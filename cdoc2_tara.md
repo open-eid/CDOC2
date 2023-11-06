@@ -73,7 +73,7 @@ Mustandkujul võiks see toimuda järgmiselt:
 ## Eelised
 
 * Autentimisvahendite kasutamise tehnilised detailid (ID-kaardiga suhtlemine, Smart-ID RP-API kasutamine, vms) on kõik TARA poolt juba lahendatud ning seeläbi saab CDOC2 klient olla tehniliselt lihtsam, odavam ning tulevikukindlam.'
-* Pole vaja SID/MID proksit täiendada, ega kasutada.
+* Pole vaja SID/MID proksit täiendada, ega kasutada (praegune SID/MID proxy toetab ainult allkirjastamise otspunkte, CDOC2 vajab autentimise otspunkte).
 * Saaja (dekrüpteerija) sertifikaadi kehtivuse kontroll on juba TARAs tehtud, CDOC2 serverid ei pea seda uuesti tegema.
 * CDOC2 dekrüpteerimisvõimekuse saab üsna lihtsalt lisada kõigile TARA poolt toetatud autentimisvahenditele (EU eID)
 
