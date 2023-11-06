@@ -10,7 +10,7 @@ Aga Sinu küsimus panin mõtlema ja tegelikult saaks SID/MID CDOC2 krüpteerimis
 
 CDOC2 klient peab endiselt iga serveriga suhtlema, aga CDOC2 kliendi moodustatud autentimis struktuur räsi allkirjastatakse TARA poolt. Vt protokolli kirjeldust all pool.
 
-TARAga autentimisel oleksid eelised ja puudused võrreldes otse SID/MID proxide kasutamise.
+TARAga autentimisel oleksid eelised ja puudused võrreldes otse SID/MID RP API kasutamisega.
 
 Puudused:
 * Praeguses TARA versioonis allkirjastab _identsustõendi_ ^3 TARA. Seega on turvalisus viletsam kui
@@ -29,6 +29,10 @@ Eelised:
  sertifikaati kontrollida (peab vaatama identy tokeni väljastamisaega)
 * Lisana saab väikeste täindustena CDOC2 krüpteerimisvõimekuse kõigile TARA poolt toetatud 
   autentimisvahenditele (EU eID)
+
+Küsimused Reimole:
+* Kas RIAle sobib TARA kasutamine CDOC2le Smart-ID/Mobiil-ID teostamiseks? (Kuna praguses SID/MID proxy ei toeta authentication APIt, siis TARA kasutamisel ei ole SID/MID proxy täiendusi teha)
+* Võib teha esimese variandi TARAga ja hiljem lisada otse SID/MID proxyde toe.
 
 
 ## CDOC2 TARA (draft)
