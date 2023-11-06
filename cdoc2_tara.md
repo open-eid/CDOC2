@@ -32,7 +32,7 @@ Eelised:
 
 Küsimused Reimole:
 * Kas RIAle sobib TARA kasutamine CDOC2le Smart-ID/Mobiil-ID teostamiseks? (Kuna praguses SID/MID proxy ei toeta authentication APIt, siis TARA kasutamisel ei ole SID/MID proxy täiendusi teha)
-* Võib teha esimese variandi TARAga ja hiljem lisada otse SID/MID proxyde toe.
+* Võib teha esimese variandi TARAga ja hiljem lisada otse SID/MID RP API toe (vaja SID/MID proxit, mis toetaks autentimist).
 
 
 ## CDOC2 TARA (draft)
