@@ -79,8 +79,10 @@ Mustandkujul võiks see toimuda järgmiselt:
 
 ## Küsimused
 
-* Kas RIA-le sobib kirjeldatud plaani kohaselt krüpteerimissüsteemis CDOC2 autentimisteenuse TARA kasutamine, kus TARA muutuks väga kriitiliseks komponendiks, mida tuleb täiel määral usaldada?
-* Kas RIA plaanib autentimisteenust TARA täiendada, et lisada autentimissignatuuri edastamine ning seeläbi vähendada usaldusvajadust?
+1. Kas RIA-le sobib kirjeldatud plaani kohaselt krüpteerimissüsteemis CDOC2 autentimisteenuse TARA kasutamine, kus TARA muutuks väga kriitiliseks komponendiks, mida tuleb täiel määral usaldada?
+2. Kas RIA plaanib autentimisteenust TARA täiendada, et lisada autentimissignatuuri edastamine ning seeläbi vähendada usaldusvajadust?
+3. Kas RIA sooviks kõigepealt teostada autentimisteenuse TARA kasutamise ning kunagi hiljem lisada süsteemile MID/SID RP-APIde otse kasutamise toe, kuna see aitaks tõsta süsteemi töökindlust juhul, kui autentimisteenus TARA ei tööta?
+
 
 ## Viited
 
