@@ -13,8 +13,8 @@ CDOC2 klient peab endiselt iga serveriga suhtlema, aga CDOC2 kliendi moodustatud
 TARAga autentimisel oleksid eelised ja puudused võrreldes otse SID/MID RP API kasutamisega.
 
 Puudused:
-* Praeguses TARA versioonis allkirjastab _identsustõendi_ ^3 TARA. Seega on turvalisus viletsam kui
-otse SID/MID proxy kaudu autentimisvõtmega allkirjastamine. Turvalisus oleks parem, kui TARA tagastaks
+* Praeguses TARA versioonis allkirjastab _identsustõendi_ ^3 TARA. Seega on turvalisus lahjem kui
+otse SID/MID RP API kaudu autentimisvõtmega allkirjastamine. Turvalisus oleks parem, kui TARA tagastaks
   _identsustõendis_ "dts" välja (Autentimisvahendi poolt moodustatud autentimissignatuur
   eraldatud signatuuriga JWS-vormingus.). Vt ^5 SPOF2.1 #5.1.8 
 * OIDC protokoll on disainitud töötama brauseris. CDOC2 klientides (DigiDoc4, Mopp, cdoc2-ref-impl) 
