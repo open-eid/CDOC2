@@ -93,7 +93,7 @@ Lihtsustatult:
 
 
 ^1 [GovSSO authentication process](https://e-gov.github.io/GOVSSO/ArchivedPocTechnicalSpecification#authentication-process)
-^2 [TARA autentimistõend](https://e-gov.github.io/TARA-Doku/TehnilineKirjeldus#41-autentimisp%C3%A4ring)
+^2 [TARA autentimispäring](https://e-gov.github.io/TARA-Doku/TehnilineKirjeldus#41-autentimisp%C3%A4ring)
 ^3 [TARA identsustõend](https://e-gov.github.io/TARA-Doku/TehnilineKirjeldus#431-identsust%C3%B5end)
 ^4 [multi-server-auth-protocol](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#autentimispiletite-kontrollimise-algoritm)
 ^5 SPOF2.1 - SPOF2.1 - autentimisprotokollistikud ver1.1 
