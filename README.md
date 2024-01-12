@@ -10,4 +10,5 @@ CDOC2
 * [Exported diagrams](img/)
 
 
-~~Siin on kirjeldus, kuidas lahendada [CDOC2 Smart-ID/Mobiili-ID](cdoc2_tara.md) tuge Tara abil~~
+~~Considered solution for implementing [CDOC2 Smart-ID/Mobiili-ID](cdoc2_tara.md) using TARA. 
+Scrapped, because JWT tokens are signed by TARA, not authentication device. Also adds dependcy for TARA~~
