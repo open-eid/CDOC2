@@ -23,7 +23,8 @@ Scheme:
 5. Sender derives content encryption key (CEK) and hmac key (HHK) from FMK using HKDF expand algorithm
 6. Sender encrypts FMK with KEK (xor) and gets encrypted_FMK
 7. Sender splits `secret` into N shares using Shamir Shared Secret Scheme. TODO: SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
-8. Sender uploads each `secret` share to different CDOC2 server (each CDOC2 server will receive a different share).
+8. Sender uploads each `secret` share and recipient etsi_identifier to each CDOC2 server 
+   (each CDOC2 server will receive a different share). 
    Sender gets transactionID for each share. TODO: define OAS spec for key-share upload
 9. Sender adds encrypted FMK, salt, key_label and server:transactionId pairs into CDOC2 header.
     TODO: define flatbuffers structure. 
