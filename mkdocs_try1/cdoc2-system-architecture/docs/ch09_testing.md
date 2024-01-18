@@ -22,7 +22,9 @@ $$
 1. Referring to another chapter: [Chapter 01](ch01_system_context.md)
 2. Referring to another subsection anchor: [Section 2.1 - External systems](ch01_system_context.md#external_systems)
 3. Referring to custom anchor defined by ourselves: not possible?
-4. ...
+4. Referring footnote [^1]
+
+[^1]: This is the first footnote.
 
 ## Testing images and diagrams
 
