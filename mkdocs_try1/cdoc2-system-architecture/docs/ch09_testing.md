@@ -23,6 +23,7 @@ $$
 2. Referring to another subsection anchor: [Section 2.1 - External systems](ch01_system_context.md#external_systems)
 3. Referring to custom anchor defined by ourselves: not possible?
 4. Referring footnote [^1]
+5. Create an anchor [anchor](#anchors-in-markdown)
 
 [^1]: This is the first footnote.
 
