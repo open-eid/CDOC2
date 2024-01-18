@@ -6,6 +6,11 @@ To access `/secret-share` related endpoints client needs to create long-term tok
 
 1. TODO
 
+### Test MD
+
+* [link to image](#figure-1)
+* [link to line 22](#kek22)
+
 
 ## Draft: Support for encryption/decryption with Smart-ID(/Mobile-ID) in CDOC2
 
@@ -62,7 +67,7 @@ Scheme:
 20. Recipient combines 'secret' shares into full secret (symmetric key) using Shamir Shared Secret Scheme. TODO: SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
 21. Recipient [derives key encryption key (KEK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc20-lib/src/main/java/ee/cyber/cdoc20/crypto/Crypto.java#L121)
      from secret, key_label and salt using HKDF algorithm
-22. Recipient decrypts FMK using KEK.
+22. Recipient decrypts FMK using KEK. {#kek22} <a id="kek22"></a>
 23. Recipient derives CEK and HHK from FMK using HKDF algorithm
 24. Recipient calculates hmac and checks it against hmac in CDOC2 header
 25. Recipient decrypts content using CEK
@@ -70,7 +75,7 @@ Scheme:
 
 ## Components
 
-![SID/MID](img/SID_MID_full.png)
+![SID/MID](img/SID_MID_full.png) <a id="figure-1"></a>
 
 
 
