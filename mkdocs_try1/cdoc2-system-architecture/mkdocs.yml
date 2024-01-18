@@ -1,0 +1,32 @@
+site_name: CDOC2 System Architecture
+
+theme: 
+  name: material
+  features:
+    - navigation.instant
+
+plugins:
+  - search
+  - enumerate-headings
+
+enumerate-headings:
+  toc_depth: 2
+
+markdown_extensions:
+  - toc:
+      permalink: true
+      title: On this page
+  - pymdownx.arithmatex:
+      generic: true
+  - markdown_katex:
+      no_inline_svg: True
+      insert_fonts_css: True
+#      macro-file: macros.tex
+
+extra_javascript:
+  - javascripts/katex.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js  
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
