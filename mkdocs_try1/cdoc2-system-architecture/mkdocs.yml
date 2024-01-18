@@ -4,6 +4,18 @@ theme:
   name: material
   features:
     - navigation.instant
+    - navigation.footer
+    - navigation.expand
+    - toc.follow
+    - toc.integrate
+# toc.integrate moves right-hand-side chapter-toc into the left-side nav-toc
+
+extra:
+  generator: false
+
+#nav:
+#  - CDOC2 System Architecture: 'front_page.md'
+#  - Chapters: 'chapter/ch01_system_context.md'
 
 plugins:
   - search
@@ -14,8 +26,16 @@ enumerate-headings:
 
 markdown_extensions:
   - toc:
+      title: "In this chapter:"
       permalink: true
-      title: On this page
+      separator: "_"
+  - plantuml_markdown:
+      server: https://plantuml.cyber.ee
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+        - class: mermaid
+        - format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.arithmatex:
       generic: true
   - markdown_katex:

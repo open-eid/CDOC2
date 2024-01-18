@@ -21,6 +21,7 @@ pip3 install katex
 pip3 install markdown-katex
 pip3 install mkdocs-enumerate-headings-plugin
 pip3 install mkdocs-material
+pip3 install plantuml_markdown
 ```
 
 Then type in the active directory:
