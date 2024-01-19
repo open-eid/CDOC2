@@ -22,13 +22,19 @@ $$
 1. Referring to another chapter: [Chapter 01](ch01_system_context.md)
 2. Referring to another subsection anchor: [Section 2.1 - External systems](ch01_system_context.md#external_systems)
 3. Referring to custom anchor defined by ourselves: not possible?
-4. ...
+4. Referring footnote [^1]
+5. Refer an anchor [anchor](#my-anchor)
+6. Refer [figure 1](#figure-1)
+
+anchor <a id="my-anchor"></a>
+
+[^1]: This is the first footnote.
 
 ## Testing images and diagrams
 
 ![minimal](img/SID_minimal.png)
 
-*Figure 1: CDOC component diagram*
+*Figure 1: CDOC component diagram* <a id="figure-1"></a>
 
 And referring to the diagram, later in the text. Not possible?
 
