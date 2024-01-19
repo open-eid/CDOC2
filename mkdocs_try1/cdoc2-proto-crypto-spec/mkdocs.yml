@@ -1,0 +1,48 @@
+site_name: CDOC2 Protocol and Cryptography Specification
+
+theme: 
+  name: material
+  features:
+    - navigation.instant
+    - navigation.footer
+    - navigation.expand
+    - toc.follow
+    - toc.integrate
+# toc.integrate moves right-hand-side chapter-toc into the left-side nav-toc
+
+extra:
+  generator: false
+
+plugins:
+  - search
+  - enumerate-headings
+
+enumerate-headings:
+  toc_depth: 2
+
+markdown_extensions:
+  - toc:
+      title: "In this chapter:"
+      permalink: true
+      separator: "_"
+  - plantuml_markdown:
+      server: https://plantuml.cyber.ee
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+        - class: mermaid
+        - format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.arithmatex:
+      generic: true
+  - markdown_katex:
+      no_inline_svg: True
+      insert_fonts_css: True
+#      macro-file: macros.tex
+
+extra_javascript:
+  - javascripts/katex.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js  
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css

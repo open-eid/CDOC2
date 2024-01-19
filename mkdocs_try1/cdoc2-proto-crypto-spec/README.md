@@ -33,4 +33,4 @@ and open <http://127.0.0.1:8000/> in your browser.
 
 # Test site
 
-Open <https://people.cyber.ee/~aivo/mkdocs_try1/site/>
+Open <https://people.cyber.ee/~aivo/mkdocs_try1/site/ch02_external_interfaces/>
