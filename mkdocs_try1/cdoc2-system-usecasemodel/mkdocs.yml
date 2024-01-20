@@ -6,6 +6,7 @@ theme:
     - navigation.instant
     - navigation.footer
     - navigation.expand
+    - content.tooltips
     - toc.follow
     - toc.integrate
 # toc.integrate moves right-hand-side chapter-toc into the left-side nav-toc
@@ -21,7 +22,17 @@ plugins:
 enumerate-headings:
   toc_depth: 2
 
+watch:
+  - includes/
+
 markdown_extensions:
+  - abbr
+  - attr_list
+  - def_list
+  - pymdownx.striphtml
+  - pymdownx.snippets: 
+      auto_append:
+        - includes/abbreviations.md
   - toc:
       title: "In this chapter:"
       permalink: true
@@ -39,6 +50,7 @@ markdown_extensions:
       no_inline_svg: True
       insert_fonts_css: True
 #      macro-file: macros.tex
+
 
 extra_javascript:
   - javascripts/katex.js

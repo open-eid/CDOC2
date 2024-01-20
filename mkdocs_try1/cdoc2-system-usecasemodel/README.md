@@ -22,6 +22,7 @@ pip3 install markdown-katex
 pip3 install mkdocs-enumerate-headings-plugin
 pip3 install mkdocs-material
 pip3 install plantuml_markdown
+pip3 install python-markdown-comments
 ```
 
 Then type in the active directory:
