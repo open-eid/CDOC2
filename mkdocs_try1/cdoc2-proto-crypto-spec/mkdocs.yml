@@ -7,7 +7,7 @@ theme:
     - navigation.footer
     - navigation.expand
     - toc.follow
-    - toc.integrate
+#    - toc.integrate
 # toc.integrate moves right-hand-side chapter-toc into the left-side nav-toc
 
 extra:

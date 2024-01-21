@@ -4,5 +4,6 @@
         "CKCTS",
         "DigiDoc4",
         "ECDH"
-    ]
+    ],
+    "markdown.extension.orderedList.autoRenumber": false
 }

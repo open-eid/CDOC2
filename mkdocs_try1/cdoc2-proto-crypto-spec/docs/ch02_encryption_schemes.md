@@ -22,7 +22,7 @@ TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3.3 "Otsesuhtluseg
 
 ## Schemes using key transmission servers
 
-These schemes are usable, in case the sender wishes to use KEK transmission servers. 
+These schemes are usable, in case the sender wishes to use CKCTS servers.
 
 ### SC03: Key transmission server scheme for recipients with EC keys
 
@@ -44,7 +44,7 @@ New content. Merge with <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm5
 
 ## Schemes with recipient authentication
 
-These schemes use key transmission servers for sending encrypted CEK from sender to recipient. Recipient will be authenticated with whatever means by key transmission servers. 
+These schemes use CKCTS servers for sending KEK from sender to recipient. Recipient will be authenticated with whatever means by CKCTS servers and would download the CKC from servers.
 
 ### SC06: Key transmission server scheme with one server
 
@@ -53,3 +53,9 @@ New content
 ### SC07: Key transmission server scheme with secret shared CEK
 
 New content
+
+IDEA: We could add one share of KEK into such CKC, which would be included in the CDOC2 Capsule at all times. This way, the CKCTS servers doesn't need to be trustworthy at all?
+
+Does this idea add any security? Because, even without such a share, the attacker, who has eavesdropped CDOC2 Capsule, can still download other CKCs from CKCTS servers.
+
+It would work perhaps, if we could invent such secret-sharing scheme, where the CDOC2 Capsule included share can only be decrypted with some kind of eID means. But in this case, what is the added benefit, of distributing other shares to CKCTS servers?
