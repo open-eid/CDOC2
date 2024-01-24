@@ -23,6 +23,7 @@ pip3 install mkdocs-enumerate-headings-plugin
 pip3 install mkdocs-material
 pip3 install plantuml_markdown
 pip3 install python-markdown-comments
+pip3 install mkdocs-awesome-pages-plugin
 ```
 
 Then type in the active directory:
@@ -47,6 +48,13 @@ cd md-upload-to-confluence
 make build
 ```
 
+```bash
+cd ..
+git clone https://github.com/kovetskiy/mark.git
+cd mark
+make build
+```
+
 ## Export files to Confluence
 
 ```bash
@@ -55,4 +63,8 @@ cd cdoc2-architecture/mkdocs_try1/cdoc2-system-usecasemodel/docs
 git clone git@gitlab.cyber.ee:id/utilities/md-upload-to-confluence.git
 cd md-upload-to-confluence
 make build
+```
+
+```bash
+export_Confluence.sh
 ```
