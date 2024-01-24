@@ -1,15 +1,14 @@
 # Encryption/decryption support with Smart-ID/Mob-ID in CDOC2
 
+> [!WARNING]  
+> This document is not updated, refer to cdoc2-system-architecture
+
 ## Authentication for CDOC2 server API (long-term token creation) using TARA
 
 To access `/secret-share` related endpoints client needs to create long-term token using TARA.
 
 1. TODO
 
-### Test MD
-
-* [link to image](#figure-1)
-* [link to line 22](#kek22)
 
 
 ## Draft: Support for encryption/decryption with Smart-ID(/Mobile-ID) in CDOC2
@@ -25,7 +24,8 @@ Prerequisites:
 
 Scheme:
 
-1. Sender checks that SID/MID certificate exists for recipient in SK LDAP server.
+1. Sender checks that SID/MID certificate exists for recipient in SK LDAP server.   
+   _TODO:_ SID certificates are not available through SK LDAP server. Need to find a way to check existence of SID account.
 2. Sender generates `secret` (symmetric key) and `salt` using secure random. 
    key_label value will be: etsi/${etsi_identifier} 
    

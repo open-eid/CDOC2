@@ -27,6 +27,7 @@ watch:
 
 markdown_extensions:
   - abbr
+  - admonition
   - attr_list
   - def_list
   - pymdownx.striphtml
@@ -39,6 +40,9 @@ markdown_extensions:
       separator: "_"
   - plantuml_markdown:
       server: https://plantuml.cyber.ee
+  - pymdownx.details
+  - pymdownx.critic:
+      mode: view
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
