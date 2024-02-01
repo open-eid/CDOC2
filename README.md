@@ -1,14 +1,16 @@
-# Architecture: Encryption/decryption with Smart-ID/Mobile-ID in CDOC2 
+# CDOC2 documentation source code repo
 
-[CDOC2 with Smart-ID/Mobile-ID architecture](architecture.md) 
+## Intro
 
-[#RM-55937](https://rm-int.cyber.ee/ito/issues/55937): CDOC2 minimal implementation for encrypting/decrypting [CDOC2 with Smart-ID](SID_minimal.md) 
+This repository contains all documentation, which will be delivered for CDOC2 development project. Documentation will be eventually made public, in a similar way as there are currently public websites:
 
-CDOC2
+* <https://open-eid.github.io/SiVa/>
+* <https://open-eid.github.io>
 
-* [Visual Paradigm project](vp/cdoc2.vpp)
-* [Exported diagrams](img/)
+## Documentation source code
 
+* Documentation source code: [cdoc2-system-docs/](cdoc2-system-docs/)
 
-~~Considered solution for implementing [CDOC2 Smart-ID/Mobiili-ID](cdoc2_tara.md) using TARA. 
-Scrapped, because JWT tokens are signed by TARA, not authentication device. Also adds dependcy for TARA~~
+## Visual Paradigm Model
+
+* Visual Paradigm file: [vp/cdoc2.vpp](vp/cdoc2.vpp)
