@@ -3,16 +3,6 @@ image: python:3.8-buster
 before_script:
   - pip install -r mkdocs_requirements.txt
 
-test:
-  stage: test
-  script:
-  - cd cdoc2-system-docs && mkdocs build --strict --site-dir test
-  artifacts:
-    paths:
-    - cdoc2-system-docs/test
-  rules:
-    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
-
 pages:
   stage: deploy
   script:
@@ -21,5 +11,3 @@ pages:
     paths:
     - cdoc2-system-docs/public
   publish: cdoc2-system-docs/public
-  rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
