@@ -3,7 +3,7 @@ title: 2. System Context
 ---
 # System Context
 
-![SID/MID](../../../img/SID_MID_full.png)
+![SID/MID](../img/SID_MID_full.png)
 
 ## Overview
 
