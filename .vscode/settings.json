@@ -3,8 +3,10 @@
         "cdoc",
         "CDOC",
         "CKCTS",
+        "CSRNG",
         "DigiDoc4",
-        "ECDH"
+        "ECDH",
+        "HKDF"
     ],
     "markdown.extension.orderedList.autoRenumber": false
 }
