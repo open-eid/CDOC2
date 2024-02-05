@@ -166,9 +166,71 @@ Scheme:
 
 These use cases are useful when End-user wishes to protect confidential files by encrypting them with CEK generated from regular password. End-user may then store CDOC2 Container for longer period, without worrying that hardware security token may not be usable, or public key certificate might be revoked or expired. CDOC2 Container may be later decrypted by Sender itself or Recipient, who knows the shared password.
 
-## UC.Client.07 — Encrypt CDOC2 container with password
+This group of UCs also include a special use case, when Recipient re-encrypts the content from received Container with a password.
 
-## UC.Client.08 — Decrypt CDOC2 container with password
+## UC.Client.P.01 — Encrypt CDOC2 container with password
+
+**Use Case Context**
+: CDOC2 Client Application (Client) creates new CDOC2 Container with a password-based cryptography
+
+**Use Case Level**
+: User goal
+
+**Primary Actor**
+: User, in a Sender role
+
+**Main Success Scenario**
+
+1. Sender specifies files to be included in a new CDOC2 Container
+2. Sender specifies the password to be used for password-based cryptography
+3. Client verifies that the password is not too simple
+4. Client creates new CDOC2 Container and uses encryption part of [scheme SC06: Direct encryption scheme for recipients with pre-shared passwords](/02_protocol_and_cryptography_spec/ch02_encryption_schemes/#sc06_direct_encryption_scheme_for_recipients_with_pre-shared_passwords)
+
+TODO: Error conditions are not handled yet
+
+## UC.Client.P.02 — Decrypt CDOC2 container with password
+
+**Use Case Context**
+: CDOC2 Client Application (Client) decrypts CDOC2 Container with a password-based cryptography
+
+**Use Case Level**
+: User goal
+
+**Primary Actor**
+: User, in a Recipient role
+
+**Main Success Scenario**
+
+1. Recipient specifies which CDOC2 Container they wish to open
+2. Client opens the Container and retrieves the header information and uses the metadata
+3. Client asks Recipient for the password to decrypt the Container
+4. Recipient enters the password
+5. Client uses decryption part of [scheme SC06: Direct encryption scheme for recipients with pre-shared passwords](/02_protocol_and_cryptography_spec/ch02_encryption_schemes/#sc06_direct_encryption_scheme_for_recipients_with_pre-shared_passwords)
+
+TODO: Error conditions are not handled yet
+
+
+## UC.Client.P.03 — Re-encrypt existing CDOC2 container for long-term storage
+
+**Use Case Context**
+: CDOC2 Client Application (Client) decrypts existing CDOC2 Container and re-encrypts all files from the Container with a password-based cryptography
+
+**Use Case Level**
+: User goal
+
+**Primary Actor**
+: User, in a Recipient role
+
+**Main Success Scenario**
+
+1. Recipient specifies which CDOC2 Container they wish to open.
+2. Client opens the Container and retrieves the header information and uses the metadata
+3. Client asks Recipient for required information to decrypt the Container.
+4. Recipient provides necessary means for decryption of the Container. This information may include connecting an ID-card and supplying PIN-code, authenticating with Mobile-ID/Smart-ID or entering a password.
+5. Client decrypts the original Container and asks, if the Recipient wishes to re-encrypt the transmitted files for long-term storage.
+6. Recipient chooses this option.
+7. Execution continues from UC [UC.Client.P.01](#ucclientp01--encrypt-cdoc2-container-with-password) with the following assumptions:
+    1. Client uses all files from the original Container
 
 ## Supporting use cases
 
