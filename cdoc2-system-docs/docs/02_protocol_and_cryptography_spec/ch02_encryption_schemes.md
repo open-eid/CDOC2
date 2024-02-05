@@ -1,8 +1,4 @@
-<!-- Title: 04. CDOC2 encryption schemes -->
-
 # CDOC2 encryption schemes
-
-<!-- Include: ac:toc -->
 
 TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3 "Krüpteerimisskeemid" beginning
 
