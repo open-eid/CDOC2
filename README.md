@@ -9,7 +9,7 @@ This repository contains all documentation, which will be delivered for CDOC2 de
 
 ## Documentation source code
 
-* Documentation source code: [cdoc2-system-docs/](cdoc2-system-docs/)
+* Documentation source code: [cdoc2-system-docs/](cdoc2-system-docs/) folder (read [cdoc2-system-docs/README.md](cdoc2-system-docs/README.md))
 
 ## Visual Paradigm Model
 
