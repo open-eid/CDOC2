@@ -6,6 +6,19 @@
 
 TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3 "Krüpteerimisskeemid" beginning
 
+## Definitions and notation
+
+TODO: This currently taken from existing spec. We probably need to rework them and align the notation and terms with rest of the document.
+
+* `FMK` - File Master Key
+* `CEK` - Content Encryption Key (used to encrypt the payload)
+* `KEK` - FMK Encryption Key (used to encrypt the FMK)
+* `M` - Message (payload of CDOC2 Container)
+* `C` - Ciphertext (encrypted message M)
+* `CK` - Encrypted FMK
+* `Capsule` - CDOC2 Key Capsule (originally `caps`)
+* ...
+
 ## Direct encryption schemes with recipients asymmetric key pairs
 
 These schemes are usable in case the recipient has asymmetric key pair (RSA or EC) and CEK decryption key (KEK) is derived between sender and recipient with some kind of key establishment protocol. CEK and key capsule is transmitted directly to the recipient, together with the encrypted payload.
@@ -38,15 +51,50 @@ TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3.4 "Võtmeedastus
 
 TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3.5 "Sümmeetrilise võtmega skeem"
 
-### SC05: Direct encryption scheme for recipient with pre-shared password
+### SC06: Direct encryption scheme for recipients with pre-shared passwords
 
-New content. Merge with <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm55854#cdoc-20-with-symmetric-key-from-password>
+TODO: Experiment with embedded LaTeX to see if this displays better than Markdown `code`
+
+This scheme is used, when Sender wishes to use a password-based encryption for:
+
+* long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, or
+* transmitting CDOC2 Container to such Receivers, who doesn't have any eID means.
+
+Password-based encryption scheme can be used for multiple Recipients, who each may know a different password for decryption. This encryption scheme is very similar to scheme SC05, which uses pre-shared encryption key(s).
+
+Sender steps for encryption:
+
+1. `FMK = HKDF_Extract(Static_FMK_Salt, CSRNG())`
+2. `CEK = HKDF_Expand(FMK)`
+3. `C = Enc(CEK, M)`
+4. `Password_i` is provided by Sender
+5. `PasswordSalt_i = CSRNG()`
+6. `PasswordKeyMaterial_i = PBKDF(Password_i, PasswordSalt_i)`
+7. `KeyMaterialSalt_i = CSRNG()`
+8. `{KEK_i, Capsule_i} = ENCAPS_HKDF(PasswordKeyMaterial_i, KeyMaterialSalt_i)`
+9. `EncryptedFMK_i = XOR(FMK, KEK_i)`
+
+Sender creates a CDOC Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage of themself.
+
+After some time, Sender may wish to decrypt the Container themselves (assuming the role of Recipient) or the Recipient wishes to decrypt the Container.
+
+Recipient steps for decryption:
+
+1. Recipient receives CDOC2 Container along with data `{C, EncryptedFMK_i, Capsule_i}`
+2. `Password_i` is provided by Recipient itself
+3. `PasswordSalt_i` is retrieved from header of received container
+4. `PasswordKeyMaterial_i = PBKDF(Password_i, PasswordSalt_i)`
+5. `KeyMaterialSalt_i` is retrieved from header of received container
+6. `{KEK_i, Capsule_i} = DECAPS_HKDF(PasswordKeyMaterial_i, KeyMaterialSalt_i)`
+7. `FMK = XOR(KEK_i, CK_i)`
+8. `CEK = GenKeyExpand(FMK)`
+9. `M = Dec(CEK, C)`
 
 ## Schemes with recipient authentication
 
 These schemes use CKCTS servers for sending KEK from sender to recipient. Recipient will be authenticated with whatever means by CKCTS servers and would download the CKC from servers.
 
-### SC06: Key transmission server scheme with one server
+### SC07: Key transmission server scheme with one server
 
 New content
 
