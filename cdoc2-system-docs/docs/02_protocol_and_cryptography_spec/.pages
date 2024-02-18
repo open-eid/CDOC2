@@ -1,3 +1,4 @@
 title: "Protocol and Cryptography Specification"
 nav:
-    - '4 Encryption Schemes': ch02_encryption_schemes.md
+    - '4.1 Encryption Schemes': ch02_encryption_schemes.md
+    - '4.2 Container Format': ch03_container_format.md
