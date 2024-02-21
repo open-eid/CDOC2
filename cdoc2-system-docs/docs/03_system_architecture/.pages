@@ -1,5 +1,5 @@
 title: "System Architecture"
 nav:
-    - '5 System Context': ch01_system_context.md
-    - '6 System Components': ch02_system_components.md
-    - '7 External Interfaces': ch03_external_interfaces.md
+    - 'System Context': ch01_system_context.md
+    - 'System Components': ch02_system_components.md
+    - 'External Interfaces': ch03_external_interfaces.md

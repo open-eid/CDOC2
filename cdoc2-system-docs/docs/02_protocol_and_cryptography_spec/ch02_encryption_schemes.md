@@ -1,25 +1,195 @@
 # CDOC2 encryption schemes
 
-TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 3 "Krüpteerimisskeemid" beginning
+This section presents the abstracted forms of all supported encryption methods, providing descriptions of messaging between the parties and the contents of exchanged messages. The purpose of the section is to familiarize the reader with the basic principles of various encryption schemes.
+In all scenarios, the sender (Alice, *A*) wants to send a message *M* to the recipient (Bob, *B*) in an encrypted form. They can achieve this either directly or by using a key server S (or servers *S1*, *S2*, … , *Sn*). The number of recipients may also be higher than one, in which case they will be designated as *B1*, *B2*, … ,*Bl*.
+
+Alice uses symmetric encryption system ``Sym``, comprising the following components.
+
+The C_DERIVEKEY function takes the sender’s ephemeral public key pkeph and a reference to the corresponding ID-card key pair (pkrec, skrec) as inputs. The recipient computes: 
+
+1. Key generation algorithm ``GenKeySym`` – used for generating the secret key. See section [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
+2. Encryption algorithm ``EncSym`` – a function taking a key and an input (to be encrypted) as arguments and returning a cryptogram.
+3. Decryption algorithm ``DecSym`` – a function taking a key and a cryptogram as arguments. If the function is called with the key used for encrypting the cryptogram as argument, it will return the original input. Otherwise it will return a random valid input.
+
+The keys are generated using HKDF (extract, then expand). In the extract phase, a file master key (*FMK*) is generated using the function ``GenKeyExtractSym`` that is then used for deriving the content encryption key (*CEK*) in the expand phase. The *CEK* is used as the secret key in symmetric encryption. Symmetric encryption and decryption utilize the ChaCha20-Poly1305 algorithm. For more details, see sections [Key derivation](ch05_cryptographic_details.md#key-derivationn) and [Payload assembly and encryption](ch05_cryptographic_details.md#payload-assembly-and-encryption).
+
+Alice generates a separate master key for each recipient, using a recipient-specific key encryption key (*KEK*).
+The scenarios described in the following sections differ by the methods used for generating the *KEK* and transmitting the key capsules containing the encrypted master key *FMK* to the recipients.
 
 ## Definitions and notation
 
 TODO: This currently taken from existing spec. We probably need to rework them and align the notation and terms with rest of the document.
 
-* `FMK` - File Master Key
-* `CEK` - Content Encryption Key (used to encrypt the payload)
-* `KEK` - FMK Encryption Key (used to encrypt the FMK)
-* `M` - Message (payload of CDOC2 Container)
-* `C` - Ciphertext (encrypted message M)
-* `CK` - Encrypted FMK
-* `Capsule` - CDOC2 Key Capsule (originally `caps`)
-* ...
+* `CDOC` - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem.
 
-## Direct encryption schemes with recipients asymmetric key pairs
+* ``CDOC 1.0`` - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
+
+* ``CDOC2 System`` - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Transmission Servers.
+
+* `CK` - Encrypted FMK
+
+* ``CKCTS`` - CDOC2 Key Capsule Transmission Server.
+
+* ``CDOC2 authentication server`` - Web service to generate access tokens for CKCTS and RIA SID/MID proxy.
+
+* ``SID/MID proxy`` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API.
+
+* ``Hardware security token`` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys.
+
+* ``ECDH`` - Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an elliptic-curve public–private key pair, to establish a shared secret over an insecure channel. (<https://en.wikipedia.org/wiki/Elliptic-curve_Diffie–Hellman>)
+
+* ``AEAD`` - Authenticated Encryption with Additional Data.
+
+* ``ECC`` - Elliptic-Curve Cryptography.
+
+* ``HMAC`` - Header Message authentication Code.
+
+* ``CEK`` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
+
+* ``KEK`` - Key Encryption Key. Symmetric key used to encrypt (wrap) the CEK, so that CEK could be transmitted inside CKC.
+
+* ``FMK`` - File Master Key. Cryptographic key material for deriving the CEK.
+
+* ``CKC`` - CDOC2 Key Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
+
+* ``HHK`` - Header HMAC Key.
+
+* `M` - Message (payload of CDOC2 Container)
+
+* `C` - Ciphertext (encrypted message M)
+
+
+## Direct key agreement-based ECDH
+
+This method can be used for transmitting encrypted messages to recipients holding the relevant ECC private key.
+Alice protects message secrecy using a key encapsulation mechanism (*KEM*) consisting of the algorithms ``EncapsKEM`` and ``DecapsKEM``.
+Prior to the encapsulation, Alice receives the recipient’s public key in the form of a an elliptic curve point. Alice and the recipient then run the ECDH key establishment protocol.
+
+The encapsulation function ``EncapsKEM`` takes a key capsule and the recipient’s public key as inputs and returns a key and a capsule. The key is the key encryption key (KEK), derived as per section [ECCPublicKeyCapsule](ch05_cryptographic_details.md#eccpublickeycapsule); in the ECDH implementation, the capsule *caps* is Alice’s ephemeral public key.
+
+The decapsulation function ``DecapsKEM`` takes a key capsule and the recipient’s secret key as inputs, verifies that the transmitted elliptic curve point is valid, runs the counterparty activities of the ECDH key establishment protocol, and derives the KEK. For more details, see subsection [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
+
+Direct key agreement-based ECDH:
+
+1. *A : fmk ← GenKeyExtractSym(Nonss)*
+2. *A : cek ← GenKeyExpandSym(fmk)*
+3. *A : c ← EncSym(cek, M)*
+4. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients* B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
+5. *A : (keki, capsi) ← EncapsKEM(PKi) (i = 1, 2, . . . , ℓ)*
+6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
+8. *Bi : keki ← DecapsKEM(capsi, SKi)*
+9. *Bi : fmk ← XOR(keki, cki)*
+10. *Bi : cek ← GenKeyExpandSym(fmk)*
+11. *Bi : M ← DecSym(cek, c)*
+
+## Key server-based ECDH
+
+In this method, Alice also protects message secrecy using ECDH key encapsulation, except in this case the capsule is transmitted via a key server, thus providing an additional layer of security, assuming that the key server is operating properly. Additional security is ensured by the use of an authentication protocol *Auth* enabling the server to authenticate the recipient.
+
+Key-server based ECDH:
+
+1. *A : fmk ← GenKeyExtractSym(Nonss)*
+2. *A : cek ← GenKeyExpandSym(fmk)*
+3. *A : c ← EncSym(cek, M)*
+4. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
+5. *A : (keki, capsi) ← EncapsKEM(PKi) (i = 1, 2, . . . , ℓ)*
+6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → Bi : c, cki (i = 1, 2, . . . , ℓ)*
+8. *A → S : capsi (i = 1, 2, . . . , ℓ)*
+9. *Bi → S : Auth3*
+10. *S → Bi : capsi*
+11. *Bi : keki ← DecapsKEM(capsi, SKi)*
+12. *Bi : fmk ← XOR(keki, cki)*
+13. *Bi : cek ← GenKeyExpandSym(fmk)*
+14. *Bi : M ← DecSym(cek, c)*
+
+## Direct key agreement-based RSA-OAEP
+
+This method can be used for transmitting encrypted messages to recipients holding an RSA private key.
+Alice wishes to protect message secrecy using an RSA-OAEP scheme comprising the encryption algorithm ``EncrRSA`` and the decryption algorithm ``DecRSA``.
+To ensure the secrecy of the key encryption key, the sender encrypts the KEK using the recipient’s public key. The key capsule comprises the resulting cryptogram that the recipient can decrypt using their private key.
+
+1. *A : fmk ← GenKeyExtractSym(Nonss)*
+2. *A : cek ← GenKeyExpandSym(fmk)*
+3. *A : c ← EncSym(cek, M)*
+4. *A : keki ← GenKeySym (i = 1, 2, . . . , ℓ)*
+5. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
+6. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
+7.* A : capsi ← EncRSA(PKi, keki) (i = 1, 2, . . . , ℓ)*
+8. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
+9. *Bi : keki ← DecRSA(SKi, capsi)*
+10. *Bi : fmk ← XOR(keki, cki)*
+11. *Bi : cek ← GenKeyExpandSym(fmk)*
+12. *Bi : M ← DecSym(cek, c)*
+
+## Key server-based RSA-OAEP
+
+Identical to the previous method, except the sender transmits the key capsule to the recipient via a key server.
+
+1. *A : fmk ← GenKeyExtractSym(Nonss)*
+2. *A : cek ← GenKeyExpandSym(fmk)*
+3. *A : c ← EncSym(cek, M)*
+4. *A : keki ← GenKeySym (i = 1, 2, . . . , ℓ)*
+5. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
+6. *A → Bi : c, cki (i = 1, 2, . . . , ℓ)*
+7. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
+8. *A : capsi ← EncRSA(PKi, keki) (i = 1, 2, . . . , ℓ)*
+9. *A → S : capsi (i = 1, 2, . . . , ℓ)*
+10. *Bi → S : Auth*
+11. *S → Bi : capsi*
+12. *Bi : keki ← DecRSA(SKi, capsi)*
+13. *Bi : fmk ← XOR(keki, cki)*
+14. *Bi : cek ← GenKeyExpandSym(fmk)*
+15. *Bi : M ← DecSym(cek, c)*
+
+## Symmetric key-based method
+
+For the protection of message secrecy, Alice uses a key derivation mechanism comprising the algorithms ``EncapsHKDF`` and ``DecapsHKDF`` . Prior to encapsulation, Alice knows the recipient’s symmetric secret key and the label of this key (agreed by the sender and recipient; the label helps identify different keys). The encapsulation function ``EncapsHKDF`` takes the recipient’s symmetric secret key and its label as inputs and returns a key and a capsule. The key is the key encryption key KEK, derived as per section [SymmetricKeyCapsule](ch05_cryptographic_details.md#symmetrickeycapsule), and the capsule *caps* is a data structure containing a decryption key label and the random number used for the derivation of the key. The decapsulation function ``DecapsHKDF`` takes the recipient’s symmetric public key, its label, and a key capsule as inputs. In case the inputs are valid, the function derives the KEK. For more details, see subsection [KEK computation during decryption](ch05_cryptographic_details.md#kek-computation-during-decryption).
+
+Symmetric key-based method:
+1. *A : fmk ← GenKeyExtractSym(Nonss)*
+2. *A : cek ← GenKeyExpandSym(fmk)*
+3. *A : c ← EncSym(cek, M)*
+4. *A* holds the symmetric keys *S1, S2, . . . , Sℓ* labelled *L1, L2, . . . , Lℓ*
+5. *A : (keki, capsi) ← EncapsHKDF (Si, Li) (i = 1, 2, . . . , ℓ)*
+6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
+8. *Bi : keki ← DecapsHKDF (capsi, Si)*
+9. *Bi : fmk ← XOR(keki, cki)*
+10. *Bi : cek ← GenKeyExpandSym(fmk)*
+11. *Bi : M ← DecSym(cek, c)*
+
+## Security assumptions
+
+The most basic security objective of encryption is that
+
+	nobody other than the specified recipient (B) can decrypt the message M.
+
+The achievement of this objective requires making corresponding security assumptions in the methods discussed herein. It must always be presumed that
+
+	the utilized symmetric encryption system Sym will not be broken.
+
+The asymmetric cryptography-based method from section [Direct key agreement-based ECDH](#direct-key-agreement-based-ecdh) assumes that
+
+	the utilized asymmetric encryption algorithm will not be broken.
+
+The asymmetric cryptography-based method from section [Key server-based ECDH](#key-server-based-ecdh) assumes that
+
+	the utilized asymmetric encryption algorithm will not be broken
+
+or
+
+	the key server is operating properly.
+
+
+
+
+
+
+Direct encryption schemes with recipients asymmetric key pairs
 
 These schemes are usable in case the recipient has asymmetric key pair (RSA or EC) and CEK decryption key (KEK) is derived between sender and recipient with some kind of key establishment protocol. CEK and key capsule is transmitted directly to the recipient, together with the encrypted payload.
-
-There are following schemes:
 
 ### SC01: Direct encryption scheme for recipient with EC keys
 
