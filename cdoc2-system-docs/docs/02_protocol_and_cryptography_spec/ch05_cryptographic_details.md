@@ -6,7 +6,8 @@ title: Cryptographic details
 
 This section provides a detailed description of the cryptographic computations used with the CDOC 2.0 format. Most of these computations are broader technological infrastructure-neutral, but some are specifically related to means of eID used in Estonia (above all, the ID-card). All such situations will be highlighted.
 
-## Security level and used cryptographic algorithms 
+## Security level and used cryptographic algorithms
+
 Recent studies [(1)](https://www.ecrypt.eu.org/csa/documents/D5.4-FinalAlgKeySizeProt.pdf), [(2)](https://doi.org/10.6028/NIST.SP.800-57pt1r5) give cause to assume that 128-bit security should be sufficiently secure even after 2031. This claim is also supported by a new study published in 2022 [(3)](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf). Based on these results, we use the following algorithms:
 
 - HKDF-SHA-256
@@ -24,6 +25,7 @@ ChaCha20-Poly1305 is a secure (IND-CPA and INT-CTXT) authenticating encryption a
 XOR encryption (one-time pad) providing 256-bit security is used for FMK encryption.
 
 Key lengths used for symmetric keys:
+
 - FMK – 256 bits.
 - HHK – 256 bits.
 - CEK – depends on the payload encryption algorithm used, 256 bits for ChaCha20-Poly1305.
@@ -68,17 +70,20 @@ KEK derivation is immediately tied to the used recipient type, and is described 
 - SymmetricKeyCapsule – section [SymmetricKeyCapsule](#symmetrickeycapsule).
 
 ## Descriptions of header elements and KEK computation
+
 The abstracted structure of the header is described in section [CDOC2 container format](ch03_container_format.md#cdoc2-container-format). Fields are described in the abstracted structure using primitive data types. The following section describes how to compute the fields and translate values to the primitive data type form.
 
 Key Encryption Key (KEK) computation depends on recipient type. Below, KEK computation is described with reference to each specific recipient type.
 
 ### ECCPublicKeyCapsule
+
 ``ECCPublicKeyCapsule`` (see [table 2](#table-2-eccpublickeycapsule-elements)) refers to a recipient identified by their ECC public key. The CDOC 2.0 format supports the use of any public key generated on a *secp384r1* elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
 For the *secp384r1* curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
 The ``ECCPublicKeyCapsule`` structure corresponds to the key capsule capsi in the sense of the protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#direct-key-agreement-based-ecdh) and [Key server-based ECDH](ch02_encryption_schemes.md#key-server-based-ecdh).
 
 #### Table 2. *ECCPublicKeyCapsule* elements
-Field | Contents | Encoding 
+
+Field | Contents | Encoding
  ----------- | ----------- | -----------
 Curve | Elliptic curve used; currently only *secp384r1*. | Based on the format used; see scheme description.
 RecipientPublicKey | Recipient’s public key, e.g. ID-card key pair 1 public key. | Public key is encoded following [TLS 1.3 rules, section 4.2.8.2](https://rfc-editor.org/rfc/rfc8446.txt).
@@ -90,15 +95,15 @@ The sender’s ephemeral key pair is anonymous, i.e. not tied to the sender’s 
 
 In case there are multiple recipients, the sender can use the same ephemeral key pair over a single CDOC container.
 
-The sender’s ephemeral key pair consists of a public and a secret key: 
-    
+The sender’s ephemeral key pair consists of a public and a secret key:
+
     (pkeph, skeph)
 
 The recipient holds their ID-card authentication key pair public key *pkrec* (assuming here that the recipient’s private key is not immediately accessible).
 
 This key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.
 
-#### KEK computation during encryption
+#### KEK computation during encryption (ECCPublicKeyCapsule)
 
 The shared ECDH secret is computed by the sender as follows:
 
@@ -115,19 +120,19 @@ KEK is computed from the shared secret as follows:
 
 *Loctets* defines the output length of the ``Expand`` function in bytes and is defined by the symmetric encryption algorithm used for FMK encryption.
 
-#### KEK computation during decryption
+#### KEK computation during decryption (ECCPublicKeyCapsule)
 
 The Estonian ID-card supports the use of an authentication key pair as one of the ECDH parties.
 This functionality can advantageously be used through the PKCS#11 ``C_DERIVEKEY`` function, employing the ``CKM_ECDH1_DERIVE`` mechanism.
 Key derivation can also be performed using the Windows ``NCryptSecretAgreement`` and ``NCryptDeriveKey`` encryption functions. ``NCryptSecretAgreement`` computes the *Secdh* and ``NCryptDeriveKey`` computes the *KEKpm*. ``NCryptDeriveKey`` parameters must be set as follows:
 
 - ``hSharedSecret`` – handle returned by ``NCryptSecretAgreement``.
--  ``pwszKDF`` – the constant BCRYPT_KDF_HMAC.
+- ``pwszKDF`` – the constant BCRYPT_KDF_HMAC.
 - ``pParameterList`` – algorithm parameters:
-    - ``KDF_HASH_ALGORITHM`` – the constant ``BCRYPT_SHA256_ALGORITHM``.
-    - ``KDF_HMAC_KEY`` – the constant ``CDOC20kekpremaster``.
-    - ``KDF_SECRET_PREPEND`` – parameter omitted.
-    - ``KDF_SECRET_APPEND`` – parameter omitted.
+  - ``KDF_HASH_ALGORITHM`` – the constant ``BCRYPT_SHA256_ALGORITHM``.
+  - ``KDF_HMAC_KEY`` – the constant ``CDOC20kekpremaster``.
+  - ``KDF_SECRET_PREPEND`` – parameter omitted.
+  - ``KDF_SECRET_APPEND`` – parameter omitted.
 
 All ID-cards used today should be able to validate elliptic curve points used as input in ECDH key derivation, but additional validation may be implemented in software supporting the CDOC format to provide more user-friendly error management.
 
@@ -153,13 +158,13 @@ The sender generates a random KEK and encrypts it using the recipient’s RSA pu
 The recipient’s public key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.
 
 #### Table 3. RSAPublicKeyCapsule elements
+
 Field | Contents |Encoding
 ----------- | ----------- | -----------
 RecipientPublicKey | RSA public key | Value: DER encoding of the ASN.1 structure *RSAPublicKey* (see [section A.1.1](https://www.rfc-editor.org/rfc/rfc8017))
 EncryptedKEK | KEK encrypted using recipient’s public key | XXX
 
-
-#### KEK computation during encryption
+#### KEK computation during encryption (RSAPublicKeyCapsule)
 
 The symmetric encryption algorithm used for the encryption of the FKM defines the KEK length *Loctets*. The sender generates a random number KEK with a length of *Loctets*.
 
@@ -168,10 +173,12 @@ For the encryption of the KEK, the sender uses the RSA-OAEP (see [section 7.1](h
     • ``maskGenAlgorithm`` – mask generation function used by the algorithm. We use the MGF1 function (``id-mgf1``), parametrized by the SHA-256 hash function.
     • ``pSourceAlgorithm`` – label source function. We use an empty label (``pSpecified Empty``).
 
-#### KEK computation during encryption
+#### KEK computation during decryption (RSAPublicKeyCapsule)
+
 The recipient decrypts the encrypted KEK using their private key and the same parameters as were used for encryption.
 
 ### KeyServerCapsule
+
 The key server described by the ``KeyServerCapsule`` structure (see [table 4](#table-4-keyservercapsule-elements)) returns the following structures which are handled as described in the referenced sections:
 
 - *ECCPublicKeyCapsule*: section [ECCPublicKeyCapsule](#eccpublickeycapsule).
@@ -180,24 +187,27 @@ The key server described by the ``KeyServerCapsule`` structure (see [table 4](#t
 The details of using *KeyServerCapsule* are described in section [Key server](ch04_key_server.md#key-server).
 
 ### SymmetricKeyCapsule
+
 *SymmetricKeyCapsule* (see [table 5](#table-5-symmetrickeycapsule-elements)) refers to a recipient identified by a key label.
 In this scheme, the sender and recipient are either the same person (use case: storage cryptography) or have previously exchanged a symmetric secret key outside the system (use case: transport cryptography).
 In both cases, both the sender and the recipient holds the same secret key, identified by a key label. The specification does not limit the selection of the label in any way.
 
 #### Table 4. KeyServerCapsule elements
-Field | Contents | Encoding 
+
+Field | Contents | Encoding
 ----------- | ----------- | -----------
-RecipientKey | Information on recipient key used by the recipient for authentication with the key server. | 
+RecipientKey | Information on recipient key used by the recipient for authentication with the key server. | -
 KeyServerID | Key server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](ch04_key_server.md#server-identification-and-trust).
 TransactionID | Transaction identifier | UTF-8 string assigned by the key server
 
 #### Table 5. SymmetricKeyCapsule elements
+
 Field | Contents | Encoding
 ----------- | ----------- | -----------
 Salt | Random number generated by the sender, used as input for the HKDF-Extract function in KEK derivation | Byte array
 
+#### KEK computation during encryption (SymmetricKeyCapsule)
 
-#### KEK computation during encryption
 The sender holds the symmetric key *sym* labelled *label*. The sender generates the random number *salt*. The purpose of this number is to ensure the generation of a new KEK even when reusing the key *sym*. Since no practical upper limit can be set for the reuse of the key, the length of *salt* is chosen with a significant margin, i.e. 256 bits.
 KEK is computed from the symmetric key and the generated random number as follows:
 
@@ -208,7 +218,8 @@ Where *algId* is the identifier of the encryption algorithm used for the encrypt
 
 *Loctets* defines the output length of the ``Expand`` function in bytes, determined by the symmetric encryption algorithm used for the encryption of the FMK.
 
-#### KEK computation during decryption
+#### KEK computation during decryption (SymmetricKeyCapsule)
+
 The recipient holds the symmetric key *sym* labelled *label*. The *Salt* field of the *SymmetricKeyCapsule* structure provides the random number *salt* generated by the sender.
 
 This information is used for computing the KEK just as described above with reference to encryption.
@@ -238,6 +249,7 @@ where *header* is the serialized header in the form it is added to the envelope.
 Validation of the message authentication code requires computing the HHK from the parsed header, then computing a message authentication code for the serialized header read from the container and comparing the computed code with the message authentication code read from the container – the two values must be identical.
 
 ## Payload assembly and encryption
+
 NOTE: The section below describes the encryption of the payload as a byte array. The assembly of encrypted files into a single byte array is described in section [Unencrypted payload](ch03_container_format.md#unencrypted-payload).
 
 For payload encryption, [ChaCha20-Poly1305 AEAD encryption](https://www.rfc-editor.org/info/rfc8439) is used with the following parameters:
