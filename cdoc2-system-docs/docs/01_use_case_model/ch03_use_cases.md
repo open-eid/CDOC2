@@ -2,13 +2,13 @@
 title: 3. Use Case Model
 ---
 
-# CDOC2 Client Application use cases
+# CDOC 2.0 Client Application use cases
 
-CDOC2 Client Application is an abstract component in the CDOC2 System. CDOC2 Client Applications help End-user to encrypt files to CDOC2 Container, decrypt received CDOC2 Containers. Specific examples of CDOC2 Client Applications include:
+CDOC 2.0 Client Application is an abstract component in the CDOC 2.0 System. CDOC 2.0 Client Applications help End-user to encrypt files to CDOC 2.0 Container, decrypt received CDOC 2.0 Containers. Specific examples of CDOC 2.0 Client Applications include:
 
 * DigiDoc4 desktop application for Windows, MacOS and Linux operating systems (<https://open-eid.github.io/#desktop-applications>, <https://www.id.ee/en/rubriik/digidoc4-client/>, <https://github.com/open-eid/DigiDoc4-Client>)
 * DigiDoc4 mobile application for Android and IOS operating systems (<https://open-eid.github.io/#mobile-applications>)
-* CDOC2 Client CLI Application
+* CDOC 2.0 Client CLI Application
 
 Use cases specified here are written in generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
 
@@ -17,24 +17,24 @@ Use cases specified here are written in generic form, so that they are applicabl
 ### Human actors
 
 **User**
-: Person, who is using CDOC2 Client Applications for sending encrypted files to somebody else (then as a Sender), or decrypting received CDOC2 Containers (then as a Recipient). In some use cases, the User may encrypt files with symmetric encryption key or password, store the CDOC2 Container for themselves and later decrypt the CDOC2 Container by themself.
+: Person, who is using CDOC 2.0 Client Applications for sending encrypted files to somebody else (then as a Sender), or decrypting received CDOC 2.0 Containers (then as a Recipient). In some use cases, the User may encrypt files with symmetric encryption key or password, store the CDOC 2.0 Container for themselves and later decrypt the CDOC 2.0 Container by themself.
 
 **Sender**
-: User, who wishes to send encrypted files, which are packaged into a CDOC2 Container, to one or multiple Receivers
+: User, who wishes to send encrypted files, which are packaged into a CDOC 2.0 Container, to one or multiple Receivers
 
 **Recipient**
-: User, who wishes to decrypt the received CDOC2 Container and has control over necessary cryptographic key material
+: User, who wishes to decrypt the received CDOC 2.0 Container and has control over necessary cryptographic key material
 
 **Administrator**
-: Person, who is managing CDOC2 Client Application for Users and is creating the configuration data for them 
+: Person, who is managing CDOC 2.0 Client Application for Users and is creating the configuration data for them 
 
 ### System components as actors
 
-**CDOC2 Client Application (Client)**
-: Desktop or mobile application, which encrypts or decrypts CDOC2 Containers and is used by Users
+**CDOC 2.0 Client Application (Client)**
+: Desktop or mobile application, which encrypts or decrypts CDOC 2.0 Containers and is used by Users
 
 **Key Capsule Transmission Server (KCTS)**
-: KCTS mediates CDOC2 Key Capsules (KC) between Sender and Recipient. Sender's Client can upload KC to one or multiple KCTS servers. Recipient's Client can download KC from KCTS server after authentication.
+: KCTS mediates CDOC 2.0 Key Capsules (KC) between Sender and Recipient. Sender's Client can upload KC to one or multiple KCTS servers. Recipient's Client can download KC from KCTS server after authentication.
 
 **LDAP-server**
 : An application used for storing private keys of persons.
@@ -43,9 +43,9 @@ Use cases specified here are written in generic form, so that they are applicabl
 
 ## Use cases for Recipients with hardware security tokens
 
-These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC2 Container itself with the encrypted payload, or with the help of KCTS server.
+These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC 2.0 Container itself with the encrypted payload, or with the help of KCTS server.
 
-### UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token
+### UC.Client.01 — Encrypt CDOC 2.0 container for sending to Recipient with a security token
 
 **Use Case Context**
 : CDOC 2.0 Client Application adds Sender's chosen files into the CDOC 2.0 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient.
@@ -67,7 +67,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 **Main Success Scenario**
 
-1. Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.
+1. Sender chooses files to be included in CDOC 2.0 container and specifies the target filename and path for CDOC 2.0 container.
 2. Sender enters identifiers for each Recipient.
 3. Client creates a content encryption key (CEK).
 4. Client creates a key capsule for each Recipient, encrypt for each Recipient a content encryption key and adds it to the corresponding key capsule.
@@ -95,16 +95,16 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case ends.
 
-5a. Configuration has no CDOC2 key capsule transmission servers:
+5a. Configuration has no CDOC 2.0 key capsule transmission servers:
 
 1. Client creates a container in the target path and adds a header with key capsules.
 2. Use case continues from step 11.
 
-5b. Configuration has a default CDOC2 key capsule transmission server:
+5b. Configuration has a default CDOC 2.0 key capsule transmission server:
 
 1. Use case continues from step 7.
 
-6a. Sender chooses to not use the CDOC2 key capsule transmission server:
+6a. Sender chooses to not use the CDOC 2.0 key capsule transmission server:
 
 1. Client creates a container in the target path and adds a header with key capsules.
 2. Use case continues from step 11.
@@ -119,12 +119,12 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case continues from step 5.
 
-9a. Forwarding key capsules to a CDOC2 key capsule transmission server fails:
+9a. Forwarding key capsules to a CDOC 2.0 key capsule transmission server fails:
 
 1. Client displays Sender a notification.
 2. Use case ends.
 
-9b. CDOC2 key capsule transmission server does not return a transaction identifier for each key capsule:
+9b. CDOC 2.0 key capsule transmission server does not return a transaction identifier for each key capsule:
 
 1. Client displays Sender a notification.
 2. Use case ends.
@@ -139,10 +139,10 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case ends.
 
-### UC.Client.02 — Decrypt CDOC2 Container with a security token
+### UC.Client.02 — Decrypt CDOC 2.0 Container with a security token
 
 **Use Case Context**
-: CDOC2 Client Application (Client) decrypts the archive in the CDOC 2 container provided by Receiver, using a key capsule from either Key Capsule Transmission Server or from inside the container.
+: CDOC 2.0 Client Application (Client) decrypts the archive in the CDOC 2 container provided by Receiver, using a key capsule from either Key Capsule Transmission Server or from inside the container.
 
 **Scope**
 CDOC 2.0 Client Application
@@ -158,11 +158,11 @@ CDOC 2.0 Client Application
 
 **Success Guarantees**
 
-* Files from the CDOC2 container are decrypted and saved into filesystem.
+* Files from the CDOC 2.0 container are decrypted and saved into filesystem.
 
 **Main Success Scenario**
 
-1. Sender chooses the CDOC2 Container to be decrypted and specifies the target filename and path for the files.
+1. Sender chooses the CDOC 2.0 Container to be decrypted and specifies the target filename and path for the files.
 2. Client verifies that the header does not exceed the size limit defined by the specification.
 3. Client reads Receiver certificate from the key device.
 4. Client verifies that the container has a record of the Receiver.
@@ -212,17 +212,17 @@ CDOC 2.0 Client Application
 
 ## Use cases for Recipients to be authenticated by KCTS
 
-These use cases can be used, when Sender cannot use Recipient's specific public key certificate (because they don't know it or because Recipient's authentication means doesn't support suitable CDOC2 encryption scheme). In this case, Sender uploads the KC to one or multiple KCTS-s. Recipient authenticates to multiple KCTS-s at once and downloads the KC.
+These use cases can be used, when Sender cannot use Recipient's specific public key certificate (because they don't know it or because Recipient's authentication means doesn't support suitable CDOC 2.0 encryption scheme). In this case, Sender uploads the KC to one or multiple KCTS-s. Recipient authenticates to multiple KCTS-s at once and downloads the KC.
 
 Additional use cases allow Sender to distribute KEK among multiple KCs according to some kind of secret-sharing scheme (<https://en.wikipedia.org/wiki/Secret_sharing>). Sender uploads each KC to different KCTS server. Recipient would need to authenticate to KCTS servers and download KCs and reconstruct KEK from them. With $(t,n)$-threshold secret-sharing schemes, Recipient doesn't need to download all $n$ KCs, in order to reconstruct KEK, but only $t$ KCs.
 
-### UC.Client.03 — Encrypt CDOC2 container using key shares
+### UC.Client.03 — Encrypt CDOC 2.0 container using key shares
 
 **Use Case Context**
 TODO!
 
 **Scope**
-: CDOC2 Client Application (Client)
+: CDOC 2.0 Client Application (Client)
 
 **Use Case Level**
 : User goal
@@ -263,17 +263,17 @@ Scheme:
     using HKDF extract algorithm
 5. Sender derives content encryption key (CEK) and HMAC key (HHK) from FMK using HKDF expand algorithm
 6. Sender encrypts FMK with KEK (xor) and gets encrypted_FMK
-7. Sender splits `secret` into `N` shares using Shamir Shared Secret Scheme. N is configuration option in CDOC2 client configuration.
+7. Sender splits `secret` into `N` shares using Shamir Shared Secret Scheme. N is configuration option in CDOC 2.0 client configuration.
    
     !!! info "TODO"
         SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
 
-8. Sender uploads each `secret share` and recipient `etsi_identifier` to each CDOC2 server
-    (each CDOC2 server will receive a different share).
-    CDOC2 servers are configured in client configuration.
+8. Sender uploads each `secret share` and recipient `etsi_identifier` to each CDOC 2.0 server
+    (each CDOC 2.0 server will receive a different share).
+    CDOC 2.0 servers are configured in client configuration.
     Sender gets `transactionID` for each share. [^1] FBS and OAS
 
-9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-schema/src/main/fbs/recipients.fbs#L70)
+9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC 2.0 header. [FBS](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-schema/src/main/fbs/recipients.fbs#L70)
 
     !!! info "TODO"
         _JK:In current FBS and OAS spec, instead of server:transactionId pair,
@@ -281,7 +281,7 @@ Scheme:
 
 10. Sender calculates header hmac using hmac key (HHK) and adds calculated hmac to CDoc
 11. Sender encrypts content with CEK (ChaCha20-Poly1305 with AAD)
-12. Sender sends CDOC2 document to Recipient
+12. Sender sends CDOC 2.0 document to Recipient
 
 ### UC.Client.04 — Decrypt CDOC 2.0 container using multi-server authentication
 
@@ -303,7 +303,7 @@ TODO!
     and signs it with Smart-ID RP-API v2 [/authentication](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session)
     endpoint. `hash` parameter is `SHA256(authentication_ticket)`.
 1. Recipient will create [authentication ticket](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#autentimispiletite-koostamine)
-    for each CDOC2 server and download matching secret share. CDOC2 server `GET /secret-share/${transactionId}` endpoint
+    for each CDOC 2.0 server and download matching secret share. CDOC 2.0 server `GET /secret-share/${transactionId}` endpoint
 1. Recipient combines 'secret' shares into full secret (symmetric key) using Shamir Shared Secret Scheme.
    
     !!! info "TODO"
@@ -313,12 +313,12 @@ TODO!
     from secret, key_label and salt using HKDF algorithm
 1. Recipient decrypts FMK using KEK.
 1. Recipient derives CEK and HHK from FMK using HKDF algorithm
-1. Recipient calculates hmac and checks it against hmac in CDOC2 header
+1. Recipient calculates hmac and checks it against hmac in CDOC 2.0 header
 1. Recipient decrypts content using CEK
 
 ## Use cases for password-based encryption
 
-These use cases are useful when End-user wishes to protect confidential files by encrypting them with CEK generated from regular password. End-user may then store CDOC2 Container for longer period, without worrying that hardware security token may not be usable, or public key certificate might be revoked or expired. CDOC2 Container may be later decrypted by Sender itself or Recipient, who knows the shared password.
+These use cases are useful when End-user wishes to protect confidential files by encrypting them with CEK generated from regular password. End-user may then store CDOC 2.0 Container for longer period, without worrying that hardware security token may not be usable, or public key certificate might be revoked or expired. CDOC 2.0 Container may be later decrypted by Sender itself or Recipient, who knows the shared password.
 
 This group of UCs also include a special use case, when Recipient re-encrypts the content from received Container with a password.
 
@@ -328,7 +328,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 : Encrypt local files for long-term storage using CDOC 2.0 Client Application and password-based cryptography by creating a new CDOC 2.0 Container. This use case is useful for occasions where decryption does not depend on availability of hardware tokens.
 
 **Scope**
-: CDOC2 Client Application (Client)
+: CDOC 2.0 Client Application (Client)
 
 **Use Case Level**
 : User goal
@@ -366,7 +366,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 : Encrypt local files for transmitting to another user using CDOC 2.0 Client Application (Client) and password-based cryptography by creating a new CDOC 2.0 Container. This use case is useful for sending encrypted messages to Receivers who do not have eID authentication means and for cases where decryption should not depend on availability of hardware tokens.
 
 **Scope**
-: CDOC2 Client Application (Client)
+: CDOC 2.0 Client Application (Client)
 
 **Use Case Level**
 : User goal
@@ -406,10 +406,10 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 ## UC.Client.P.03 — Decrypt CDOC 2.0 container with password
 
 **Use Case Context**
-: CDOC2 Client Application decrypts CDOC2 Container with password-based cryptography.
+: CDOC 2.0 Client Application decrypts CDOC 2.0 Container with password-based cryptography.
 
 **Scope**
-: CDOC2 Client Application (Client)
+: CDOC 2.0 Client Application (Client)
 
 **Use Case Level**
 : User goal
@@ -445,7 +445,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the user.
 2. Use case ends.
 
-## UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage
+## UC.Client.P.04 — Re-encrypt existing CDOC 2.0 container for long-term storage
 
 **Use Case Context**
 : CDOC 2.0 Client Application offers Receiver to re-encrypt all files after CDOC 2.0 container decryption and before extracting and saving files locally.
@@ -512,12 +512,12 @@ TODO!
 
 MERGE WITH <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm55854#cdoc-20-with-symmetric-key-from-password>
 
-# CDOC2 Key Transmission Server Use Case Model
+# CDOC 2.0 Key Transmission Server Use Case Model
 
 ## UC.KTS.01 Forward Key Capsule
 
 **Context of Use**
-: CDOC2 Client Application forwards Key Transmission Server a Receiver key capsule, which contains a content encryption key encrypted for a particular Receiver, which is used for decrypting the archive in CDOC 2.0 container. Key Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC 2.0 Client Application.
+: CDOC 2.0 Client Application forwards Key Transmission Server a Receiver key capsule, which contains a content encryption key encrypted for a particular Receiver, which is used for decrypting the archive in CDOC 2.0 container. Key Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC 2.0 Client Application.
 
 **Scope**
 Key Transmission Server (KS)
@@ -550,7 +550,7 @@ Key Transmission Server (KS)
 ## UC.KTS.02 Request Key Capsule
 
 **Context of Use**
-: CDOC2 Client Application requests a Key Capsule from Key Transmission Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC 2.0 container. Key Capsule is identified by public key in Receiver certificate and the transaction code provided by CDOC 2.0 Client Application.
+: CDOC 2.0 Client Application requests a Key Capsule from Key Transmission Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC 2.0 container. Key Capsule is identified by public key in Receiver certificate and the transaction code provided by CDOC 2.0 Client Application.
 
 **Scope**
 Key Transmission Server (KS)
@@ -628,7 +628,7 @@ Key Transmission Server (KS)
 ## UC.KTS.04 Authenticate Recipient
 
 **Context of Use**
-: CDOC2 Client Application (Client) establishes a TLS-connection to Key Transmission Server and forwards Receiver certificate.
+: CDOC 2.0 Client Application (Client) establishes a TLS-connection to Key Transmission Server and forwards Receiver certificate.
 
 **Scope**
 Key Transmission Server (KS)
