@@ -1,4 +1,5 @@
-<!--- This file contains acronyms, which will be highlighted and provided with a tooltip in the built HTML -->
+<!-- This file contains acronyms, which will be highlighted and provided with a tooltip in the built HTML -->
+<!-- markdownlint-disable first-line-heading -->
 
 *[CDOC]: Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem
 

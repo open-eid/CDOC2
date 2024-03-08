@@ -3,6 +3,8 @@
 This section presents the abstracted forms of all supported encryption methods, providing descriptions of messaging between the parties and the contents of exchanged messages. The purpose of the section is to familiarize the reader with the basic principles of various encryption schemes.
 In all scenarios, the sender (Alice, *A*) wants to send a message *M* to the recipient (Bob, *B*) in an encrypted form. They can achieve this either directly or by using a key server S (or servers *S1*, *S2*, … , *Sn*). The number of recipients may also be higher than one, in which case they will be designated as *B1*, *B2*, … ,*Bl*.
 
+<-- REVIEW: Proposal. Let's use UTF-8 subscripts, like S₁ and Sₙ. This way, output looks nicer and the source code is also readable? -->
+
 Alice uses symmetric encryption system ``Sym``, comprising the following components.
 
 The C_DERIVEKEY function takes the sender’s ephemeral public key pkeph and a reference to the corresponding ID-card key pair (pkrec, skrec) as inputs. The recipient computes:
