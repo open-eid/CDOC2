@@ -9,11 +9,11 @@ Alice uses symmetric encryption system ``Sym``, comprising the following compone
 
 The C_DERIVEKEY function takes the sender’s ephemeral public key pkeph and a reference to the corresponding ID-card key pair (pkrec, skrec) as inputs. The recipient computes:
 
-1. Key generation algorithm GenKey<sub>Sym</sub> – used for generating the secret key. See section [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
-2. Encryption algorithm $$Enc_{Sym}$$ – a function taking a key and an input (to be encrypted) as arguments and returning a cryptogram.
-3. Decryption algorithm $$ Dec_{Sym} $$ – a function taking a key and a cryptogram as arguments. If the function is called with the key used for encrypting the cryptogram as argument, it will return the original input. Otherwise it will return a random valid input.
+1. Key generation algorithm *GenKey<sub>Sym</sub>* – used for generating the secret key. See section [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
+2. Encryption algorithm *Enc<sub>Sym</sub>* – a function taking a key and an input (to be encrypted) as arguments and returning a cryptogram.
+3. Decryption algorithm *Dec<sub>Sym</sub>* – a function taking a key and a cryptogram as arguments. If the function is called with the key used for encrypting the cryptogram as argument, it will return the original input. Otherwise it will return a random valid input.
 
-The keys are generated using HKDF (extract, then expand). In the extract phase, a file master key (*FMK*) is generated using the function ``GenKeyExtractSym`` that is then used for deriving the content encryption key (*CEK*) in the expand phase. The *CEK* is used as the secret key in symmetric encryption. Symmetric encryption and decryption utilize the ChaCha20-Poly1305 algorithm. For more details, see sections [Key derivation](ch05_cryptographic_details.md#key-derivationn) and [Payload assembly and encryption](ch05_cryptographic_details.md#payload-assembly-and-encryption).
+The keys are generated using HKDF (extract, then expand). In the extract phase, a file master key (*FMK*) is generated using the function *GenKeyExtract<sub>Sym</sub>* that is then used for deriving the content encryption key (*CEK*) in the expand phase using the function *GenKeyExpand<sub>Sym</sub>*. The *CEK* is used as the secret key in symmetric encryption. Symmetric encryption and decryption utilize the ChaCha20-Poly1305 algorithm. For more details, see sections [Key derivation](ch05_cryptographic_details.md#key-derivationn) and [Payload assembly and encryption](ch05_cryptographic_details.md#payload-assembly-and-encryption).
 
 Alice generates a separate master key for each recipient, using a recipient-specific key encryption key (*KEK*).
 The scenarios described in the following sections differ by the methods used for generating the *KEK* and transmitting the key capsules containing the encrypted master key *FMK* to the recipients.
@@ -61,26 +61,28 @@ The scenarios described in the following sections differ by the methods used for
 ## Direct key agreement-based ECDH
 
 This method can be used for transmitting encrypted messages to recipients holding the relevant ECC private key.
-Alice protects message secrecy using a key encapsulation mechanism (*KEM*) consisting of the algorithms ``EncapsKEM`` and ``DecapsKEM``.
+
+Alice protects message secrecy using a key encapsulation mechanism (*KEM*) consisting of the algorithms *Encaps<sub>KEM</sub>* and *Decaps<sub>KEM</sub>*.
+
 Prior to the encapsulation, Alice receives the recipient’s public key in the form of a an elliptic curve point. Alice and the recipient then run the ECDH key establishment protocol.
 
-The encapsulation function ``EncapsKEM`` takes a key capsule and the recipient’s public key as inputs and returns a key and a capsule. The key is the key encryption key (KEK), derived as per section [ECCPublicKeyCapsule](ch05_cryptographic_details.md#eccpublickeycapsule); in the ECDH implementation, the capsule *caps* is Alice’s ephemeral public key.
+The encapsulation function *Encaps<sub>KEM</sub>* takes a key capsule and the recipient’s public key as inputs and returns a key and a capsule. The key is the key encryption key (KEK), derived as per section [ECCPublicKeyCapsule](ch05_cryptographic_details.md#eccpublickeycapsule); in the ECDH implementation, the capsule *caps* is Alice’s ephemeral public key.
 
-The decapsulation function ``DecapsKEM`` takes a key capsule and the recipient’s secret key as inputs, verifies that the transmitted elliptic curve point is valid, runs the counterparty activities of the ECDH key establishment protocol, and derives the KEK. For more details, see subsection [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
+The decapsulation function *Decaps<sub>KEM</sub>* takes a key capsule and the recipient’s secret key as inputs, verifies that the transmitted elliptic curve point is valid, runs the counterparty activities of the ECDH key establishment protocol, and derives the KEK. For more details, see subsection [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
 
 Direct key agreement-based ECDH:
 
-1. *A : fmk ← GenKeyExtractSym(Nonss)*
-2. *A : cek ← GenKeyExpandSym(fmk)*
-3. *A : c ← EncSym(cek, M)*
-4. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
-5. *A : (keki, capsi) ← EncapsKEM(PKi) (i = 1, 2, . . . , ℓ)*
-6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
-7. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
-8. *Bi : keki ← DecapsKEM(capsi, SKi)*
-9. *Bi : fmk ← XOR(keki, cki)*
-10. *Bi : cek ← GenKeyExpandSym(fmk)*
-11. *Bi : M ← DecSym(cek, c)*
+1. *A : fmk ← GenKeyExtract<sub>Sym</sub>(N<sub>onss</sub>)*
+2. *A : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+3. *A : c ← Enc<sub>Sym</sub>(cek, M)*
+4. *A* receives the public keys *PK<sub>1</sub>, PK<sub>2</sub>, . . . , PK<sub>l</sub>* of recipients *B<sub>1</sub>, B<sub>2</sub>, . . . , B<sub>l</sub>*; recipients hold corresponding secret keys *SK<sub>1</sub>, SK<sub>2</sub>, . . . , SK<sub>l</sub>*
+5. *A : (kek<sub>i</sub>, caps<sub>i</sub>) ← Encaps<sub>KEM</sub>(PK<sub>i</sub>) (i = 1, 2, . . . , ℓ)*
+6. *A : ck<sub>i</sub> ← XOR(kek<sub>i</sub>, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → B<sub>i</sub> : c, ck<sub>i</sub>, caps<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+8. *B<sub>i</sub> : kek<sub>i</sub> ← Decaps<sub>KEM</sub>(caps<sub>i</sub>, SK<sub>i</sub>)*
+9. *B<sub>i</sub> : fmk ← XOR(kek<sub>i</sub>, ck<sub>i</sub>)*
+10. *B<sub>i</sub> : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+11. *B<sub>i</sub> : M ← Dec<sub>Sym</sub>(cek, c)*
 
 ## Key server-based ECDH
 
@@ -88,77 +90,77 @@ In this method, Alice also protects message secrecy using ECDH key encapsulation
 
 Key-server based ECDH:
 
-1. *A : fmk ← GenKeyExtractSym(Nonss)*
-2. *A : cek ← GenKeyExpandSym(fmk)*
-3. *A : c ← EncSym(cek, M)*
-4. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
-5. *A : (keki, capsi) ← EncapsKEM(PKi) (i = 1, 2, . . . , ℓ)*
-6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
-7. *A → Bi : c, cki (i = 1, 2, . . . , ℓ)*
-8. *A → S : capsi (i = 1, 2, . . . , ℓ)*
-9. *Bi → S : Auth3*
-10. *S → Bi : capsi*
-11. *Bi : keki ← DecapsKEM(capsi, SKi)*
-12. *Bi : fmk ← XOR(keki, cki)*
-13. *Bi : cek ← GenKeyExpandSym(fmk)*
-14. *Bi : M ← DecSym(cek, c)*
+1. *A : fmk ← GenKeyExtract<sub>Sym</sub>(Nonss)*
+2. *A : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+3. *A : c ← Enc<sub>Sym</sub>(cek, M)*
+4. *A* receives the public keys *PK<sub>1</sub>, PK<sub>2</sub>, . . . , PK<sub>l</sub>* of recipients *B<sub>1</sub>, B<sub>2</sub>, . . . , B<sub>l</sub>*; recipients hold corresponding secret keys *SK<sub>1</sub>, SK<sub>2</sub>, . . . , SK<sub>l</sub>*
+5. *A : (kek<sub>i</sub>, caps<sub>i</sub>) ← Encaps<sub>KEM</sub>(PK<sub>i</sub>) (i = 1, 2, . . . , ℓ)*
+6. *A : ck<sub>i</sub> ← XOR(kek<sub>i</sub>, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → B : c, ck<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+8. *A → S : caps<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+9. *B<sub>i</sub> → S : Auth3*
+10. *S → B<sub>i</sub> : caps<sub>i</sub>*
+11. *B<sub>i</sub> : kek<sub>i</sub> ← Decaps<sub>KEM</sub>(caps<sub>i</sub>, SK<sub>i</sub>)*
+12. *B<sub>i</sub> : fmk ← XOR(kek<sub>i</sub>, ck<sub>i</sub>)*
+13. *B<sub>i</sub> : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+14. *B<sub>i</sub> : M ← Dec<sub>Sym</sub>(cek, c)*
 
 ## Direct key agreement-based RSA-OAEP
 
 This method can be used for transmitting encrypted messages to recipients holding an RSA private key.
-Alice wishes to protect message secrecy using an RSA-OAEP scheme comprising the encryption algorithm ``EncrRSA`` and the decryption algorithm ``DecRSA``.
+Alice wishes to protect message secrecy using an RSA-OAEP scheme comprising the encryption algorithm *Encr<sub>RSA</sub>* and the decryption algorithm *Dec<sub>RSA</sub>*.
 To ensure the secrecy of the key encryption key, the sender encrypts the KEK using the recipient’s public key. The key capsule comprises the resulting cryptogram that the recipient can decrypt using their private key.
 
-1. *A : fmk ← GenKeyExtractSym(Nonss)*
-2. *A : cek ← GenKeyExpandSym(fmk)*
-3. *A : c ← EncSym(cek, M)*
-4. *A : keki ← GenKeySym (i = 1, 2, . . . , ℓ)*
-5. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
-6. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
-7. *A : capsi ← EncRSA(PKi, keki) (i = 1, 2, . . . , ℓ)*
-8. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
-9. *Bi : keki ← DecRSA(SKi, capsi)*
-10. *Bi : fmk ← XOR(keki, cki)*
-11. *Bi : cek ← GenKeyExpandSym(fmk)*
-12. *Bi : M ← DecSym(cek, c)*
+1. *A : fmk ← GenKeyExtract<sub>Sym</sub>(Nonss)*
+2. *A : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+3. *A : c ← Enc<sub>Sym</sub>(cek, M)*
+4. *A : kek<sub>i</sub> ← GenKey<sub>Sym</sub> (i = 1, 2, . . . , ℓ)*
+5. *A : ck<sub>i</sub> ← XOR(kek<sub>i</sub>, fmk) (i = 1, 2, . . . , ℓ)*
+6. *A* receives the public keys *PK<sub>1</sub>, PK<sub>2</sub>, . . . , PK<sub>l</sub>* of recipients *B<sub>1</sub>, B<sub>2</sub>, . . . , B<sub>l</sub>*; recipients hold corresponding secret keys *SK<sub>1</sub>, SK<sub>2</sub>, . . . , SK<sub>l</sub>*
+7. *A : caps<sub>i</sub> ← Enc<sub>RSA</sub>(PK<sub>i</sub>, kek<sub>i</sub>) (i = 1, 2, . . . , ℓ)*
+8. *A → B<sub>i</sub> : c, ck<sub>i</sub>, caps<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+9. *B<sub>i</sub> : kek<sub>i</sub> ← Dec<sub>RSA</sub>(SK<sub>i</sub>, caps<sub>i</sub>)*
+10. *B<sub>i</sub> : fmk ← XOR(kek<sub>i</sub>, ck<sub>i</sub>)*
+11. *B<sub>i</sub> : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+12. *B<sub>i</sub> : M ← Dec<sub>Sym</sub>(cek, c)*
 
 ## Key server-based RSA-OAEP
 
 Identical to the previous method, except the sender transmits the key capsule to the recipient via a key server.
 
-1. *A : fmk ← GenKeyExtractSym(Nonss)*
-2. *A : cek ← GenKeyExpandSym(fmk)*
-3. *A : c ← EncSym(cek, M)*
-4. *A : keki ← GenKeySym (i = 1, 2, . . . , ℓ)*
-5. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
-6. *A → Bi : c, cki (i = 1, 2, . . . , ℓ)*
-7. *A* receives the public keys *PK1, PK2, . . . , PKℓ* of recipients *B1, B2, . . . , Bℓ*; recipients hold corresponding secret keys *SK1, SK2, . . . , SKℓ*
-8. *A : capsi ← EncRSA(PKi, keki) (i = 1, 2, . . . , ℓ)*
-9. *A → S : capsi (i = 1, 2, . . . , ℓ)*
-10. *Bi → S : Auth*
-11. *S → Bi : capsi*
-12. *Bi : keki ← DecRSA(SKi, capsi)*
-13. *Bi : fmk ← XOR(keki, cki)*
-14. *Bi : cek ← GenKeyExpandSym(fmk)*
-15. *Bi : M ← DecSym(cek, c)*
+1. *A : fmk ← GenKeyExtract<sub>Sym</sub>(Nonss)*
+2. *A : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+3. *A : c ← Enc<sub>Sym</sub>(cek, M)*
+4. *A : kek<sub>i</sub> ← GenKey<sub>Sym</sub> (i = 1, 2, . . . , ℓ)*
+5. *A : ck<sub>i</sub> ← XOR(kek<sub>i</sub>, fmk) (i = 1, 2, . . . , ℓ)*
+6. *A → B<sub>i</sub> : c, ck<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+7. *A* receives the public keys *PK<sub>1</sub>, PK<sub>2</sub>, . . . , PK<sub>l</sub>* of recipients *B<sub>1</sub>, B<sub>2</sub>, . . . , B<sub>l</sub>*; recipients hold corresponding secret keys *SK<sub>1</sub>, SK<sub>2</sub>, . . . , SK<sub>l</sub>*
+8. *A : caps<sub>i</sub> ← Enc<sub>RSA</sub>(PK<sub>i</sub>, kek<sub>i</sub>) (i = 1, 2, . . . , ℓ)*
+9. *A → S : caps<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+10. *B<sub>i</sub> → S : Auth*
+11. *S → B<sub>i</sub> : caps<sub>i</sub>*
+12. *B<sub>i</sub> : kek<sub>i</sub> ← Dec<sub>RSA</sub>(SKi, caps<sub>i</sub>)*
+13. *B<sub>i</sub> : fmk ← XOR(kek<sub>i</sub>, ck<sub>i</sub>)*
+14. *B<sub>i</sub> : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+15. *B<sub>i</sub> : M ← Dec<sub>Sym</sub>(cek, c)*
 
 ## Symmetric key-based method
 
-For the protection of message secrecy, Alice uses a key derivation mechanism comprising the algorithms ``EncapsHKDF`` and ``DecapsHKDF`` . Prior to encapsulation, Alice knows the recipient’s symmetric secret key and the label of this key (agreed by the sender and recipient; the label helps identify different keys). The encapsulation function ``EncapsHKDF`` takes the recipient’s symmetric secret key and its label as inputs and returns a key and a capsule. The key is the key encryption key KEK, derived as per section [SymmetricKeyCapsule](ch05_cryptographic_details.md#symmetrickeycapsule), and the capsule *caps* is a data structure containing a decryption key label and the random number used for the derivation of the key. The decapsulation function ``DecapsHKDF`` takes the recipient’s symmetric public key, its label, and a key capsule as inputs. In case the inputs are valid, the function derives the KEK. For more details, see subsection [KEK computation during decryption](ch05_cryptographic_details.md#kek-computation-during-decryption).
+For the protection of message secrecy, Alice uses a key derivation mechanism comprising the algorithms *Encaps<sub>HKDF</sub>* and *Decaps<sub>HKDF</sub>* . Prior to encapsulation, Alice knows the recipient’s symmetr<sub>i</sub>c secret key and the label of this key (agreed by the sender and recipient; the label helps identify different keys). The encapsulation function *Encaps<sub>HKDF</sub>* takes the recipient’s symmetric secret key and its label as inputs and returns a key and a capsule. The key is the key encryption key KEK, derived as per section [SymmetricKeyCapsule](ch05_cryptographic_details.md#symmetrickeycapsule), and the capsule *caps* is a data structure containing a decryption key label and the random number used for the derivation of the key. The decapsulation function *Decaps<sub>HKDF</sub>* takes the recipient’s symmetric public key, its label, and a key capsule as inputs. In case the inputs are valid, the function derives the KEK. For more details, see subsection [KEK computation during decryption](ch05_cryptographic_details.md#kek-computation-during-decryption).
 
 Symmetric key-based method:
 
-1. *A : fmk ← GenKeyExtractSym(Nonss)*
-2. *A : cek ← GenKeyExpandSym(fmk)*
-3. *A : c ← EncSym(cek, M)*
-4. *A* holds the symmetric keys *S1, S2, . . . , Sℓ* labelled *L1, L2, . . . , Lℓ*
-5. *A : (keki, capsi) ← EncapsHKDF (Si, Li) (i = 1, 2, . . . , ℓ)*
-6. *A : cki ← XOR(keki, fmk) (i = 1, 2, . . . , ℓ)*
-7. *A → Bi : c, cki, capsi (i = 1, 2, . . . , ℓ)*
-8. *Bi : keki ← DecapsHKDF (capsi, Si)*
-9. *Bi : fmk ← XOR(keki, cki)*
-10. *Bi : cek ← GenKeyExpandSym(fmk)*
-11. *Bi : M ← DecSym(cek, c)*
+1. *A : fmk ← GenKeyExtract<sub>Sym</sub>(Nonss)*
+2. *A : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+3. *A : c ← Enc<sub>Sym</sub>(cek, M)*
+4. *A* holds the symmetric keys *S<sub>1</sub>, S<sub>2</sub>, . . . , S<sub>l</sub>* labelled *L1, L2, . . . , Lℓ*
+5. *A : (kek<sub>i</sub>, caps<sub>i</sub>) ← Encaps<sub>HKDF</sub> (Si, Li) (i = 1, 2, . . . , ℓ)*
+6. *A : ck<sub>i</sub> ← XOR(kek<sub>i</sub>, fmk) (i = 1, 2, . . . , ℓ)*
+7. *A → B<sub>i</sub> : c, ck<sub>i</sub>, caps<sub>i</sub> (i = 1, 2, . . . , ℓ)*
+8. *B<sub>i</sub> : kek<sub>i</sub> ← Decaps<sub>HKDF</sub> (caps<sub>i</sub>, S<sub>i</sub>)*
+9. *B<sub>i</sub> : fmk ← XOR(kek<sub>i</sub>, ck<sub>i</sub>)*
+10. *B<sub>i</sub> : cek ← GenKeyExpand<sub>Sym</sub>(fmk)*
+11. *B<sub>i</sub> : M ← Dec<sub>Sym</sub>(cek, c)*
 
 ## Security assumptions
 

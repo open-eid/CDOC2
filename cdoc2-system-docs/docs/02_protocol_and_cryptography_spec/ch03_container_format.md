@@ -143,7 +143,7 @@ The envelope consists of the following data elements, presented sequentially as 
 
 - 4 bytes: the string “CDOC” – format designator (prelude), UTF-8 encoded.
 - 1 byte: version identifier, set as 2 in the specification.
-- 4 bytes: length of the following header, big-endian order. Header length is a 32-bit signed integer, i.e. the maximum header size is 2 GB. For the sake of the simplicity of implementation, header size is limited to 1 MB (220 B in base 2).
+- 4 bytes: length of the following header, big-endian order. Header length is a 32-bit signed integer, i.e. the maximum header size is 2 GB. For the sake of the simplicity of implementation, header size is limited to 1 MB (2<sup>20</sup> bytes).
 - x bytes, where x is as defined above: serialized FlatBuffers header.
 - 32 bytes: header message authentication code (see section 6.5).
 - The rest of the bytes, until the end of the envelope: payload encrypted using the method and key specified in the header.
