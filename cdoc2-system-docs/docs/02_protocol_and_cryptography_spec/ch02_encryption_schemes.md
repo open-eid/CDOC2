@@ -9,9 +9,9 @@ Alice uses symmetric encryption system ``Sym``, comprising the following compone
 
 The C_DERIVEKEY function takes the sender’s ephemeral public key pkeph and a reference to the corresponding ID-card key pair (pkrec, skrec) as inputs. The recipient computes:
 
-1. Key generation algorithm ``GenKeySym`` – used for generating the secret key. See section [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
-2. Encryption algorithm ``EncSym`` – a function taking a key and an input (to be encrypted) as arguments and returning a cryptogram.
-3. Decryption algorithm ``DecSym`` – a function taking a key and a cryptogram as arguments. If the function is called with the key used for encrypting the cryptogram as argument, it will return the original input. Otherwise it will return a random valid input.
+1. Key generation algorithm GenKey<sub>Sym</sub> – used for generating the secret key. See section [KEK computation during encryption](ch05_cryptographic_details.md#kek-computation-during-encryption).
+2. Encryption algorithm $$Enc_{Sym}$$ – a function taking a key and an input (to be encrypted) as arguments and returning a cryptogram.
+3. Decryption algorithm $$ Dec_{Sym} $$ – a function taking a key and a cryptogram as arguments. If the function is called with the key used for encrypting the cryptogram as argument, it will return the original input. Otherwise it will return a random valid input.
 
 The keys are generated using HKDF (extract, then expand). In the extract phase, a file master key (*FMK*) is generated using the function ``GenKeyExtractSym`` that is then used for deriving the content encryption key (*CEK*) in the expand phase. The *CEK* is used as the secret key in symmetric encryption. Symmetric encryption and decryption utilize the ChaCha20-Poly1305 algorithm. For more details, see sections [Key derivation](ch05_cryptographic_details.md#key-derivationn) and [Payload assembly and encryption](ch05_cryptographic_details.md#payload-assembly-and-encryption).
 
