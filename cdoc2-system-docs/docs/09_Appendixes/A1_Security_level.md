@@ -36,7 +36,7 @@ Taking into account the NIST recommendation and based on tests on general purpos
 
 When we consider brute-force exhaustive password search attack against CDOC2 Container, we have to somehow model the capabilities of the attacker. It is especially difficult, because we have to consider a long crypto-period. Attacker may store the captured CDOC2 Container and launch the attack after powerful computers have emerged, or execute the attack for longer period of time, like multiple years.
 
-"Bovine RC5 effort" (<https://www.distributed.net/RC5>) is one of the examples of highly parallel exhaustive key searches performed in 2002. They were able to find 64-bit encryption key for RC5 ciphertext within 1,757 days ($\approx 1.5 \cdot 10^8$ seconds), by using computers of 331,252 individuals. Massive parallel exhaustive search is therefore certainly within capabilities of attackers.
+"Bovine RC5 effort" (<https://www.distributed.net/RC5>) is one of the examples of highly parallel exhaustive key searches performed in 2002. They were able to find 64-bit encryption key for RC5 ciphertext within 1,757 days, by using computers of 331,252 individuals. Massive parallel exhaustive search is therefore certainly within capabilities of attackers.
 
 There are no guidelines for estimating, how many CPU cores an attacker might be able to use. We could use an estimate for the upper bound, by taking the number of CPU cores in the world. ARM company has estimated that all their partners combined, have shipped more than 25 billion ($\approx 2.5 \cdot 10^{10}$) chips in year 2020 (<https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results>). We could assume that all of those chips are controlled by single attacker and all of those chips are capable of doing a PBKDF2 operation with $1*10^7$ iterations in one second. Then we could have our upper bound for a very powerful attacker, which is $\approx 7.8 \cdot 10^{17}$ password tries per year.
 
@@ -46,7 +46,7 @@ TODO: Another way to validate this upper bound, is to compare this with bitcoin 
 
 One example of practical passwords, which are considered secure, are Apple's "Automatic strong passwords" (<https://support.apple.com/en-gb/guide/security/secc84c811c4/web>). They are 20 characters long, contain one digit, one uppercase, two hyphens and 16 lowercase characters. Such generated passwords contain 71 bits of entropy.
 
-If CDOC2 system would enforce using similar passwords and would use PBKDF2 with $1 \cdot 10^7$ iterations, it would mean that our hypothetical attacker could try out all combinations ($ 2^{71} \approx 2.3 \cdot 10^{21} $) within
+If CDOC2 system would enforce using similar passwords and would use PBKDF2 with $1 \cdot 10^7$ iterations, it would mean that our hypothetical attacker could try out all combinations ( $2^{71} \approx 2.3 \cdot 10^{21}$ ) within
 
 $$ \frac{2.3 \cdot 10^{21}}{7.8 \cdot 10^{17}} \approx 3000 $$
 
