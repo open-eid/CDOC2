@@ -114,6 +114,7 @@ i.e. the shared secret is the elliptic curve x-coordinate computed in this manne
 KEK is computed from the shared secret as follows:
 
 $$ KEK_{pm} ← Extract(”CDOC20kekpremaster”, S_{ecdh}) $$
+
 $$ KEK ← Expand(KEK_{pm}, ”CDOC20kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{<sub>octets</sub>}) $$
 
 *algId* is the identifier of the cryptographic algorithm used for the encryption of the FMK defined as a string corresponding to the field *Recipient.FMKEncryptionMethod* (section [FMK encryption and decryption](#fmk-encryption-and-decryption)).
@@ -214,6 +215,7 @@ The sender holds the symmetric key *sym* labelled *label*. The sender generates 
 KEK is computed from the symmetric key and the generated random number as follows:
 
 $$ KEK_{pm} \leftarrow Extract(salt, sym) $$
+
 $$ KEK     \leftarrow Expand(KEK_{pm}, "CDOC20kek" \parallel algId \parallel label, L_{octets})
 $$
 
