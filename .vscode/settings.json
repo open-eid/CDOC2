@@ -6,7 +6,8 @@
         "CSRNG",
         "DigiDoc4",
         "ECDH",
-        "HKDF"
+        "HKDF",
+        "HMAC"
     ],
     "markdown.extension.orderedList.autoRenumber": false
 }
