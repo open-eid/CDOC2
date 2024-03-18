@@ -21,7 +21,7 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 * `C` - Ciphertext (encrypted message M)
 * `FMK` - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
 * `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
-* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the CEK, so that CEK could be transmitted inside CDOC2 Capsule (CKC).
+* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).
 * Index `i` is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, `KEK_i`.
 
 ## Standard cryptographic functions
