@@ -15,7 +15,7 @@ The basic principles outlined below will provide the user of this specification 
 - The abstracted format consists of a header and an encrypted payload.
 - The abstracted format contains a single encrypted payload consisting of one or several encrypted files. File information, as well as the sizes and sequence of the files, in case there is more than one file, is also encrypted.
 - The payload is encrypted using a single symmetric key (Content Encryption Key; CEK), using AEAD (Authenticated Encryption with Additional Data) encryption.
-- The CEK is derived from the CDOC file master key (File Master Key; FMK). See section [Key derivation](ch05_cryptographic_details#key-derivation).
+- The CEK is derived from the CDOC file master key (File Master Key; FMK). See section [Key derivation](ch05_cryptographic_details.md#key-derivation).
 - The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per recipient. On KEK generation see section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation).
 - The header describes the protection of the FMK (i.e. how the recipients can acquire the KEK required for decrypting the FMK).
 - Header integrity is ensured using a message authentication code computed using the message authentication key derived from the FMK (Header HMAC Key; HHK). See section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code).
