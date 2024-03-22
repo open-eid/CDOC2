@@ -58,7 +58,7 @@ Some password managers also offer separate CLI application, which could be invok
 
 | Password Manager           | CLI application name| References                           |
 | -------------------------- | ------------------- | ------------------------------------ |
-| Windows Credential Manager | no official options | |
+| Windows Credential Manager | `cmdkey.exe`<br>`vaultcmd.exe` | [Windows Server manual page for `cmdkey`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmdkey) <br> [Hacker recipes - Windows Credential Manager](https://www.thehacker.recipes/a-d/movement/credentials/dumping/windows-credential-manager)|
 | MacOS/IOS KeyChain         | `security`          | [Blog post with examples](https://blog.koehntopp.info/2017/01/26/command-line-access-to-the-mac-keychain.html), <br>[man page for `security`](https://www.unix.com/man-page/osx/1/security/) |
 | Google Password Manager    | no official options | |
 | Mozilla Password Manager   | no official options | |
