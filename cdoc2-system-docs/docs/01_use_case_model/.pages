@@ -1,4 +1,4 @@
 title: Use Case Model
 nav:
-    - 'Business Cases': ch02_business_cases.md
-    - 'Use Cases': ch03_use_cases.md
+    - 'Use Cases (Phase 1)': ch03_use_cases.md
+    - 'Use Cases (SID, MID)': SID_MID_use_cases.md
