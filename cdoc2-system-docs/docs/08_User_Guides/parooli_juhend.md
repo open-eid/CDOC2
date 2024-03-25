@@ -32,14 +32,14 @@ Kui tugev parool on loodud, jätka failide krüpteerimist. Järgi neid samme:
 1. Vali fail(id), mida soovid krüpteerida.
 2. Vali parooliga krüpteerimise võimalus.
 3. Sulle palutakse sisestada parool. Sisesta tugev parool, mille oled loonud.
-4. Järgi täiendavaid ekraanil kuvatavaid juhiseid krüptimisprotsessi lõpuleviimiseks.
+4. Järgi täiendavaid ekraanil kuvatavaid juhiseid krüpteerimisprotsessi lõpuleviimiseks.
 
 **Samm 4: Kaitse oma parooli**
 
 Sinu krüpteeritud failid on nüüd kaitstud tugeva parooliga. Siiski on oluline kaitsta ka parooli ennast. Siin on mõned näpunäited:
 
 - **Kasuta paroolihaldurit**: Kui kasutasid paroolihaldurit parooli genereerimiseks, veendu, et ka paroolihaldur ise oleks kaitstud tugeva põhiparooliga.
-- **Kirjuta parool üles**: Väldi kirjaliku parooli salvestamist kergesti ligipääsetavasse kohta.
+- **Kirjuta parool üles**: Ära jäta üleskirjutatud parooli laokile.
 - **Ära jaga kunagi**: Ära jaga oma parooli kellegagi, välja arvatud juhul, kui see on absoluutselt vajalik.
 
 Nende juhiste järgimisega saad oma failid krüpteerida tugeva parooliga, suurendades seeläbi oma elektrooniliselt salvestatud andmete turvalisust ja muutes need sobivaks pikaajaliseks hoiustamiseks.
