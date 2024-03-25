@@ -1,6 +1,7 @@
 ---
 title: 3. CDOC2 encryption schemes
 ---
+<!-- markdownlint-disable no-duplicate-heading -->
 
 # CDOC2 encryption schemes
 
@@ -20,7 +21,7 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 * `C` - Ciphertext (encrypted message M)
 * `FMK` - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
 * `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
-* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the CEK, so that CEK could be transmitted inside CDOC2 Capsule (CKC).
+* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).
 * Index `i` is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, `KEK_i`.
 
 ## Standard cryptographic functions
@@ -44,12 +45,11 @@ In general, CDOC2 system implements encryption of payload of CDOC2 Container wit
 3. FMK is encrypted (wrapped) with a recipient-specific key encryption key (KEK) and added to the CDOC2 Container. It now depends on the capabilities of the Recipient, how this KEK is made available to Recipient, so that they could decrypt the encrypted FMK and in turn, the whole Container. For example, some Recipients may be able to use eID means, which are capable of Diffie-Hellman key exchange, some may be able to use authentication-only eID means and some may only be able to use pre-shared password.
 4. Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "key capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, capsule transmission server(s) could be used.
 
-*TODO: Possible place for explanationary diagram?*
+*TODO: Possible place for explanatory diagram?*
 
 <!--- no good place for this text: 
 
 ## Key Capsule
-
 
 In summary, the `Capsule_i` could be such Capsule, which contains all necessary information locally,
 
