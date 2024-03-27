@@ -92,25 +92,26 @@ It's not know, if any FIDO2 tokens on the market support these extensions. They 
 
 This extension is used by the platform to retrieve a symmetric secret from the authenticator when it needs to encrypt or decrypt data using that symmetric secret (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#sctn-hmac-secret-extension>), which sounds like perfect functionality to be used by CDOC2 Client Application.
 
-In order to create a FIDO2 credential, which has associated secret value:
+In order to create a FIDO2 credential, which can be used to derive a CDOC2 Container symmetric encryption key, following steps should be done:
 
 1. Computer chooses user validation protocol (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#authenticatorClientPIN>), which is based on user's PIN code, or on-device user verification method like fingerprint or input UI with secure communication
 2. Computer sends `authenticatorClientPIN (0x06)` command with parameters `pinUvAuthProtocol` and `getKeyAgreement(0x02)` and establishes a shared secret with the authenticator.
 3. Computer sends `authenticatorMakeCredential (0x01)` command with parameters `"hmac-secret": true`
 4. Authenticator creates two random 32-byte values (called `CredRandomWithUV` and `CredRandomWithoutUV`) and associates them with the credential and responds with parameters `"hmac-secret": true`.
 
-In order to retrieve the `CredRandomWithUV`, the computer needs to do following:
+In order to retrieve the key material, the computer should do following steps:
 
-1. Computer chooses user validation protocol (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#authenticatorClientPIN>), which is based on user's PIN code, or on-device user verification method like fingerprint or input UI with secure communication
+1. Computer chooses user validation protocol.
 2. Computer sends `authenticatorClientPIN (0x06)` command with parameters `pinUvAuthProtocol` and `getKeyAgreement(0x02)` and establishes a shared secret with the authenticator.
-3. Computer sends `authenticatorGetAssertion (0x02)` command with extension map `hmac-secret` and parameters `salt1` and `salt2` (optional).
-4. Authenticator verifies the command parameters and responds with `output1=HMAC-SHA-256(CredRandomWithUV, salt1)` and `output2=HMAC-SHA-256(CredRandom, salt2)` and returns `output1` and `output2` if there was `salt2` as the argument.
+3. Computer sends `authenticatorGetAssertion (0x02)` command with extension map `hmac-secret` and parameters `salt1` and `salt2` (optional), using the shared secret established in the previous step.
+4. Authenticator verifies the command parameters, chooses `CredRandom=CredRandomWithUV` and responds with `output1=HMAC-SHA-256(CredRandomWithUV, salt1)` and `output2=HMAC-SHA-256(CredRandom, salt2)` and returns `output1` and `output2` if there was `salt2` as the argument, using the shared secret established in the previous step.
+5. Computer can use `output1` or `output2` as the key material for CDOC2 encryption scheme SC05.
 
-TODO:
+An example of open-source implementations, who are using this feature, could be found at
 
 * https://github.com/FiloSottile/age/discussions/390
 * https://github.com/keepassxreboot/keepassxc/issues/3560
-* https://github.com/olastor/age-plugin-fido2-hmac/blob/main/SPEC.md#recipients--identities
+* https://github.com/olastor/age-plugin-fido2-hmac/blob/main/SPEC.md
 
 #### UserID parameter
 
