@@ -5,13 +5,17 @@
 
 *[CDOC 1.0]: Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
 
-*[CDOC2 System]: IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Transmission Servers
+*[CDOC2 System]: IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers
 
-*[CDOC2 Container]: File format for transmitting the encrypted payload and metadata information, <br/>including the key capsule from Sender to Recipient
+*[CDOC2 Container]: File format for transmitting the encrypted payload and metadata information, <br/>including the capsule from Sender to Recipient
 
-*[Capsule]: Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container
+*[Capsule]: Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.
 
-*[CKCTS]: CDOC2 Key Capsule Transmission Server
+*[Server Capsule]: A Capsule that is mediated by a CDOC2 Capsule Server.
+
+*[Container Capsule]: A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
+
+*[CCS]: CDOC2 Capsule Server
 
 *[CDOC2 authentication server]: Web service to generate access tokens for CKCTS and RIA SID/MID proxy
 
@@ -39,6 +43,6 @@
 
 *[FMK]: File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
 
-*[CKC]: CDOC2 Key Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
+*[CC]: CDOC2 Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
 
 *[HHK]: Header HMAC Key
