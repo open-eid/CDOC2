@@ -9,3 +9,6 @@ Diffie
 markdownlint
 WebAuthn
 credBlob
+secp256r1
+Yubikey
+KeeChallenge

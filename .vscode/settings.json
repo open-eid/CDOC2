@@ -9,13 +9,18 @@
         "ECDH",
         "ECSVDP",
         "HKDF",
+        "hmac",
         "HMAC",
         "HOTP",
+        "KeeChallenge",
         "linenums",
         "RSAES",
+        "secp256r1",
         "TOTP",
         "Yubi",
-        "Yubico"
+        "yubico",
+        "Yubico",
+        "Yubikey"
     ],
     "markdown.extension.orderedList.autoRenumber": false
 }
