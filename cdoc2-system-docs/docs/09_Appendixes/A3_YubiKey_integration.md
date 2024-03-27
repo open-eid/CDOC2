@@ -64,17 +64,61 @@ From cryptography viewpoint, it might be possible, because internally, the YubiK
 
 From CDOC2 System viewpoint, there is still the problem of how the Sender gets access to authentic RSA public key of the Recipient, so that Sender could use the CDOC2 SC02 encryption scheme. Because there's no PKI and no identity management services within FIDO, this is unresolved. Building custom PKI services into the CDOC2 System, which would work on top of FIDO U2F tokens, seems unrealistic.
 
-### FIDO2 CTAP2 interface and WebAuthn credentials
+### FIDO CTAP2 interface and WebAuthn credentials
 
-resident credentials (<https://developers.yubico.com/WebAuthn/WebAuthn_Developer_Guide/Resident_Keys.html>)
+This feature is compatible with all YubiKey security tokens.
+
+FIDO CTAP1 interface provides same features as FIDO U2F interface, using APDU-like binary structure for transmitting messages between computer and authenticators.
+
+FIDO CTAP2 interface (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html>) provides FIDO U2F interface features and some extra, while also using CBOR encoding for transmitting the messages between computer and authenticators.
+
+WebAuthn2 standard (<https://www.w3.org/TR/webauthn-2/>) provides JavaScript API for web sites running inside browser, in order to use FIDO authenticators, both over U2F and CTAP2 interfaces.
+
+Security tokens, which comply with WebAuthn2 and CTAP2, could be also referred as FIDO2 tokens. At the moment, YubiKeys in the 5 Series can hold up to 25 resident keys (also called discoverable credentials).
+
+#### FIDO CTAP2 signature capabilities
+
+In the same way, CTAP2 only provides assertion signature creation function `authenticatorGetAssertion (0x02)` (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#authenticatorGetAssertion>, <https://www.w3.org/TR/webauthn-2/#sctn-op-get-assertion>). However, CTAP2 also has some extensions (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#sctn-defined-extensions>), which we look into at the next sections.
+
+#### `credBlob` and `largeBlobKey` extensions
+
+`credBlob` extension (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#sctn-credBlob-extension>) allows some secret information (a blob array) to be stored inside FIDO2 token, alongside the RP-specific credential. Optionally, computer could request that FIDO2 token perform the user authorization (i.e., asks the user to press the physical button on the FIDO2 token) or even perform the verification of the supplied PIN-code, when retrieving this array.
+
+This blob could be used as a place to store the symmetric encryption/decryption key of the CDOC2 Container. Unfortunately, YubiKey 5 Series tokens only support ( <https://docs.yubico.com/hardware/yubikey/yk-tech-manual/yk5-apps.html#supported-extensions>) `appID` extension (<https://www.w3.org/TR/webauthn-2/#sctn-appid-extension>).
+
+It's not know, if any FIDO2 tokens on the market support these extensions. They are not listed as mandatory feature (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#mandatory-features>).
+
+### HMAC Secret Extension
+
+This extension is used by the platform to retrieve a symmetric secret from the authenticator when it needs to encrypt or decrypt data using that symmetric secret (<https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-errata-20220621.html#sctn-hmac-secret-extension>), which sounds like perfect functionality to be used by CDOC2 Client Application.
+
+https://github.com/FiloSottile/age/discussions/390
+
+https://github.com/keepassxreboot/keepassxc/issues/3560
+
+https://github.com/olastor/age-plugin-fido2-hmac/blob/main/SPEC.md#recipients--identities
+
+#### UserID parameter
+
+### TODO: interesting upcoming features
+
+<https://forums.developer.apple.com/forums/thread/733413>
+<https://bitwarden.com/blog/prf-webauthn-and-its-role-in-passkeys>
+<https://github.com/w3c/webauthn/wiki/Explainer:-PRF-extension>
+
 
 ### OATH credentials
 
-OATH consortium (https://openauthentication.org/about-oath/) is standardising 
+OATH consortium (https://openauthentication.org/about-oath/) is standardising ...
+
+It seems that KeePass password manager is able to use YubiKey OTP feature as master password?
+
+<https://support.yubico.com/hc/en-us/articles/360013779759-Using-Your-YubiKey-with-KeePass>
 
 ### Smart-card API
 
 ### OpenPGP Smart Card API
 
+## Summary
 
-
+TODO
