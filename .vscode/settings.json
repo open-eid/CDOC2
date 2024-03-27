@@ -4,13 +4,18 @@
         "CDOC",
         "CKCTS",
         "CSRNG",
+        "CTAP",
         "DigiDoc4",
         "ECDH",
         "ECSVDP",
         "HKDF",
         "HMAC",
+        "HOTP",
         "linenums",
-        "RSAES"
+        "RSAES",
+        "TOTP",
+        "Yubi",
+        "Yubico"
     ],
     "markdown.extension.orderedList.autoRenumber": false
 }
