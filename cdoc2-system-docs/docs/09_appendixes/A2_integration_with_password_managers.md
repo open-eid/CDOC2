@@ -69,7 +69,7 @@ Some password managers also offer separate CLI application, which could be invok
 
 #### CLI API methods
 
-All CLI application offer adequate collection of methods for shell script integration, such as adding new password entries, searching,  reading password entries, and deleting password entries.
+All CLI application offer adequate collection of methods for shell script integration, such as adding new password entries, searching, reading password entries, and deleting password entries.
 
 #### Access authentication
 
@@ -87,7 +87,7 @@ In case user has other passwords in the password manager database, in addition t
 
 1. Only store passwords for CDOC2 Containers in that particular password manager, which is integrated with CDOC2 Client application.
 2. Create a separate "vault" or "collection of passwords", in case password manager supports this, and only allow CDOC2 Client application access to this particular "vault".
-3. Add fine-grained ACLs to each password entry
+3. Add fine-grained ACLs to each password entry.
 
 ### Programmatic or REST API integration
 
@@ -103,4 +103,4 @@ In case user has other passwords in the password manager database, in addition t
 
 ## Summary
 
-TODO
+This analysis reviewed how popular password managers on MacOS and Microsoft Windows operating systems could be integrated with the CODC2 Client Application. There is not a clearly superior integration option suitable for all users. CLI-based integration options could be superior for organizations who integrate container encryption into their information systems or other workflows. However, access authorization and having the authorization be fine-grained become important decisions which probably each organization has to tackle individually as it depends on the choice of password managers and information security policies. The manual copy-paste solution is probably the most realistic option for individuals who use the Client Application less frequently and not as part of an information system workflow and should problably be the suggested method.
