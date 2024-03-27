@@ -46,7 +46,7 @@ markdown_extensions:
   - toc:
       title: "In this chapter:"
       permalink: true
-      separator: "_"
+      separator: "-"
   - pymdownx.details
   - pymdownx.critic:
       mode: view

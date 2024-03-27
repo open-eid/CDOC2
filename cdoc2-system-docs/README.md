@@ -13,6 +13,12 @@ Please follow these conventions:
 * Put image files into the `docs/img` folder, so that they could be re-used from multiple `.md` files and refer to them with paths like `../img/SID_MID_full.png`
 * Follow [Python-Markdown](https://python-markdown.github.io/#features) conventions and [MkDocs Material features](https://squidfunk.github.io/mkdocs-material/reference/)
 
+# Linting
+
+```bash
+markdownlint-cli2 "cdoc2-system-docs/**/*.md"
+```
+
 # Generation toolchain
 
 1. Visual Studio Code (<https://code.visualstudio.com>)

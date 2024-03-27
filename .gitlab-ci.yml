@@ -5,6 +5,8 @@ before_script:
 
 pages:
   stage: deploy
+  only:
+     - master
   script:
     - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
   artifacts:

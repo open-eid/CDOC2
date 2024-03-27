@@ -50,13 +50,13 @@ Where *CDOC20salt* is a constant string and *random* is an at least 256-bit valu
 
 **Content Encryption Key, CEK**
 
-*CEK ← Expand(FMK, ”CDOC20cek”, Loctets)*
+*CEK ← Expand(FMK, ”CDOC20cek”, L<sub><sub>octets</sub></sub>)*
 
-Loctets defines the output length of the Expand function in bytes and must be equal to the key length of the used symmetric encryption algorithm (see section [Payload assembly and encryption](#payload-assembly-and-encryption)).
+L<sub>octets</sub> defines the output length of the Expand function in bytes and must be equal to the key length of the used symmetric encryption algorithm (see section [Payload assembly and encryption](#payload-assembly-and-encryption)).
 
 **Header HMAC Key, HHK**
 
-*HHK ← Expand(FMK, ”CDOC20hmac”, 32octets)*
+*HHK ← Expand(FMK, ”CDOC20hmac”, 32<sub><sub>octets</sub></sub>)*
 
 Note that the length of the HHK derived in this manner is 256 bits, i.e. equal to the output length of the used SHA-256 hash algorithm. This is based on the recommendations presented in the [HMAC standard](https://rfc-editor.org/rfc/rfc2104.txt).
 
@@ -97,7 +97,7 @@ In case there are multiple recipients, the sender can use the same ephemeral key
 
 The sender’s ephemeral key pair consists of a public and a secret key:
 
-    (pkeph, skeph)
+$$(pk_{eph}, sk_{eph})$$
 
 The recipient holds their ID-card authentication key pair public key *pkrec* (assuming here that the recipient’s private key is not immediately accessible).
 
@@ -107,18 +107,19 @@ This key is also accessible to the sender. Mechanisms for the dissemination of t
 
 The shared ECDH secret is computed by the sender as follows:
 
-    Secdh ← (skeph · pkrec)x ,
+$$ S_{ecdh} ← (s_{keph} · pk_{rec})_x $$
 
 i.e. the shared secret is the elliptic curve x-coordinate computed in this manner. The shared secret is encoded as a big-endian byte array, the length of which in full bytes corresponds to the modulus length of the used elliptic curve in full bytes. For example, the modulus length of secp384r1 is 48 bytes.
 
 KEK is computed from the shared secret as follows:
 
-    KEKpm ← Extract(”CDOC20kekpremaster”, Secdh)
-    KEK ← Expand(KEKpm, ”CDOC20kek” ∥ algId ∥ pkrec ∥ pkeph, Loctets)
+$$ KEK_{pm} ← Extract(”CDOC20kekpremaster”, S_{ecdh}) $$
+
+$$ KEK ← Expand(KEK_{pm}, ”CDOC20kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{<sub>octets</sub>}) $$
 
 *algId* is the identifier of the cryptographic algorithm used for the encryption of the FMK defined as a string corresponding to the field *Recipient.FMKEncryptionMethod* (section [FMK encryption and decryption](#fmk-encryption-and-decryption)).
 
-*Loctets* defines the output length of the ``Expand`` function in bytes and is defined by the symmetric encryption algorithm used for FMK encryption.
+*L<sub><sub>octets</sub></sub>* defines the output length of the ``Expand`` function in bytes and is defined by the symmetric encryption algorithm used for FMK encryption.
 
 #### KEK computation during decryption (ECCPublicKeyCapsule)
 
@@ -138,14 +139,16 @@ All ID-cards used today should be able to validate elliptic curve points used as
 
 In order to validate whether the point *Q = (x, y)* is located on the curve, it must be verified whether *x* and *y* fall in the interval [0…*p* – 1], whether they satisfy the curve equation, and whether the point falls in the correct subgroup. For example, the formula for the curve P-384 can be presented as
 
-    y2 ≡ x3 - 3x + b mod p
+$$ y^2 ≡ x^3 - 3x+b\bmod p\; $$
 
 It must also be verified that *nQ* = 0 and *Q* != 0. The constants *b*, *p*, and *n* are described in the [Digital Signature Standard](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf).
 The ``C_DERIVEKEY`` function takes the sender’s ephemeral public key *pkeph* and a reference to the corresponding ID-card key pair (*pkrec*, *skrec*) as inputs. The recipient computes
 
-    Secdh ′ ← (skrec · pkeph)x 
+$$S_{ecdh}' \leftarrow (sk_{rec}\cdot pk_{eph})_{x}\;$$
 
-Thanks to the algebraic properties of the elliptic curve, *Secdh = Secdh*.
+Thanks to the algebraic properties of the elliptic curve,
+$S_{ecdh}=S_{ecdh}'$.
+
 This shared secret must be used to compute KEK as described above with reference to encryption.
 
 ### RSAPublicKeyCapsule
@@ -166,7 +169,7 @@ EncryptedKEK | KEK encrypted using recipient’s public key | XXX
 
 #### KEK computation during encryption (RSAPublicKeyCapsule)
 
-The symmetric encryption algorithm used for the encryption of the FKM defines the KEK length *Loctets*. The sender generates a random number KEK with a length of *Loctets*.
+The symmetric encryption algorithm used for the encryption of the FKM defines the KEK length *L<sub>octets</sub>*. The sender generates a random number KEK with a length of *L<sub>octets</sub>*.
 
 For the encryption of the KEK, the sender uses the RSA-OAEP (see [section 7.1](https://www.rfc-editor.org/rfc/rfc8017)) encryption function. RSA-OAEP has three input parameters (see [section A.2.1](https://www.rfc-editor.org/rfc/rfc8017)):
     • ``hashAlgorithm`` – hash function used by the algorithm. We use the SHA-256 hash function (``id-sha256``).
@@ -211,12 +214,14 @@ Salt | Random number generated by the sender, used as input for the HKDF-Extract
 The sender holds the symmetric key *sym* labelled *label*. The sender generates the random number *salt*. The purpose of this number is to ensure the generation of a new KEK even when reusing the key *sym*. Since no practical upper limit can be set for the reuse of the key, the length of *salt* is chosen with a significant margin, i.e. 256 bits.
 KEK is computed from the symmetric key and the generated random number as follows:
 
-    KEKpm ← Extract(salt, sym)
-    KEK ← Expand(KEKpm, ”CDOC20kek” ∥ algId ∥ label, Loctets)
+$$ KEK_{pm} \leftarrow Extract(salt, sym) $$
+
+$$ KEK     \leftarrow Expand(KEK_{pm}, "CDOC20kek" \parallel algId \parallel label, L_{octets})
+$$
 
 Where *algId* is the identifier of the encryption algorithm used for the encryption of the FMK as a string, set as ``Recipient.FMKEncryptionMethod`` (section [FMK encryption and decryption](#fmk-encryption-and-decryption)).
 
-*Loctets* defines the output length of the ``Expand`` function in bytes, determined by the symmetric encryption algorithm used for the encryption of the FMK.
+*L<sub>octets</sub>* defines the output length of the ``Expand`` function in bytes, determined by the symmetric encryption algorithm used for the encryption of the FMK.
 
 #### KEK computation during decryption (SymmetricKeyCapsule)
 
@@ -242,7 +247,7 @@ The HHK (see section [Key derivation](#key-derivation)) is used as the key.
 
 HHK length must be at least equal to the output length of the used hash function, i.e. 256 bits.
 
-    HMACValueheader ← HMACSHA−256(HHK, header)
+$$ HMACValue_{header} \leftarrow HMAC_{SHA-256}(HHK, header) , $$
 
 where *header* is the serialized header in the form it is added to the envelope.
 
@@ -264,20 +269,20 @@ The nonce (*nonce*) is always generated afresh, using a cryptographically secure
 
 Additional data (*additionalData*) comprises a predetermined UTF-8 encoded string, the serialized header, and the header message authentication code.
 
-    additionalData ← ”CDOC20payload” ∥ header ∥ headerHMAC
+$$  additionalData \leftarrow "CDOC20payload" \parallel header \parallel headerHMAC $$
 
 Payload (*payLoad*) encryption is performed using the encryption function below, with an output length of plaintext payload length plus authentication label length.
 
-    encryptedPayload ← encryptcc20p1305(CEK, nonce, payLoad, additionalData)
+$$ encryptedPayload \leftarrow encrypt_{cc20p1305}(CEK, nonce, payLoad, additionalData) $$
 
 Decryption of the encrypted payload is performed using the decryption function below.
 
-    payload ← decryptcc20p1305(CEK, nonce, encryptedPayLoad, additionalData)
+$$ payload \leftarrow decrypt_{cc20p1305}(CEK, nonce, encryptedPayLoad, additionalData) $$
 
 When processing the payload in streaming mode, the plaintext will be handled before the decryption function has validated the authentication label. Requirements for plaintext processing and error handling are detailed in section [Requirements for payload unpacking](ch03_container_format.md#requirements-for-payload-unpacking). It is critical to delete all files if authentication label validation fails.
 
 The encrypted payload is serialized along with the nonce, as the nonce has to be transmitted to the recipient.
 
-    serializedPayload ← nonce ∥ encryptedPayLoad
+$$ serializedPayload \leftarrow nonce \parallel encryptedPayLoad $$
 
 In the case of the format envelope, payload means an encrypted and serialized payload (*serializedPayload*). Nonce and other details have not been explicated in the description of the envelope as they depend on the encryption method employed.

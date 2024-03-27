@@ -5,5 +5,6 @@
     "single-title": false,
     "no-inline-html": {
         "allowed_elements": ["br"]
-    }
+    },
+    "no-emphasis-as-heading": false
 }
