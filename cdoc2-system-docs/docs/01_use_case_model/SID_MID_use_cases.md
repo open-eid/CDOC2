@@ -49,9 +49,9 @@ Scheme:
         _JK: MID uses additionally mobile phone, but this can be asked from user, when decrypting.
         Later private identifiers could also be supported_
 
-3. Sender [derives key encryption key (KEK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc20-lib/src/main/java/ee/cyber/cdoc20/crypto/Crypto.java#L121)
+3. Sender [derives key encryption key (KEK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121)
    from `secret`, `key_label` and `salt` using HKDF algorithm
-4. Sender [generates file master key (FMK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc20-lib/src/main/java/ee/cyber/cdoc20/crypto/Crypto.java#L94)
+4. Sender [generates file master key (FMK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L94)
     using HKDF extract algorithm
 5. Sender derives content encryption key (CEK) and HMAC key (HHK) from FMK using HKDF expand algorithm
 6. Sender encrypts FMK with KEK (xor) and gets encrypted_FMK
@@ -65,7 +65,7 @@ Scheme:
     CDOC2 servers are configured in client configuration.
     Sender gets `transactionID` for each share. [^1] FBS and OAS
 
-9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-schema/src/main/fbs/recipients.fbs#L70)
+9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-schema/src/main/fbs/recipients.fbs#L70)
 
     !!! info "TODO"
         _JK:In current FBS and OAS spec, instead of server:transactionId pair,
@@ -101,7 +101,7 @@ TODO!
     !!! info "TODO"
         TODO: SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
 
-1. Recipient [derives key encryption key (KEK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc20-lib/src/main/java/ee/cyber/cdoc20/crypto/Crypto.java#L121)
+1. Recipient [derives key encryption key (KEK)](https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121)
     from secret, key_label and salt using HKDF algorithm
 1. Recipient decrypts FMK using KEK.
 1. Recipient derives CEK and HHK from FMK using HKDF algorithm

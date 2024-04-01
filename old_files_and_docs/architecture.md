@@ -41,7 +41,7 @@ Scheme:
 8. Sender uploads each `secret share` and recipient `etsi_identifier` to each CDOC2 server 
    (each CDOC2 server will receive a different share). CDOC2 servers are configured in client configuration.
    Sender gets `transactionID` for each share. [^1] FBS and OAS
-9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-schema/src/main/fbs/recipients.fbs#L70) 
+9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-schema/src/main/fbs/recipients.fbs#L70) 
    
    _JK:In current FBS and OAS spec, instead of server:transactionId pair, 
    `secret shares` are identified by full urls. That way there is no need to keep synced list of server_name, server_url in client configuration._  
@@ -102,11 +102,11 @@ Instances run on independent premises.
 
 #### Endpoints
 
-WIP: https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/merge_requests/58/diffs
+WIP: https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/merge_requests/58/diffs
 
-* [/secret-shares](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-openapi/cdoc20-key-capsules.yaml?ref_type=heads#L102) Upload Shamir Secret Share and get transactionId
-* [/secret-shares/{transactionId}/nonce](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-openapi/cdoc20-key-capsules.yaml?ref_type=heads#L127) Create nonce for transactionId (for authentication)
-* [/secret-shares/{transactionId}](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-openapi/cdoc20-key-capsules.yaml?ref_type=heads#L71) GET Shamir Secret Share for transactionId
+* [/secret-shares](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L100) Upload Shamir Secret Share and get transactionId
+* [/secret-shares/{transactionId}/nonce](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L136) Create nonce for transactionId (for authentication)
+* [/secret-shares/{transactionId}](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L71) GET Shamir Secret Share for transactionId
 
 Old endpoints from test assignment:
 * ~~[/nonce](https://gitlab.cyber.ee/id/ee-ria/cdoc2-java-ref-impl/-/blob/main/cdoc20-openapi/cdoc20-key-capsules.yaml?ref_type=heads#L71)
@@ -155,4 +155,4 @@ Authentication request
 
 ## Links
 
-* [1] Flatbuffers and OpenAPI spec WIP: https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/merge_requests/58/diffs
+* [1] Flatbuffers and OpenAPI spec WIP: https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/merge_requests/58/diffs
