@@ -43,7 +43,7 @@ Server state consists of the Capsules received by the server for transmission, a
 
 The server provides two interfaces: one for delivery of the Capsule from the sender to the Capsule Server and the other for delivery of the Capsule from the server to the recipient.
 
-The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [appendix C](appendix_c_cdoc2-key-capsules.md)).
+The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [appendix C](appendix_c_cdoc2-capsules.md)).
 
 ### Sender interface
 
