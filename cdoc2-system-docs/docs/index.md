@@ -16,43 +16,51 @@ TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
 
 ## Terms and acronyms
 
-* `CDOC` - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem.
+* `CDOC` - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem
 
-* ``CDOC 1.0`` - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
+* `CDOC 1.0` - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
 
-* ``CDOC2 System`` - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Transmission Servers.
+* `CDOC2 System` - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers
 
-* `CK` - Encrypted FMK
+* `CDOC2 Container` - File format for transmitting the encrypted payload and metadata information, <br/>including the capsule from Sender to Recipient
 
-* ``CKCTS`` - CDOC2 Key Capsule Transmission Server.
+* `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.
 
-* ``CDOC2 authentication server`` - Web service to generate access tokens for CKCTS and RIA SID/MID proxy.
+* `Server Capsule` - A Capsule that is mediated by a CDOC2 Capsule Server.
 
-* ``SID/MID proxy`` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API.
+* `Container Capsule` - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
-* ``Hardware security token`` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys.
+* `CCS` - CDOC2 Capsule Server
 
-* ``ECDH`` - Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an elliptic-curve public–private key pair, to establish a shared secret over an insecure channel. (<https://en.wikipedia.org/wiki/Elliptic-curve_Diffie–Hellman>)
+* `CDOC2 authentication server` - Web service to generate access tokens for CKCTS and RIA SID/MID proxy
 
-* ``AEAD`` - Authenticated Encryption with Additional Data.
+* `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
-* ``ECC`` - Elliptic-Curve Cryptography.
+* `hardware security token` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys
 
-* ``HMAC`` - Header Message authentication Code.
+* `ECDH` - Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.
 
-* ``CEK`` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
+* `AEAD` - Authenticated Encryption with Additional Data
 
-* ``KEK`` - Key Encryption Key. Symmetric key used to encrypt (wrap) the CEK, so that CEK could be transmitted inside CKC.
+* `ECC` - Elliptic-Curve Cryptography
 
-* ``FMK`` - File Master Key. Cryptographic key material for deriving the CEK.
+* `ECC DH` - Elliptic-Curve Cryptography Diffie Hellman key-establishment algorithm
 
-* ``CKC`` - CDOC2 Key Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
+* `ECC CDH` - Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm
 
-* ``HHK`` - Header HMAC Key.
+* `HMAC` - Hash-Based Message Authentication Code. Protects integrity of CDOC Container.
 
-* `M` - Message (payload of CDOC2 Container)
+<!--- acronyms about various keys -->
 
-* `C` - Ciphertext (encrypted message M)
+* `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
+
+* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.
+
+* `FMK` - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
+
+* `CC` - CDOC2 Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
+
+* `HHK` - Header HMAC Key
 
 ## Short overview
 
