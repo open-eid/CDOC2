@@ -33,15 +33,24 @@ Use cases specified here are written in generic form, so that they are applicabl
 **CDOC2 Client Application (Client)**
 : Desktop or mobile application, which encrypts or decrypts CDOC2 Containers and is used by Users
 
-**Key Capsule Transmission Server (KCTS)**
-: KCTS mediates CDOC2 Key Capsules (KC) between Sender and Recipient. Sender's Client can upload KC to one or multiple KCTS servers. Recipient's Client can download KC from KCTS server after authentication.
+**CDOC2 Capsule Server (CCS)**
+: CCS mediates CDOC2 Server Capsules between Sender and Recipient. Sender's Client can upload a Server Capsule to one or multiple CCS servers. Recipient's Client can download Server Capsule from CCS server after authentication.
+
+**Capsule**
+: Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.
+
+**Server Capsule**
+: A Capsule that is mediated by a CDOC2 Capsule Server.
+
+**Container Capsule**
+: A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
 **LDAP-server**
 : An application used for publishing public keys.
 
 ## Use cases for Recipients with hardware security tokens
 
-These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC2 Container itself with the encrypted payload, or with the help of KCTS server.
+These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC2 Container itself with the encrypted payload, or with the help of CCS server.
 
 ### UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token
 
@@ -57,25 +66,28 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 **Primary Actor**
 : Sender
 
+**Preconditions**
+: Client has a long-term access token from CDOC2 authentication server.
+
 **Success Guarantees**
 
 * CDOC2 container is saved into filesystem.
-* A key capsule is sent for each Recipient to the CDOC2 key capsule transmission server.
-* Client has received a transaction code for each key capsule.
+* A server capsule is sent for each Recipient to the CDOC2 capsule server.
+* Client has received a transaction code for each server capsule.
 
 **Main Success Scenario**
 
 1. Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.
 2. Sender enters identifiers for each Recipient.
-3. Client creates a key capsule for each Recipient.
-4. Client displays a list of Key Capsule Transmission Servers to Sender.
-5. Sender chooses a Key Capsule Transmission Server.
-6. Client creates a TLS-connection with the chosen Key Capsule Transmission Server and receives the server's certificate.
+3. Client creates a capsule for each Recipient.
+4. Client displays a list of Capsule Servers to Sender.
+5. Sender chooses a CDOC2 Capsule Server.
+6. Client creates a TLS-connection with the chosen CDOC2 Capsule Server and receives the server's certificate.
 7. Client verifies the server's certificate against the configuration.
-8. Client forwards each Recipient's key capsule to the chosen Key Capsule Transmission Server and receives a transaction code for each key capsule.
+8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server and receives a transaction code for each server capsule.
 9. Client creates a container into filesystem in the chosen target path and adds a header.
 10. Client verifies that the header does not exceed the size limit defined by the specification.
-11. Client verifies technical file correctness, creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
+11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
 12. Client saves the CDOC2 container and displays Sender a notification.
 
 **Extensions**
@@ -98,18 +110,18 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case ends.
 
-5a. Configuration has no CDOC2 key capsule transmission servers:
+5a. Configuration has no CDOC2 capsule servers:
 
-1. Client creates a container in the target path and adds a header with key capsules.
+1. Client creates a container in the target path and adds a header with container capsules for each recipient.
 2. Use case continues from step 11.
 
-5b. Configuration has a default CDOC2 key capsule transmission server:
+5b. Configuration has a default CDOC2 capsule server:
 
 1. Use case continues from step 7.
 
-6a. Sender chooses to not use the CDOC2 key capsule transmission server:
+6a. Sender chooses to not use the CDOC2 capsule server:
 
-1. Client creates a container in the target path and adds a header with key capsules.
+1. Client creates a container in the target path and adds a header with container capsules for each recipient.
 2. Use case continues from step 11.
 
 7a. TLS connection cannot be established:
@@ -122,12 +134,12 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case continues from step 5.
 
-9a. Forwarding key capsules to a CDOC2 key capsule transmission server fails:
+9a. Forwarding capsules to a CDOC2 capsule server fails:
 
 1. Client displays Sender a notification.
 2. Use case ends.
 
-9b. CDOC2 key capsule transmission server does not return a transaction identifier for each key capsule:
+9b. CDOC2 capsule server does not return a transaction identifier for each server capsule:
 
 1. Client displays Sender a notification.
 2. Use case ends.
@@ -145,7 +157,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 ### UC.Client.02 — Decrypt CDOC2 Container with a security token
 
 **Use Case Context**
-: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a key capsule from either Key Capsule Transmission Server or from inside the container.
+: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule from either CDOC2 Capsule Server or a container capsule from inside the container.
 
 **Scope**
 CDOC2 Client Application
@@ -157,11 +169,13 @@ CDOC2 Client Application
 : Recipient
 
 **Preconditions**
-: Recipient's security token is connected.
+
+* Recipient's security token is connected.
+* Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
 
-* Files from the CDOC2 container are decrypted and saved into filesystem.
+* Files from the CDOC2 container are decrypted.
 
 **Main Success Scenario**
 
@@ -169,12 +183,12 @@ CDOC2 Client Application
 2. Client verifies that the header does not exceed the size limit defined by the specification.
 3. Client reads Recipient certificate from the security token.
 4. Client verifies that the container has a record of the Recipient.
-5. Client verifies that the Recipient record has a Key Capsule Transmission Server reference.
-6. Client uses Recipient's eID means to authenticate to KCTS.
-7. Client sends the Key Capsule Transmission Server the transaction code from the container.
-8. Client receives a key capsule from the Key Capsule Transmission Server.
+5. Client verifies that the Recipient record has a CDOC2 Capsule Server reference.
+6. Client uses Recipient's eID means to authenticate to CCS.
+7. Client sends the CDOC2 Capsule Server the transaction code from the container.
+8. Client receives a capsule from the CDOC2 Capsule Server.
 9. Client decrypts the encrypted archive in the CDOC2 container using the connected security token.
-10. Client saves the files into the target path in filesystem and notifies the Recipient.
+10. Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage.
 
 **Extensions**
 2a. Header size is larger than allowed by the specification:
@@ -192,9 +206,9 @@ CDOC2 Client Application
 1. Client displays Recipient a notification.
 2. Use case ends.
 
-5a. Recipient record does not contain a reference to a Key Capsule Transmission Server.
+5a. Recipient record does not contain a reference to a CDOC2 Capsule Server.
 
-1. Client finds a key capsule from the Recipient record.
+1. Client finds a container capsule from the Recipient record.
 2. Use case continues from step 9.
 
 6a. PIN 1 code is required:
@@ -208,7 +222,7 @@ CDOC2 Client Application
 1. Client displays user a notification.
 2. Use case ends.
 
-8a. No key capsule returned from Key Capsule Transmission Server:
+8a. No capsule returned from CDOC2 Capsule Server:
 
 1. Client displays user a notification.
 2. Use case ends.
@@ -305,9 +319,9 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 1. User specifies which CDOC2 container they wish to open.
 2. Client opens the container and retrieves the header information. Client verifies that the header does not exceed the limit defined in the specification.
-3. Client asks User for the password to decrypt the container.
+3. Client asks User for the password to decrypt the container. Client shows a password hint based on the KeyLabel value set during encryption.
 4. User enters the password.
-5. Client reads password salt and key material salt from container header, uses the password and password salt to calculate password key material. Then uses it with the key material salt to derive the key encryption key. Finally Client derives file master key, uses that to derive the content encryption key and finally decodes the archive in the CDOC2 container.
+5. Client verifies the password and decrypts the CDOC2 container.
 6. Client asks user for the target location where to save the files.
 7. User defines the target location.
 8. Client unpacks the archive contents and saves it to the target location.
@@ -319,10 +333,10 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the user.
 2. Use case ends.
 
-5a. Reading password salt or key material salt fails:
+5a. Password is not correct:
 
 1. Client notifies the user.
-2. Use case ends.
+2. Use case continues from step 3.
 
 8a. Saving archive contents to disk fails:
 
@@ -345,7 +359,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 **Preconditions**
 
-* CDOC2 container is decrypted.
+* CDOC2 container was just decrypted.
 
 **Success Guarantees**
 
@@ -388,23 +402,78 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 ## Supporting use cases
 
-### UC.Client.09 — Create application configuration
+### UC.Client.09 — Acquire a long-term access token
 
-TODO!
-
-# Old UCs
-
-MERGE WITH <https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java#cdoc2-with-symmetric-key-from-password>
-
-# CDOC2 Key Transmission Server Use Case Model
-
-## UC.KTS.01 Forward Key Capsule
-
-**Context of Use**
-: CDOC2 Client Application forwards Key Transmission Server a Recipient key capsule, which contains a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Key Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.
+**Use Case Context**
+: CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 Capsule Servers.
 
 **Scope**
-Key Transmission Server (KS)
+: CDOC2 Client Application (Client)
+
+**Use Case Level**
+: Subfunction
+
+**Primary Actor**
+: User
+
+**Preconditions**
+
+* CDOC2 Client Application is installed on User system.
+
+**Success Guarantees**
+
+* Client has a long-term access token to CDOC2 Capsule Server API-s.
+* Client allows User to encrypt CDOC2 containers for other Recipients besides the User.
+
+**Main Success Scenario**
+
+1. Client asks User to authenticate in order to gain access to CDOC2 Capsule Servers.
+2. User agrees to authenticate.
+3. Client opens a web view and directs user to an authentication service (e.g. TARA) that follows the OpenID Connect protocol. The authentication request is inside the redirect URL and the request is mediated by a CDOC2 Authentication Server. User is shown a choice of authentication methods.
+4. User chooses an authentication method.
+5. User completes the authentication by using an external authentication device.
+6. User is redirected back to the Client, mediated by a CDOC2 Authentication Server.
+7. CDOC2 Authentication Server requests the authentication service an identity token providing a client secret inside the request.
+8. CDOC2 Authentication Server receives the identity token and validates its signature, address and expiration time.
+9. Client receives a long-term access token from the CDOC2 Authentication Server.
+10. Client notifies User that the authentication is succesfully completed.
+
+**Extensions**
+
+5a. Authentication results in an error:
+
+1. Authentication service displays the error and offers User to try again or try another authentication method.
+2. Use case continues from step 4.
+
+5b. User cancels the authentication flow:
+
+1. Client redirects User back to the Client and notifies about the error.
+2. Use case ends.
+
+7a. Identity token is invalid:
+
+1. Client notifies the User.
+2. Use case ends.
+
+8a. Identity token request expires:
+
+1. Client notifies the User that the authentication process has to be restarted.
+2. Use case continues from step 1.
+
+8b. Identity token is not valid:
+
+1. Client notifies the User.
+2. Use case ends.
+
+# CDOC2 Capsule Server Use Case Model
+
+## UC.KTS.01 Forward Capsule
+
+**Context of Use**
+: CDOC2 Client Application forwards CDOC2 Capsule Server a Server Capsule, which contains a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.
+
+**Scope**
+CDOC2 Capsule Server (CCS)
 
 **Use Case Level**
 : User goal
@@ -414,30 +483,30 @@ Key Transmission Server (KS)
 
 **Success Guarantees**
 
-* Key capsule is saved with an expiration time.
+* Server Capsule is saved with an expiration time.
 * Transaction code is forwarded to the CDOC2 Client Application.
 
 **Main Success Scenario**
 
-1. Client sends a key capsule using the appropriate API service to a KS.
-2. KS validates the key capsule against specification rules.
-3. KS generates a universally unique transaction code (UUID).
-4. KS saves the key capsule and an expiration time, which it calculates based on KS system configuration settings.
-5. KS returns Client the transaction code.
+1. Client sends a server capsule using the appropriate API service to a CCS.
+2. CCS validates the server capsule against specification rules.
+3. CCS generates a universally unique transaction code (UUID).
+4. CCS saves the server capsule and an expiration time, which it calculates based on CCS system configuration settings.
+5. CCS returns Client the transaction code.
 
 **Extensions**
-2a. Key capsule exceeds the allowed length limit:
+2a. server capsule exceeds the allowed length limit:
 
-1. KS returns Client a error message.
+1. CCS returns Client a error message.
 2. Use case ends.
 
-## UC.KTS.02 Request Key Capsule
+## UC.KTS.02 Request Capsule
 
 **Context of Use**
-: CDOC2 Client Application requests a Key Capsule from Key Transmission Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC2 container. Key Capsule is identified by public key in Recipient certificate and the transaction code provided by CDOC2 Client Application.
+: CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the transaction code provided by CDOC2 Client Application.
 
 **Scope**
-Key Transmission Server (KS)
+CDOC2 Capsule Server (CCS)
 
 **Use Case Level**
 : User goal
@@ -448,41 +517,42 @@ Key Transmission Server (KS)
 **Preconditions**
 
 * Recipient is authenticated.
+* Client has a long-term access token from CDOC2 authentication server.
 
 **Success guarantees**
 
-* Key Capsule is forwarded to CDOC2 Client Application.
+* Server Capsule is forwarded to CDOC2 Client Application.
 
 **Main Success Scenario**
 
-1. Client requests a key capsule using the appropriate API service, providing a transaction code as input.
-2. KS validates the transaction code against specification rules.
-3. KS finds the correct Key Capsule useing the transaction code and validates that the Recipient public key matches with the one in the Key Capsule.
-4. KS sends the Client the Key Capsule.
+1. Client requests a Server Capsule using the appropriate API service, providing a transaction code as input.
+2. CCS validates the transaction code against specification rules.
+3. CCS finds the correct Server Capsule useing the transaction code and validates that the Recipient public key matches with the one in the Capsule.
+4. CCS sends the Client the Capsule.
 
 **Extensions**
 2a. Transaction code is too long:
 
-1. KS returns Client an error message.
+1. CCS returns Client an error message.
 2. Use case ends.
 
-3a. Key Capsule was not found:
+3a. Capsule was not found:
 
-1. KS returns Client an error message.
+1. CCS returns Client an error message.
 2. Use case ends.
 
-3b. Recipient public key does not match the one in the Key Capsule:
+3b. Recipient public key does not match the one in the Capsule:
 
-1. KS returns Client an error message.
+1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.03 Delete Key Capsule
+## UC.KTS.03 Delete Server Capsule
 
 **Context of Use**
-: System timer deletes expired Key Capsules.
+: System timer deletes expired Server Capsules.
 
 **Scope**
-Key Transmission Server (KS)
+CDOC2 Capsule Server (CCS)
 
 **Use Case Level**
 : User goal
@@ -492,36 +562,39 @@ Key Transmission Server (KS)
 
 **Success guarantees**
 
-* Expired Key Capsules are removed from the storing KS.
+* Expired Server Capsules are removed from the storing CCS.
 
 **Trigger**
 
-* System timer schedules and initiates the deletion fo expired Key Capsules.
+* System timer schedules and initiates the deletion of expired Server Capsules.
 
 **Main Success Scenario**
 
-1. KS identifies expired Key Capsules.
-2. KS deletes expired Key Capsules.
+1. CCS identifies expired Server Capsules.
+2. CCS deletes expired Server Capsules.
 
 **Extensions**
 
-1a. No expired Key Capsules found.
+1a. No expired Server Capsules found.
 
 1. Use case ends.
 
 ## UC.KTS.04 Authenticate Recipient
 
 **Context of Use**
-: CDOC2 Client Application (Client) establishes a TLS-connection to Key Transmission Server and forwards Recipient certificate.
+: CDOC2 Client Application (Client) establishes a TLS-connection to CDOC2 Capsule Server and forwards Recipient certificate.
 
 **Scope**
-Key Transmission Server (KS)
+CDOC2 Capsule Server (CCS)
 
 **Use Case Level**
 : Subfunction
 
 **Primary Actor**
 : CDOC2 Client Application (Client)
+
+**Preconditions**
+: Client has a long-term access token from CDOC2 authentication server.
 
 **Success guarantees**
 
@@ -531,12 +604,12 @@ Key Transmission Server (KS)
 **Main Success Scenario**
 
 1. Client initiates a TLS-connection and forwards Recipient certificate.
-2. KS verifies certificate validity using an OCSP service.
-3. KS establishes the TLS connection.
+2. CCS verifies certificate validity using an OCSP service.
+3. CCS establishes the TLS connection.
 
 **Extensions**
 
 2a. Recipient certificate is not valid:
 
-1. KS replies to the Client with an error message.
+1. CCS replies to the Client with an error message.
 2. Use case ends.
