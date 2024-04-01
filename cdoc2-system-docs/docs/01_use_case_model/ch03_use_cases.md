@@ -394,7 +394,7 @@ TODO!
 
 # Old UCs
 
-MERGE WITH <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm55854#cdoc-20-with-symmetric-key-from-password>
+MERGE WITH <https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java#cdoc2-with-symmetric-key-from-password>
 
 # CDOC2 Key Transmission Server Use Case Model
 

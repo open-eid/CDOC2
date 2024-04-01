@@ -10,11 +10,11 @@ This is the specification for CDOC2 system protocols, cryptography, and data for
 
 ## Document scope
 
-TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 1.2 "Käsitlusala"
+TO-TRANSLATE "CDOC2 spetsifikatsioon", version 0.9, Section 1.2 "Käsitlusala"
 
 ## Terms and acronyms
 
-TO-TRANSLATE "CDOC2.0 spetsifikatsioon", version 0.9, Section 1.3 "Määratlused ja lühendid"
+TO-TRANSLATE "CDOC2 spetsifikatsioon", version 0.9, Section 1.3 "Määratlused ja lühendid"
 
 Possibly, this section might be shared between "CDOC2 System Architecture" and "CDOC2 Protocol and Cryptography Specification"
 

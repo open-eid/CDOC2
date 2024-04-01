@@ -5,7 +5,7 @@ title: 2. CDOC2 container format
 # CDOC2 container format
 
 ## Abstracted format
-This section describes the CDOC 2.0 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.
+This section describes the CDOC2 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.
 ### Basic principles
 The basic principles outlined below will provide the user of this specification with points of reference for understanding the details of the specification.
 
@@ -149,7 +149,7 @@ Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32
 
 
 ### Header and HMAC
-The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under `cdoc20-schema/`.
+The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under `cdoc2-schema/`.
 The schema is described in two files and reproduced as appendices to the specification.
 
 - ``src/main/fbs/header.fbs`` Description of the FlatBuffers header.
@@ -170,7 +170,7 @@ The encryption of the payload is described in section 6.6. TODO! link
 
 ### Format composition procedure
 This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
-The following steps are needed to compose a CDOC 2.0 container.
+The following steps are needed to compose a CDOC2 container.
 
 -  Compile the list of all recipients.
 -  Generate FMK, HHK, and CEK.

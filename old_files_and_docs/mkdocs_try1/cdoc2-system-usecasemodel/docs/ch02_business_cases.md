@@ -12,7 +12,7 @@ New thing, need to write
 
 ## BUC.02 Add CDOC2 key transmission server
 
-Existing content from "CDOC2.0 kasutusmallimudel", Section 2.21 "BUC.01 Lisa Võtmeedastusserver"
+Existing content from "CDOC2 kasutusmallimudel", Section 2.21 "BUC.01 Lisa Võtmeedastusserver"
 
 ## Additional BUCs?
 

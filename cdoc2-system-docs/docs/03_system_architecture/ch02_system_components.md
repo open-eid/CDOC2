@@ -24,7 +24,7 @@ retrieval. Uses TARA OpenID Connect to authenticate. Token format is not yet dec
 
 ## CDOC2 CLI user application
 
-Command line utility to create/process CDOC 2.0 files. Provides CLI interface to CDOC2 reference Java library.
+Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.
 
 # Interfaces between system components
 
@@ -33,10 +33,10 @@ Command line utility to create/process CDOC 2.0 files. Provides CLI interface to
 TODO: Add existing endpoints
 
 New endpoints for shared secrets supporting SID/MID:
-* [/shared-secrets](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/9206134e6936e7bdf5d62293c3f6f6ed5aeb0e98/cdoc20-openapi/cdoc20-key-capsules.yaml#L111) Upload Shamir Secret Share and get transactionId
-* [/shared-secrets/{transactionId}/nonce](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/9206134e6936e7bdf5d62293c3f6f6ed5aeb0e98/cdoc20-openapi/cdoc20-key-capsules.yaml#L136) 
+* [/shared-secrets](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L111) Upload Shamir Secret Share and get transactionId
+* [/shared-secrets/{transactionId}/nonce](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L136) 
   Create nonce for transactionId (for authentication). [Authentication ticket creation schema](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#nonsside-v%C3%A4ljastamise-p%C3%A4ringud)
-* [/shared-secrets/{transactionId}](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/9206134e6936e7bdf5d62293c3f6f6ed5aeb0e98/cdoc20-openapi/cdoc20-key-capsules.yaml#L71) GET Shamir Shared Secret for transactionId
+* [/shared-secrets/{transactionId}](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L71) GET Shamir Shared Secret for transactionId
 
 ## CDOC2 authentication server
 
