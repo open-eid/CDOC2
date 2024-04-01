@@ -4,7 +4,7 @@
 
 ## Purpose
 
-The purpose of this specification is to describe the CDOC 2.0 data format for file classification.
+The purpose of this specification is to describe the CDOC2 data format for file classification.
 
 ## Handling area
 
@@ -22,7 +22,7 @@ Specification describes:
 
 **CDOC 1.0** unofficial term for all pre-CDOC vor (XML-ENC-based) pre-specifications.
 
-**CDOC 2.0** version of the CDOC format described in this specification.
+**CDOC2** version of the CDOC format described in this specification.
 
 **CEK** Content Encryption Key. A key used to encrypt the cargo of the container.
 
@@ -38,23 +38,23 @@ Specification describes:
 
 **KEM** key encapsulation mechanism, key encapsulation mechanism
 
-**Container** single CDOC 2.0 format file.
+**Container** single CDOC2 format file.
 
-**Last** Payload, a set of files transmitted using the CDOC 2.0 format. This term refers to this set in the form of an open text.
+**Last** Payload, a set of files transmitted using the CDOC2 format. This term refers to this set in the form of an open text.
 
 **OAEP** Optimal Asymmetric Encryption Padding, Filling Scheme, usable with RSA for Encryption
 
-**Header** CDOC 2.0 format part describing container receivers and applicable cryptographic measures.
+**Header** CDOC2 format part describing container receivers and applicable cryptographic measures.
 
 **RSA** Rivest-Shamir-Adleman, a public key crypto-system
 
-**Receiver** party targeted by the CDOC 2.0 container and controlled by key materials that can decrypt the contents of the container.
+**Receiver** party targeted by the CDOC2 container and controlled by key materials that can decrypt the contents of the container.
 
 **The receiver identifier** is a cryptographic public key, personal identification code, identification name of the certificate holder, or other data mentor that allows you to decide whether a party is among the recipients of a particular container.
 
-**Key capsule** The part of the CDOC 2.0 format that contains the key for decrypting the encrypted cargo, the part of that key, or the data required for calculation by the receiver of that key. The sender may add the key capsule to the envelope or transmit it via the key transfer server.
+**Key capsule** The part of the CDOC2 format that contains the key for decrypting the encrypted cargo, the part of that key, or the data required for calculation by the receiver of that key. The sender may add the key capsule to the envelope or transmit it via the key transfer server.
 
-**Envelope** The outermost layer of the CDOC 2.0 format, which describes the encoding of a header and cargo into a single con second.
+**Envelope** The outermost layer of the CDOC2 format, which describes the encoding of a header and cargo into a single con second.
 
 ## Review
 
@@ -62,15 +62,15 @@ Specification describes:
 
 # Problem setting
 
-CDOC 2.0 solves the problem related to CDOC 1.0 specifications [1, 2] and realizations based on the solution options proposed in the previous analysis [3].
+CDOC2 solves the problem related to CDOC 1.0 specifications [1, 2] and realizations based on the solution options proposed in the previous analysis [3].
 
-CDOC 2.0 solves the following CDOC 1.0 issues:
+CDOC2 solves the following CDOC 1.0 issues:
 
 - CDOC 1.0 offers no future security. An attacker who has stored a CDOC container can open it in the future by compromising the keys or crypto algorithms used to create the container. The ROCA case [4] showed that this is not merely a theoretical problem.
 - The CDOC 1.0 format and the software created for its processing do not distinguish between document encryption for transport between parties and document encryption for storage by one party.
 - The CDOC 1.0 format does not allow sending an encrypted document to a receiver using only a mobile eID tool (Mobile-ID or Smart-ID).
 
-## CDOC 2.0 Encryption Schemes
+## CDOC2 Encryption Schemes
 
 The specification describes the following encryption schemes:
 
@@ -96,17 +96,17 @@ Encryption for symmetrical key. Usable for both transport and storage cryptograp
 
 ## Assumptions and requirements for communication channels
 
-Similar to the previous specification CDOC 1.0, CDOC 2.0 provides protection for data transmission through public and potentially attacker-readable communication channels (e.g. e-mail, USB memory device, file exchange services).
+Similar to the previous specification CDOC 1.0, CDOC2 provides protection for data transmission through public and potentially attacker-readable communication channels (e.g. e-mail, USB memory device, file exchange services).
 
-CDOC 2.0 does not make any assumptions about the communication channel used to transmit the container and ensures the confidentiality of the data contained therein during the transmission of the container. As a general rule, CDOC 2.0 does not guarantee future security of the forward message - i.e. an attacker who intercepts and stores the container may be able to decrypt it in the future.
+CDOC2 does not make any assumptions about the communication channel used to transmit the container and ensures the confidentiality of the data contained therein during the transmission of the container. As a general rule, CDOC2 does not guarantee future security of the forward message - i.e. an attacker who intercepts and stores the container may be able to decrypt it in the future.
 
-CDOC 2.0 also describes encryption schemes (SC.02 and SC.04) that offer partial future security, where some of the key material is transmitted from the sender to the receiver via key distribution server(s). The requirements for key transmission servers and their communication channels are described in section 4 separately for each scheme.
+CDOC2 also describes encryption schemes (SC.02 and SC.04) that offer partial future security, where some of the key material is transmitted from the sender to the receiver via key distribution server(s). The requirements for key transmission servers and their communication channels are described in section 4 separately for each scheme.
 
 ## Functionality that is out of scope
 
-CDOC 2.0 does not provide solutions for the following needs:
+CDOC2 does not provide solutions for the following needs:
 
-- Transmitter authentication. CDOC 2.0 does not authenticate the sender. In order to authenticate the sender, the encrypted information may be signed before it is encrypted.
+- Transmitter authentication. CDOC2 does not authenticate the sender. In order to authenticate the sender, the encrypted information may be signed before it is encrypted.
 
 # Encryption Schemes
 
@@ -252,11 +252,11 @@ The key transfer server works according to the rules.
 
 # Container format
 
-CDOC 2.0 container format description is divided into two parts: abstract and specific. The abstract section describes the data elements and their relationships, the specific section describes how to sequence these data elements.
+CDOC2 container format description is divided into two parts: abstract and specific. The abstract section describes the data elements and their relationships, the specific section describes how to sequence these data elements.
 
 ## Abstract Format
 
-This section describes the CDOC 2.0 format from an abstract view, giving data formations and and memos, but not a description of the serialized format.
+This section describes the CDOC2 format from an abstract view, giving data formations and and memos, but not a description of the serialized format.
 
 ### Basic principles
 
@@ -425,7 +425,7 @@ Table 1. Envelope Structure
 
 ### Basic message authentication code
 
-The technical description (scheme) of the FlatBuffers format scheme is provided in the reference realization source code repository, directory `cdoc20-schema/`.
+The technical description (scheme) of the FlatBuffers format scheme is provided in the reference realization source code repository, directory `cdoc2-schema/`.
 
 The scheme is described in two files, which are given in the annexes to this specification.
 
@@ -450,7 +450,7 @@ Cargo encryption is described in section 6.6.
 
 _This section refers to the reference realization source code using Java package names and other identifiers. Such references are_ `given in a continuous step`.
 
-The following steps should be taken when preparing the CDOC 2.0 container:
+The following steps should be taken when preparing the CDOC2 container:
 
 - Collect a list of all recipients.
 - Generate FMK, HHK and CEK.
@@ -531,7 +531,7 @@ The open text of the container cargo is formed in the following way: from the fi
 
 ### Requirements for POSIX tar archival drafting
 
-Since the format `tar` has a long history and several variations, it is described here which requirements must be met by the archive prepared for CDOC 2.0. The purpose of these requirements is to reduce compatibility problems with different client applications and/or management systems and to allow files to be written into the file system as safely as possible from the archive.
+Since the format `tar` has a long history and several variations, it is described here which requirements must be met by the archive prepared for CDOC2. The purpose of these requirements is to reduce compatibility problems with different client applications and/or management systems and to allow files to be written into the file system as safely as possible from the archive.
 
 - A standardised POSIX tar dialect [5] is used. This format is also known as "POSIX 1003.1- 2001" or "PAX."
 - All file names are provided in the UTF-8 encoding.
@@ -546,22 +546,22 @@ Since the format `tar` has a long history and several variations, it is describe
 
 The packaging of the payload has been selected such that it can be unpacked in streaming mode. This means that the entire encrypted payload does not need to be loaded into memory for processing. The payload can be decrypted, unpacked, and written to the disk in plain form sequentially.
 
-In the case of decryption, encrypted data is used before the cryptographic checksum is checked. When unpacking, it must be taken into account that the package may be corrupted and does not comply with the rules specified in the specification or is maliciously assembled by the attacker. Since the sender of the CDOC 2.0 container is not authenticated, it must always be taken into account that the package may have been assembled by an attacker - even if the cryptographic checksum matches.
+In the case of decryption, encrypted data is used before the cryptographic checksum is checked. When unpacking, it must be taken into account that the package may be corrupted and does not comply with the rules specified in the specification or is maliciously assembled by the attacker. Since the sender of the CDOC2 container is not authenticated, it must always be taken into account that the package may have been assembled by an attacker - even if the cryptographic checksum matches.
 
 Errors (wrapping or archiving errors) arising from the processing of open text shall not be treated in flow mode until the entire cargo has been passed and the cryptogram authenticated. If cryptogram authentication failed, this error must be reported. Only when cryptogram authentication has succeeded can an error in the processing of the open text be reported. In the event of an error, all created files must be deleted.
 
 According to the specification, software must build protection measures against the following two attacks.
 
-> The list of possible attacks is not final - for example, the content of the file may be a virus or malware, and must be controlled with an antivirus before it is used - but this attack is not CDOC 2.0 specific, but applies to the use of any file obtained from an unreliable source, and therefore it is not described here for longer.
+> The list of possible attacks is not final - for example, the content of the file may be a virus or malware, and must be controlled with an antivirus before it is used - but this attack is not CDOC2 specific, but applies to the use of any file obtained from an unreliable source, and therefore it is not described here for longer.
 
 First attack: An attacker can create a packed cargo, which, when unpacked, forms a giant file. If the receiver processes the cargo in memory, the application may crash. If the receiver writes the cargo on the disk, the disk can be full. When unpacking, it is reasonable to set the maximum allowable size for unpacked files and to check the size of the free memory or free disk space when unpacking. If the files to be unpacked are larger than allowed or the free memory or the free disk space has shrunk below the permitted limit, the unpacking must be interrupted, the files written on the disk must be removed and the error reported.
 
 Second attack: the attacker can manipulate the attributes of files contained in the tar file - names, permissions, security arguments and types. If such a tar file is unpacked without additional checks, the attacker may be able to overwrite existing system files, add new files, create files that are not visible to the average user but may be necessary for carrying out some attack, etc.
 
-Since the CDOC 2.0 container is not intended to be a universal archive format, but simply to offer the possibility of simultaneously encrypting multiple files while preserving the original names of the file for the convenience of users, a number of rules have been established for unpacking the tar file, the following of which provides protection against the aforementioned manipulations:
+Since the CDOC2 container is not intended to be a universal archive format, but simply to offer the possibility of simultaneously encrypting multiple files while preserving the original names of the file for the convenience of users, a number of rules have been established for unpacking the tar file, the following of which provides protection against the aforementioned manipulations:
 
 - When creating files, you must ignore the permission abits in the archive, the characteristics of the file owner and group, and other security arguments - all files must be created as non-launched, as the user who started the application, and as readable and writeable to him.
-- Only regular files (type 0) should be created. If there is another type of file in the archive, it is necessary to interrupt the unpacking, remove the files written on the disk so far, and make a mistake. A correct CDOC 2.0 client program must not create files that contain other types of files.
+- Only regular files (type 0) should be created. If there is another type of file in the archive, it is necessary to interrupt the unpacking, remove the files written on the disk so far, and make a mistake. A correct CDOC2 client program must not create files that contain other types of files.
 - Check the safety of the file name before writing the file to the disk. If you find a file name that contains unauthorized symbols, stop unpacking, remove the files that have been written on the disk so far, and make a mistake.
 Checking file name safety has the following objectives:
 - Avoid a directory jump (Path traversal) [7] attack and create files outside the user's specified directory.
@@ -588,7 +588,7 @@ This section defines the key transfer server (here also in the section: server),
 
 A key transfer server is a subsystem designed to transfer the key capsule required for decrypting a CDOC container from the transmitter to the receiver, following the rules described in Section 3 for a specific crypt sharpening scheme.
 
-The communication channel provided by the key transmission server is more secure than the public communication channels, whose folder is transmitted to CDOC 2.0 containers. A normally functioning key transfer server ensures the future security of the data transmitted in a crypto-directed manner, since an attacker who monitors a public communication channel cannot possess symmetrical encryption keys classified by means of crypto-algorithms with a public key - they move through the key transfer server in a secure manner. Thus, in the future, after breaking crypto algorithms with a public key or compromising private keys, an attacker cannot break crypto keys. The key transfer server does not have to mediate large encrypted documents - so the cost of operating it is low.
+The communication channel provided by the key transmission server is more secure than the public communication channels, whose folder is transmitted to CDOC2 containers. A normally functioning key transfer server ensures the future security of the data transmitted in a crypto-directed manner, since an attacker who monitors a public communication channel cannot possess symmetrical encryption keys classified by means of crypto-algorithms with a public key - they move through the key transfer server in a secure manner. Thus, in the future, after breaking crypto algorithms with a public key or compromising private keys, an attacker cannot break crypto keys. The key transfer server does not have to mediate large encrypted documents - so the cost of operating it is low.
 
 A number of key transmission servers may be used at any one time, and may be operated by different organisations. Security requirements established in the course of the investigation may require the operation of each individual key transmission server by independent organisations.
 
@@ -661,9 +661,9 @@ After successful authentication, the server reads the client's public key from t
 
 ## Server identification and trust
 
-The additional security features provided by CDOC 2.0 apply to the identification and trust of servers only if the key capsule is transmitted via the server rite with the features provided by the specific encryption scenario (see section 3).
+The additional security features provided by CDOC2 apply to the identification and trust of servers only if the key capsule is transmitted via the server rite with the features provided by the specific encryption scenario (see section 3).
 
-In order for the receiver and sender to be sure which servers they are communicating with, either in the DigiDoc software installation package or otherwise, a list of trusted key-transmission servers must be distributed to each client using the CDOC 2.0 format. The list is also used to embed TLS keys.
+In order for the receiver and sender to be sure which servers they are communicating with, either in the DigiDoc software installation package or otherwise, a list of trusted key-transmission servers must be distributed to each client using the CDOC2 format. The list is also used to embed TLS keys.
 
 This list contains the following elements:
 
@@ -687,7 +687,7 @@ More than one public key may be assigned to each server - this is necessary for 
 
 # Cryptographic Details
 
-This section describes all cryptographic calculations in CDOC 2.0 format. Most of these calculations are neutral with regard to the wider technological infrastructure, but in some cases there are specific links with the eID tools used in Estonia (e.g. ID-card) - these links are indicated in the respective places.
+This section describes all cryptographic calculations in CDOC2 format. Most of these calculations are neutral with regard to the wider technological infrastructure, but in some cases there are specific links with the eID tools used in Estonia (e.g. ID-card) - these links are indicated in the respective places.
 
 ## Security level and cryptographic algorithms used
 
@@ -715,7 +715,7 @@ Key lengths used for symmetrical keys.
 
 ## Succession of keys
 
-In order to inherit keys, the CDOC 2.0 format uses the HKDF key query function, which is specified as IETF RFC 5869 [17].
+In order to inherit keys, the CDOC2 format uses the HKDF key query function, which is specified as IETF RFC 5869 [17].
 
 RFC 5869 defines two key query functions: `HKDF-Extract` and `HKDF-Expand`, the benefits of which are described below. In the future, the shorter `Extract` and `Expand` variants will be used to mark these features.
 
@@ -725,13 +725,13 @@ All textual constants must be encoded by the UTF-8 encoding before they are give
 
 Commonly used symmetrical keys are inherited as follows:
 
-**File Master Key, FMK** _FMK ← Extract ("CDOC20salt,"random)_
+**File Master Key, FMK** _FMK ← Extract ("CDOC2salt,"random)_
 
-Where the _CDOC20salt_ has a constant string and the _random_ has a value of at least 256-bit, which is generated by cryptographically strong random number generator (CSPRNG).
+Where the _CDOC2salt_ has a constant string and the _random_ has a value of at least 256-bit, which is generated by cryptographically strong random number generator (CSPRNG).
 
-**Content Encryption Key, CEK** _CEK ← Expand (FMK,"CDOC20cek,"Loctets)_ The _Loctets_ function determines the output length of _Expand_ in bytes and must be the same as the key length of the symmetrical encryption algorithm that is to be forced (see section 6.6).
+**Content Encryption Key, CEK** _CEK ← Expand (FMK,"CDOC2cek,"Loctets)_ The _Loctets_ function determines the output length of _Expand_ in bytes and must be the same as the key length of the symmetrical encryption algorithm that is to be forced (see section 6.6).
 
-**Header HMAC Key, HHK** _HHK ← Expand (FMK,"CDOC20hmac,"32octets)_
+**Header HMAC Key, HHK** _HHK ← Expand (FMK,"CDOC2hmac,"32octets)_
 
 It is important to note that the length of HHK inherited in this way is 256 bits, or as much as the output of the used SHA-256 hash algorithm. This is due to the recommendations of the HMAC standard [18].
 
@@ -750,7 +750,7 @@ _Key Encryption Key_ (KEK) calculation depends on the type of receiver. Below, K
 
 ### ECCPublicKeyCapsule
 
-`ECCPublicKeyCapsule` (see Table 2) refers to a receiver identified by its ECC public key. The CDOC 2.0 format supports the use of any public key generated by the secp384r1 ellipt curve as the recipient. For example, this key may be the public key of the Estonian ID-card authentication key couple.
+`ECCPublicKeyCapsule` (see Table 2) refers to a receiver identified by its ECC public key. The CDOC2 format supports the use of any public key generated by the secp384r1 ellipt curve as the recipient. For example, this key may be the public key of the Estonian ID-card authentication key couple.
 
 The TLS 1.3 encoding used for the ellipt curve points is identical to the CDOC 1.0 for the secp384r1 curve.
 
@@ -780,9 +780,9 @@ The secret of shared ECDH is calculated by the sender as follows: _Secdh ← (sk
 
 KEK is calculated from the shared secret as follows:
 
-_KEKpm ← Extract ("CDOC20kekpremaster," Secdh)_
+_KEKpm ← Extract ("CDOC2kekpremaster," Secdh)_
 
-_KEK ← Expand (KEKpm, "CDOC20kek" || algId || pkrec || pkeph, Loctets)_
+_KEK ← Expand (KEKpm, "CDOC2kek" || algId || pkrec || pkeph, Loctets)_
 
 Here _algId_ of the crypto algorithm used for FMK encryption is defined as a string according to the `Recipient.FMKEncryptionMethod` field (section 6.4).
 
@@ -802,7 +802,7 @@ You can also use the Windows crypto functions `NCryptSecretAgrement` and `NCrypt
 - `pwszKDF` - constant `BCRYPT_KDF_HMAC`.
 - `pParameterList` - algorithm parameters:
     - `KDF_HASH_ALGORITHM` - constant `BCRYPT_SHA256_ALGORITHM`.
-    - `KDF_HMAC_KEY` - constant `CDOC20kekpremaster`.
+    - `KDF_HMAC_KEY` - constant `CDOC2kekpremaster`.
     - `KDF_SECRET_PREPEND` - this parameter should be omitted.
     - `KDF_SECRET_APPEND` - this parameter should be omitted.
 
@@ -888,7 +888,7 @@ KEK is calculated from the symmetrical key and the generated random number as fo
 
 _KEKpm ← Extract (salt, sym)_
 
-_KEK ← Expand (KEKpm, "CDOC20kek" algId label, Loctets)_
+_KEK ← Expand (KEKpm, "CDOC2kek" algId label, Loctets)_
 
 Here _algId_ is the identifier of the crypto algorithm used for FMK encryption as a string, according to the `Recipient.FMKencryptionMethod` field (Section 6.4).
 
@@ -938,7 +938,7 @@ The key is the CEK. Nonce is always generated fresh using a cryptographically st
 
 Additional information (_additionalData_) is used in the UTF-8 encoding of a predetermined string, a sequenced header, and a message authentication code for the header.
 
-_additionalData ← "CDOC20payload" || header || headerHMAC_
+_additionalData ← "CDOC2payload" || header || headerHMAC_
 
 An open text (_payLoad_) encryption function with output length of open text plus length of authentication mark is applied.
 
@@ -960,15 +960,15 @@ In the context of an envelope, a serialized payload is a response to the cipher 
 
 ## Reference realization
 
-CDOC 2.0 etalonrealisatsioon (reference implementation) is a command-line application implemented in the programming language Java, which is available at https://stash.ria.ee/projects/CDOC2/repos/cdoc20_java/.
+CDOC2 etalonrealisatsioon (reference implementation) is a command-line application implemented in the programming language Java, which is available at https://stash.ria.ee/projects/CDOC2/repos/cdoc20_java/.
 
-The reference realization is written by the authors of the CDOC 2.0 specification and its source code is strongly recommended for other realizers of the specification to read.
+The reference realization is written by the authors of the CDOC2 specification and its source code is strongly recommended for other realizers of the specification to read.
 
 The reference realization can also be used for compatibility tests.
 
 ## Test vectors
 
-Test vectors are sets of data that allow testing of CDOC 2.0 realizations. Test vectors are included in the reference realization, in the `test/testvectors/` catalogue.
+Test vectors are sets of data that allow testing of CDOC2 realizations. Test vectors are included in the reference realization, in the `test/testvectors/` catalogue.
 
 # References
 
@@ -976,7 +976,7 @@ Test vectors are sets of data that allow testing of CDOC 2.0 realizations. Test 
 
 [2] Required modifications to CDOC for elliptical curve support. Cybernetica AS, Report number A-101-7, https://www.ria.ee/media/1974/download. September 2017.
 
-[3] Kristjan Krips, Mart Oruaas and Jan Willemson. CDOC 2.0 analysis. Technical report. Cyber-netica, 2020.
+[3] Kristjan Krips, Mart Oruaas and Jan Willemson. CDOC2 analysis. Technical report. Cyber-netica, 2020.
 
 [4] Mats Nemec et al. "The Return of Coppersmith's Attack: Practical Factorization of Widely Used RSA Moduli." In: Proceedings of the 2017 ACM SIGSAC Conference on Com- Puter and Communications Security, CCS 2017, Dallas, TX, USA, October 30 - November 03, 2017. That's the thing. Bhavani Thuraisingham et al. ACM, 2017, p. 1631-1648. DOI: 10.1145/ 3133956.3133969. URL: https://doi.org/10.1145/3133956.3133969.
 
@@ -1115,17 +1115,17 @@ table SymmetricKeyCapsule {
 }
 ```
 
-# APPENDIX C cdoc20-key-capsules.yaml
+# APPENDIX C cdoc2-key-capsules.yaml
 
 ```yaml
-# Key Capsules API, version 2.0 of cdoc20services API
+# Key Capsules API, version 2.0 of cdoc2services API
 openapi: 3.0.3
 info:
     contact:
         url: http://cyber.ee
-    title: cdoc20-key-capsules
+    title: cdoc2-key-capsules
     version: '2.0'
-    description: API for exchanging CDOC2.0 ephemeral key material in key capsules
+    description: API for exchanging CDOC2 ephemeral key material in key capsules
 servers:
     - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8443'
     description: RIA test TLS
@@ -1138,7 +1138,7 @@ paths:
             summary: Get key capsule for transactionId
             description: Get key capsule for transactionId
             tags:
-                - cdoc20-key-capsules
+                - cdoc2-key-capsules
             parameters:
                 - name: transactionId
                 in: path
@@ -1187,7 +1187,7 @@ paths:
                             $ref: '#/components/schemas/Capsule'
             security: []
             tags:
-                - cdoc20-key-capsules
+                - cdoc2-key-capsules
 components:
     schemas:
         Capsule:
@@ -1230,5 +1230,5 @@ components:
             type: http
             scheme: basic
 tags:
-  - name: cdoc20-key-capsules
+  - name: cdoc2-key-capsules
 ```

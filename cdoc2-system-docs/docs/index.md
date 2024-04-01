@@ -6,13 +6,13 @@ title: Introduction
 
 ## Goal
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 1.1 "Eesmärk"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.1 "Eesmärk"
 
 This documentation aims to describe the CDOC2 system.
 
 ## Document scope
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 1.2 "Käsitlusala"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
 
 ## Terms and acronyms
 
@@ -56,4 +56,4 @@ TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 1.2 "Käsitlusala"
 
 ## Short overview
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 1.5 "Ülevaade"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.5 "Ülevaade"

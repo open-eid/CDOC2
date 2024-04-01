@@ -6,7 +6,7 @@ title: 2. CDOC2 container format
 
 ## Abstracted format
 
-This section describes the CDOC 2.0 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.
+This section describes the CDOC2 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.
 
 ### Basic principles
 
@@ -158,7 +158,7 @@ Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32
 
 ### Header and HMAC
 
-The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under `cdoc20-schema/`.
+The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under `cdoc2-schema/`.
 The schema is described in two files and reproduced as appendices to the specification.
 
 - ``src/main/fbs/header.fbs`` Description of the FlatBuffers header.
@@ -181,7 +181,7 @@ The encryption of the payload is described in section [Payload assembly and encr
 ### Format composition procedure
 
 This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
-The following steps are needed to compose a CDOC 2.0 container.
+The following steps are needed to compose a CDOC2 container.
 
 - Compile the list of all recipients.
 - Generate FMK, HHK, and CEK.
@@ -266,7 +266,7 @@ The container payload plaintext is formed as follows: the transmitted files (or 
 
 ### Requirements for POSIX tar archive assembly
 
-Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC 2.0. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.
+Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC2. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.
 
 - [Standardized POSIX tar dialect](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html) is used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.
 - All file names are UTF-8 encoded.
@@ -281,21 +281,21 @@ Given the long history and large number of variations of the tar format, this su
 
 The payload format is chosen to enable unpacking in streaming mode. This means the encrypted payload does not have to be loaded to memory in one piece. The payload can be decrypted, unpacked, and files written to the disk in plaintext sequentially.
 
-When data is processed in streaming mode, the decrypted data will be used before encryption checksum verification. Unpacking must be done with account of the possibility that the payload could be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC 2.0 container is unauthenticated, the possibility of the payload having been assembled by an attacker must always be accounted for, even if the encryption checksums match.
+When data is processed in streaming mode, the decrypted data will be used before encryption checksum verification. Unpacking must be done with account of the possibility that the payload could be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker must always be accounted for, even if the encryption checksums match.
 
 When processing data in streaming mode, errors encountered in processing the plaintext (packing or archival errors) cannot be handled before the entire payload has been processed and the cryptogram authenticated. If cryptogram authentication fails, this must be reported as an error. Errors encountered in plaintext processing can only be reported if cryptogram authentication was successful. In case of an error, all created files must be deleted.
 
     Below, we have described two types of attacks that software based on this specification must be able to deploy countermeasures against.
-    The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC 2.0 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
+    The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
 
 Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.
 
 Attack 2: The attacker may manipulate the attributes of the files in the tar archive – file names, permission bits, security attributes and types. In case such a tar file is unpacked without additional checks, the attacker may be able to overwrite existing system files, add new files, create files invisible to normal users but necessary for certain attacks, etc.
 
-Since the CDOC 2.0 container is not meant to serve as a universal archive format but simply provide a means for the simultaneous encryption of multiple files while retaining original file names for the user’s convenience, a number of rules have been set out for the unpacking of tar files which will ensure protection from the forms of manipulation described above if enforced:
+Since the CDOC2 container is not meant to serve as a universal archive format but simply provide a means for the simultaneous encryption of multiple files while retaining original file names for the user’s convenience, a number of rules have been set out for the unpacking of tar files which will ensure protection from the forms of manipulation described above if enforced:
 
 - File creation must ignore permission bits, file owner and group identifiers and other security attributes found in the archive – all files must be created non-executable, owned by the user running the application, and readable and writable by this	 user.
-- Only normal files (type 0) must be created. If the archive contains a file of some other type, abort unpacking, delete files written to the disk before this point, and return an error message. A correctly implemented CDOC 2.0 client application should not create files containing files of other types.
+- Only normal files (type 0) must be created. If the archive contains a file of some other type, abort unpacking, delete files written to the disk before this point, and return an error message. A correctly implemented CDOC2 client application should not create files containing files of other types.
 - Validate file name safety before writing a file to the disk. If a file name containing unpermitted symbols is found, abort unpacking, delete files written to the disk before this point, and return an error message.
 
 File name safety verification serves the following purposes:

@@ -1,12 +1,12 @@
-# Appendix C: Key Capsules API, version 2.0 of cdoc20services API
+# Appendix C: Key Capsules API, version 2.0 of cdoc2services API
 
     openapi: 3.0.3
     info:
     contact:
         url: http://cyber.ee
-    title: cdoc20-key-capsules
+    title: cdoc2-key-capsules
     version: '2.0'
-    description: API for exchanging CDOC2.0 ephemeral key material in key capsules
+    description: API for exchanging CDOC2 ephemeral key material in key capsules
     servers:
     - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8443'
         description: RIA test TLS
@@ -19,7 +19,7 @@
         summary: Get key capsule for transactionId
         description: Get key capsule for transactionId
         tags:
-            - cdoc20-key-capsules
+            - cdoc2-key-capsules
         parameters:
             - name: transactionId
             in: path
@@ -68,7 +68,7 @@
                 $ref: '#/components/schemas/Capsule'
         security: []
         tags:
-            - cdoc20-key-capsules
+            - cdoc2-key-capsules
     components:
     schemas:
         Capsule:
@@ -111,4 +111,4 @@
         type: http
         scheme: basic
     tags:
-    - name: cdoc20-key-capsules
+    - name: cdoc2-key-capsules

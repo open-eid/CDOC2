@@ -1,6 +1,6 @@
 # Purpose and scope of testing
 
-The test plan presented herein describes tasks related to testing the CDOC 2.0 key server (hereinafter also simply ‘server’). The test plan does not cover the client-side components of CDOC 2.0; it is solely focused on the server side of the system.
+The test plan presented herein describes tasks related to testing the CDOC2 key server (hereinafter also simply ‘server’). The test plan does not cover the client-side components of CDOC2; it is solely focused on the server side of the system.
 
 Within the scope of the test plan presented here, server testing serves two main purposes:
 

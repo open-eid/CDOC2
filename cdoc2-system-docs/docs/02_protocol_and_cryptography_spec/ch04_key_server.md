@@ -10,7 +10,7 @@ This section defines the key server (herein also simply ‘the server’), its e
 
 The key server is a subsystem tasked with transmitting the key capsule required for the decryption of the CDOC container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](ch02_encryption_schemes.md#cdoc2-encryption-schemes).
 
-The communication channel provided by the key server is more secure than public channels of communication used for the transmission of CDOC 2.0 containers. A properly operating key server ensures the future-proofness of data transmitted in an encrypted form, as an attacker monitoring the public communication channel will not be able to acquire symmetric cryptographic keys secured with public key encryption algorithms: the keys are securely transmitted via the key server. The attacker will therefore be unable to break the encryption keys at a later time, after breaking the public key encryption algorithms or the compromising of the private keys. The key server does not need to transmit large encrypted documents, meaning that its operating costs will be low.
+The communication channel provided by the key server is more secure than public channels of communication used for the transmission of CDOC2 containers. A properly operating key server ensures the future-proofness of data transmitted in an encrypted form, as an attacker monitoring the public communication channel will not be able to acquire symmetric cryptographic keys secured with public key encryption algorithms: the keys are securely transmitted via the key server. The attacker will therefore be unable to break the encryption keys at a later time, after breaking the public key encryption algorithms or the compromising of the private keys. The key server does not need to transmit large encrypted documents, meaning that its operating costs will be low.
 
 Multiple key servers may be used in parallel, operated by different organizations. Security requirements established in the implementation process may call for the operation of each individual key server by organizations independent from each other.
 
@@ -43,7 +43,7 @@ Server state consists of the key capsules received by the server for transmissio
 
 The server provides two interfaces: one for delivery of the key capsule from the sender to the key server and the other for delivery of the key capsule from the server to the recipient.
 
-The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [appendix C](appendix_c_cdoc20-key-capsules.md)).
+The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [appendix C](appendix_c_cdoc2-key-capsules.md)).
 
 ### Sender interface
 
@@ -81,8 +81,8 @@ After successful authentication, the server reads the client’s public key from
 
 ## Server identification and trust
 
-Enhanced security features provided by CDOC 2.0 are only valid if the key capsule is transmitted via servers meeting the requirements of the specific encryption scenario (see section 3).
-To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC 2.0 format must be provided with a list of trusted key servers either as a part of the DigiDoc software package or in some other form. This list is also used for TLS key pinning.
+Enhanced security features provided by CDOC2 are only valid if the key capsule is transmitted via servers meeting the requirements of the specific encryption scenario (see section 3).
+To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted key servers either as a part of the DigiDoc software package or in some other form. This list is also used for TLS key pinning.
 The server list consists of the following elements.
 
 - Server identifier

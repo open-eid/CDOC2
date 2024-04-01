@@ -1,16 +1,27 @@
 {
     "cSpell.words": [
+        "Bitwarden",
         "cdoc",
         "CDOC",
         "CKCTS",
         "CSRNG",
+        "CTAP",
         "DigiDoc4",
         "ECDH",
         "ECSVDP",
         "HKDF",
+        "hmac",
         "HMAC",
+        "HOTP",
+        "KeeChallenge",
         "linenums",
-        "RSAES"
+        "RSAES",
+        "secp256r1",
+        "TOTP",
+        "Yubi",
+        "yubico",
+        "Yubico",
+        "Yubikey"
     ],
     "markdown.extension.orderedList.autoRenumber": false
 }

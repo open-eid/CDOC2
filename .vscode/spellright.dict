@@ -1,5 +1,6 @@
 cdoc
 cdoc2.vpp
+Bitwarden
 Passphrases
 ciphertext
 approx
@@ -7,3 +8,8 @@ cdot
 frac
 Diffie
 markdownlint
+WebAuthn
+credBlob
+secp256r1
+Yubikey
+KeeChallenge

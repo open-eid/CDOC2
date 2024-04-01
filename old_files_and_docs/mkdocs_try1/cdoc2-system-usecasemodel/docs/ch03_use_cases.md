@@ -42,7 +42,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 ### UC.Client.01 — Encrypt CDOC2 Container for sending to Recipient with security token
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.1 "UC.CLIENT.01 Krüpteeri sõnum"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 3.2.1 "UC.CLIENT.01 Krüpteeri sõnum"
 
 **Use Case Context**
 : CDOC2 Client Application (Client) adds Sender's chosen files into the CDOC2 Container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient.
@@ -73,7 +73,7 @@ TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.1 "UC.CLIENT.01 Krüpteeri
 
 ### UC.Client.02 — Decrypt CDOC2 Container with Recipient's security token
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.2 "UC.CLIENT.02 Dekrüpteeri sõnum"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 3.2.2 "UC.CLIENT.02 Dekrüpteeri sõnum"
 
 ## Use cases for Recipients to be authenticated by CKCTS
 
@@ -125,7 +125,7 @@ Scheme:
     CDOC2 servers are configured in client configuration.
     Sender gets `transactionID` for each share. [^1] FBS and OAS
 
-9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/blob/RM-55885/cdoc20-schema/src/main/fbs/recipients.fbs#L70)
+9. Sender adds `encrypted FMK`, `salt`, `key_label` and `server:transactionId` pairs into CDOC2 header. [FBS](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-schema/src/main/fbs/recipients.fbs#L70)
 
     !!! info "TODO"
         _JK:In current FBS and OAS spec, instead of server:transactionId pair,
@@ -178,17 +178,17 @@ These use cases are useful when End-user wishes to protect confidential files by
 
 ## UC.CLIENT.01 Encrypt Message
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.1 "UC.CLIENT.01 Krüpteeri sõnum"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 3.2.1 "UC.CLIENT.01 Krüpteeri sõnum"
 
 ## UC.CLIENT.02 Decrypt Message
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.2 "UC.CLIENT.02 Dekrüpteeri sõnum"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 3.2.2 "UC.CLIENT.02 Dekrüpteeri sõnum"
 
 ## UC.CLIENT.03 Encrypt For Storage (with password)
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 3.2.3 "UC.CLIENT.03 Krüpteeri parooliga säilitamiseks"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 3.2.3 "UC.CLIENT.03 Krüpteeri parooliga säilitamiseks"
 
-MERGE WITH <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm55854#cdoc-20-with-symmetric-key-from-password>
+MERGE WITH <https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java#cdoc2-with-symmetric-key-from-password>
 
 # CDOC2 Key Transmission Server use cases
 
@@ -196,17 +196,17 @@ MERGE WITH <https://gitlab.cyber.ee/cdoc-2.0/cdoc20_java/-/tree/rm55854#cdoc-20-
 
 ## UC.KTS.01 Upload Key Capsule
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 4.2.1 "UC.KS.01 Edasta võtmekapsel"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 4.2.1 "UC.KS.01 Edasta võtmekapsel"
 
 ## UC.KTS.02 Download Key Capsule
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 4.2.2 "UC.KS.02 Päri võtmekapsel"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 4.2.2 "UC.KS.02 Päri võtmekapsel"
 
 ## UC.KTS.03 Delete Key Capsule
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 4.2.3 "UC.KS.03 Kustuta võtmekapsel"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 4.2.3 "UC.KS.03 Kustuta võtmekapsel"
 
 ## UC.KTS.04 Authenticate Recipient
 
-TO-TRANSLATE "CDOC2.0 kasutusmallimudel", Section 4.2.4 "UC.KS.04 Autendi Vastuvõtja"
+TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 4.2.4 "UC.KS.04 Autendi Vastuvõtja"
 
