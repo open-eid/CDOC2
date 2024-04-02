@@ -30,23 +30,11 @@ The header consists of one or several structures describing a recipient. Each re
 
 A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
 
-    Header = {
-        Recipients              = :Recipient[](1..k)
-        PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
-    }
-
-```plantuml
-@startjson
-{
-    "CDOC2 Container": {
-        "Header": [
-            "Recipients",
-            "PayloadEncryptionMethod"
-        ],
-        "Payload": "encrypted payload"
-    }
+```yaml
+Header = {
+    Recipients              = :Recipient[](1..k)
+    PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
 }
-@endjson
 ```
 
 A message authentication code is computed for the header (see section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code)):
@@ -55,7 +43,38 @@ A message authentication code is computed for the header (see section [Header au
         value = HMAC(HHK, Serialize(Header))
     }
 
+```plantuml
+@startyaml
+CDOC Container:
+    - Header
+    - HeaderChecksumBytes
+    - EncryptedPayload
+@endyaml
+```
+
+```plantuml
+@startyaml
+Header:
+    Recipients[]:
+        - Recipient_1
+        - Recipient_2
+        - ...
+    PayloadEncryptionMethod: ""
+@endyaml
+```
+
+```plantuml
+@startyaml
+Recipient:
+    Capsule: Capsule for Recipient i,
+    KeyLabel: label,
+    EncryptedFMK: ...WpezYaBzPbsQw+vUbDTvA==,
+    FMKEncryptionMethod: "XOR"
+@endyaml
+```
+
 The recipient is described using the structure ``Recipient``. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of ``Recipient``.
+
 
     Recipient = {
         Capsule = Union(:ECCPublicKeyCapsule | :KeyServerCapsule | 
