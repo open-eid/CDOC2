@@ -1,3 +1,3 @@
 title: "Test Plan"
 nav:
-    - 'Key Capsule Transmission Server Test Plan': test_plan.md
+    - 'Capsule Server Test Plan': test_plan.md

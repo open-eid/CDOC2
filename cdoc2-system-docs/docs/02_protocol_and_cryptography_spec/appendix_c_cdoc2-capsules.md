@@ -6,7 +6,7 @@
         url: http://cyber.ee
     title: cdoc2-key-capsules
     version: '2.0'
-    description: API for exchanging CDOC2 ephemeral key material in key capsules
+    description: API for exchanging CDOC2 ephemeral key material in capsules
     servers:
     - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8443'
         description: RIA test TLS
@@ -16,8 +16,8 @@
     paths:
     '/key-capsules/{transactionId}':
         get:
-        summary: Get key capsule for transactionId
-        description: Get key capsule for transactionId
+        summary: Get capsule for transactionId
+        description: Get capsule for transactionId
         tags:
             - cdoc2-key-capsules
         parameters:
@@ -47,7 +47,7 @@
             - mutualTLS: []
     '/key-capsules':
         post:
-        summary: Add Key Capsule
+        summary: Add Capsule
         description: Save Capsule and generate transaction id using secure random. Generated transactionId is returned in Location header
         operationId: createCapsule
         responses:

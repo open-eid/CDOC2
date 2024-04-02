@@ -51,7 +51,7 @@ The recipient is described using the structure ``Recipient``. The format of the 
         FMKEncryptionMethod = :enum(XOR)
     }
 
-The ``Recipient`` structure consists of a key capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
+The ``Recipient`` structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
 
 - ``Capsule`` – encryption method specific data that the recipient can use to decrypt the FMK.
 - ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
@@ -59,16 +59,16 @@ The ``Recipient`` structure consists of a key capsule, a recipient key label, an
 - ``FMKEncryptionMethod`` –FMK encryption method type.
 
 Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
-The following key capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
+The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
 
 - ``ECCPublicKeyCapsule`` – the recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-direct-encryption-scheme-for-recipient-with-ec-keys).
-- ``RSAPublicKeyCapsule`` – the recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the key capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-key-transmission-server-scheme-for-recipients-with-ec-keys).
-- ``KeyServerCapsule`` – the recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the recipient for authentication on a key server. The key server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-key-transmission-server-scheme-for-recipients-with-rsa-keys) encryption methods.
+- ``RSAPublicKeyCapsule`` – the recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
+- ``KeyServerCapsule`` – the recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
 - ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
 
 This list may be expanded in future versions of the specification.
 
-### Key capsule types
+### Capsule types
 
 ECC public key capsule. The recipient is identified by ECC public key ``RecipientPublicKey``.
 
@@ -92,7 +92,7 @@ RSA public key capsule. The recipient is identified by RSA public key ``Recipien
 - ``RecipientPublicKey`` - recipient’s RSA public key, used by the recipient to establish the corresponding recipient record.
 - ``EncryptedKEK`` -  key encryption key encrypted with the receipient's public key.
 
-Key server capsule. The receipient is identified by ECC or RSA public key ``RecipientPublicKey``.
+Server capsule. The receipient is identified by ECC or RSA public key ``RecipientPublicKey``.
 
     KeyServerCapsule = {
         RecipientKey = Union(:EccKeyDetails | :RsaKeyDetails)
@@ -109,9 +109,9 @@ Key server capsule. The receipient is identified by ECC or RSA public key ``Reci
             RecipientPublicKey = :byte[]
     }
 
-- ``RecipientKey`` – information on the recipient key, used by the recipient for authentication on the key server.
-- ``KeyServerID`` – key server identifier. The recipient must be able to use this to establish the key server’s network address and connect to the server.
-- ``TransactionID`` – identifier of the key capsule sent to the key exchange server by the sender for transmission to the recipient.
+- ``RecipientKey`` – information on the recipient key, used by the recipient for authentication on the Capsule Server.
+- ``KeyServerID`` – Capsule Server identifier. The recipient must be able to use this to establish the Capsule Server’s network address and connect to the server.
+- ``TransactionID`` – identifier of the capsule sent to the key exchange server by the sender for transmission to the recipient.
 
 Symmetric key capsule. The recipient is identified by the label of the symmetric key held by the user, ``KeyLabel``.
 
@@ -133,7 +133,7 @@ The specification describes the implementation of the abstracted format using th
 
 The format consists of an envelope, which is essentially made up of a serialized and concatenated header, a message authentication code, and a payload.
 The message authentication code and payload are serialized using simple serialization.
-For the sake of extensibility and the necessity of transmitting messages identical to the header from the point of view of processing logic via the key server, the header is described here with reference to the FlatBuffers format.
+For the sake of extensibility and the necessity of transmitting messages identical to the header from the point of view of processing logic via the capsule server, the header is described here with reference to the FlatBuffers format.
 Aside from the header extension mechanism, the envelope used in this format also defines another point of extension.
 This point of extension is provided by the version identifier, set as 2 (byte value) in the specification. The identifier must be changed in the descriptions of new versions.
 

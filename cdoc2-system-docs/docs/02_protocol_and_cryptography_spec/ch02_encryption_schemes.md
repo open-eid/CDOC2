@@ -43,13 +43,13 @@ In general, CDOC2 system implements encryption of payload of CDOC2 Container wit
 1. Sender generates a random FMK, which is used as a master key material for deriving other specific cryptographic keys.
 2. From FMK, Sender derives a CEK, which is used for encrypting the payload of CDOC2 Container, and additional HMAC keys, which are used to protect the integrity of CDOC2 Container.
 3. FMK is encrypted (wrapped) with a recipient-specific key encryption key (KEK) and added to the CDOC2 Container. It now depends on the capabilities of the Recipient, how this KEK is made available to Recipient, so that they could decrypt the encrypted FMK and in turn, the whole Container. For example, some Recipients may be able to use eID means, which are capable of Diffie-Hellman key exchange, some may be able to use authentication-only eID means and some may only be able to use pre-shared password.
-4. Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "key capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, capsule transmission server(s) could be used.
+4. Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.
 
 *TODO: Possible place for explanatory diagram?*
 
 <!--- no good place for this text: 
 
-## Key Capsule
+## Capsule
 
 In summary, the `Capsule_i` could be such Capsule, which contains all necessary information locally,
 
@@ -66,7 +66,7 @@ or such Capsule, which contains information, where to retrieve information to re
 
 ## Encryption schemes with key-establishment algorithms
 
-These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and key capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.
+These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.
 
 ### SC01: Encryption scheme for Recipients with EC key pair
 
@@ -105,7 +105,7 @@ M = Dec(CEK, C)
 
 ### SC02: Encryption scheme for recipients with RSA key pair
 
-This scheme can be used for transmitting encrypted messages to Recipients holding a RSA key pair. Scheme uses RSA-OAEP encryption scheme to protect the FMK decryption key (KEK). Wrapped KEK is included in the key capsule, which is transmitted to the Recipient within the CDOC2 Container.
+This scheme can be used for transmitting encrypted messages to Recipients holding a RSA key pair. Scheme uses RSA-OAEP encryption scheme to protect the FMK decryption key (KEK). Wrapped KEK is included in the capsule, which is transmitted to the Recipient within the CDOC2 Container.
 
 Note that, while it is also possible to use Diffie-Hellman key exchange algorithm with RSA key pair, in order to derive the KEK between Sender and Recipient, a direct RSAES-PKCS1-v1_5 or RSA-OAEP encryption scheme has been traditionally used with CDOC1 applications and therefore, support for this scheme has been carried over to CDOC2 system as well.
 
@@ -136,13 +136,13 @@ CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
 ```
 
-## Encryption schemes using key capsule transmission servers
+## Encryption schemes using Capsule Servers
 
-These schemes are usable, in case the Sender wishes to use capsule transmission server as a separate transmission channel for sending key capsules to Recipients. CDOC2 Container itself is still transmitted within the usual transmission channel.
+These schemes are usable, in case the Sender wishes to use Capsule Server as a separate transmission channel for sending key capsules to Recipients. CDOC2 Container itself is still transmitted within the usual transmission channel.
 
-### SC03: Encryption scheme with capsule transmission server for recipients with EC key pairs
+### SC03: Encryption scheme with capsule server for recipients with EC key pairs
 
-This scheme uses same kind of key-establishment algorithm, as [scheme SC01](#sc01-encryption-scheme-for-recipients-with-ec-key-pair), but Capsule is transmitted via the capsule transmission servers.
+This scheme uses same kind of key-establishment algorithm, as [scheme SC01](#sc01-encryption-scheme-for-recipients-with-ec-key-pair), but Capsule is transmitted via the Capsule Servers.
 
 #### Encryption steps by Sender
 
@@ -161,7 +161,7 @@ EncryptedFMK_i = XOR(FMK, KEK_i)
 
 #### Decryption steps by Recipients
 
-Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has ECDSA public key `PK_i` and corresponding ECDSA secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from key transmission server.
+Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has ECDSA public key `PK_i` and corresponding ECDSA secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from Capsule Server.
 
 Decryption steps are exactly the same:
 
@@ -174,9 +174,9 @@ CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
 ```
 
-### SC04: Encryption scheme with capsule transmission server for recipients with RSA key pairs
+### SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
 
-This scheme uses same kind of RSA-OAEP encryption scheme, as [scheme SC02](#sc02-encryption-scheme-for-recipients-with-rsa-key-pair), but Capsule is transmitted via the capsule transmission server.
+This scheme uses same kind of RSA-OAEP encryption scheme, as [scheme SC02](#sc02-encryption-scheme-for-recipients-with-rsa-key-pair), but Capsule is transmitted via Capsule Server.
 
 #### Encryption steps by Sender
 
@@ -195,7 +195,7 @@ EncryptedFMK_i = XOR(FMK, KEK_i)
 
 #### Decryption steps by Recipients
 
-Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has RSA public key `PK_i` and corresponding RSA secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from key transmission server. Recipient authenticates to key transmission server with RSA key pair `(SK_i, PK_i)`.
+Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has RSA public key `PK_i` and corresponding RSA secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from Capsule server. Recipient authenticates to Capsule Server with RSA key pair `(SK_i, PK_i)`.
 
 Decryption steps are exactly the same:
 

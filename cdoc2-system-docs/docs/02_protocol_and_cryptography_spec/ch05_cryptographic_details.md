@@ -79,7 +79,7 @@ Key Encryption Key (KEK) computation depends on recipient type. Below, KEK compu
 
 ``ECCPublicKeyCapsule`` (see [table 2](#table-2-eccpublickeycapsule-elements)) refers to a recipient identified by their ECC public key. The CDOC2 format supports the use of any public key generated on a *secp384r1* elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
 For the *secp384r1* curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
-The ``ECCPublicKeyCapsule`` structure corresponds to the key capsule capsi in the sense of the protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#direct-key-agreement-based-ecdh) and [Key server-based ECDH](ch02_encryption_schemes.md#key-server-based-ecdh).
+The ``ECCPublicKeyCapsule`` structure corresponds to the capsule capsi in the sense of the protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#direct-key-agreement-based-ecdh) and [Capsule server-based ECDH](ch02_encryption_schemes.md#key-server-based-ecdh).
 
 #### Table 2. *ECCPublicKeyCapsule* elements
 
@@ -154,7 +154,7 @@ This shared secret must be used to compute KEK as described above with reference
 ### RSAPublicKeyCapsule
 
 *RSAPublicKeyCapsule* (see [table 3](#table-3-rsapublickeycapsule-elements)) refers to a recipient identified by their RSA public key.
-The structure *RSAPublicKeyCapsule* corresponds to the key capsule *capsi* in the sense of the protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#direct-key-agreement-based-ecdh) and [Key server-based ECDH](ch02_encryption_schemes.md#key-server-based-ecdh).
+The structure *RSAPublicKeyCapsule* corresponds to the capsule *capsi* in the sense of the protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#direct-key-agreement-based-ecdh) and [Capsule server-based ECDH](ch02_encryption_schemes.md#key-server-based-ecdh).
 
 The sender generates a random KEK and encrypts it using the recipient’s RSA public key with OAEP padding. The recipient decrypts the encrypted KEK using their RSA private key. Details of the computations are provided below.
 
@@ -182,12 +182,12 @@ The recipient decrypts the encrypted KEK using their private key and the same pa
 
 ### KeyServerCapsule
 
-The key server described by the ``KeyServerCapsule`` structure (see [table 4](#table-4-keyservercapsule-elements)) returns the following structures which are handled as described in the referenced sections:
+The Capsule Server described by the ``KeyServerCapsule`` structure (see [table 4](#table-4-keyservercapsule-elements)) returns the following structures which are handled as described in the referenced sections:
 
 - *ECCPublicKeyCapsule*: section [ECCPublicKeyCapsule](#eccpublickeycapsule).
 - *RSAPublicKeyCapsule*: section [RSAPublicKeyCapsule](#rsapublickeycapsule).
 
-The details of using *KeyServerCapsule* are described in section [Key server](ch04_key_server.md#key-server).
+The details of using *KeyServerCapsule* are described in section [Capsule server](ch04_capsule_server.md#key-server).
 
 ### SymmetricKeyCapsule
 
@@ -199,9 +199,9 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 
 Field | Contents | Encoding
 ----------- | ----------- | -----------
-RecipientKey | Information on recipient key used by the recipient for authentication with the key server. | -
-KeyServerID | Key server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](ch04_key_server.md#server-identification-and-trust).
-TransactionID | Transaction identifier | UTF-8 string assigned by the key server
+RecipientKey | Information on recipient key used by the recipient for authentication with the capsule server. | -
+KeyServerID | Capsule server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](ch04_capsule_server.md#server-identification-and-trust).
+TransactionID | Transaction identifier | UTF-8 string assigned by the capsule server
 
 #### Table 5. SymmetricKeyCapsule elements
 
