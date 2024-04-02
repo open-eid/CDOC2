@@ -47,6 +47,8 @@ markdown_extensions:
       title: "In this chapter:"
       permalink: true
       separator: "-"
+  - plantuml_markdown:
+      server: https://plantuml.cyber.ee
   - pymdownx.details
   - pymdownx.critic:
       mode: view

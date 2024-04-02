@@ -35,6 +35,20 @@ A message authentication code is computed for the header using a key derived fro
         PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
     }
 
+```plantuml
+@startjson
+{
+    "CDOC2 Container": {
+        "Header": [
+            "Recipients",
+            "PayloadEncryptionMethod"
+        ],
+        "Payload": "encrypted payload"
+    }
+}
+@endjson
+```
+
 A message authentication code is computed for the header (see section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code)):
 
     Checksum = {
