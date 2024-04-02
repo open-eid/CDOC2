@@ -1,31 +1,33 @@
 # Appendix A: header.fbs
+
     include "recipients.fbs";
 
-    namespace Header;
+    namespace ee.cyber.cdoc2.fbs.header;
 
     // Union for communicating the recipient type
     union Capsule {
         recipients.ECCPublicKeyCapsule,
         recipients.RSAPublicKeyCapsule,
         recipients.KeyServerCapsule,
-        recipients.SymmetricKeyCapsule
+        recipients.SymmetricKeyCapsule,
+        recipients.PBKDF2Capsule
     }
 
     // FMK encryption method enum.
-    enum FMKEncryptionMethod:byte { 
+    enum FMKEncryptionMethod:byte {
         UNKNOWN,
         XOR
     }
 
     // Payload encryption method enum.
-    enum PayloadEncryptionMethod:byte { 
+    enum PayloadEncryptionMethod:byte {
         UNKNOWN,
         CHACHA20POLY1305
     }
 
     // Intermediate record, some languages act very poorly when it comes
     // to an array of unions.
-    // Thus it is better to have an an array of tables that 
+    // Thus it is better to have an an array of tables that
     // contains the union as a field.
     table RecipientRecord {
         capsule:                Capsule;

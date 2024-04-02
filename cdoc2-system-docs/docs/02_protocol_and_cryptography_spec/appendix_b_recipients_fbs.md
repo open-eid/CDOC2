@@ -1,7 +1,8 @@
 # Appendix B: recipients.fbs
-    namespace Recipients;
 
-    //for future proofing and data type
+    namespace ee.cyber.cdoc2.fbs.recipients;
+
+    //server recipient type
     union KeyDetailsUnion {
         EccKeyDetails, RsaKeyDetails
     }
@@ -12,9 +13,14 @@
         secp384r1
     }
 
+    // KDF algorithm identifier enum
+    enum KDFAlgorithmIdentifier:byte {
+        UNKNOWN,
+        PBKDF2WithHmacSHA256
+    }
 
     table RsaKeyDetails {
-        //RSA pub key in DER
+        //RSA pub key in DER - RFC8017 RSA Public Key Syntax (A.1.1) https://www.rfc-editor.org/rfc/rfc8017#page-54
         recipient_public_key:   [ubyte] (required);
     }
 
@@ -22,7 +28,7 @@
         // Elliptic curve type enum
         curve:                 EllipticCurve = UNKNOWN;
 
-        //EC pub key in TLS format 
+        //EC pub key in TLS 1.3 format https://datatracker.ietf.org/doc/html/rfc8446#section-4.2.8.2
         //for secp384r1 curve: 0x04 + X 48 coord bytes + Y coord 48 bytes)
         recipient_public_key:  [ubyte] (required);
     }
@@ -39,15 +45,24 @@
         encrypted_kek:         [ubyte] (required);
     }
 
-
+    // recipient where ephemeral key material is download from server (server scenarios)
     table KeyServerCapsule {
+        // recipient id - key type specific. For public key cryptography this is usually recipient public key
         recipient_key_details: KeyDetailsUnion;
         keyserver_id:          string (required);
         transaction_id:        string (required);
     }
 
-
     // symmetric long term crypto
     table SymmetricKeyCapsule {
         salt:                 [ubyte] (required);
+    }
+
+    // password derived key
+    table PBKDF2Capsule {
+        // HKDF salt to derive KEK
+        salt:                     [ubyte] (required);
+        password_salt:            [ubyte] (required);
+        kdf_algorithm_identifier: KDFAlgorithmIdentifier = UNKNOWN;
+        kdf_iterations:           int32;
     }
