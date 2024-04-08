@@ -23,5 +23,6 @@
         "Yubico",
         "Yubikey"
     ],
-    "markdown.extension.orderedList.autoRenumber": false
+    "markdown.extension.orderedList.autoRenumber": false,
+    "plantuml.server": "https://plantuml.cyber.ee"
 }

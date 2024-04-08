@@ -6,6 +6,46 @@ title: CDOC2 Capsule server
 
 This section defines the CDOC2 Capsule Server (herein also simply ‘the server’), its external interfaces and rules of use.
 
+```plantuml
+@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 30
+hide footbox
+autonumber
+
+box "User"
+Actor Recipient as R
+participant Authenticator as A
+end box
+
+box "Capsule Servers"
+collections Server as S
+end box
+
+box "Trust infrastructure"
+participant "PKI/OCSP" as PKI
+end box
+
+R -> R: Read list of TXs from Container
+loop for each Capsule Server
+    R -> S: Authentication request for TX_ID
+    S --> R: Nonce for TX_ID
+end
+R -> R: Create authentication signature data
+R -> A: Create authentication signature
+A --> R: Authentication signature
+loop for each Capsule Server
+    R -> R: Create authentication token specific for server
+    R -> S: Present token with authentication signature \n and request Capsule
+    S -> PKI: Recipient certificate not revoked?
+    PKI --> S: Recipient certificate is good
+    S -> S: AuthN: Verify authentication token \n and authentication signature
+    S -> S: AuthZ: Verify that Recipient is \n allowed to download Capsule
+    S --> R: Capsule
+end
+@enduml
+```
+
 ## Introduction
 
 The CDOC2 Capsule Server is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](ch02_encryption_schemes.md#cdoc2-encryption-schemes).
@@ -105,3 +145,95 @@ The Capsule type supported by the server allows the sender to choose the correct
 The identifier of the organization maintaining the server does not necessarily have to be explicitly tied to the organization’s name, but it must enable the identification of servers controlled by the same organization. This information is required to support future secret sharing-based encryption methods.
 
 Each server may be assigned more than one public key – this helps ensure smooth change of certificates and keys. Upon connection to the server, the client must always verify that the server is using one of the listed certificates. This will help prevent man-in-the-middle attacks.
+
+## Authentication
+
+We need to do detached JWS? No, not really. We could include all the payload in the signature object. Even if the server has everything, it's still ok.
+
+### Authentication signature
+
+```json
+{
+    "type": "CDOC2 authentication signature v0.1",
+    "nonces": [
+        {
+            "transactionID": "transactionID1",
+            "masked_nonce": "SHA-256(nonce1)"
+        },
+        {
+            "transactionID": "transactionID2",
+            "masked_nonce": "SHA-256(nonce2)"
+        },
+        {
+            "transactionID": "transactionID3",
+            "masked_nonce": "SHA-256(nonce3)"
+        }
+    ]
+}
+```
+
+#### ID-card-raw
+
+We will create JWS object with header:
+
+```json
+{
+    "typ": "JWS",
+    "alg": "RS256"
+}
+```
+
+and with payload:
+
+```java
+BASE64URL(JWS Header)..BASE64URL(JWS Signature)
+```
+
+```json
+{
+    "type": "CDOC2 authentication signature v0.1",
+    "nonces": [
+        {
+            "transactionID": "transactionID1",
+            "masked_nonce": "SHA-256(nonce1)"
+        },
+        {
+            "transactionID": "transactionID2",
+            "masked_nonce": "SHA-256(nonce2)"
+        },
+        {
+            "transactionID": "transactionID3",
+            "masked_nonce": "SHA-256(nonce3)"
+        }
+    ]
+}
+```
+
+### Authentication token
+
+```json
+{
+    "type": "CDOC2 authentication ticket v0.1",
+    "transaction": {
+            "transactionID": "transactionID1",
+            "nonce": "nonce1"
+    },
+    "masked_transactions": [
+        {
+            "transactionID": "transactionID2",
+            "masked_nonce": "SHA-256(nonce2)"
+        },
+        {
+            "transactionID": "transactionID3",
+            "masked_nonce": "SHA-256(nonce3)"
+        }
+    ],
+    "authentication_signature_type": "ID-card-raw",
+    "authentication_signature_value": "signature",
+    "jwk": "certificate that corresponds to the key used to
+        create the authentication signature, in JSON Web Key format"
+}
+```
+
+
+

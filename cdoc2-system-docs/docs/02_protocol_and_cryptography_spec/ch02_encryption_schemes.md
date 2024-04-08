@@ -24,7 +24,7 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 * `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).
 * Index `i` is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, `KEK_i`.
 
-## Standard cryptographic functions
+### Standard cryptographic functions
 
 Schemes use following standard functions:
 
@@ -45,7 +45,32 @@ In general, CDOC2 system implements encryption of payload of CDOC2 Container wit
 3. FMK is encrypted (wrapped) with a recipient-specific key encryption key (KEK) and added to the CDOC2 Container. It now depends on the capabilities of the Recipient, how this KEK is made available to Recipient, so that they could decrypt the encrypted FMK and in turn, the whole Container. For example, some Recipients may be able to use eID means, which are capable of Diffie-Hellman key exchange, some may be able to use authentication-only eID means and some may only be able to use pre-shared password.
 4. Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.
 
-*TODO: Possible place for explanatory diagram?*
+An example activity diagram about creating CDOC2 Container with multiple recipients, is given below:
+
+```plantuml title="Example diagram about creating CDOC2 Container with multiple recipients"
+@startuml
+start
+: Generate random FMK;
+: Derive CEK and HMAC keys; 
+fork
+   : ... ;
+fork again
+   : ... ;
+fork again
+   : Create KEK_i and capsule_i
+      for recipient i;
+   if (Encryption scheme uses \n Capsule Servers?) then (yes)
+      : Upload Capsule to server(s);
+   else (no)
+      : Add Capsule to container;
+   endif
+fork again
+   : ... ;
+end fork
+: Encrypt the payload of container with CEK;
+stop
+@enduml
+```
 
 <!--- no good place for this text: 
 
@@ -294,8 +319,6 @@ CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
 ```
 
-<!--- Commented out, until we continue with the task https://rm.ext.cyber.ee/redmine/issues/2827
-
 ## Encryption schemes with secret sharing
 
 ### SC07: Encryption scheme with (n-of-n) secret shared decryption key
@@ -325,7 +348,7 @@ Sender gets a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1
 
 TODO: `{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)` is undefined. We could use Jan's help here.
 
-#### Draft for reconstructing from shares
+#### Reconstructing from shares
 
 Recipient receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]`.
 
@@ -370,7 +393,7 @@ Sender gets a CDOC2 containers `Container_i [1..l]` containing `{C, EncryptedFMK
 
 TODO: `{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)` is undefined. It might be rather complicated and there are no standards?
 
-#### Draft for reconstructing from shares
+#### Reconstructing from shares
 
 Recipient receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]`.
 
@@ -387,5 +410,3 @@ Recipient receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 10. `M = Dec(CEK, C)`
 
 TODO: `KEK_i = SSS_reconstruct(share_i_j) (j = 1..n)` is undefined. It might be rather complicated and there are no standards?
-
---->
