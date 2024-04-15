@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - deploy
 
 build-image:
@@ -21,6 +22,19 @@ build-image:
       changes: 
       - Dockerfile
       - mkdocs_requirements.txt
+      - nvm-install.sh
+
+test:
+  stage: test
+  image: $CI_REGISTRY_IMAGE
+  script:
+    - markdownlint-cli2 "cdoc2-system-docs/**/*.md"
+    - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
+  rules:
+    - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+      changes: 
+      - cdoc2-system-docs/**/*
+  allow_failure: true
 
 pages:
   stage: deploy
