@@ -25,15 +25,15 @@ markdownlint-cli2 "cdoc2-system-docs/**/*.md"
 2. Python with [`pip` package manager](<https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-pip-from-the-command-line>)
 3. Install smaller Python packages and other requirements:
 
-```bash
-pip3 install -r ../mkdocs_requirements.txt
-```
+    ```bash
+    pip3 install -r ../mkdocs_requirements.txt
+    ```
 
 4. Test the `mkdocs` utility
 
-```bash
-mkdocs --version
-```
+    ```bash
+    mkdocs --version
+    ```
 
 # Development process
 

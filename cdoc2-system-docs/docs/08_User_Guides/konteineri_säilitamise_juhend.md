@@ -1,4 +1,4 @@
-## Juhend krüpteeritud CDOC2 konteineri pikaajaliseks säilitamiseks
+# Juhend krüpteeritud CDOC2 konteineri pikaajaliseks säilitamiseks
 
 Tundlike failide krüpteerimine on oluline samm oma andmete kaitsmisel, kuid sama tähtis on tagada, et krüpteeritud CDOC2-konteiner oleks pikaajaliselt turvaliselt hoitud. Allpool on juhend selle kohta, kuidas hoiustada krüpteeritud konteinerit, et tagada selle terviklikkus ja ligipääsetavus pikaks ajaks:
 
@@ -26,5 +26,5 @@ Kontrollige regulaarselt krüpteeritud failikonteineri ja selle sisu terviklikku
 
 Jälgige krüpteeritud failikonteineri salvestustingimusi, et vältida keskkonnategureid, nagu äärmuslikud temperatuurid, niiskus või magnetväljad, mis võivad kahjustada salvestusmeediumi. Hoidke seadet jahedas, kuivas ja stabiilses keskkonnas eemal otsest päikesevalgust ja elektromagnetilistest häiretest.
 
-Nende sammude järgimisega saate tõhusalt säilitada krüpteeritud failikonteinerit pikaajaliselt, tagades teie tundlike andmete 
+Nende sammude järgimisega saate tõhusalt säilitada krüpteeritud failikonteinerit pikaajaliselt, tagades teie tundlike andmete
 konfidentsiaalsuse, tervikluse ja ligipääsetavuse aja jooksul.
