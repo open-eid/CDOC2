@@ -68,26 +68,21 @@ Plan:
    2. Assuming in safety margin. 10 fold? million fold?
    3. Then we can let users use X-character passwords
 
-Safety margin: 
+Safety margin:
 
-https://crypto.stackexchange.com/questions/68672/origin-of-values-for-security-margin
-https://eprint.iacr.org/2017/560.pdf
-https://www.cryptopp.com/wiki/Security_Level
+[https://crypto.stackexchange.com/questions/68672/origin-of-values-for-security-margin](https://crypto.stackexchange.com/questions/68672/origin-of-values-for-security-margin)
+[https://eprint.iacr.org/2017/560.pdf](https://eprint.iacr.org/2017/560.pdf)
+[https://www.cryptopp.com/wiki/Security_Level](https://www.cryptopp.com/wiki/Security_Level)
 
 distributed.net was able to find RC5-64 key within 1,757 days. So, they broke 64-bit entropy password. They were able to do 2^64 = 18446744073709551616 = 10^19 tries.
 
 10^19/(1757*24*60*60) = 10^10 tries per second
 
-They used 331 000 individuals. Assuming that attackers nowadays are able to utilise every computer in the world. (https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results)
+They used 331 000 individuals. Assuming that attackers nowadays are able to utilise every computer in the world. ([https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results](https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results))
 
 70 million chips a day -> 2*10^10 chips per year.
 
 Assuming that attacker is able to use all of such chips and is able to parallelise PBKDF computations.
-
-
-
-
-
 
 ## Password length
 
@@ -147,14 +142,10 @@ BSI Technical Guideline – Cryptographic Algorithms and Key Lengths
 
 "In other situations where these conditions are not met (for example, when a cryptographic secret is directly derived from the password that provides access to sensitive information), it is recommended to choose passwords via a method that offers at least 120 bits of entropy."
 
-
-https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile
+[https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile)
 
 "9. SecretSharing"
 
+[https://www.theregister.com/2009/08/03/new_crypto_attack/](https://www.theregister.com/2009/08/03/new_crypto_attack/)
 
-https://www.theregister.com/2009/08/03/new_crypto_attack/
-
-
-https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism/cyber-security-guidelines/guidelines-cryptography
-
+[https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism/cyber-security-guidelines/guidelines-cryptography](https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism/cyber-security-guidelines/guidelines-cryptography)
