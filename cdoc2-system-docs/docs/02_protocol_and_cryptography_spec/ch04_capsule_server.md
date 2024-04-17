@@ -235,5 +235,22 @@ BASE64URL(JWS Header)..BASE64URL(JWS Signature)
 }
 ```
 
+## MID/SID authentication scheme for N-of-N
 
+We might use https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.txt data format with following changes in concepts
 
+1. CDOC2 Client is the SD-JWT Issuer + Holder
+2. CDOC2 Server is the SD-JWT Verifier
+3. CDOC2 Client gets nonce1, nonce2, nonce3 from server1, server2, server3.
+4. CDOC2 Client creates a set of JWT claims like ("CapsuleId1": "nonce1")
+5. CDOC2 Client issues SD-JWT with signing it with ephemeral issuer key pair
+6. CDOC2 Client creates three presentations of SD-JWT to different servers. Each time, it discloses only those claims, which are relevant for particular server, i.e. only "CapsuleId1": "nonce1" and not "CapsuleId2: "nonce2".
+7. CDOC2 Server receive a presentation with only relevant data and cannot replay it to other servers.
+
+PoC script: cdoc2-sd-jwt-testing.py in root of this repo. 
+
+TODO problems:
+
+1. Smart-ID RP-APIv3 authentication method doesn't sign the hash given by RP, but modifies it. This might mean that we have to use custom JWT/JWS verifier.
+2. SD-JWT presentation also needs a "nonce". This is different from n1, n2, n3 and it gets confusing.
+3. ...
