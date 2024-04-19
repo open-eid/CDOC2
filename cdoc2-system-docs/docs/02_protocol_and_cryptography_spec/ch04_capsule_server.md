@@ -247,7 +247,7 @@ We might use https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosu
 6. CDOC2 Client creates three presentations of SD-JWT to different servers. Each time, it discloses only those claims, which are relevant for particular server, i.e. only "CapsuleId1": "nonce1" and not "CapsuleId2: "nonce2".
 7. CDOC2 Server receive a presentation with only relevant data and cannot replay it to other servers.
 
-PoC script: cdoc2-sd-jwt-testing.py in root of this repo. 
+PoC script: cdoc2-sd-jwt-testing.py in root of this repo.
 
 TODO problems:
 
