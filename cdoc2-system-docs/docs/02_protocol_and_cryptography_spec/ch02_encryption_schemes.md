@@ -374,6 +374,8 @@ FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF_Expand(FMK)
 M = Dec(CEK, C)
 ```
+<!---
+Commented out until we start working on this 
 
 ### SC08: (WIP) Encryption scheme with t-of-n secret shared decryption key
 
@@ -431,3 +433,4 @@ FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF_Expand(FMK)
 M = Dec(CEK, C)
 ```
+-->
