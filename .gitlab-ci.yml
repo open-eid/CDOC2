@@ -1,15 +1,51 @@
-image: python:3.8-buster
+stages:
+  - build
+  - test
+  - deploy
 
-before_script:
-  - pip install -r mkdocs_requirements.txt
+build-image:
+  stage: build
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.22.0-debug
+    entrypoint: [""]
+  script:
+    - |
+      /kaniko/executor \
+        --context $CI_PROJECT_DIR \
+        --build-arg http_proxy=$http_proxy \
+        --build-arg https_proxy=$https_proxy \
+        --dockerfile $CI_PROJECT_DIR/Dockerfile \
+        --destination $CI_REGISTRY_IMAGE:latest \
+        --cache
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: 
+      - Dockerfile
+      - mkdocs_requirements.txt
+      - nvm-install.sh
+
+test:
+  stage: test
+  image: $CI_REGISTRY_IMAGE
+  script:
+    - markdownlint-cli2 "cdoc2-system-docs/**/*.md"
+    - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
+  rules:
+    - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+      changes: 
+      - cdoc2-system-docs/**/*
+  allow_failure: true
 
 pages:
   stage: deploy
-  only:
-     - master
+  image: $CI_REGISTRY_IMAGE
   script:
     - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
   artifacts:
     paths:
     - cdoc2-system-docs/public
   publish: cdoc2-system-docs/public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: 
+      - cdoc2-system-docs/**/*

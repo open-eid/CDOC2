@@ -29,7 +29,7 @@ TODO!
 
 **Success Guarantees**
 
-* 
+*  
 
 **Main Success Scenario**
 
@@ -56,7 +56,7 @@ Scheme:
 5. Sender derives content encryption key (CEK) and HMAC key (HHK) from FMK using HKDF expand algorithm
 6. Sender encrypts FMK with KEK (xor) and gets encrypted_FMK
 7. Sender splits `secret` into `N` shares using Shamir Shared Secret Scheme. N is configuration option in CDOC2 client configuration.
-   
+
     !!! info "TODO"
         SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
 
@@ -97,7 +97,7 @@ TODO!
 1. Recipient will create [authentication ticket](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#autentimispiletite-koostamine)
     for each CDOC2 server and download matching secret share. CDOC2 server `GET /secret-share/${transactionId}` endpoint
 1. Recipient combines 'secret' shares into full secret (symmetric key) using Shamir Shared Secret Scheme.
-   
+
     !!! info "TODO"
         TODO: SSSS needs analysis [#RM-55926](https://rm-int.cyber.ee/ito/issues/55926)
 
