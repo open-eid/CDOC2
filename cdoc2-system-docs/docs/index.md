@@ -10,13 +10,13 @@ This documentation aims to describe the CDOC2 system.
 
 ## Document scope
 
-TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
 The specification describes:
-• supported encryption schemes
-• abstract and serialized data format
-• details of cryptographic operations
-• use of a CDOC2 capsule server
-• implementation guidelines
+
+* supported encryption schemes
+* abstract and serialized data format
+* details of cryptographic operations
+* use of a CDOC2 capsule server
+* implementation guidelines
 
 ## Terms and acronyms
 
