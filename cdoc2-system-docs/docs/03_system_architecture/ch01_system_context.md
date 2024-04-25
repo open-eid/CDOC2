@@ -9,7 +9,7 @@ title: 2. System Context
 
 "CDOC2 system" - IT system, which contains following primary components:
 
-1. CDOC2 key transmission servers (CKCTS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 key transmission server uses local database component as well.
+1. CDOC2 Capsule Server (CCS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 Capsule Server uses local database component as well.
 2. CDOC2 reference library, to be used by CDOC2 servers, CLI client ~~and DigiDoc4 client application~~
 3. CDOC2 CLI client, which is a command-line Java application and which implements all CDOC2 end-user usecases, but without graphical user interface.
 

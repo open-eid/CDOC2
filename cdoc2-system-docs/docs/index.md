@@ -6,13 +6,17 @@ title: Introduction
 
 ## Goal
 
-TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.1 "Eesmärk"
-
 This documentation aims to describe the CDOC2 system.
 
 ## Document scope
 
 TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
+The specification describes:
+• supported encryption schemes
+• abstract and serialized data format
+• details of cryptographic operations
+• use of a CDOC2 capsule server
+• implementation guidelines
 
 ## Terms and acronyms
 
@@ -48,7 +52,7 @@ TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
 
 * `ECC CDH` - Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm
 
-* `HMAC` - Hash-Based Message Authentication Code. Protects integrity of CDOC Container.
+* `HMAC` - Hash-Based Message Authentication Code. Protects integrity of CDOC2 Container.
 
 <!--- acronyms about various keys -->
 
@@ -64,4 +68,4 @@ TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.2 "Käsitlusala"
 
 ## Short overview
 
-TO-TRANSLATE "CDOC2 kasutusmallimudel", Section 1.5 "Ülevaade"
+The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.

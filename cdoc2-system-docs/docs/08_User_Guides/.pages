@@ -1,5 +1,6 @@
 title: "User Guides"
 nav:
+    - 'Public Intro': public_intro.md
     - 'Password Strength User Guide': password_guide.md
     - 'CDOC2 Container Storage User Guide': container_storage_guide.md
     - 'Parooli tugevuse juhend': parooli_juhend.md
