@@ -54,9 +54,9 @@ The recipient is described using the structure ``Recipient``. The format of the 
 The ``Recipient`` structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
 
 - ``Capsule`` – encryption method specific data that the recipient can use to decrypt the FMK.
-- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 - ``EncryptedFMK`` – encrypted FMK.
 - ``FMKEncryptionMethod`` –FMK encryption method type.
+- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string. 
 
 Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
@@ -67,6 +67,22 @@ The following capsule types have been specified to ensure the support of a varie
 - ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
 
 This list may be expanded in future versions of the specification.
+
+#### KeyLabel recommendations
+
+Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of passwords, a reminder of what password to use. Dependent upon the encryption method the following formatting rules are used in the reference implementation:
+
+The format is first URL-encoded, parameters are case-insensitive, separated by '&' character and no white-space is allowed. 
+
+- `Smart-ID` - `PNO=ETSI:{ETSI indentifier}` e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier. 
+- `Mobile-ID` - `PN={Phone nr}`, where {Phone nr} is replaced by the actual number. '+' sign and 00 should be considered equivalent.
+- `Password, with an integrated password manager` - `KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2`, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. 
+- `Password, without a password manager` - USER_DESC={user input}, where {user input} is replaced by the text given by the User. 
+- `Symmetric key` - `KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem`, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
+- `Certificate` - `FILE=~/folder/filename&CERT_HASH=XXYYXXYY`, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
+- `ID-card` and `Digi-ID` and `Digi-ID E-RESIDENT` - `NAME={given name}+{surname}&ID={personal code}&TYPE={document type}`, where NAME is the persons name with spaces replaced by '+' signs. ID refers to the personal code of the person. TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'.
+
+Everything besides `USER_DESC` contents will be additionally encoded using the Base64 encoding scheme and encapsulated by the following text: `BASE64{encoded content};`. The parsing of the Base64 encoded content must end when ';' is encountered. If the final parameter before the ';' was `USER_DESC`, then the rest of the string will be interpreted as free text and read to the end. 
 
 ### Capsule types
 
