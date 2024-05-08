@@ -74,13 +74,13 @@ Although not required by the specification, `KeyLabel` should however follow con
 
 Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
-**1. For machine parse-able text data url format was chosen, that starts with data:**
+**1. For machine parse-able text [data url](https://datatracker.ietf.org/doc/html/rfc2397) format was chosen, that starts with `data:`**
 
-    data:[<type>][;base64],<data>
+    data:<version>[<mediatype>][;base64],<data>
 
-The `type` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive.
+The `version` is required in order to support future changes. The `mediatype` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. `;base64` encoding is optional and means that the `<data>` part is encoded   .
 
-Following `type` parameter values are defined:
+Following `type` parameter values are supported inside the `<data>` part of the format:
 
 - Smart-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
 Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
@@ -100,10 +100,10 @@ Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
 
 Machine-readable `KeyLabel` examples:
 
-- `data:,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
-- `data:application/x-www-form-urlencoded,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
-- `data:application/x-www-form-urlencoded;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
-- `data:;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+- `data:version=cyber-1.0,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:version=cyber-1.0,application/x-www-form-urlencoded,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:version=cyber-1.0,application/x-www-form-urlencoded;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+- `data:version=cyber-1.0;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
 
 **2. The second format for `KeyLabel` is free text format and it doesn't start with `data:`**
 
@@ -114,6 +114,7 @@ Free text `KeyLabel` examples:
 - "131:40:16"
 - "kevade"
 - "poem"
+- "password manager, key: hello.cdoc2"
 
 ### Capsule types
 
