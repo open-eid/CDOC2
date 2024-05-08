@@ -56,7 +56,7 @@ The ``Recipient`` structure consists of a capsule, a recipient key label, an enc
 - ``Capsule`` – encryption method specific data that the recipient can use to decrypt the FMK.
 - ``EncryptedFMK`` – encrypted FMK.
 - ``FMKEncryptionMethod`` –FMK encryption method type.
-- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string. 
+- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 
 Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
@@ -70,9 +70,9 @@ This list may be expanded in future versions of the specification.
 
 #### KeyLabel recommendations
 
-Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use. 
+Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.
 
-Dependent upon the encryption method the following formatting rules are used in the reference implementation: 
+Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
 **1. For machine parse-able text data url format was chosen, that starts with data:**
 
@@ -107,7 +107,7 @@ Machine-readable `KeyLabel` examples:
 
 **2. The second format for `KeyLabel` is free text format and it doesn't start with `data:`**
 
-This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used. 
+This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used.
 
 Free text `KeyLabel` examples:
 
@@ -198,10 +198,10 @@ The envelope consists of the following data elements, presented sequentially as 
 Table 1 presents an overview of the envelope structure.
 Table 1. Envelope structure
 
-Field | “CDOC” | Version | Header length | Header | HMAC | Payload
------------- | ------------- | ------------ | ------------ | ------------- | ------------ | ------------
-Length | 4 | 1 | 4 | Header length | 32 | Until end of envelope
-Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32
+| Field | “CDOC” | Version | Header length | Header | HMAC | Payload |
+| ------------ | ------------- | ------------ | ------------ | ------------- | ------------ | ------------ |
+| Length | 4 | 1 | 4 | Header length | 32 | Until end of envelope |
+| Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32 |
 
 ### Header and HMAC
 
