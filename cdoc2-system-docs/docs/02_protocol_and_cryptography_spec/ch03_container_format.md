@@ -70,19 +70,50 @@ This list may be expanded in future versions of the specification.
 
 #### KeyLabel recommendations
 
-Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of passwords, a reminder of what password to use. Dependent upon the encryption method the following formatting rules are used in the reference implementation:
+Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use. 
 
-The format is first URL-encoded, parameters are case-insensitive, separated by '&' character and no white-space is allowed. 
+Dependent upon the encryption method the following formatting rules are used in the reference implementation: 
 
-- `Smart-ID` - `PNO=ETSI:{ETSI indentifier}` e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier. 
-- `Mobile-ID` - `PN={Phone nr}`, where {Phone nr} is replaced by the actual number. '+' sign and 00 should be considered equivalent.
-- `Password, with an integrated password manager` - `KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2`, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. 
-- `Password, without a password manager` - USER_DESC={user input}, where {user input} is replaced by the text given by the User. 
-- `Symmetric key` - `KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem`, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
-- `Certificate` - `FILE=~/folder/filename&CERT_HASH=XXYYXXYY`, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
-- `ID-card` and `Digi-ID` and `Digi-ID E-RESIDENT` - `NAME={given name}+{surname}&ID={personal code}&TYPE={document type}`, where NAME is the persons name with spaces replaced by '+' signs. ID refers to the personal code of the person. TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'.
+**1. For machine parse-able text data url format was chosen, that starts with data:**
 
-Everything besides `USER_DESC` contents will be additionally encoded using the Base64 encoding scheme and encapsulated by the following text: `BASE64{encoded content};`. The parsing of the Base64 encoded content must end when ';' is encountered. If the final parameter before the ';' was `USER_DESC`, then the rest of the string will be interpreted as free text and read to the end. 
+    data:[<type>][;base64],<data>
+
+The `type` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive.
+
+Following `type` parameter values are defined:
+
+- Smart-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
+Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
+- Mobile-ID - PN={Phone nr}, where {Phone nr} is replaced by the actual number. '+' sign and 00 should be considered equivalent.
+- Password, with an integrated password manager - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.
+- Symmetric key - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
+- Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
+- ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined:
+
+| field | description | example | required |
+|-------|-------------|---------|----------|
+| type | eID type: `ID-card` or `Digi-ID` or `Digi-ID E-RESIDENT` | ID-card | X |
+| cn | Recipient common name as it is appears in certificate | JÕEORG,JAAK-KRISTJAN,38001085718 | X |
+| serialNumber | serialNumber as it appears in LDAP server | PNOEE-38001085718 | X |
+| last_name | Recipient last name | Jõeorg |  |
+| first_name | Recipient first name | Jaak-Kristjan |  |
+
+Machine-readable `KeyLabel` examples:
+
+- `data:,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:application/x-www-form-urlencoded,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:application/x-www-form-urlencoded;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+- `data:;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+
+**2. The second format for `KeyLabel` is free text format and it doesn't start with `data:`**
+
+This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used. 
+
+Free text `KeyLabel` examples:
+
+- "131:40:16"
+- "kevade"
+- "poem"
 
 ### Capsule types
 
