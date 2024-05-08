@@ -54,9 +54,9 @@ The recipient is described using the structure ``Recipient``. The format of the 
 The ``Recipient`` structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
 
 - ``Capsule`` – encryption method specific data that the recipient can use to decrypt the FMK.
-- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 - ``EncryptedFMK`` – encrypted FMK.
 - ``FMKEncryptionMethod`` –FMK encryption method type.
+- ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 
 Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
@@ -67,6 +67,54 @@ The following capsule types have been specified to ensure the support of a varie
 - ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
 
 This list may be expanded in future versions of the specification.
+
+#### KeyLabel recommendations
+
+Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.
+
+Dependent upon the encryption method the following formatting rules are used in the reference implementation:
+
+**1. For machine parse-able text [data url](https://datatracker.ietf.org/doc/html/rfc2397) format was chosen, that starts with `data:`**
+
+    data:<version>[<mediatype>][;base64],<data>
+
+The `version` is required in order to support future changes. The `mediatype` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. `;base64` encoding is optional and means that the `<data>` part is encoded   .
+
+Following `type` parameter values are supported inside the `<data>` part of the format:
+
+- Smart-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
+Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
+- Mobile-ID - PN={Phone nr}, where {Phone nr} is replaced by the actual number. '+' sign and 00 should be considered equivalent.
+- Password, with an integrated password manager - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.
+- Symmetric key - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
+- Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
+- ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined:
+
+| field | description | example | required |
+|-------|-------------|---------|----------|
+| type | eID type: `ID-card` or `Digi-ID` or `Digi-ID E-RESIDENT` | ID-card | X |
+| cn | Recipient common name as it is appears in certificate | JÕEORG,JAAK-KRISTJAN,38001085718 | X |
+| serialNumber | serialNumber as it appears in LDAP server | PNOEE-38001085718 | X |
+| last_name | Recipient last name | Jõeorg |  |
+| first_name | Recipient first name | Jaak-Kristjan |  |
+
+Machine-readable `KeyLabel` examples:
+
+- `data:version=cyber-1.0,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:version=cyber-1.0,application/x-www-form-urlencoded,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:version=cyber-1.0,application/x-www-form-urlencoded;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+- `data:version=cyber-1.0;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+
+**2. The second format for `KeyLabel` is free text format and it doesn't start with `data:`**
+
+This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used.
+
+Free text `KeyLabel` examples:
+
+- "131:40:16"
+- "kevade"
+- "poem"
+- "password manager, key: hello.cdoc2"
 
 ### Capsule types
 
@@ -151,10 +199,10 @@ The envelope consists of the following data elements, presented sequentially as 
 Table 1 presents an overview of the envelope structure.
 Table 1. Envelope structure
 
-Field | “CDOC” | Version | Header length | Header | HMAC | Payload
------------- | ------------- | ------------ | ------------ | ------------- | ------------ | ------------
-Length | 4 | 1 | 4 | Header length | 32 | Until end of envelope
-Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32
+| Field | “CDOC” | Version | Header length | Header | HMAC | Payload |
+| ------------ | ------------- | ------------ | ------------ | ------------- | ------------ | ------------ |
+| Length | 4 | 1 | 4 | Header length | 32 | Until end of envelope |
+| Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32 |
 
 ### Header and HMAC
 
