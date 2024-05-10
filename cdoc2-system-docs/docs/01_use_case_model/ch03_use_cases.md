@@ -601,7 +601,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.03 Delete Server Capsule
+## UC.KTS.03 Delete Server Capsules
 
 **Context of Use**
 : System timer deletes expired Server Capsules.
