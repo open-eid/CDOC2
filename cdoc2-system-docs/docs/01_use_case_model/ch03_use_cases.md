@@ -84,7 +84,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 5. Sender chooses a CDOC2 Capsule Server.
 6. Client creates a TLS-connection with the chosen CDOC2 Capsule Server and receives the server's certificate.
 7. Client verifies the server's certificate against the configuration.
-8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule. Client receives a transaction code for each server capsule.
+8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
 9. Client creates a container into filesystem in the chosen target path and adds a header.
 10. Client verifies that the header does not exceed the size limit defined by the specification.
 11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
@@ -134,11 +134,11 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case continues from step 5.
 
-8b. Client uses a orgnaization-specific external configuration service:
+8b. Client uses a organization-specific external configuration service:
 
 1. Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.
-2. External provides a default capsule expiration time.
-3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
+2. External configuration service provides a default capsule expiration time.
+3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
 4. Use case continues from step 9.
 
 8c. The expiration time provided by Client is longer than allowed in the CCS system configuration:
@@ -390,7 +390,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 7. Client adds the files to an archive and creates a new CDOC2 container, which it saves to the target location.
 8. Client asks Recipient whether to delete the server capsule that was used during the previous decryption process. The purpose is to make it impossible that anybody could ever again decrypt the original message.
 9. Recipient chooses to delete the server capsule.
-10. Client, still having access to the original container decrypted container, reads again thee recipient record from it and makes a request to CCS to delete the server capsule by providing the same transaction code.
+10. Client, still having access to the original container decrypted container, reads again the recipient record from it and makes a request to CCS to delete the server capsule by providing the same transaction code.
 11. CCS deletes the server capsule and replies with a confirmation response.
 12. Client notifies the Recipient.
 
@@ -526,7 +526,7 @@ CDOC2 Capsule Server (CCS)
 
 **Main Success Scenario**
 
-1. Client sends server capsules using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule.
+1. Client sends server capsules using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule.
 2. CCS validates the server capsules against specification rules.
 3. CCS generates a universally unique transaction code (UUID).
 4. CCS saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.
@@ -685,7 +685,7 @@ CDOC2 Capsule Server (CCS)
 
 **Success guarantees**
 
-* Server capsule is removed from the storing CCS.
+* Server capsule is removed from the storage of the CCS.
 
 **Preconditions**
 
