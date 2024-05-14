@@ -84,7 +84,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 5. Sender chooses a CDOC2 Capsule Server.
 6. Client creates a TLS-connection with the chosen CDOC2 Capsule Server and receives the server's certificate.
 7. Client verifies the server's certificate against the configuration.
-8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server and receives a transaction code for each server capsule.
+8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
 9. Client creates a container into filesystem in the chosen target path and adds a header.
 10. Client verifies that the header does not exceed the size limit defined by the specification.
 11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
@@ -133,6 +133,19 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 1. Client displays Sender a notification.
 2. Use case continues from step 5.
+
+8b. Client uses a organization-specific external configuration service:
+
+1. Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.
+2. External configuration service provides a default capsule expiration time.
+3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
+4. Use case continues from step 9.
+
+8c. The expiration time provided by Client is longer than allowed in the CCS system configuration:
+
+1. CCS returns Client a error message.
+2. Client notifies Sender.
+3. Use case ends.
 
 9a. Forwarding capsules to a CDOC2 capsule server fails:
 
@@ -370,18 +383,23 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 1. Client suggests Recipient to re-encrypt the decrypted container contents and displays multiple options for encryption.
 2. Recipient chooses to re-encrypt and chooses to encrypt with a password.
-3. Client asks User to specify the target name and path.
-4. User specifies a target name and path in local filesystem.
-5. User enters a password to be used for password-based cryptography.
+3. Client asks Recipient to specify the target name and path.
+4. Recipient specifies a target name and path in local filesystem.
+5. Recipient enters a password to be used for password-based cryptography.
 6. Client verifies that the password satisfies minimal requirements.
 7. Client adds the files to an archive and creates a new CDOC2 container, which it saves to the target location.
+8. Client asks Recipient whether to delete the server capsule that was used during the previous decryption process. The purpose is to make it impossible that anybody could ever again decrypt the original message.
+9. Recipient chooses to delete the server capsule.
+10. Client, still having access to the original container decrypted container, reads again the recipient record from it and makes a request to CCS to delete the server capsule by providing the same transaction code.
+11. CCS deletes the server capsule and replies with a confirmation response.
+12. Client notifies the Recipient.
 
 **Extensions**
 
 2a. Recipient chooses to re-encrypt using a security token:
 
 1. Client verifies that the security token is connected.
-2. User specifies a target name and path in local filesystem and enters the security token password.
+2. Recipient specifies a target name and path in local filesystem and enters the security token password.
 3. Client verifies the password. If password is not correct, the use case continues from the previous step.
 4. Use case continues from step 7.
 
@@ -392,13 +410,33 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 5a. Password does not meet minimum requirements.
 
-1. Client notifies the User with instructions to insert a new password.
+1. Client notifies the Recipient with instructions to insert a new password.
 2. Use case continues from step 3.
 
 7a. Container creation or saving fails.
 
-1. System notifies the User.
+1. System notifies the Recipient.
 2. Use case ends.
+
+9a. Recipient does not want to delete the server capsule:
+
+1. Use case ends.
+
+10a. Recipient's authentication has expired:
+
+1. Client completes the use case UC.KTS.04 Authenticate Recipient.
+2. Use case resumes from step 10.
+
+11a. No non-expired Server Capsules found with the corresponding transaction ID:
+
+1. Server returns an error message.
+2. Client assumes that the server capsule does no longer exist and notifies the Recipient.
+3. Use case ends.
+
+11a. Establishing a connection to the CCS fails:
+
+1. Client notifies the Recipient.
+2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise use case ends.
 
 ## Supporting use cases
 
@@ -467,10 +505,10 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 # CDOC2 Capsule Server Use Case Model
 
-## UC.KTS.01 Forward Capsule
+## UC.KTS.01 Forward Capsules
 
 **Context of Use**
-: CDOC2 Client Application forwards CDOC2 Capsule Server a Server Capsule, which contains a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.
+: CDOC2 Client Application forwards CDOC2 Capsule Server Server Capsules, which contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.
 
 **Scope**
 CDOC2 Capsule Server (CCS)
@@ -483,19 +521,36 @@ CDOC2 Capsule Server (CCS)
 
 **Success Guarantees**
 
-* Server Capsule is saved with an expiration time.
-* Transaction code is forwarded to the CDOC2 Client Application.
+* Server Capsules are saved with an expiration time.
+* Transaction codes are forwarded to the CDOC2 Client Application.
 
 **Main Success Scenario**
 
-1. Client sends a server capsule using the appropriate API service to a CCS.
-2. CCS validates the server capsule against specification rules.
+1. Client sends server capsules using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule.
+2. CCS validates the server capsules against specification rules.
 3. CCS generates a universally unique transaction code (UUID).
-4. CCS saves the server capsule and an expiration time, which it calculates based on CCS system configuration settings.
-5. CCS returns Client the transaction code.
+4. CCS saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.
+5. CCS returns Client a transaction code for each capsule.
 
 **Extensions**
-2a. server capsule exceeds the allowed length limit:
+1a. Client uses a orgnaization-specific external configuration service:
+
+1. Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.
+2. External provides a default capsule expiration time.
+3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.
+4. Use case continues from step 2.
+
+2a. Server capsule exceeds the allowed length limit:
+
+1. CCS returns Client a error message.
+2. Use case ends.
+
+4a. Client did not provide an expiration time:
+
+1. CCS calculates the expiration time based on system configuration.
+2. Use case continues from step 5.
+
+4b. The expiration time provided by Client is longer than allowed in the CCS system configuration:
 
 1. CCS returns Client a error message.
 2. Use case ends.
@@ -546,7 +601,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.03 Delete Server Capsule
+## UC.KTS.03 Delete Server Capsules
 
 **Context of Use**
 : System timer deletes expired Server Capsules.
@@ -613,3 +668,54 @@ CDOC2 Capsule Server (CCS)
 
 1. CCS replies to the Client with an error message.
 2. Use case ends.
+
+## UC.KTS.05 Request To Delete Server Capsule
+
+**Context of Use**
+: Client requests the CSS to delete a server capsule.
+
+**Scope**
+CDOC2 Capsule Server (CCS)
+
+**Use Case Level**
+: User goal
+
+**Primary Actor**
+: CDOC2 Client Application (Client)
+
+**Success guarantees**
+
+* Server capsule is removed from the storage of the CCS.
+
+**Preconditions**
+
+* Recipient has received a server capsule from a CCS.
+* Recipient has completed the re-encryption flow in the Client.
+
+**Main Success Scenario**
+
+1. Client asks Recipient whether to delete server capsule and thus make it impossible that anybody could ever again decrypt the original message.
+2. Recipient chooses to delete the server capsule.
+3. Client makes request to CCS to delete the server capsule by providing the same transaction code as when originally requesting the capsule.
+4. CCS deletes the server capsule.
+
+**Extensions**
+2a. Recipient does not want to delete the server capsule:
+
+1. Use case ends.
+
+3a. Recipient's authentication has expired:
+
+1. Client completes the use case UC.KTS.04 Authenticate Recipient.
+2. Use case resumes from step 3.
+
+4a. No non-expired Server Capsules found with the corresponding transaction ID:
+
+1. Server returns an error message.
+2. Client assumes that the server capsule does no longer exist and notifies the Recipient.
+3. Use case ends.
+
+4a. Establishing a connection to the CCS fails:
+
+1. Client notifies the Recipient.
+2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise use case ends.
