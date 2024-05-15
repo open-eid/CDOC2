@@ -58,9 +58,9 @@ def create_and_sign_authentication_data(signing_key, server1_access_data, server
       
       SDJWT_claims = {}
       SDJWT_regular_claims = {
-            "CDOC2_token_type": "CTS authentication token v0.1",
-            "iss": "etsi/PNOEE-48010010101",
-            "iat": "1715694253"
+            'CDOC2_token_type': "CTS authentication token v0.1",
+            'iss': "etsi/PNOEE-48010010101",
+            'iat': "1715694253"
             }
       SDJWT_claims.update(SDJWT_regular_claims)
       SDJWT_claims.update(SDJWT_disclosable_claims)
