@@ -1,4 +1,4 @@
-#!/Users/aivo/tmp/repos/CDOC2/sd-jwt/sd-jwt-python/venv/bin/python3.12
+#!/Users/aivo/tmp/repos/CDOC2/RM-2776-authentication-protocol/sd-jwt/sd-jwt-python/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 
 import re
@@ -19,23 +19,49 @@ def receive_nonce_from_server1(capsule_id):
 def receive_nonce_from_server2(capsule_id):
     return "41"
 
-def create_and_sign_authentication_data(signing_key, first_server_data, second_server_data):     
+def create_and_sign_authentication_data(signing_key, server1_access_data, server2_access_data):     
+
+      server_1_structure = {
+            "serverURL": server1_access_data['serverURL'],
+            "capsuleID": server1_access_data['capsuleID'],
+            "serverNonce": server1_access_data['serverNonce'],
+            }
+
+      server_2_structure = {
+            "serverURL": server2_access_data['serverURL'],
+            "capsuleID": server2_access_data['capsuleID'],
+            "serverNonce": server2_access_data['serverNonce'],
+            }
+      
+      server_auth_data_array = json.loads('[]')
+      #print("server_auth_data_array: " + json.dumps(server_auth_data_array,sort_keys=True, indent=4))
+      server_auth_data_array.append(SDObj(server_1_structure))
+      server_auth_data_array.append(SDObj(server_2_structure))
+      #print("server_auth_data_array with two elements: " + json.dumps(server_auth_data_array,sort_keys=True, indent=4))
+      disclosable_array = {
+           SDObj("capsule_access_data"): server_auth_data_array
+      }
+
+      #print("SD array: " + json.dumps(disclosable_array,sort_keys=True, indent=4))
+
+      SDJWT_disclosable_claims = {}
+      SDJWT_disclosable_claims.update(disclosable_array)
+
+#      SDJWT_disclosable_claims = {
+#            SDObj([])
+#            SDObj("FirstCapsuleID"): first_server_data['id'],
+#            SDObj("FirstCapsuleNonce"): first_server_data['nonce'],
+#
+#            SDObj("SecondCapsuleID"): second_server_data['id'],
+#            SDObj("SecondCapsuleNonce"): second_server_data['nonce']
+#            }
+      
+      SDJWT_claims = {}
       SDJWT_regular_claims = {
-            "typ": "CDOC2 authentication token v0.1",
+            "CDOC2_token_type": "CTS authentication token v0.1",
             "iss": "etsi/PNOEE-48010010101",
             "iat": "1715694253"
             }
-
-      SDJWT_disclosable_claims = {
-            SDObj([])
-            SDObj("FirstCapsuleID"): first_server_data['id'],
-            SDObj("FirstCapsuleNonce"): first_server_data['nonce'],
-
-            SDObj("SecondCapsuleID"): second_server_data['id'],
-            SDObj("SecondCapsuleNonce"): second_server_data['nonce']
-            }
-      
-      SDJWT_claims = {}
       SDJWT_claims.update(SDJWT_regular_claims)
       SDJWT_claims.update(SDJWT_disclosable_claims)
 
@@ -58,7 +84,9 @@ def create_and_sign_authentication_data(signing_key, first_server_data, second_s
 def create_authentication_ticket_for_server1(auth_signature):
     
       auth_signature.create_presentation(
-            claims_to_disclose={'FirstCapsuleID': True, 'FirstCapsuleNonce': True}
+            claims_to_disclose={
+                 'capsule_access_data': [True, False]
+                 }
             )
 
       auth_ticket = auth_signature.sd_jwt_presentation
@@ -68,7 +96,9 @@ def create_authentication_ticket_for_server1(auth_signature):
 def create_authentication_ticket_for_server2(auth_signature):
     
       auth_signature.create_presentation(
-            claims_to_disclose={'SecondCapsuleID': True, 'SecondCapsuleNonce': True}
+            claims_to_disclose={
+                 'capsule_access_data': [False, True]
+                 }
             )
 
       auth_ticket = auth_signature.sd_jwt_presentation
@@ -76,6 +106,9 @@ def create_authentication_ticket_for_server2(auth_signature):
       return auth_ticket
 
 def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
+
+      expected_serverNonce = "42"
+      expected_capsuleID = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
 
       # Define a function to check the issuer and retrieve the
       # matching public key
@@ -107,12 +140,15 @@ def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
             json.dumps(verified_payload, indent=4)
             )
       
-      if (verified_payload['FirstCapsuleID'] == "1") and (verified_payload['FirstCapsuleNonce'] == "42"): 
+      if (verified_payload['capsule_access_data'][0]['capsuleID'] == expected_capsuleID) and (verified_payload['capsule_access_data'][0]['serverNonce'] == expected_serverNonce):
            return True
       else:
            return False
     
 def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
+
+      expected_serverNonce = "41"
+      expected_capsuleID = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
 
       # Define a function to check the issuer and retrieve the
       # matching public key
@@ -144,7 +180,7 @@ def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
             json.dumps(verified_payload, indent=4)
             )
 
-      if (verified_payload['SecondCapsuleID'] == "2") and (verified_payload['SecondCapsuleNonce'] == "41"): 
+      if (verified_payload['capsule_access_data'][0]['capsuleID'] == expected_capsuleID) and (verified_payload['capsule_access_data'][0]['serverNonce'] == expected_serverNonce):
            return True
       else:
            return False
@@ -172,13 +208,29 @@ user_RSA_keypair = {
   "qi"  : "ldHXIrEmMZVaNwGzDF9WG8sHj2mOZmQpw9yrjLK9hAsmsNr5LTyqWAqJIYZSwPTYWhY4nu2O0EY9G9uYiqewXfCKw_UngrJt8Xwfq1Zruz0YY869zPN4GiE9-9rzdZB33RBw8kIOquY3MK74FMwCihYx_LiU2YTHkaoJ3ncvtvg"
 }
 
-capsule_ID1 = "1"
-capsule_ID2 = "2"
+capsule_ID1 = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
+capsule_ID2 = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
 
 nonce1 = receive_nonce_from_server1(capsule_id=capsule_ID1)
 nonce2 = receive_nonce_from_server2(capsule_id=capsule_ID2)
 
-signed_auth_data = create_and_sign_authentication_data(signing_key=user_EC_key_pair, first_server_data={'id': capsule_ID1, 'nonce': nonce1}, second_server_data={'id': capsule_ID2, 'nonce':nonce2})
+server1_access_data = {
+     'serverURL': "https://cdoc.ria.ee:443/capsules",
+     'capsuleID': capsule_ID1,
+     'serverNonce': nonce1
+}
+
+server2_access_data = {
+      'serverURL': "https://cdoc.smit.ee:443/capsules",
+     'capsuleID': capsule_ID2,
+     'serverNonce': nonce2
+}
+
+signed_auth_data = create_and_sign_authentication_data(
+      signing_key=user_EC_key_pair, 
+      server1_access_data = server1_access_data,
+      server2_access_data = server2_access_data
+      )
 
 print("signed auth_data serialized_sd_jwt:\n", 
       json.dumps(json.loads(signed_auth_data.serialized_sd_jwt), indent=4))
