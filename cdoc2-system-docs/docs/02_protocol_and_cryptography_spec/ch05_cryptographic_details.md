@@ -44,19 +44,19 @@ Public symmetric keys are derived as follows.
 
 **File Master Key, FMK**
 
-*FMK ← Extract(”CDOC2salt”, random)*
+*FMK ← Extract(”CDOC20salt”, random)*
 
-Where *CDOC2salt* is a constant string and *random* is an at least 256-bit value generated using a cryptographically secure random number generator (CSPRNG).
+Where *CDOC20salt* is a constant string and *random* is an at least 256-bit value generated using a cryptographically secure random number generator (CSPRNG).
 
 **Content Encryption Key, CEK**
 
-*CEK ← Expand(FMK, ”CDOC2cek”, L<sub><sub>octets</sub></sub>)*
+*CEK ← Expand(FMK, ”CDOC20cek”, L<sub><sub>octets</sub></sub>)*
 
 L<sub>octets</sub> defines the output length of the Expand function in bytes and must be equal to the key length of the used symmetric encryption algorithm (see section [Payload assembly and encryption](#payload-assembly-and-encryption)).
 
 **Header HMAC Key, HHK**
 
-*HHK ← Expand(FMK, ”CDOC2hmac”, 32<sub><sub>octets</sub></sub>)*
+*HHK ← Expand(FMK, ”CDOC20hmac”, 32<sub><sub>octets</sub></sub>)*
 
 Note that the length of the HHK derived in this manner is 256 bits, i.e. equal to the output length of the used SHA-256 hash algorithm. This is based on the recommendations presented in the [HMAC standard](https://rfc-editor.org/rfc/rfc2104.txt).
 
@@ -113,9 +113,9 @@ i.e. the shared secret is the elliptic curve x-coordinate computed in this manne
 
 KEK is computed from the shared secret as follows:
 
-$$ KEK_{pm} ← Extract(”CDOC2kekpremaster”, S_{ecdh}) $$
+$$ KEK_{pm} ← Extract(”CDOC20kekpremaster”, S_{ecdh}) $$
 
-$$ KEK ← Expand(KEK_{pm}, ”CDOC2kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{<sub>octets</sub>}) $$
+$$ KEK ← Expand(KEK_{pm}, ”CDOC20kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{<sub>octets</sub>}) $$
 
 *algId* is the identifier of the cryptographic algorithm used for the encryption of the FMK defined as a string corresponding to the field *Recipient.FMKEncryptionMethod* (section [FMK encryption and decryption](#fmk-encryption-and-decryption)).
 
@@ -131,7 +131,7 @@ Key derivation can also be performed using the Windows ``NCryptSecretAgreement``
 - ``pwszKDF`` – the constant BCRYPT_KDF_HMAC.
 - ``pParameterList`` – algorithm parameters:
   - ``KDF_HASH_ALGORITHM`` – the constant ``BCRYPT_SHA256_ALGORITHM``.
-  - ``KDF_HMAC_KEY`` – the constant ``CDOC2kekpremaster``.
+  - ``KDF_HMAC_KEY`` – the constant ``CDOC20kekpremaster``.
   - ``KDF_SECRET_PREPEND`` – parameter omitted.
   - ``KDF_SECRET_APPEND`` – parameter omitted.
 
@@ -216,7 +216,7 @@ KEK is computed from the symmetric key and the generated random number as follow
 
 $$ KEK_{pm} \leftarrow Extract(salt, sym) $$
 
-$$ KEK     \leftarrow Expand(KEK_{pm}, "CDOC2kek" \parallel algId \parallel label, L_{octets})
+$$ KEK     \leftarrow Expand(KEK_{pm}, "CDOC20kek" \parallel algId \parallel label, L_{octets})
 $$
 
 Where *algId* is the identifier of the encryption algorithm used for the encryption of the FMK as a string, set as ``Recipient.FMKEncryptionMethod`` (section [FMK encryption and decryption](#fmk-encryption-and-decryption)).
@@ -269,7 +269,7 @@ The nonce (*nonce*) is always generated afresh, using a cryptographically secure
 
 Additional data (*additionalData*) comprises a predetermined UTF-8 encoded string, the serialized header, and the header message authentication code.
 
-$$  additionalData \leftarrow "CDOC2payload" \parallel header \parallel headerHMAC $$
+$$  additionalData \leftarrow "CDOC20payload" \parallel header \parallel headerHMAC $$
 
 Payload (*payLoad*) encryption is performed using the encryption function below, with an output length of plaintext payload length plus authentication label length.
 
