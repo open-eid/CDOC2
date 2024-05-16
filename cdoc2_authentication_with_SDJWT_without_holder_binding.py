@@ -71,37 +71,42 @@ def create_and_sign_authentication_data(signing_key, server1_access_data, server
       SDJWT_at_issuer = SDJWTIssuer(
             user_claims=SDJWT_claims,
             issuer_key=issuer_jwk,
-            serialization_format="json"
+            serialization_format="compact"
       )
+      return SDJWT_at_issuer
 
+
+def create_authentication_ticket_for_server1(SDJWT_at_issuer):
+      
       SDJWT_at_holder = SDJWTHolder(
             sd_jwt_issuance=SDJWT_at_issuer.sd_jwt_issuance,
-            serialization_format="json"
+            serialization_format="compact"
       )
 
-      return SDJWT_at_holder
-
-def create_authentication_ticket_for_server1(auth_signature):
-    
-      auth_signature.create_presentation(
+      SDJWT_at_holder.create_presentation(
             claims_to_disclose={
                  'capsule_access_data': [True, False]
                  }
             )
 
-      auth_ticket = auth_signature.sd_jwt_presentation
+      auth_ticket = SDJWT_at_holder.sd_jwt_presentation
 
       return auth_ticket
 
-def create_authentication_ticket_for_server2(auth_signature):
+def create_authentication_ticket_for_server2(SDJWT_at_issuer):
     
-      auth_signature.create_presentation(
+      SDJWT_at_holder = SDJWTHolder(
+            sd_jwt_issuance=SDJWT_at_issuer.sd_jwt_issuance,
+            serialization_format="compact"
+      )
+          
+      SDJWT_at_holder.create_presentation(
             claims_to_disclose={
                  'capsule_access_data': [False, True]
                  }
             )
 
-      auth_ticket = auth_signature.sd_jwt_presentation
+      auth_ticket = SDJWT_at_holder.sd_jwt_presentation
 
       return auth_ticket
 
@@ -119,24 +124,22 @@ def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
       sdjwt_at_verifier = SDJWTVerifier(
             sd_jwt_presentation=auth_ticket,
             cb_get_issuer_key=cb_get_issuer_key,
-            serialization_format="json"
+            serialization_format="compact"
             )
 
       verified_payload = sdjwt_at_verifier.get_verified_payload()
 
-      print("verifier unverified input sd:\n", 
-            json.dumps(json.loads(sdjwt_at_verifier._unverified_input_sd_jwt), indent=4)
-            )
+      print("server1 unverified SD-JWT compact format: ", sdjwt_at_verifier._unverified_input_sd_jwt)
 
-      print("verifier unverified input sd payload:\n", 
+      print("server1 unverified SD-JWT payload:\n", 
             json.dumps(sdjwt_at_verifier._unverified_input_sd_jwt_payload, indent=4)
             )
 
-      print("verifier parsed sd_jwt_payload:\n", 
+      print("server1 unverified parsed sd_jwt_payload:\n", 
             json.dumps(sdjwt_at_verifier._sd_jwt_payload, indent=4)
             )
 
-      print("Verifier verified payload: \n", 
+      print("server1 verified SD-JWT claims: \n", 
             json.dumps(verified_payload, indent=4)
             )
       
@@ -159,24 +162,22 @@ def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
       sdjwt_at_verifier = SDJWTVerifier(
             sd_jwt_presentation=auth_ticket,
             cb_get_issuer_key=cb_get_issuer_key,
-            serialization_format="json"
+            serialization_format="compact"
             )
 
       verified_payload = sdjwt_at_verifier.get_verified_payload()
 
-      print("verifier unverified input sd:\n", 
-            json.dumps(json.loads(sdjwt_at_verifier._unverified_input_sd_jwt), indent=4)
-            )
+      print("server2 unverified SD-JWT compact format: ", sdjwt_at_verifier._unverified_input_sd_jwt)
 
-      print("verifier unverified input sd payload:\n", 
+      print("server2 unverified SD-JWT payload:\n", 
             json.dumps(sdjwt_at_verifier._unverified_input_sd_jwt_payload, indent=4)
             )
 
-      print("verifier parsed sd_jwt_payload:\n", 
+      print("server2 unverified parsed sd_jwt_payload:\n", 
             json.dumps(sdjwt_at_verifier._sd_jwt_payload, indent=4)
             )
 
-      print("Verifier verified payload: \n", 
+      print("server2 verified SD-JWT claims: \n", 
             json.dumps(verified_payload, indent=4)
             )
 
@@ -232,32 +233,22 @@ signed_auth_data = create_and_sign_authentication_data(
       server2_access_data = server2_access_data
       )
 
-print("signed auth_data serialized_sd_jwt:\n", 
-      json.dumps(json.loads(signed_auth_data.serialized_sd_jwt), indent=4))
+#print("signed auth_data serialized_sd_jwt:\n", 
+#      json.dumps(json.loads(signed_auth_data.serialized_sd_jwt), indent=4))
+
 print("signed auth_data sd_jwt_payload:\n", 
       json.dumps(signed_auth_data.sd_jwt_payload, indent=4))
+
 #print("signed auth_data sd_jwt_protected:\n",
 #      json.dumps(signed_auth_data.sd_jwt.jose_header, indent=4))
 
-ticket1 = create_authentication_ticket_for_server1(auth_signature=signed_auth_data)
+ticket1 = create_authentication_ticket_for_server1(SDJWT_at_issuer=signed_auth_data)
 
-print("auth_ticket1 serialized_sd_jwt:\n", 
-      json.dumps(json.loads(ticket1), indent=4)
-      )
+print("auth_ticket1 compact representation:", ticket1)
 
-print("auth_ticket1 sd_jwt_payload:\n", 
-      json.dumps(json.loads(ticket1)['payload'], indent=4)
-      )
+ticket2 = create_authentication_ticket_for_server2(SDJWT_at_issuer=signed_auth_data)
 
-ticket2 = create_authentication_ticket_for_server2(auth_signature=signed_auth_data)
-
-print("auth_ticket1 serialized_sd_jwt:\n", 
-      json.dumps(json.loads(ticket2), indent=4)
-      )
-
-print("auth_ticket1 sd_jwt_payload:\n", 
-      json.dumps(json.loads(ticket2)['payload'], indent=4)
-      )
+print("auth_ticket2 compact representation:", ticket2)
 
 ok1 = verify_authentication_ticket_at_server1(user_public_key=user_EC_key_pair, auth_ticket=ticket1)
 ok2 = verify_authentication_ticket_at_server2(user_public_key=user_EC_key_pair, auth_ticket=ticket2)
