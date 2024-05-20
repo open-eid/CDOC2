@@ -83,6 +83,7 @@ We are mapping those SD-JWT specific entities to CDOC2 world in the following wa
     "iat": "1715694253",
     "exp": "1715694293"
 ```
+TODO: Perhaps we should use official JWT header "typ" claims instead, because [SD-JWT section 10.12](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#name-explicit-typing) recommends applications to invent their own values, like "application/example+sd-jwt" be used, where "example" is replaced by the identifier for the specific kind of SD-JWT. So, perhaps something like `cdoc2-auth-token+sd-jwt`. Still, how about versioning?
 
 TODO: Somehow, client needs to express what is the certificate that it was using. Can we use "x5c" claim? <https://mojoauth.com/glossary/jwt-x.509-certificate-chain/>
 
