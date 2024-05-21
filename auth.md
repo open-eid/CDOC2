@@ -10,8 +10,8 @@
 
 ## General protocol flow
 
-1. Client retrieves the list of `serverID` and `capsuleID` from header of CDOC2 Container
-2. Client connects to every server and exchanges `capsuleID` with `serverNonce`. Every server will reply with different `serverNonce`.
+1. Client retrieves the list of `serverBaseURL` and `shareId` from header of CDOC2 Container
+2. Client connects to every server and exchanges `shareId` with `serverNonce`. Every server will reply with different `serverNonce`.
 3. Client constructs authentication data to be signed with authentication means.
 4. Client signs the data and creates the authentication signature.
 5. Client constructs a list of authentication tickets from authentication data and authentication signature, so that every server will have different ticket.
@@ -27,20 +27,20 @@ Let's say that Client will sign the following set of JWT claims with their authe
     "iss": "etsi/PNOEE-48010010101",
     "capsule_access_data": [
         {   
-            "serverURL": "https://cdoc.ria.ee:443/capsules",
-            "capsuleID": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3",
+            "serverID": "https://cdoc.ria.ee:443/key-shares/",
+            "shareId": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3",
             "serverNonce": "59b314d4815f21f73a0b9168cecbd5773cc694b6"
         },
         {
-            "serverURL": "https://cdoc.smit.ee:443/capsules",
-            "capsuleID": "5BAE4603-C33C-4425-B301-125F2ACF9B1E",
+            "serverID": "https://cdoc.smit.ee:443/key-shares/",
+            "shareId": "5BAE4603-C33C-4425-B301-125F2ACF9B1E",
             "serverNonce": "9d23660840b427f405009d970d269770417bc769"
         }
     ]
 }
 ```
 
-If user would create (in JWT and SDJWT terminology, "issue") an ordinary JWT with these claims, the resulting thing would look something like that:
+If user would create (in JWT and SD-JWT terminology, "issue") an ordinary JWT with these claims, the resulting thing would look something like that:
 
 ```text
 eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
@@ -73,6 +73,70 @@ We are mapping those SD-JWT specific entities to CDOC2 world in the following wa
 3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CCS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder key binding.
 4. Roles of SD-JWT Verifiers is performed by CCS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
+## SD-JWT and selective disclosures
+
+How does this "selective disclosure" actually work behind the scenes? The idea is that Issuer will create special kind of `SD-CLAIMS` in the ordinary JWT, which are:
+
+```text
+SD-CLAIMS = (
+    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
+)*
+```
+
+where `SALT` is a random salt. This kind of operation effectively "hides" the `CLAIM-VALUE`. Such kind of `SD-CLAIMS` are included in the standard JWT structure, in a special structure, with claim name `sd_digests`.
+
+In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES`, which are:
+
+```text
+SD-RELEASES = (
+    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
+)
+```
+
+and include such info in a special structure in the JWT, with claim name `sd_release`. So, for example, if the original set of claims are: 
+
+```json
+{
+  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+  "given_name": "John",
+  "family_name": "Doe",
+}
+
+Let's say that the Issuer wishes to make claim "given_name" disclosable:
+
+```json
+{
+  "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
+  "family_name": "Doe",
+  "sd_digests": {
+    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
+  }
+}
+```
+
+This JOSE is then signed and following JWT is created:
+
+```text
+<JWT_header>.<JWT_payload>.<JWT_signature>
+```
+
+However, this JWT doesn't yet contain the random salt values. So, SD-JWT Salt/value Container (SVC) is added:
+
+```json
+{
+  "sd_release": {
+    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+  }
+}
+
+and encoded in Base64 and added to JWT compact encoding after period ("."): 
+
+```text
+<JWT_header>.<JWT_payload>.<JWT_signature>.<SD-JWT SVC>
+```
+
+Now, Holder can decide which disclosable claim information from the SVC it will include, when creating the presentation to Verifier, and which it doesn't include. The signature of the original JWT is still valid.
+
 ## Creating SD-JWT structure (authentication data and authentication signature)
 
 1. Client creates an empty SD-JWT structure and adds following always-disclosed claims:
@@ -84,7 +148,6 @@ We are mapping those SD-JWT specific entities to CDOC2 world in the following wa
     "exp": "1715694293"
 ```
 TODO: Perhaps we should use official JWT header "typ" claims instead, because [SD-JWT section 10.12](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#name-explicit-typing) recommends applications to invent their own values, like "application/example+sd-jwt" be used, where "example" is replaced by the identifier for the specific kind of SD-JWT. So, perhaps something like `cdoc2-auth-token+sd-jwt`. Still, how about versioning?
-
 TODO: Somehow, client needs to express what is the certificate that it was using. Can we use "x5c" claim? <https://mojoauth.com/glossary/jwt-x.509-certificate-chain/>
 
 TODO: Add the OCSP response about certificate validity as well?
