@@ -1,11 +1,13 @@
 #!/Users/aivo/tmp/repos/CDOC2/RM-2776-authentication-protocol/sd-jwt/sd-jwt-python/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import sys
 import json
 from jwcrypto.common import json_decode, json_encode
 from jwcrypto.jwk import JWK
+from jwcrypto.jwt import JWT
 from sd_jwt.common import SDObj
 from sd_jwt.issuer import SDJWTIssuer
 from sd_jwt.holder import SDJWTHolder
@@ -13,23 +15,80 @@ from sd_jwt.verifier import SDJWTVerifier
 
 SDJWTIssuer.unsafe_randomness = True
 
-def receive_nonce_from_server1(capsule_id):
+def print_SDJWT(desc, jwt):
+      from pygments import highlight, lexers, formatters
+
+      formatted_json = json.dumps(jwt, sort_keys=True, indent=4)
+      colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
+      print(desc+colorful_json)
+
+def print_signed_auth_data_components(auth_data):
+
+      print_SDJWT(
+            desc="signed auth_data (SD-JWT) serialised in \"compact\" format: ", 
+            jwt=auth_data.serialized_sd_jwt
+      )
+
+      print_SDJWT(
+            desc="signed auth_data (SD-JWT), header component:\n", 
+            jwt=json.loads(SDJWTHolder._base64url_decode(auth_data._unverified_input_sd_jwt.split(".")[0]))
+      )
+
+      print_SDJWT(
+            desc="signed auth_data (SD-JWT), payload component:\n", 
+            jwt=auth_data.sd_jwt_payload
+      )
+
+
+def print_auth_ticket_components(name, ticket):
+
+      print_SDJWT(
+            desc=name + " compact representation: ",
+            jwt=ticket
+            )
+
+      print_SDJWT(
+            desc=name + " SD-JWT components, protected header (component before the first .):\n",
+            jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split(".")[0]))
+            )
+
+      print_SDJWT(
+            desc=name + " SD-JWT components, protected payload (component after the first . and before second .):\n",
+            jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split(".")[1]))
+            )
+
+      print_SDJWT(
+            desc=name + " SD-JWT components, binary base64-encoded signature (component after second . and before first ~):\n",
+            jwt=ticket.split("~")[0].split(".")[2]
+            )
+
+      print_SDJWT(
+            desc=name + " SD-JWT components, SD-JWT Salt/value Container (component after first ~ and before second ~):\n",
+            jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split("~")[1]))
+            )
+
+      print_SDJWT(
+            desc=name + " SD-JWT components, something (component after second ~ and before third ~):\n",
+            jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split("~")[2]))
+            )
+
+def receive_nonce_from_server1(share_id):
     return "42"
 
-def receive_nonce_from_server2(capsule_id):
+def receive_nonce_from_server2(share_id):
     return "41"
 
 def create_and_sign_authentication_data(signing_key, server1_access_data, server2_access_data):     
 
       server_1_structure = {
-            "serverURL": server1_access_data['serverURL'],
-            "capsuleID": server1_access_data['capsuleID'],
+            "serverBaseURL": server1_access_data['serverBaseURL'],
+            "shareId": server1_access_data['shareId'],
             "serverNonce": server1_access_data['serverNonce'],
             }
 
       server_2_structure = {
-            "serverURL": server2_access_data['serverURL'],
-            "capsuleID": server2_access_data['capsuleID'],
+            "serverBaseURL": server2_access_data['serverBaseURL'],
+            "shareId": server2_access_data['shareId'],
             "serverNonce": server2_access_data['serverNonce'],
             }
       
@@ -39,53 +98,52 @@ def create_and_sign_authentication_data(signing_key, server1_access_data, server
       server_auth_data_array.append(SDObj(server_2_structure))
       #print("server_auth_data_array with two elements: " + json.dumps(server_auth_data_array,sort_keys=True, indent=4))
       disclosable_array = {
-           SDObj("capsule_access_data"): server_auth_data_array
+           SDObj("shareAccessData"): server_auth_data_array
       }
 
       #print("SD array: " + json.dumps(disclosable_array,sort_keys=True, indent=4))
 
       SDJWT_disclosable_claims = {}
       SDJWT_disclosable_claims.update(disclosable_array)
-
-#      SDJWT_disclosable_claims = {
-#            SDObj([])
-#            SDObj("FirstCapsuleID"): first_server_data['id'],
-#            SDObj("FirstCapsuleNonce"): first_server_data['nonce'],
-#
-#            SDObj("SecondCapsuleID"): second_server_data['id'],
-#            SDObj("SecondCapsuleNonce"): second_server_data['nonce']
-#            }
-      
+     
       SDJWT_claims = {}
       SDJWT_regular_claims = {
-            'CDOC2_token_type': "CTS authentication token v0.1",
-            'iss': "etsi/PNOEE-48010010101",
-            'iat': "1715694253"
+            'iat': "1715694253",
+            'exp': "1715694263"
             }
       SDJWT_claims.update(SDJWT_regular_claims)
       SDJWT_claims.update(SDJWT_disclosable_claims)
 
+      SDJWT_header_claims = {
+           'x5c': "MIIC8TCCAdmgA...Vt5432GA=="
+      }
+
       issuer_jwk = JWK.from_json(json_encode(signing_key))
       holder_jwk = JWK.from_json(json_encode(signing_key))
+
+      # Should overrides default "example+sd-jwt", but it is lost somewhere
+      os.environ["SD_JWT_HEADER"] = "vnd.cdoc2.CTS-auth-token.v1+sd-jwt"
 
       SDJWT_at_issuer = SDJWTIssuer(
             user_claims=SDJWT_claims,
             issuer_key=issuer_jwk,
-            serialization_format="compact"
+            sign_alg="ES256",
+            serialization_format="compact",
+            extra_header_parameters=SDJWT_header_claims
       )
-      return SDJWT_at_issuer
 
-
-def create_authentication_ticket_for_server1(SDJWT_at_issuer):
-      
       SDJWT_at_holder = SDJWTHolder(
             sd_jwt_issuance=SDJWT_at_issuer.sd_jwt_issuance,
             serialization_format="compact"
       )
 
+      return SDJWT_at_holder
+
+def create_authentication_ticket_for_server1(SDJWT_at_holder):
+
       SDJWT_at_holder.create_presentation(
             claims_to_disclose={
-                 'capsule_access_data': [True, False]
+                 'shareAccessData': [True, False]
                  }
             )
 
@@ -93,16 +151,11 @@ def create_authentication_ticket_for_server1(SDJWT_at_issuer):
 
       return auth_ticket
 
-def create_authentication_ticket_for_server2(SDJWT_at_issuer):
-    
-      SDJWT_at_holder = SDJWTHolder(
-            sd_jwt_issuance=SDJWT_at_issuer.sd_jwt_issuance,
-            serialization_format="compact"
-      )
-          
+def create_authentication_ticket_for_server2(SDJWT_at_holder):
+             
       SDJWT_at_holder.create_presentation(
             claims_to_disclose={
-                 'capsule_access_data': [False, True]
+                 'shareAccessData': [False, True]
                  }
             )
 
@@ -113,7 +166,7 @@ def create_authentication_ticket_for_server2(SDJWT_at_issuer):
 def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
 
       expected_serverNonce = "42"
-      expected_capsuleID = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
+      expected_shareId = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
 
       # Define a function to check the issuer and retrieve the
       # matching public key
@@ -129,21 +182,22 @@ def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
 
       verified_payload = sdjwt_at_verifier.get_verified_payload()
 
-      print("server1 unverified SD-JWT compact format: ", sdjwt_at_verifier._unverified_input_sd_jwt)
+      print_SDJWT(
+           desc="server1 unverified SD-JWT compact format: ", 
+           jwt=sdjwt_at_verifier._unverified_input_sd_jwt
+      )
 
-      print("server1 unverified SD-JWT payload:\n", 
-            json.dumps(sdjwt_at_verifier._unverified_input_sd_jwt_payload, indent=4)
-            )
-
-      print("server1 unverified parsed sd_jwt_payload:\n", 
-            json.dumps(sdjwt_at_verifier._sd_jwt_payload, indent=4)
-            )
-
-      print("server1 verified SD-JWT claims: \n", 
-            json.dumps(verified_payload, indent=4)
-            )
+      print_SDJWT(
+            desc="server1 unverified SD-JWT payload: ", 
+            jwt=sdjwt_at_verifier._unverified_input_sd_jwt_payload
+      )
       
-      if (verified_payload['capsule_access_data'][0]['capsuleID'] == expected_capsuleID) and (verified_payload['capsule_access_data'][0]['serverNonce'] == expected_serverNonce):
+      print_SDJWT(
+            desc="server1 verified SD-JWT protected payload: ", 
+            jwt=verified_payload
+      )
+    
+      if (verified_payload['shareAccessData'][0]['shareId'] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
            return True
       else:
            return False
@@ -151,7 +205,7 @@ def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
 def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
 
       expected_serverNonce = "41"
-      expected_capsuleID = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
+      expected_shareId = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
 
       # Define a function to check the issuer and retrieve the
       # matching public key
@@ -167,21 +221,22 @@ def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
 
       verified_payload = sdjwt_at_verifier.get_verified_payload()
 
-      print("server2 unverified SD-JWT compact format: ", sdjwt_at_verifier._unverified_input_sd_jwt)
+      print_SDJWT(
+           desc="server2 unverified SD-JWT compact format: ", 
+           jwt=sdjwt_at_verifier._unverified_input_sd_jwt
+      )
 
-      print("server2 unverified SD-JWT payload:\n", 
-            json.dumps(sdjwt_at_verifier._unverified_input_sd_jwt_payload, indent=4)
-            )
+      print_SDJWT(
+            desc="server2 unverified SD-JWT payload: ", 
+            jwt=sdjwt_at_verifier._unverified_input_sd_jwt_payload
+      )
 
-      print("server2 unverified parsed sd_jwt_payload:\n", 
-            json.dumps(sdjwt_at_verifier._sd_jwt_payload, indent=4)
-            )
+      print_SDJWT(
+            desc="server2 verified SD-JWT payload: ", 
+            jwt=verified_payload
+      )
 
-      print("server2 verified SD-JWT claims: \n", 
-            json.dumps(verified_payload, indent=4)
-            )
-
-      if (verified_payload['capsule_access_data'][0]['capsuleID'] == expected_capsuleID) and (verified_payload['capsule_access_data'][0]['serverNonce'] == expected_serverNonce):
+      if (verified_payload['shareAccessData'][0]['shareId'] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
            return True
       else:
            return False
@@ -209,21 +264,21 @@ user_RSA_keypair = {
   "qi"  : "ldHXIrEmMZVaNwGzDF9WG8sHj2mOZmQpw9yrjLK9hAsmsNr5LTyqWAqJIYZSwPTYWhY4nu2O0EY9G9uYiqewXfCKw_UngrJt8Xwfq1Zruz0YY869zPN4GiE9-9rzdZB33RBw8kIOquY3MK74FMwCihYx_LiU2YTHkaoJ3ncvtvg"
 }
 
-capsule_ID1 = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
-capsule_ID2 = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
+share_ID1 = "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
+share_ID2 = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
 
-nonce1 = receive_nonce_from_server1(capsule_id=capsule_ID1)
-nonce2 = receive_nonce_from_server2(capsule_id=capsule_ID2)
+nonce1 = receive_nonce_from_server1(share_id=share_ID1)
+nonce2 = receive_nonce_from_server2(share_id=share_ID2)
 
 server1_access_data = {
-     'serverURL': "https://cdoc.ria.ee:443/capsules",
-     'capsuleID': capsule_ID1,
+     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
+     'shareId': share_ID1,
      'serverNonce': nonce1
 }
 
 server2_access_data = {
-      'serverURL': "https://cdoc.smit.ee:443/capsules",
-     'capsuleID': capsule_ID2,
+     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
+     'shareId': share_ID2,
      'serverNonce': nonce2
 }
 
@@ -233,22 +288,13 @@ signed_auth_data = create_and_sign_authentication_data(
       server2_access_data = server2_access_data
       )
 
-#print("signed auth_data serialized_sd_jwt:\n", 
-#      json.dumps(json.loads(signed_auth_data.serialized_sd_jwt), indent=4))
+print_signed_auth_data_components(auth_data=signed_auth_data)
 
-print("signed auth_data sd_jwt_payload:\n", 
-      json.dumps(signed_auth_data.sd_jwt_payload, indent=4))
+ticket1 = create_authentication_ticket_for_server1(SDJWT_at_holder=signed_auth_data)
+print_auth_ticket_components(name="ticket1", ticket=ticket1)
 
-#print("signed auth_data sd_jwt_protected:\n",
-#      json.dumps(signed_auth_data.sd_jwt.jose_header, indent=4))
-
-ticket1 = create_authentication_ticket_for_server1(SDJWT_at_issuer=signed_auth_data)
-
-print("auth_ticket1 compact representation:", ticket1)
-
-ticket2 = create_authentication_ticket_for_server2(SDJWT_at_issuer=signed_auth_data)
-
-print("auth_ticket2 compact representation:", ticket2)
+ticket2 = create_authentication_ticket_for_server2(SDJWT_at_holder=signed_auth_data)
+print_auth_ticket_components(name="ticket2", ticket=ticket2)
 
 ok1 = verify_authentication_ticket_at_server1(user_public_key=user_EC_key_pair, auth_ticket=ticket1)
 ok2 = verify_authentication_ticket_at_server2(user_public_key=user_EC_key_pair, auth_ticket=ticket2)

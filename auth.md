@@ -19,20 +19,20 @@
 
 ## Authentication data
 
-Let's say that Client will sign the following set of JWT claims with their authentication means:
+Let's say that Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID):
 
 ```json
 {
     "CDOC2_token_type": "CTS authentication token v0.1",
     "iss": "etsi/PNOEE-48010010101",
-    "capsule_access_data": [
+    "shareAccessData": [
         {   
-            "serverID": "https://cdoc.ria.ee:443/key-shares/",
+            "serverBaseURL": "https://cdoc-ccs.ria.ee:443/key-shares/",
             "shareId": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3",
             "serverNonce": "59b314d4815f21f73a0b9168cecbd5773cc694b6"
         },
         {
-            "serverID": "https://cdoc.smit.ee:443/key-shares/",
+            "serverBaseURL": "https://cdoc-ccs.smit.ee:443/key-shares/",
             "shareId": "5BAE4603-C33C-4425-B301-125F2ACF9B1E",
             "serverNonce": "9d23660840b427f405009d970d269770417bc769"
         }
@@ -56,26 +56,26 @@ It contains following sections, separated by periods (".")
 2. second section is base64 encoded JWT claims
 3. third section is base64 encoded signature value
 
-In the next section, we will explain how to use SD-JWT  to only disclose those elements of the `capsule_access_data` array to CCS servers, which are necessary and prevent the replay possibility.
+In the next section, we will explain how to use SD-JWT  to only disclose those elements of the `shareAccessData` array to CCS servers, which are necessary and prevent the replay possibility.
 
 ## Intro to SD-JWT standard
 
 SD-JWT standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) _defines a mechanism for selective disclosure of individual elements of a JSON object used as the payload of a JSON Web Signature (JWS) structure_. It assumes a ecosystem with following entities:
 
-1. SD-JWT is created by an entity called "Issuer". Issuer decides, what claims are included in SD-JWT, which claims are individually disclosable. Issuer signs the SD-JWT with its key pair and secures the SD-JWT against modifications.
-2. SD-JWT is received from Issuer by entity called "Holder". Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which one it wishes to keep secret.
-3. SD-JWT is presented to an entity called "Verifier". Verifier requests SD-JWT from Holder and checks and extracts the list of claims from SD-JWT.
+1. SD-JWT is created by an entity called _Issuer_. Issuer decides, what claims are included in SD-JWT and which claims are individually disclosable. Issuer signs the SD-JWT with its key pair and this way secures the SD-JWT against modifications.
+2. SD-JWT is received from Issuer by entity called _Holder_. Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which one it wishes to keep secret.
+3. SD-JWT is presented to an entity called _Verifier_. Verifier requests SD-JWT from Holder, checks the Issuer signature and extracts the list of claims from SD-JWT.
 
-We are mapping those SD-JWT specific entities to CDOC2 world in the following way:
+We are mapping those SD-JWT-specific entities to CDOC2 world in the following way:
 
-1. SD-JWT data structure is used as both CDOC2 authentication data and CDOC2 authentication signature, in other words, information that is used to create authentication data and authentication signature, is expressed as SD-JWT structures.
+1. SD-JWT data structure is used as both CDOC2 authentication data and CDOC2 authentication signature. In other words, information that is used to create authentication data and authentication signature, is expressed (encoded) as SD-JWT structure. Authentication signature corresponds to Issuer signature.
 2. SD-JWT presentation with selectively disclosed claims is used as server-specific CDOC2 authentication ticket.
-3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CCS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder key binding.
-4. Roles of SD-JWT Verifiers is performed by CCS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
+3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CCS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
+4. Role of SD-JWT Verifier is performed by CCS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
 ## SD-JWT and selective disclosures
 
-How does this "selective disclosure" actually work behind the scenes? The idea is that Issuer will create special kind of `SD-CLAIMS` in the ordinary JWT, which are:
+How does this "selective disclosure" magic actually work behind the scenes? The idea is that Issuer will create special kind of `SD-CLAIMS` data items in the ordinary JWT, which are:
 
 ```text
 SD-CLAIMS = (
@@ -83,7 +83,7 @@ SD-CLAIMS = (
 )*
 ```
 
-where `SALT` is a random salt. This kind of operation effectively "hides" the `CLAIM-VALUE`. Such kind of `SD-CLAIMS` are included in the standard JWT structure, in a special structure, with claim name `sd_digests`.
+where `SALT` is a random salt. This kind of operation effectively "hides" the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if he is provided with the salt and clear-text claim value. Such kind of `SD-CLAIMS` are included in the standard JWT structure, in a special structure, within claim name `_sd`.
 
 In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES`, which are:
 
@@ -93,7 +93,7 @@ SD-RELEASES = (
 )
 ```
 
-and include such info in a special structure in the JWT, with claim name `sd_release`. So, for example, if the original set of claims are: 
+and include such info in a special structure in the JWT, with claim name `sd_release`. So, for example, if the original set of claims are following:
 
 ```json
 {
@@ -101,54 +101,62 @@ and include such info in a special structure in the JWT, with claim name `sd_rel
   "given_name": "John",
   "family_name": "Doe",
 }
+```
 
-Let's say that the Issuer wishes to make claim "given_name" disclosable:
+Let's say that the Issuer wishes to make claim `given_name` disclosable. It generates a random salt and computes digest value from `SHA-256("eluV5Og3gSNII8EYnsxA_A" + "John")` and includes this value in `_sd` structure:
 
 ```json
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "family_name": "Doe",
-  "sd_digests": {
+  "_sd_": {
     "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
   }
 }
 ```
 
-This JOSE is then signed and following JWT is created:
+This JOSE is then signed as `<JWT_payload` and following JWT is created:
 
 ```text
 <JWT_header>.<JWT_payload>.<JWT_signature>
 ```
 
-However, this JWT doesn't yet contain the random salt values. So, SD-JWT Salt/value Container (SVC) is added:
+However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container (SVC) is also added:
 
 ```json
-{
-  "sd_release": {
+{ 
+  [
     "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
-  }
+  ]
 }
+```
 
-and encoded in Base64 and added to JWT compact encoding after period ("."): 
+and it is encoded in Base64 and added to the original encoded JWT, after yet another period ("."):
 
 ```text
 <JWT_header>.<JWT_payload>.<JWT_signature>.<SD-JWT SVC>
 ```
 
-Now, Holder can decide which disclosable claim information from the SVC it will include, when creating the presentation to Verifier, and which it doesn't include. The signature of the original JWT is still valid.
+Now, Holder can decide which disclosable claim information from the SVC it will include, when creating a presentation to Verifier, and which it removes. The signature of the original JWT is still valid, because original JWT will be unchanged.
 
 ## Creating SD-JWT structure (authentication data and authentication signature)
 
-1. Client creates an empty SD-JWT structure and adds following always-disclosed claims:
+1. Client creates an SD-JWT with following header:
 
 ```json
-    "CDOC2_token_type": "CTS authentication token v0.1",
-    "iss": "etsi/PNOEE-48010010101",
+{
+    "typ": "vnd.cdoc2.CTS-auth-token.v1+sd-jwt",
+    "alg": "ES256",
+    "x5c": "base64 encoded certificate chain with user's certificate"
+}
+```
+
+2. and initialises empty SD-JWT payload structure and adds following always-disclosed claims to SD-JWT payload:
+
+```json
     "iat": "1715694253",
     "exp": "1715694293"
 ```
-TODO: Perhaps we should use official JWT header "typ" claims instead, because [SD-JWT section 10.12](https://www.ietf.org/archive/id/draft-ietf-oauth-selective-disclosure-jwt-08.html#name-explicit-typing) recommends applications to invent their own values, like "application/example+sd-jwt" be used, where "example" is replaced by the identifier for the specific kind of SD-JWT. So, perhaps something like `cdoc2-auth-token+sd-jwt`. Still, how about versioning?
-TODO: Somehow, client needs to express what is the certificate that it was using. Can we use "x5c" claim? <https://mojoauth.com/glossary/jwt-x.509-certificate-chain/>
 
 TODO: Add the OCSP response about certificate validity as well?
 
@@ -157,26 +165,24 @@ TODO: other useful claims?
 2. Client adds to SD-JWT structure the following disclosable object:
 
 ```json
-    "capsule_access_data": []
+    "shareAccessData": []
 ```
 
-3. Client adds disclosable JSON structure objects to the disclosable array `capsule_access_data` for each capsule that it wishes to download from CCS servers. For example, the structure may contain following info:
+3. Client adds disclosable JSON structure objects to the disclosable array `shareAccessData` for each capsule that it wishes to download from CCS servers. For example, the structure may contain following info:
 
 ```json
 {
-    "serverURL": "https://cdoc.ria.ee:443/capsules",
-    "capsuleID": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3",
+    "serverBaseURL": "https://cdoc-ccs.ria.ee:443/key-shares/",
+    "shareId": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3",
     "serverNonce": "649a44d6cd9827cae3f3df04fd5eda98246d2dde"
 }
 ```
-
-TODO: is this enough? Too much? Do we wish to use `serverID` instead?
 
 4. Client signs the SD-JWT structure as SD-JWT Issuer with its authentication means.
 
 ## Presenting SD-JWT (creating authentication ticket)
 
-For each server, Client creates SD-JWT presentation and discloses only the corresponding JSON structure object, which contains the `capsuleID` and `serverNonce`, specific to that server.
+For each server, Client creates SD-JWT presentation and discloses only the corresponding JSON structure object, which contains the `shareId` and `serverNonce`, specific to that server.
 
 Resulting SD-JWT is formatted as (elements separated by "~"):
 
@@ -190,24 +196,84 @@ where `<Issuer-signed JWT>` contains following elements (separated by "."):
 <SD-JWT header>.<SD-JWT payload>.<Issuer signature>
 ```
 
-Actual SD-JWT in compact representation looks something like that: 
+Actual SD-JWT in compact representation looks something like that:
 ```text
-eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0In0.eyJfc2QiOiBbIl9URVhpZmkzZF9OdzRGYjNjOVI5WjN1ZGpVTTFGNTFIdWozeUkwOEsxbnMiXSwgIkNET0MyX3Rva2VuX3R5cGUiOiAiQ1RTIGF1dGhlbnRpY2F0aW9uIHRva2VuIHYwLjEiLCAiaXNzIjogImV0c2kvUE5PRUUtNDgwMTAwMTAxMDEiLCAiaWF0IjogIjE3MTU2OTQyNTMiLCAiX3NkX2FsZyI6ICJzaGEtMjU2In0.pXgj9fqVtplw8k9W7Lqn7PTg8JFkbB7AeoEQK83FRTLLqnHJ1PorL4M32o2iurqA6JVlg6ijDDCKAqLuPmRnwA~WyJtQy1CcC1GSUszQUVxSVJQZG1IeWF3IiwgImNhcHN1bGVfYWNjZXNzX2RhdGEiLCBbeyIuLi4iOiAiaEN3bFh2c1RNc21mTEI1Y2k3ckpaczgwazk0d014M2o2LXVUMTFhOWNMQSJ9LCB7Ii4uLiI6ICJYRGJnQm1IbDZkdkRHTERheVprNnVQNFRGT2F4RDdKeG9BdUxCb21WdmZjIn1dXQ~WyJBcmtKUHJrN0hGWXI4dl9FQmNrdEF3IiwgeyJzZXJ2ZXJVUkwiOiAiaHR0cHM6Ly9jZG9jLnJpYS5lZTo0NDMvY2Fwc3VsZXMiLCAiY2Fwc3VsZUlEIjogIjlFRTkwRjJELUQ5NDYtNEQ1NC05QzNELUY0QzY4RjdGRkFFMyIsICJzZXJ2ZXJOb25jZSI6ICI0MiJ9XQ~
+eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0IiwgIng1YyI6ICJNSUlDOFRDQ0FkbWdBLi4uVnQ1NDMyR0E9PSJ9.eyJfc2QiOiBbIjFTVGpGbEJINmptRjI3MElmeTJTdFhuTXpaMlREcklLSlg1Qnk2NWd2LTQiXSwgImlhdCI6ICIxNzE1Njk0MjUzIiwgImV4cCI6ICIxNzE1Njk0MjYzIiwgIl9zZF9hbGciOiAic2hhLTI1NiJ9.0EXb6QCwNL19ZWieDHDWZsm2W_bO2tCH8QBr1ftcTFh2t2P77qEimYjrattAHMah5FPAD3otdDARzh4DfWcuVg~WyJrLTRFYVpwQWctMTdRbk1mT3dNYk93IiwgInNoYXJlQWNjZXNzRGF0YSIsIFt7Ii4uLiI6ICJFRXNfNWVmWUN5WVNjaDB6ZTJKZ1VsV0VpSVhzcTZic1o4UXFBdnlqZXVNIn0sIHsiLi4uIjogIkZfLTZuc0RDT0NvSmNOS2ZhODdWZ0FNVFRzODdLRjN6WXlzbUpnQzF3ckUifV1d~WyJMUTN0eUxONHZVbDRFakR0ekdmRVFnIiwgeyJzZXJ2ZXJCYXNlVVJMIjogImh0dHBzOi8vY2RvYy1jY3MucmlhLmVlOjQ0My9rZXktc2hhcmVzLyIsICJzaGFyZUlkIjogIjlFRTkwRjJELUQ5NDYtNEQ1NC05QzNELUY0QzY4RjdGRkFFMyIsICJzZXJ2ZXJOb25jZSI6ICI0MiJ9XQ~
+```
+
+if we decode the individual parts, we get the following pieces.
+
+1. Protected header:
+
+```json
+{
+    "alg": "ES256",
+    "typ": "example+sd-jwt",
+    "x5c": "MIIC8TCCAdmgA...Vt5432GA=="
+}
+```
+
+2. Protected payload:
+
+```json
+{
+    "_sd": [
+        "1STjFlBH6jmF270Ify2StXnMzZ2TDrIKJX5By65gv-4"
+    ],
+    "_sd_alg": "sha-256",
+    "exp": "1715694263",
+    "iat": "1715694253"
+}
+```
+
+3. Binary signature:
+   
+```text
+0EXb6QCwNL19ZWieDHDWZsm2W_bO2tCH8QBr1ftcTFh2t2P77qEimYjrattAHMah5FPAD3otdDARzh4DfWcuVg
+```
+
+4. SVC container with salts and hashes:
+   
+```json
+[
+    "k-4EaZpAg-17QnMfOwMbOw",
+    "shareAccessData",
+    [
+        {
+            "...": "EEs_5efYCyYSch0ze2JgUlWEiIXsq6bsZ8QqAvyjeuM"
+        },
+        {
+            "...": "F_-6nsDCOCoJcNKfa87VgAMTTs87KF3zYysmJgC1wrE"
+        }
+    ]
+]
+```
+
+5. Disclosures:
+
+```json
+[
+    "LQ3tyLN4vUl4EjDtzGfEQg",
+    {
+        "serverBaseURL": "https://cdoc-ccs.ria.ee:443/key-shares/",
+        "serverNonce": "42",
+        "shareId": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
+    }
+]
 ```
 
 ## Verifying SD-JWT (verifying authentication ticket)
 
 CCS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~`) and performs following checks:
 
-1. Verify that SD-JWT is signed by the key pair, whose public key is included in the certificate, presented in the SD-JWT claim `x5c`.
-2. Verify that certificate is issued by trustworthy CA
+1. Verify that SD-JWT is signed by the key pair, whose public key is included in the certificate, presented in the SD-JWT header claim `x5c`.
+2. Verify that certificate is issued by trustworthy CA.
 3. Verify that certificate is valid at current point of time and is not revoked.
 4. Verify that SD_JWT contains claims `iat` and `exp` and current point of time is between those timestamps.
-5. Verify that SD-JWT contains claim `iss` and the personal code is the same as within the `x5c` certificate (TODO: This is actually redundant. Perhaps we can drop the `iss` claim?)
-6. Verify that SD-JWT contains claim `capsule_access_data`, which is an array, which contains a single JSON structure with the following claims: `serverURL`, `capsuleID` and `serverNonce`.
-7. Verify that `serverURL` is correct for this CCS server.
-8. Verify that this CCS server has `capsuleID` and it is not expired or deleted.
-9. Verify that this CCS server has previously generated a nonce for this `capsuleID` and the nonce value matches with `serverNonce` claim value.
-10. Verify that `RecipientInfo` from the capsule matches with the subjectInfo from the certificate. (TODO: Is `RecipientInfo` the correct field name?)
+5. Verify that SD-JWT contains claim `shareAccessData`, which is an array, which contains one JSON structure with following claims: `serverBaseURL`, `shareId` and `serverNonce`.
+6. Verify that `serverBaseURL` is correct for this CCS server.
+7. Verify that this CCS server has a share with identifier `shareId` and it is not expired or deleted.
+8. Verify that this CCS server has previously generated a nonce for this `shareId` and the nonce value matches with `serverNonce` claim value.
+9. Verify that `RecipientInfo` from the capsule matches with the subjectInfo from the certificate. (TODO: Is `RecipientInfo` the correct field name?)
 
 If all checks are positive, then the authentication and access control decision is successful and CCS server can return the capsule.
