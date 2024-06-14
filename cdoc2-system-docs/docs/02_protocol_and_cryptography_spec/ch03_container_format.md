@@ -74,36 +74,31 @@ Although not required by the specification, `KeyLabel` should however follow con
 
 Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
-**1. For machine parse-able text [data url](https://datatracker.ietf.org/doc/html/rfc2397) format was chosen, that starts with `data:`**
+**1. For machine parsable text [data url](https://datatracker.ietf.org/doc/html/rfc2397) format was chosen, that starts with `data:`**
 
-    data:<version>[<mediatype>][;base64],<data>
+    data:[<mediatype>][;base64],<data>
 
-The `version` is required in order to support future changes. The `mediatype` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. `;base64` encoding is optional and means that the `<data>` part is encoded   .
+The `mediatype` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. `;base64` encoding is optional and means then that Base64 encoded has been applied to the `<data>` part.
 
-Following `type` parameter values are supported inside the `<data>` part of the format:
+`type` and `v` fields are required, rest of fields are `type` specific.
 
-- Smart-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
+Examples:
+
+- Smart-ID/Mobile-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
 Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
-- Mobile-ID - PN={Phone nr}, where {Phone nr} is replaced by the actual number. '+' sign and 00 should be considered equivalent.
 - Password, with an integrated password manager - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.
 - Symmetric key - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
 - Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
-- ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined:
+- ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined
 
-| field | description | example | required |
-|-------|-------------|---------|----------|
-| type | eID type: `ID-card` or `Digi-ID` or `Digi-ID E-RESIDENT` | ID-card | X |
-| cn | Recipient common name as it is appears in certificate | JÕEORG,JAAK-KRISTJAN,38001085718 | X |
-| serialNumber | serialNumber as it appears in LDAP server | PNOEE-38001085718 | X |
-| last_name | Recipient last name | Jõeorg |  |
-| first_name | Recipient first name | Jaak-Kristjan |  |
+Known fields are defined in Appendix: [KeyLabel field specification v1](appendix_d_keylabel.md).
 
 Machine-readable `KeyLabel` examples:
 
-- `data:version=cyber-1.0,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
-- `data:version=cyber-1.0,application/x-www-form-urlencoded,type=ID-card&serialNumber=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
-- `data:version=cyber-1.0,application/x-www-form-urlencoded;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
-- `data:version=cyber-1.0;base64,dHlwZT1JRC1jYXJkJnNlcmlhbE51bWJlcj1QTk9FRS0zODAwMTA4NTcxOCZjbj1KJUMzJTk1RU9SRyUyQ0pBQUstS1JJU1RKQU4lMkMzODAwMTA4NTcxOA==`
+- `data:v=1&type=ID-card&serial_number=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:application/x-www-form-urlencoded,v=1&type=ID-card&serial_number=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:application/x-www-form-urlencoded;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4`
+- `data:;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4`
 
 **2. The second format for `KeyLabel` is free text format and it doesn't start with `data:`**
 
