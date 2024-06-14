@@ -7,3 +7,4 @@ nav:
     - 'Appendix A: header.fbs': appendix_a_header_fbs.md
     - 'Appendix B: recipients.fbs': appendix_b_recipients_fbs.md
     - 'Appendix C: Capsules API': appendix_c_cdoc2-capsules.md
+    - 'Appendix D: KeyLabel field specification': appendix_d_keylabel.md 
