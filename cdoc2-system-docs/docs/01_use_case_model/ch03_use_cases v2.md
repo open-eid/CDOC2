@@ -403,6 +403,11 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 3. Client verifies the password. If password is not correct, the use case continues from the previous step.
 4. Use case continues from step 7.
 
+2a. Recipient chooses to re-encrypt using Smart-ID or Mobile-ID:
+
+1. TODO!
+2. Use case continues from step 7.
+
 5a. Password does not meet minimum requirements.
 
 1. Client notifies the Recipient with instructions to insert a new password.

@@ -52,3 +52,13 @@ Implementers may define their own vendor-specific field specification, but its r
 | v     | version                                                                  | 1       | X        |
 | type  | user-given password                                                      | pw      | X        |
 | label | label to identify password from other passwords, user-given or generated | Arno    | X        |
+
+## Smart-ID/Mobile-ID (type=auth&v=2)
+
+Not supported by version 1, but version 2 Draft
+
+| field | description                | example                | required | from |
+|-------|----------------------------|------------------------|----------|------|
+| v     | Version                    | 2                      | X        | 2    |
+| type  | Smart-ID/Mobile-ID         | auth                   | X        | 2    |
+| pno   | (National) personal number | ETSI:PNOEE-48010010101 | X        | 2    |
