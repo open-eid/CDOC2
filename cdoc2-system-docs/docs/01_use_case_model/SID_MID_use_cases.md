@@ -107,3 +107,68 @@ TODO!
 1. Recipient derives CEK and HHK from FMK using HKDF algorithm
 1. Recipient calculates hmac and checks it against hmac in CDOC2 header
 1. Recipient decrypts content using CEK
+
+## Supporting use cases
+
+### UC.Client.09 — Acquire a long-term access token
+
+**Use Case Context**
+: CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 Capsule Servers.
+
+**Scope**
+: CDOC2 Client Application (Client)
+
+**Use Case Level**
+: Subfunction
+
+**Primary Actor**
+: User
+
+**Preconditions**
+
+* CDOC2 Client Application is installed on User system.
+
+**Success Guarantees**
+
+* Client has a long-term access token to CDOC2 Capsule Server API-s.
+* Client allows User to encrypt CDOC2 containers for other Recipients besides the User.
+
+**Main Success Scenario**
+
+1. Client asks User to authenticate in order to gain access to CDOC2 Capsule Servers.
+2. User agrees to authenticate.
+3. Client opens a web view and directs user to an authentication service (e.g. TARA) that follows the OpenID Connect protocol. The authentication request is inside the redirect URL and the request is mediated by a CDOC2 Authentication Server. User is shown a choice of authentication methods.
+4. User chooses an authentication method.
+5. User completes the authentication by using an external authentication device.
+6. User is redirected back to the Client, mediated by a CDOC2 Authentication Server.
+7. CDOC2 Authentication Server requests the authentication service an identity token providing a client secret inside the request.
+8. CDOC2 Authentication Server receives the identity token and validates its signature, address and expiration time.
+9. Client receives a long-term access token from the CDOC2 Authentication Server.
+10. Client notifies User that the authentication is succesfully completed.
+
+**Extensions**
+
+5a. Authentication results in an error:
+
+1. Authentication service displays the error and offers User to try again or try another authentication method.
+2. Use case continues from step 4.
+
+5b. User cancels the authentication flow:
+
+1. Client redirects User back to the Client and notifies about the error.
+2. Use case ends.
+
+7a. Identity token is invalid:
+
+1. Client notifies the User.
+2. Use case ends.
+
+8a. Identity token request expires:
+
+1. Client notifies the User that the authentication process has to be restarted.
+2. Use case continues from step 1.
+
+8b. Identity token is not valid:
+
+1. Client notifies the User.
+2. Use case ends.

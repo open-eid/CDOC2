@@ -66,9 +66,6 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 **Primary Actor**
 : Sender
 
-**Preconditions**
-: Client has a long-term access token from CDOC2 authentication server.
-
 **Success Guarantees**
 
 * CDOC2 container is saved into filesystem.
@@ -136,7 +133,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 8b. Client uses a organization-specific external configuration service:
 
-1. Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.
+1. Client first syncs default capsule expiration time from an orgnaization-specific external service.
 2. External configuration service provides a default capsule expiration time.
 3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
 4. Use case continues from step 9.
@@ -184,7 +181,6 @@ CDOC2 Client Application
 **Preconditions**
 
 * Recipient's security token is connected.
-* Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
 
@@ -433,71 +429,6 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the Recipient.
 2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise use case ends.
 
-## Supporting use cases
-
-### UC.Client.09 — Acquire a long-term access token
-
-**Use Case Context**
-: CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 Capsule Servers.
-
-**Scope**
-: CDOC2 Client Application (Client)
-
-**Use Case Level**
-: Subfunction
-
-**Primary Actor**
-: User
-
-**Preconditions**
-
-* CDOC2 Client Application is installed on User system.
-
-**Success Guarantees**
-
-* Client has a long-term access token to CDOC2 Capsule Server API-s.
-* Client allows User to encrypt CDOC2 containers for other Recipients besides the User.
-
-**Main Success Scenario**
-
-1. Client asks User to authenticate in order to gain access to CDOC2 Capsule Servers.
-2. User agrees to authenticate.
-3. Client opens a web view and directs user to an authentication service (e.g. TARA) that follows the OpenID Connect protocol. The authentication request is inside the redirect URL and the request is mediated by a CDOC2 Authentication Server. User is shown a choice of authentication methods.
-4. User chooses an authentication method.
-5. User completes the authentication by using an external authentication device.
-6. User is redirected back to the Client, mediated by a CDOC2 Authentication Server.
-7. CDOC2 Authentication Server requests the authentication service an identity token providing a client secret inside the request.
-8. CDOC2 Authentication Server receives the identity token and validates its signature, address and expiration time.
-9. Client receives a long-term access token from the CDOC2 Authentication Server.
-10. Client notifies User that the authentication is succesfully completed.
-
-**Extensions**
-
-5a. Authentication results in an error:
-
-1. Authentication service displays the error and offers User to try again or try another authentication method.
-2. Use case continues from step 4.
-
-5b. User cancels the authentication flow:
-
-1. Client redirects User back to the Client and notifies about the error.
-2. Use case ends.
-
-7a. Identity token is invalid:
-
-1. Client notifies the User.
-2. Use case ends.
-
-8a. Identity token request expires:
-
-1. Client notifies the User that the authentication process has to be restarted.
-2. Use case continues from step 1.
-
-8b. Identity token is not valid:
-
-1. Client notifies the User.
-2. Use case ends.
-
 # CDOC2 Capsule Server Use Case Model
 
 ## UC.KTS.01 Forward Capsules
@@ -530,7 +461,7 @@ CDOC2 Capsule Server (CCS)
 **Extensions**
 1a. Client uses a orgnaization-specific external configuration service:
 
-1. Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.
+1. Client first syncs default capsule expiration time from an orgnaization-specific external service.
 2. External provides a default capsule expiration time.
 3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.
 4. Use case continues from step 2.
@@ -567,7 +498,6 @@ CDOC2 Capsule Server (CCS)
 **Preconditions**
 
 * Recipient is authenticated.
-* Client has a long-term access token from CDOC2 authentication server.
 
 **Success guarantees**
 
@@ -642,9 +572,6 @@ CDOC2 Capsule Server (CCS)
 
 **Primary Actor**
 : CDOC2 Client Application (Client)
-
-**Preconditions**
-: Client has a long-term access token from CDOC2 authentication server.
 
 **Success guarantees**
 
