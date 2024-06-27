@@ -1,4 +1,4 @@
-# Keylabel field specificiation version 1
+# Appendix D: Keylabel field specificiation version 1
 
 KeyLabel field specification version 1 lists the following fields.
 
