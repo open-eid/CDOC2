@@ -21,6 +21,8 @@ markdownlint-cli2 "cdoc2-system-docs/**/*.md"
 
 # Generation toolchain
 
+It is possible to build the documentation using Python utilities `mike` and `mkdocs`. `mike` is used for creating persistent versions of the documentation which will not be changed once the documentation has changed. Those versions are created under a special `gh-pages` branch.
+
 1. Visual Studio Code (<https://code.visualstudio.com>)
 2. Python with [`pip` package manager](<https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-pip-from-the-command-line>)
 3. Install smaller Python packages and other requirements:
@@ -34,6 +36,32 @@ markdownlint-cli2 "cdoc2-system-docs/**/*.md"
     ```bash
     mkdocs --version
     ```
+
+5. Test the `mike` utility
+
+    ```bash
+    mike --version
+    ```
+
+6. Build a version of the documentation using `mike`, where `1.1` is an arbitrary version. Any other version name can be used. Then use `mike serve` to serve all built versions of the documentation under different URL-s.
+
+    ```bash
+    cd cdoc2-system-docs
+    mike deploy 1.1
+    mike serve
+    ```
+
+    If a default version number is not configured, then the documentation will be served at http://localhost:8000/v1/ , where `v1` is the name of the version that was used with the `deploy` command.
+
+7. Alternatively `mkdocs` can be used directly to build the documentation under the same git branch into the `/site` folder and served from there.
+
+    ```bash
+    cd cdoc2-system-docs
+    mkdocs build
+    mike serve
+    ```
+
+    The documentation should be served at http://127.0.0.1:8000/
 
 # Development process
 
