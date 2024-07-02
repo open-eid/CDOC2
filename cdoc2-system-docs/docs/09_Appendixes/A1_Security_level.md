@@ -1,8 +1,8 @@
 ---
-title: A1 - CDOC2 security level
+title: Appendix 1 - CDOC2 security level
 ---
 
-# Security level of password-based encryption/decryption in CDOC2
+# Appendix 1 - Security level of password-based encryption/decryption in CDOC2
 
 ## General regulatory requirements
 

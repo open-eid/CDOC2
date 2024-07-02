@@ -1,0 +1,5 @@
+title: "Appendixes"
+nav:
+    - 'Appendix 1: Security level': A1_Security_level.md
+    - 'Appendix 2: Integration with password manager': A2_integration_with_password_managers.md
+    - 'Appendix 3: YubiKey integration': A3_YubiKey_integration.md

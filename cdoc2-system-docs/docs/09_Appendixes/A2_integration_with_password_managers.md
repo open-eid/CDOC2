@@ -2,7 +2,7 @@
 title: Appendix 2 - Integration with Password Managers
 ---
 
-# Integration with Password Managers
+# Appendix 2 - Integration with Password Managers
 
 ## Intro
 

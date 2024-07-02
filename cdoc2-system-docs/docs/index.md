@@ -4,19 +4,21 @@ title: Introduction
 
 # Introduction
 
+This is documentation for the CDOC2 System and includes analysis, protocol and format specification, architecture documentation.
+
 ## Goal
 
-This documentation aims to describe the CDOC2 system.
+This documentation aims to describe the CDOC2 System.
 
 ## Document scope
 
 The specification describes:
 
-* supported encryption schemes
-* abstract and serialized data format
-* details of cryptographic operations
-* use of a CDOC2 capsule server
-* implementation guidelines
+* Supported encryption schemes.
+* Abstract and serialized data format.
+* Details of cryptographic operations.
+* Use of a CDOC2 capsule server.
+* Implementation guidelines.
 
 ## Terms and acronyms
 
@@ -69,3 +71,5 @@ The specification describes:
 ## Short overview
 
 The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.
+
+![Funding](img/cofunding_logo.jpg)
