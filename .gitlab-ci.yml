@@ -1,3 +1,6 @@
+variables:
+  DOC_VERSION: 0.2
+
 stages:
   - build
   - test
@@ -29,7 +32,7 @@ test:
   image: $CI_REGISTRY_IMAGE
   script:
     - markdownlint-cli2 "cdoc2-system-docs/**/*.md"
-    - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
+    - cd cdoc2-system-docs && mike deploy $DOC_VERSION --ignore-remote-status
   rules:
     - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
       changes: 
@@ -40,11 +43,11 @@ pages:
   stage: deploy
   image: $CI_REGISTRY_IMAGE
   script:
-    - cd cdoc2-system-docs && mkdocs build --strict --verbose --site-dir public
+    - cd cdoc2-system-docs && mike deploy $DOC_VERSION --ignore-remote-status
   artifacts:
     paths:
-    - cdoc2-system-docs/public
-  publish: cdoc2-system-docs/public
+    - cdoc2-system-docs/site
+  publish: cdoc2-system-docs/site
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       changes: 
