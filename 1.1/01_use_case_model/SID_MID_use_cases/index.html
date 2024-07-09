@@ -841,7 +841,7 @@
 
 <h2 id="use-cases-for-recipients-to-be-authenticated-by-kcts">Use cases for Recipients to be authenticated by KCTS<a class="headerlink" href="#use-cases-for-recipients-to-be-authenticated-by-kcts" title="Permanent link">&para;</a></h2>
 <p>These use cases can be used, when Sender cannot use Recipient's specific public key certificate (because they don't know it or because Recipient's authentication means doesn't support suitable CDOC2 encryption scheme). In this case, Sender uploads the KC to one or multiple KCTS-s. Recipient authenticates to multiple KCTS-s at once and downloads the KC.</p>
-<p>Additional use cases allow Sender to distribute KEK among multiple KCs according to some kind of secret-sharing scheme (<a href="https://en.wikipedia.org/wiki/Secret_sharing">https://en.wikipedia.org/wiki/Secret_sharing</a>). Sender uploads each KC to different KCTS server. Recipient would need to authenticate to KCTS servers and download KCs and reconstruct KEK from them. With <span class="arithmatex">\((t,n)\)</span>-threshold secret-sharing schemes, Recipient doesn't need to download all <span class="arithmatex">\(n\)</span> KCs, in order to reconstruct KEK, but only <span class="arithmatex">\(t\)</span> KCs.</p>
+<p>Additional use cases allow Sender to distribute <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> among multiple KCs according to some kind of secret-sharing scheme (<a href="https://en.wikipedia.org/wiki/Secret_sharing">https://en.wikipedia.org/wiki/Secret_sharing</a>). Sender uploads each KC to different KCTS server. Recipient would need to authenticate to KCTS servers and download KCs and reconstruct <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> from them. With <span class="arithmatex">\((t,n)\)</span>-threshold secret-sharing schemes, Recipient doesn't need to download all <span class="arithmatex">\(n\)</span> KCs, in order to reconstruct <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, but only <span class="arithmatex">\(t\)</span> KCs.</p>
 <h3 id="ucclient03-encrypt-cdoc2-container-using-key-shares">UC.Client.03 — Encrypt CDOC2 container using key shares<a class="headerlink" href="#ucclient03-encrypt-cdoc2-container-using-key-shares" title="Permanent link">&para;</a></h3>
 <p><strong>Use Case Context</strong>
 TODO!</p>
@@ -856,7 +856,7 @@ TODO!</p>
 <p><strong>Preconditions</strong></p>
 <ul>
 <li>Client has long-term token to use the required CDOC2 API service.</li>
-<li>Client has configuration for N CDOC2 servers used to upload KEK shares.</li>
+<li>Client has configuration for N CDOC2 servers used to upload <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> shares.</li>
 </ul>
 <p><strong>Success Guarantees</strong></p>
 <ul>
@@ -883,13 +883,13 @@ Later private identifiers could also be supported</em></p>
 </div>
 </li>
 <li>
-<p>Sender <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121">derives key encryption key (KEK)</a>
+<p>Sender <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121">derives key encryption key (<abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>)</a>
    from <code>secret</code>, <code>key_label</code> and <code>salt</code> using HKDF algorithm</p>
 </li>
-<li>Sender <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L94">generates file master key (FMK)</a>
+<li>Sender <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L94">generates file master key (<abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>)</a>
     using HKDF extract algorithm</li>
-<li>Sender derives content encryption key (CEK) and HMAC key (HHK) from FMK using HKDF expand algorithm</li>
-<li>Sender encrypts FMK with KEK (xor) and gets encrypted_FMK</li>
+<li>Sender derives content encryption key (<abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>) and <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> key (<abbr title="Header HMAC Key">HHK</abbr>) from <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> using HKDF expand algorithm</li>
+<li>Sender encrypts <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> with <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> (xor) and gets encrypted_FMK</li>
 <li>
 <p>Sender splits <code>secret</code> into <code>N</code> shares using Shamir Shared Secret Scheme. N is configuration option in CDOC2 client configuration.</p>
 <div class="admonition info">
@@ -912,20 +912,20 @@ Later private identifiers could also be supported</em></p>
 </div>
 </li>
 <li>
-<p>Sender calculates header hmac using hmac key (HHK) and adds calculated hmac to CDoc</p>
+<p>Sender calculates header hmac using hmac key (<abbr title="Header HMAC Key">HHK</abbr>) and adds calculated hmac to CDoc</p>
 </li>
-<li>Sender encrypts content with CEK (ChaCha20-Poly1305 with AAD)</li>
+<li>Sender encrypts content with <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> (ChaCha20-Poly1305 with AAD)</li>
 <li>Sender sends CDOC2 document to Recipient</li>
 </ol>
 <h3 id="ucclient04-decrypt-cdoc2-container-using-multi-server-authentication">UC.Client.04 — Decrypt CDOC2 container using multi-server authentication<a class="headerlink" href="#ucclient04-decrypt-cdoc2-container-using-multi-server-authentication" title="Permanent link">&para;</a></h3>
 <p>TODO!</p>
-<h3 id="ucclient06-decrypt-cdoc2-container-with-secret-shared-kek-by-authenticating-recipient">UC.Client.06 — Decrypt CDOC2 container with secret-shared KEK by authenticating Recipient<a class="headerlink" href="#ucclient06-decrypt-cdoc2-container-with-secret-shared-kek-by-authenticating-recipient" title="Permanent link">&para;</a></h3>
+<h3 id="ucclient06-decrypt-cdoc2-container-with-secret-shared-kek-by-authenticating-recipient">UC.Client.06 — Decrypt CDOC2 container with secret-shared <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> by authenticating Recipient<a class="headerlink" href="#ucclient06-decrypt-cdoc2-container-with-secret-shared-kek-by-authenticating-recipient" title="Permanent link">&para;</a></h3>
 <p>TODO!</p>
 <ol>
 <li>Recipient  will enter her <em>isikukood</em> (id-code) and choose Smart-ID decryption method.</li>
-<li>Recipient searches CDOC header for Smart-ID record with entered id-code.</li>
+<li>Recipient searches <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> header for Smart-ID record with entered id-code.</li>
 <li>Recipient downloads Smart-ID certificate from SK LDAP using his id (isikukood).</li>
-<li><del class="critic">Recipient verifies that certificate serial from LDAP matches with certificate serial from CDOC SID recipient record.</del></li>
+<li><del class="critic">Recipient verifies that certificate serial from LDAP matches with certificate serial from <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> SID recipient record.</del></li>
 <li>
 <p>Recipient loops over secret shares and for each <code>server:transactionId</code> asks <code>nonce</code> from server.
     Uses '/secret-shares/{transactionId}/nonce' endpoint in each server.</p>
@@ -946,19 +946,19 @@ Later private identifiers could also be supported</em></p>
 </div>
 </li>
 <li>
-<p>Recipient <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121">derives key encryption key (KEK)</a>
+<p>Recipient <a href="https://github.com/open-eid/cdoc2-java-ref-impl/blob/main/cdoc2-lib/src/main/java/ee/cyber/cdoc2/crypto/Crypto.java#L121">derives key encryption key (<abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>)</a>
     from secret, key_label and salt using HKDF algorithm</p>
 </li>
-<li>Recipient decrypts FMK using KEK.</li>
-<li>Recipient derives CEK and HHK from FMK using HKDF algorithm</li>
+<li>Recipient decrypts <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> using <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>.</li>
+<li>Recipient derives <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> and <abbr title="Header HMAC Key">HHK</abbr> from <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> using HKDF algorithm</li>
 <li>Recipient calculates hmac and checks it against hmac in CDOC2 header</li>
-<li>Recipient decrypts content using CEK</li>
+<li>Recipient decrypts content using <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr></li>
 </ol>
 <h2 id="supporting-use-cases">Supporting use cases<a class="headerlink" href="#supporting-use-cases" title="Permanent link">&para;</a></h2>
 <h3 id="ucclient09-acquire-a-long-term-access-token">UC.Client.09 — Acquire a long-term access token<a class="headerlink" href="#ucclient09-acquire-a-long-term-access-token" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 Capsule Servers.</dd>
+<dd>CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -972,12 +972,12 @@ Later private identifiers could also be supported</em></p>
 </ul>
 <p><strong>Success Guarantees</strong></p>
 <ul>
-<li>Client has a long-term access token to CDOC2 Capsule Server API-s.</li>
+<li>Client has a long-term access token to CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server API-s.</li>
 <li>Client allows User to encrypt CDOC2 containers for other Recipients besides the User.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client asks User to authenticate in order to gain access to CDOC2 Capsule Servers.</li>
+<li>Client asks User to authenticate in order to gain access to CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers.</li>
 <li>User agrees to authenticate.</li>
 <li>Client opens a web view and directs user to an authentication service (e.g. TARA) that follows the OpenID Connect protocol. The authentication request is inside the redirect URL and the request is mediated by a CDOC2 Authentication Server. User is shown a choice of authentication methods.</li>
 <li>User chooses an authentication method.</li>

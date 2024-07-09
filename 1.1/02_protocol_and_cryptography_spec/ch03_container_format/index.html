@@ -589,18 +589,18 @@
 <ul>
 <li>The abstracted format consists of a header and an encrypted payload.</li>
 <li>The abstracted format contains a single encrypted payload consisting of one or several encrypted files. File information, as well as the sizes and sequence of the files, in case there is more than one file, is also encrypted.</li>
-<li>The payload is encrypted using a single symmetric key (Content Encryption Key; CEK), using AEAD (Authenticated Encryption with Additional Data) encryption.</li>
-<li>The CEK is derived from the CDOC file master key (File Master Key; FMK). See section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>.</li>
-<li>The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per recipient. On KEK generation see section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>.</li>
-<li>The header describes the protection of the FMK (i.e. how the recipients can acquire the KEK required for decrypting the FMK).</li>
-<li>Header integrity is ensured using a message authentication code computed using the message authentication key derived from the FMK (Header HMAC Key; HHK). See section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</li>
+<li>The payload is encrypted using a single symmetric key (Content Encryption Key; <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>), using <abbr title="Authenticated Encryption with Additional Data">AEAD</abbr> (Authenticated Encryption with Additional Data) encryption.</li>
+<li>The <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> is derived from the <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> file master key (File Master Key; <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>). See section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>.</li>
+<li>The <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> can be encrypted in parallel using one or several key encryption keys (<abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>), one per recipient. On <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> generation see section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation</a>.</li>
+<li>The header describes the protection of the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> (i.e. how the recipients can acquire the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> required for decrypting the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>).</li>
+<li>Header integrity is ensured using a message authentication code computed using the message authentication key derived from the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> (Header <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> Key; <abbr title="Header HMAC Key">HHK</abbr>). See section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</li>
 <li>To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the recipient is described with reference to their public key rather than their certificate.</li>
-<li>Decryption always follows the same pattern: 1) the recipient acquires a KEK, 2) the recipient decrypts the FMK, 3) the recipient derives the HHK and validates the header, 4) the recipient derives the CEK, 5) the recipient decrypts the payload.</li>
+<li>Decryption always follows the same pattern: 1) the recipient acquires a <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, 2) the recipient decrypts the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, 3) the recipient derives the <abbr title="Header HMAC Key">HHK</abbr> and validates the header, 4) the recipient derives the <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>, 5) the recipient decrypts the payload.</li>
 </ul>
 <h3 id="header-structure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2</span> Header structure<a class="headerlink" href="#header-structure" title="Permanent link">¶</a></h3>
 <p>Header structure is described with the help of pseudocode that is based on no specific programming or schema language but should be intuitively understood.</p>
-<p>The header consists of one or several structures describing a recipient. Each recipient structure contains complete information on how the specific recipient can access the FMK (for identification, access to personal encrypted materials, etc.).</p>
-<p>A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section <a href="#serialized-format">Serialized format</a>).</p>
+<p>The header consists of one or several structures describing a recipient. Each recipient structure contains complete information on how the specific recipient can access the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> (for identification, access to personal encrypted materials, etc.).</p>
+<p>A message authentication code is computed for the header using a key derived from the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section <a href="#serialized-format">Serialized format</a>).</p>
 <pre><code>Header = {
     Recipients              = :Recipient[](1..k)
     PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
@@ -620,20 +620,20 @@
     FMKEncryptionMethod = :enum(XOR)
 }
 </code></pre>
-<p>The <code>Recipient</code> structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.</p>
+<p>The <code>Recipient</code> structure consists of a capsule, a recipient key label, an encrypted <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, and an <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption method identifier.</p>
 <ul>
-<li><code>Capsule</code> – encryption method specific data that the recipient can use to decrypt the FMK.</li>
-<li><code>EncryptedFMK</code> – encrypted FMK.</li>
-<li><code>FMKEncryptionMethod</code> –FMK encryption method type.</li>
-<li><code>KeyLabel</code> – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. <code>KeyLabel</code> is a UTF-8 string.</li>
+<li><code>Capsule</code> – encryption method specific data that the recipient can use to decrypt the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>.</li>
+<li><code>EncryptedFMK</code> – encrypted <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>.</li>
+<li><code>FMKEncryptionMethod</code> –<abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption method type.</li>
+<li><code>KeyLabel</code> – human-readable label of the private or secret key required for decrypting the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. <code>KeyLabel</code> is a UTF-8 string.</li>
 </ul>
-<p>Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as <code>FMKEncryptionMethod</code>. See section 6.4 on the details of cryptographic operations.
+<p>Successful processing of the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> structure returns a cryptographic key for decrypting the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> using the method defined as <code>FMKEncryptionMethod</code>. See section 6.4 on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods (<a href="../ch02_encryption_schemes/">CDOC2 encryption schemes</a>).</p>
 <ul>
-<li><code>ECCPublicKeyCapsule</code> – the recipient is identified by ECC public key <code>RecipientPublicKey</code> (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the <a href="../ch02_encryption_schemes/#sc01-direct-encryption-scheme-for-recipient-with-ec-keys">SC.01 encryption method</a>.</li>
-<li><code>RSAPublicKeyCapsule</code> – the recipient is identified by RSA public key <code>RecipientPublicKey</code>. The KEK is derived by decrypting the capsule using the RSA private key. Used in the <a href="../ch02_encryption_schemes/#sc03-capsule-server-scheme-for-recipients-with-ec-keys">SC.03 encryption method</a>.</li>
-<li><code>KeyServerCapsule</code> – the recipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an <code>ECCPublicKeyCapsule</code> or a <code>RSAPublicKeyCapsule</code> used as described above. Used in the  <a href="../ch02_encryption_schemes/#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys">SC.02</a> and <a href="../ch02_encryption_schemes/#sc04-capsule-server-scheme-for-recipients-with-rsa-keys">SC.04</a> encryption methods.</li>
-<li><code>SymmetricKeyCapsule</code> – the recipient is identified by key label <code>KeyLabel</code>. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the <a href="../ch02_encryption_schemes/#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key">SC.05 encryption method</a>.</li>
+<li><code>ECCPublicKeyCapsule</code> – the recipient is identified by <abbr title="Elliptic-Curve Cryptography">ECC</abbr> public key <code>RecipientPublicKey</code> (e.g. the public key of the first ID-card key pair). The <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> is derived using <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr>. Used in the <a href="../ch02_encryption_schemes/#sc01-direct-encryption-scheme-for-recipient-with-ec-keys">SC.01 encryption method</a>.</li>
+<li><code>RSAPublicKeyCapsule</code> – the recipient is identified by RSA public key <code>RecipientPublicKey</code>. The <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> is derived by decrypting the capsule using the RSA private key. Used in the <a href="../ch02_encryption_schemes/#sc03-capsule-server-scheme-for-recipients-with-ec-keys">SC.03 encryption method</a>.</li>
+<li><code>KeyServerCapsule</code> – the recipient is identified by <abbr title="Elliptic-Curve Cryptography">ECC</abbr> or RSA public key <code>RecipientPublicKey</code>, used by the recipient for authentication on a <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server. The <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server returns an <code>ECCPublicKeyCapsule</code> or a <code>RSAPublicKeyCapsule</code> used as described above. Used in the  <a href="../ch02_encryption_schemes/#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys">SC.02</a> and <a href="../ch02_encryption_schemes/#sc04-capsule-server-scheme-for-recipients-with-rsa-keys">SC.04</a> encryption methods.</li>
+<li><code>SymmetricKeyCapsule</code> – the recipient is identified by key label <code>KeyLabel</code>. The <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> is derived using HKDF from a symmetric key provided by the user. Used in the <a href="../ch02_encryption_schemes/#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key">SC.05 encryption method</a>.</li>
 </ul>
 <p>This list may be expanded in future versions of the specification.</p>
 <h4 id="keylabel-recommendations"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2.1</span> KeyLabel recommendations<a class="headerlink" href="#keylabel-recommendations" title="Permanent link">¶</a></h4>
@@ -670,8 +670,8 @@ Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
 <li>"poem"</li>
 <li>"password manager, key: hello.cdoc2"</li>
 </ul>
-<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> Capsule types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
-<p>ECC public key capsule. The recipient is identified by ECC public key <code>RecipientPublicKey</code>.</p>
+<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
+<p><abbr title="Elliptic-Curve Cryptography">ECC</abbr> public key capsule. The recipient is identified by <abbr title="Elliptic-Curve Cryptography">ECC</abbr> public key <code>RecipientPublicKey</code>.</p>
 <pre><code>ECCPublicKeyCapsule = {
     Curve              = :enum(secp384r1)
     RecipientPublicKey = :byte[]
@@ -680,8 +680,8 @@ Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
 </code></pre>
 <ul>
 <li><code>Curve</code> – identifier of the elliptic curve employed.</li>
-<li><code>RecipientPublicKey</code> – recipient’s ECC public key, used by the recipient to establish the corresponding recipient record.</li>
-<li><code>SenderPublicKey</code> – sender’s public key used by the recipient to derive the KEK using ECDH.</li>
+<li><code>RecipientPublicKey</code> – recipient’s <abbr title="Elliptic-Curve Cryptography">ECC</abbr> public key, used by the recipient to establish the corresponding recipient record.</li>
+<li><code>SenderPublicKey</code> – sender’s public key used by the recipient to derive the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> using <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr>.</li>
 </ul>
 <p>RSA public key capsule. The recipient is identified by RSA public key <code>RecipientPublicKey</code>.</p>
 <pre><code>RSAPublicKeyCapsule = {
@@ -693,7 +693,7 @@ Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
 <li><code>RecipientPublicKey</code> - recipient’s RSA public key, used by the recipient to establish the corresponding recipient record.</li>
 <li><code>EncryptedKEK</code> -  key encryption key encrypted with the receipient's public key.</li>
 </ul>
-<p>Server capsule. The receipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>.</p>
+<p>Server capsule. The receipient is identified by <abbr title="Elliptic-Curve Cryptography">ECC</abbr> or RSA public key <code>RecipientPublicKey</code>.</p>
 <pre><code>KeyServerCapsule = {
     RecipientKey = Union(:EccKeyDetails | :RsaKeyDetails)
     KeyServerID         = :string
@@ -710,8 +710,8 @@ EccKeyDetails = {
 }
 </code></pre>
 <ul>
-<li><code>RecipientKey</code> – information on the recipient key, used by the recipient for authentication on the Capsule Server.</li>
-<li><code>KeyServerID</code> – Capsule Server identifier. The recipient must be able to use this to establish the Capsule Server’s network address and connect to the server.</li>
+<li><code>RecipientKey</code> – information on the recipient key, used by the recipient for authentication on the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</li>
+<li><code>KeyServerID</code> – <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server identifier. The recipient must be able to use this to establish the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server’s network address and connect to the server.</li>
 <li><code>TransactionID</code> – identifier of the capsule sent to the key exchange server by the sender for transmission to the recipient.</li>
 </ul>
 <p>Symmetric key capsule. The recipient is identified by the label of the symmetric key held by the user, <code>KeyLabel</code>.</p>
@@ -723,7 +723,7 @@ EccKeyDetails = {
 <li><code>Salt</code> – random number generated by the sender, used by the sender as input for the HKDF-Extract function.</li>
 </ul>
 <h3 id="format-extension"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.4</span> Format extension<a class="headerlink" href="#format-extension" title="Permanent link">¶</a></h3>
-<p>To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.</p>
+<p>To allow for format extension and ensure general forward compatibility, the union type field <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> is included in the header structure Recipient. Each type of the union describes a specific type of recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.</p>
 <h2 id="serialized-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Serialized format<a class="headerlink" href="#serialized-format" title="Permanent link">¶</a></h2>
 <p>The specification describes the implementation of the abstracted format using the FlatBuffers format.</p>
 <h3 id="general-description-of-the-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.1</span> General description of the format<a class="headerlink" href="#general-description-of-the-format" title="Permanent link">¶</a></h3>
@@ -733,9 +733,9 @@ For the sake of extensibility and the necessity of transmitting messages identic
 Aside from the header extension mechanism, the envelope used in this format also defines another point of extension.
 This point of extension is provided by the version identifier, set as 2 (byte value) in the specification. The identifier must be changed in the descriptions of new versions.</p>
 <h3 id="envelope"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.2</span> Envelope<a class="headerlink" href="#envelope" title="Permanent link">¶</a></h3>
-<p>The envelope consists of the following data elements, presented sequentially as bytes. The designation of the start and end of the envelope is outside the scope of the specification, insofar as the main and natural use case of the format is one where a CDOC file contains a single envelope.</p>
+<p>The envelope consists of the following data elements, presented sequentially as bytes. The designation of the start and end of the envelope is outside the scope of the specification, insofar as the main and natural use case of the format is one where a <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> file contains a single envelope.</p>
 <ul>
-<li>4 bytes: the string “CDOC” – format designator (prelude), UTF-8 encoded.</li>
+<li>4 bytes: the string “<abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr>” – format designator (prelude), UTF-8 encoded.</li>
 <li>1 byte: version identifier, set as 2 in the specification.</li>
 <li>4 bytes: length of the following header, big-endian order. Header length is a 32-bit signed integer, i.e. the maximum header size is 2 GB. For the sake of the simplicity of implementation, header size is limited to 1 MB (2<sup>20</sup> bytes).</li>
 <li>x bytes, where x is as defined above: serialized FlatBuffers header.</li>
@@ -748,11 +748,11 @@ Table 1. Envelope structure</p>
 <thead>
 <tr>
 <th>Field</th>
-<th>“CDOC”</th>
+<th>“<abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr>”</th>
 <th>Version</th>
 <th>Header length</th>
 <th>Header</th>
-<th>HMAC</th>
+<th><abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr></th>
 <th>Payload</th>
 </tr>
 </thead>
@@ -777,7 +777,7 @@ Table 1. Envelope structure</p>
 </tr>
 </tbody>
 </table>
-<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.3</span> Header and HMAC<a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
+<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.3</span> Header and <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr><a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
 <p>The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under <code>cdoc2-schema/</code>.
 The schema is described in two files and reproduced as appendices to the specification.</p>
 <ul>
@@ -789,9 +789,9 @@ The schema is described in two files and reproduced as appendices to the specifi
 </li>
 </ul>
 <p>The header, serialized following the FlatBuffers rule set, is written to the envelope, preceded a 4-byte length field as per the envelope description.
-The Header Message Authentication Code (HMAC) is computed as described in section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a> and written, bytewise, immediately after the header. The message authentication code algorithm and, consequently, HMAC length are defined in this specification.</p>
+The Header Message Authentication Code (<abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr>) is computed as described in section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a> and written, bytewise, immediately after the header. The message authentication code algorithm and, consequently, <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> length are defined in this specification.</p>
 <h3 id="payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.4</span> Payload<a class="headerlink" href="#payload" title="Permanent link">¶</a></h3>
-<p>Lastly, the payload is written to a container composed following the CDOC format, immediately after the HMAC. The format presumes that the end-of-payload indicator is defined outside the format, e.g. as end-of-file.</p>
+<p>Lastly, the payload is written to a container composed following the <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> format, immediately after the <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr>. The format presumes that the end-of-payload indicator is defined outside the format, e.g. as end-of-file.</p>
 <p>Note that the end-of-payload indicator is purely optional: the true integrity of the payload is determined by whether the payload can be completely decrypted.</p>
 <p>The composition of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>.</p>
 <p>The encryption of the payload is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
@@ -800,19 +800,19 @@ The Header Message Authentication Code (HMAC) is computed as described in sectio
 The following steps are needed to compose a CDOC2 container.</p>
 <ul>
 <li>Compile the list of all recipients.</li>
-<li>Generate FMK, HHK, and CEK.</li>
+<li>Generate <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, <abbr title="Header HMAC Key">HHK</abbr>, and <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>.</li>
 <li>Compose the header along with all corresponding cryptographic operations.</li>
-<li>Compute the HMAC.</li>
+<li>Compute the <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr>.</li>
 <li>Generate the payload plaintext.</li>
 <li>Encrypt the payload.</li>
 <li>Generate the serialized envelope.</li>
-<li>Securely delete the FMK, HHK, and CEK values used during the procedure.</li>
+<li>Securely delete the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, <abbr title="Header HMAC Key">HHK</abbr>, and <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> values used during the procedure.</li>
 </ul>
 <p>Generation of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>, <code>container.Tar.archiveFiles()</code>.</p>
-<p>Next, the cryptographic material used for the protection of the header and payload must be prepared. Generation and derivation of the corresponding keys (FMK, HHK, CEK) is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>container.Envelope.prepare()</code> and <code>container.Envelope()</code>.</p>
+<p>Next, the cryptographic material used for the protection of the header and payload must be prepared. Generation and derivation of the corresponding keys (<abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, <abbr title="Header HMAC Key">HHK</abbr>, <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>) is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>container.Envelope.prepare()</code> and <code>container.Envelope()</code>.</p>
 <p>The list of all desired recipients must then be compiled and serialized, as the cryptographic methods used for ensuring the integrity of the container operate with an integral serialized header.</p>
-<p>The requisite cryptographic procedures described in sections <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a> and <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a> must be executed for each recipient.</p>
-<p>The HMAC is then computed as per section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</p>
+<p>The requisite cryptographic procedures described in sections <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation</a> and <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption"><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption and decryption</a> must be executed for each recipient.</p>
+<p>The <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> is then computed as per section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</p>
 <p>Payload encryption is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>, <code>crypto.ChaChaCipher.encryptPayload()</code> and <code>crypto.ChaChaCipher.initChaChaOutputStream()</code>.</p>
 <p>The detailed serialized envelope format is presented in section <a href="#envelope">Envelope</a>.</p>
 <p>At the end of the encryption process, the employed cryptographic materials (symmetric keys, ephemeral private keys) must be securely deleted. Secure deletion significantly depends on the operational environment; in some cases (e.g. in JVM) it might not be possible. The developer must evaluate what options for secure deletion are provided by the employed programming language and operational environment.</p>
@@ -822,23 +822,23 @@ The following steps are needed to compose a CDOC2 container.</p>
 <p>The function does the following and all its alternative implementations must do the same while employing all relevant security checks.</p>
 <ul>
 <li>Parsing the envelope and decoding the envelope header.</li>
-<li>Decrypting/deriving the KEK.</li>
-<li>Decrypting/deriving the container-specific keys, i.e. FMK, HHK, and CEK.</li>
-<li>Checking the HMAC.</li>
+<li>Decrypting/deriving the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>.</li>
+<li>Decrypting/deriving the container-specific keys, i.e. <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, <abbr title="Header HMAC Key">HHK</abbr>, and <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>.</li>
+<li>Checking the <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr>.</li>
 <li>Decrypting the archive.</li>
 <li>Extracting files from the encrypted archive and writes the files to the selected folder. In stream processing mode, decryption and extraction form a single operation.</li>
 </ul>
 <p>The envelope parsing and header decryption reference implementation is found in the function <code>container.Envelope.readFBSHeader()</code>.</p>
 <p>The header must be parsed using the FlatBuffers library, utilizing the root type fbs.header.Header (in the reference implementation, this is implemented as the function <code>fbs.header.Header.getRootAsHeader()</code> generated from the FlatBuffers schema).</p>
 <p>Parsing of the complete header is implemented as the reference implementation function <code>container.Envelope.deserializeFBSHeader()</code>.</p>
-<p>A recipient (Recipient) corresponding to the party processing the container must be found in the header and the KEK, FMK, and HHK must be derived or decrypted.</p>
-<p>Recipient identification methods corresponding to each encryption method are described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. In case no recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm must return a “container not meant for opening by the processor” error and terminate.</p>
-<p>KEK computation is described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class <code>crypto.KekTools</code>.</p>
-<p>FMK decryption is described in section <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a>,  <code>crypto.Crypto.xor()</code>.</p>
-<p>HHK derivation procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>crypto.Crypto.deriveHeaderHmacKey()</code>.</p>
-<p>The HHK and the original serialized form of the header must be used to check the HMAC using <code>container.Envelope.checkHmac()</code>.</p>
-<p>After a successful message authentication code check, the payload may be decrypted. In case the HMAC check was unsuccessful, the algorithm must return an error and terminate.</p>
-<p>Decryption requires deriving the CEK. The corresponding procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>Crypto.deriveContentEncryptionKey()</code>.</p>
+<p>A recipient (Recipient) corresponding to the party processing the container must be found in the header and the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, and <abbr title="Header HMAC Key">HHK</abbr> must be derived or decrypted.</p>
+<p>Recipient identification methods corresponding to each encryption method are described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation</a>. In case no recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm must return a “container not meant for opening by the processor” error and terminate.</p>
+<p><abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation is described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation</a>. Should an error occur during <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation functions are found in the class <code>crypto.KekTools</code>.</p>
+<p><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> decryption is described in section <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption"><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption and decryption</a>,  <code>crypto.Crypto.xor()</code>.</p>
+<p><abbr title="Header HMAC Key">HHK</abbr> derivation procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>crypto.Crypto.deriveHeaderHmacKey()</code>.</p>
+<p>The <abbr title="Header HMAC Key">HHK</abbr> and the original serialized form of the header must be used to check the <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> using <code>container.Envelope.checkHmac()</code>.</p>
+<p>After a successful message authentication code check, the payload may be decrypted. In case the <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> check was unsuccessful, the algorithm must return an error and terminate.</p>
+<p>Decryption requires deriving the <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>. The corresponding procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>Crypto.deriveContentEncryptionKey()</code>.</p>
 <p>Payload decryption is carried out in three stages: decryption, cryptogram authentication, and unpacking the decrypted archive.</p>
 <p>Decryption and cryptogram authentication are described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
 <p>Archive unpacking is described in section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a>.</p>

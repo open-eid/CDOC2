@@ -381,9 +381,9 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h1>
-<p>This is documentation for the CDOC2 System and includes analysis, protocol and format specification, architecture documentation.</p>
+<p>This is documentation for the <abbr title="IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers">CDOC2 System</abbr> and includes analysis, protocol and format specification, architecture documentation.</p>
 <h2 id="goal"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.1</span> Goal<a class="headerlink" href="#goal" title="Permanent link">¶</a></h2>
-<p>This documentation aims to describe the CDOC2 System.</p>
+<p>This documentation aims to describe the <abbr title="IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers">CDOC2 System</abbr>.</p>
 <h2 id="document-scope"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.2</span> Document scope<a class="headerlink" href="#document-scope" title="Permanent link">¶</a></h2>
 <p>The specification describes:</p>
 <ul>
@@ -399,28 +399,28 @@
 <p><code>CDOC</code> - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem</p>
 </li>
 <li>
-<p><code>CDOC 1.0</code> - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.</p>
+<p><code>CDOC 1.0</code> - Unofficial term for all (XML-ENC based) <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> formats preceding this specification.</p>
 </li>
 <li>
-<p><code>CDOC2 System</code> - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers</p>
+<p><code>CDOC2 System</code> - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers</p>
 </li>
 <li>
 <p><code>CDOC2 Container</code> - File format for transmitting the encrypted payload and metadata information, <br/>including the capsule from Sender to Recipient</p>
 </li>
 <li>
-<p><code>Capsule</code> - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.</p>
+<p><code>Capsule</code> - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>. <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> can either be a Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> or a Container <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>.</p>
 </li>
 <li>
-<p><code>Server Capsule</code> - A Capsule that is mediated by a CDOC2 Capsule Server.</p>
+<p><code>Server Capsule</code> - A <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> that is mediated by a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</p>
 </li>
 <li>
-<p><code>Container Capsule</code> - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.</p>
+<p><code>Container Capsule</code> - A <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> that is created inside a CDOC2 container and is therefore not sent to a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</p>
 </li>
 <li>
-<p><code>CCS</code> - CDOC2 Capsule Server</p>
+<p><code>CCS</code> - CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server</p>
 </li>
 <li>
-<p><code>CDOC2 authentication server</code> - Web service to generate access tokens for CKCTS and RIA SID/MID proxy</p>
+<p><code>CDOC2 authentication server</code> - Web service to generate access tokens for CKCTS and RIA <abbr title="Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API">SID/MID proxy</abbr></p>
 </li>
 <li>
 <p><code>SID/MID proxy</code> - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API</p>
@@ -444,28 +444,28 @@
 <p><code>ECC CDH</code> - Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm</p>
 </li>
 <li>
-<p><code>HMAC</code> - Hash-Based Message Authentication Code. Protects integrity of CDOC2 Container.</p>
+<p><code>HMAC</code> - Hash-Based Message Authentication Code. Protects integrity of <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>.</p>
 </li>
 </ul>
 <ul>
 <li>
-<p><code>CEK</code> - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.</p>
+<p><code>CEK</code> - Content Encryption Key. Symmetric key used to encrypt the payload of <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>.</p>
 </li>
 <li>
-<p><code>KEK</code> - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.</p>
+<p><code>KEK</code> - Key Encryption Key. Symmetric key used to encrypt (wrap) the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, so that <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> could be transmitted inside <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> to Recipient.</p>
 </li>
 <li>
-<p><code>FMK</code> - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.</p>
+<p><code>FMK</code> - File Master Key. Cryptographic key material for deriving other encryption and <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> keys.</p>
 </li>
 <li>
-<p><code>CC</code> - CDOC2 Capsule. Data structure inside CDOC2 Container. CKC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.</p>
+<p><code>CC</code> - CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>. Data structure inside <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>. CKC contains information for decrypting the payload of <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr>.</p>
 </li>
 <li>
-<p><code>HHK</code> - Header HMAC Key</p>
+<p><code>HHK</code> - Header <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> Key</p>
 </li>
 </ul>
 <h2 id="short-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.4</span> Short overview<a class="headerlink" href="#short-overview" title="Permanent link">¶</a></h2>
-<p>The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.</p>
+<p>The document is divided into five parts – the first part describes the functionality of the <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> 2.0 Client Application and the CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.</p>
 <p><img alt="Funding" src="img/cofunding_logo.jpg"/></p>
 </article>
 </div>

@@ -900,7 +900,7 @@
 
 
 <h1 id="cdoc2-client-application-use-case-model">CDOC2 Client Application Use Case Model<a class="headerlink" href="#cdoc2-client-application-use-case-model" title="Permanent link">&para;</a></h1>
-<p>CDOC2 Client Application is an abstract component in the CDOC2 System. CDOC2 Client Applications help users to encrypt files to CDOC2 Container, decrypt received CDOC2 Containers. Specific examples of CDOC2 Client Applications include:</p>
+<p>CDOC2 Client Application is an abstract component in the <abbr title="IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers">CDOC2 System</abbr>. CDOC2 Client Applications help users to encrypt files to <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>, decrypt received CDOC2 Containers. Specific examples of CDOC2 Client Applications include:</p>
 <ul>
 <li>DigiDoc4 desktop application for Windows, MacOS and Linux operating systems (<a href="https://open-eid.github.io/#desktop-applications">https://open-eid.github.io/#desktop-applications</a>, <a href="https://www.id.ee/en/rubriik/digidoc4-client/">https://www.id.ee/en/rubriik/digidoc4-client/</a>, <a href="https://github.com/open-eid/DigiDoc4-Client">https://github.com/open-eid/DigiDoc4-Client</a>)</li>
 <li>DigiDoc4 mobile application for Android and IOS operating systems (<a href="https://open-eid.github.io/#mobile-applications">https://open-eid.github.io/#mobile-applications</a>)</li>
@@ -911,11 +911,11 @@
 <h3 id="human-actors">Human actors<a class="headerlink" href="#human-actors" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong>User</strong></dt>
-<dd>Person, who is using CDOC2 Client Applications for sending encrypted files to somebody else (then as a Sender), or decrypting received CDOC2 Containers (then as a Recipient). In some use cases, the User may encrypt files with symmetric encryption key or password, store the CDOC2 Container for themselves and later decrypt the CDOC2 Container by themself.</dd>
+<dd>Person, who is using CDOC2 Client Applications for sending encrypted files to somebody else (then as a Sender), or decrypting received CDOC2 Containers (then as a Recipient). In some use cases, the User may encrypt files with symmetric encryption key or password, store the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> for themselves and later decrypt the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> by themself.</dd>
 <dt><strong>Sender</strong></dt>
-<dd>User, who wishes to send encrypted files, which are packaged into a CDOC2 Container, to one or multiple Recipients</dd>
+<dd>User, who wishes to send encrypted files, which are packaged into a <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>, to one or multiple Recipients</dd>
 <dt><strong>Recipient</strong></dt>
-<dd>User, who wishes to decrypt the received CDOC2 Container and has control over necessary cryptographic key material</dd>
+<dd>User, who wishes to decrypt the received <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> and has control over necessary cryptographic key material</dd>
 <dt><strong>Administrator</strong></dt>
 <dd>Person, who is managing CDOC2 Client Application for Users and is creating the configuration data for them</dd>
 </dl>
@@ -923,23 +923,23 @@
 <dl>
 <dt><strong>CDOC2 Client Application (Client)</strong></dt>
 <dd>Desktop or mobile application, which encrypts or decrypts CDOC2 Containers and is used by Users</dd>
-<dt><strong>CDOC2 Capsule Server (CCS)</strong></dt>
-<dd>CCS mediates CDOC2 Server Capsules between Sender and Recipient. Sender's Client can upload a Server Capsule to one or multiple CCS servers. Recipient's Client can download Server Capsule from CCS server after authentication.</dd>
-<dt><strong>Capsule</strong></dt>
-<dd>Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.</dd>
-<dt><strong>Server Capsule</strong></dt>
-<dd>A Capsule that is mediated by a CDOC2 Capsule Server.</dd>
-<dt><strong>Container Capsule</strong></dt>
-<dd>A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.</dd>
+<dt><strong>CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</strong></dt>
+<dd><abbr title="CDOC2 Capsule Server">CCS</abbr> mediates CDOC2 Server Capsules between Sender and Recipient. Sender's Client can upload a Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> to one or multiple <abbr title="CDOC2 Capsule Server">CCS</abbr> servers. Recipient's Client can download Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> from <abbr title="CDOC2 Capsule Server">CCS</abbr> server after authentication.</dd>
+<dt><strong><abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr></strong></dt>
+<dd>Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>. <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> can either be a Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> or a Container <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>.</dd>
+<dt><strong>Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr></strong></dt>
+<dd>A <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> that is mediated by a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</dd>
+<dt><strong>Container <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr></strong></dt>
+<dd>A <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> that is created inside a CDOC2 container and is therefore not sent to a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</dd>
 <dt><strong>LDAP-server</strong></dt>
 <dd>An application used for publishing public keys.</dd>
 </dl>
 <h2 id="use-cases-for-recipients-with-hardware-security-tokens">Use cases for Recipients with hardware security tokens<a class="headerlink" href="#use-cases-for-recipients-with-hardware-security-tokens" title="Permanent link">&para;</a></h2>
-<p>These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC2 Container itself with the encrypted payload, or with the help of CCS server.</p>
+<p>These use cases are useful, when Sender knows that Recipient has specific <abbr title="Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys">hardware security token</abbr>, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. KC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> itself with the encrypted payload, or with the help of <abbr title="CDOC2 Capsule Server">CCS</abbr> server.</p>
 <h3 id="ucclient01-encrypt-cdoc2-container-for-sending-to-recipient-with-a-security-token">UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token<a class="headerlink" href="#ucclient01-encrypt-cdoc2-container-for-sending-to-recipient-with-a-security-token" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient.</dd>
+<dd>CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr>. <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> is encrypted with <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, which is generated with key-agreement protocol between Sender and Recipient.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -947,7 +947,7 @@
 <dt><strong>Primary Actor</strong></dt>
 <dd>Sender</dd>
 <dt><strong>Preconditions</strong></dt>
-<dd>Client has a long-term access token from CDOC2 authentication server.</dd>
+<dd>Client has a long-term access token from <abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr>.</dd>
 </dl>
 <p><strong>Success Guarantees</strong></p>
 <ul>
@@ -960,14 +960,14 @@
 <li>Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.</li>
 <li>Sender enters identifiers for each Recipient.</li>
 <li>Client creates a capsule for each Recipient.</li>
-<li>Client displays a list of Capsule Servers to Sender.</li>
-<li>Sender chooses a CDOC2 Capsule Server.</li>
-<li>Client creates a TLS-connection with the chosen CDOC2 Capsule Server and receives the server's certificate.</li>
+<li>Client displays a list of <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers to Sender.</li>
+<li>Sender chooses a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</li>
+<li>Client creates a TLS-connection with the chosen CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server and receives the server's certificate.</li>
 <li>Client verifies the server's certificate against the configuration.</li>
-<li>Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.</li>
+<li>Client forwards each Recipient's server capsule to the chosen CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.</li>
 <li>Client creates a container into filesystem in the chosen target path and adds a header.</li>
 <li>Client verifies that the header does not exceed the size limit defined by the specification.</li>
-<li>Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.</li>
+<li>Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> and adds it to the container as payload.</li>
 <li>Client saves the CDOC2 container and displays Sender a notification.</li>
 </ol>
 <p><strong>Extensions</strong></p>
@@ -1017,12 +1017,12 @@
 <ol>
 <li>Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.</li>
 <li>External configuration service provides a default capsule expiration time.</li>
-<li>Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.</li>
+<li>Client sends a server capsule using the appropriate API service to a <abbr title="CDOC2 Capsule Server">CCS</abbr> using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.</li>
 <li>Use case continues from step 9.</li>
 </ol>
-<p>8c. The expiration time provided by Client is longer than allowed in the CCS system configuration:</p>
+<p>8c. The expiration time provided by Client is longer than allowed in the <abbr title="CDOC2 Capsule Server">CCS</abbr> system configuration:</p>
 <ol>
-<li>CCS returns Client a error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client a error message.</li>
 <li>Client notifies Sender.</li>
 <li>Use case ends.</li>
 </ol>
@@ -1046,10 +1046,10 @@
 <li>Client displays Sender a notification.</li>
 <li>Use case ends.</li>
 </ol>
-<h3 id="ucclient02-decrypt-cdoc2-container-with-a-security-token">UC.Client.02 — Decrypt CDOC2 Container with a security token<a class="headerlink" href="#ucclient02-decrypt-cdoc2-container-with-a-security-token" title="Permanent link">&para;</a></h3>
+<h3 id="ucclient02-decrypt-cdoc2-container-with-a-security-token">UC.Client.02 — Decrypt <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> with a security token<a class="headerlink" href="#ucclient02-decrypt-cdoc2-container-with-a-security-token" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule from either CDOC2 Capsule Server or a container capsule from inside the container.</dd>
+<dd>CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule from either CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server or a container capsule from inside the container.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Client Application</p>
@@ -1062,7 +1062,7 @@ CDOC2 Client Application</p>
 <p><strong>Preconditions</strong></p>
 <ul>
 <li>Recipient's security token is connected.</li>
-<li>Client has a long-term access token from CDOC2 authentication server.</li>
+<li>Client has a long-term access token from <abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr>.</li>
 </ul>
 <p><strong>Success Guarantees</strong></p>
 <ul>
@@ -1070,14 +1070,14 @@ CDOC2 Client Application</p>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Recipient chooses the CDOC2 Container to be decrypted and specifies the target filename and path for the files.</li>
+<li>Recipient chooses the <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> to be decrypted and specifies the target filename and path for the files.</li>
 <li>Client verifies that the header does not exceed the size limit defined by the specification.</li>
 <li>Client reads Recipient certificate from the security token.</li>
 <li>Client verifies that the container has a record of the Recipient.</li>
-<li>Client verifies that the Recipient record has a CDOC2 Capsule Server reference.</li>
-<li>Client uses Recipient's eID means to authenticate to CCS.</li>
-<li>Client sends the CDOC2 Capsule Server the transaction code from the container.</li>
-<li>Client receives a capsule from the CDOC2 Capsule Server.</li>
+<li>Client verifies that the Recipient record has a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server reference.</li>
+<li>Client uses Recipient's eID means to authenticate to <abbr title="CDOC2 Capsule Server">CCS</abbr>.</li>
+<li>Client sends the CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server the transaction code from the container.</li>
+<li>Client receives a capsule from the CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</li>
 <li>Client decrypts the encrypted archive in the CDOC2 container using the connected security token.</li>
 <li>Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage.</li>
 </ol>
@@ -1097,7 +1097,7 @@ CDOC2 Client Application</p>
 <li>Client displays Recipient a notification.</li>
 <li>Use case ends.</li>
 </ol>
-<p>5a. Recipient record does not contain a reference to a CDOC2 Capsule Server.</p>
+<p>5a. Recipient record does not contain a reference to a CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server.</p>
 <ol>
 <li>Client finds a container capsule from the Recipient record.</li>
 <li>Use case continues from step 9.</li>
@@ -1113,7 +1113,7 @@ CDOC2 Client Application</p>
 <li>Client displays user a notification.</li>
 <li>Use case ends.</li>
 </ol>
-<p>8a. No capsule returned from CDOC2 Capsule Server:</p>
+<p>8a. No capsule returned from CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server:</p>
 <ol>
 <li>Client displays user a notification.</li>
 <li>Use case ends.</li>
@@ -1124,12 +1124,12 @@ CDOC2 Client Application</p>
 <li>Use case ends.</li>
 </ol>
 <h2 id="use-cases-for-password-based-encryption">Use cases for password-based encryption<a class="headerlink" href="#use-cases-for-password-based-encryption" title="Permanent link">&para;</a></h2>
-<p>These use cases are useful when User wishes to protect confidential files by encrypting them with CEK generated from regular password. User may then store CDOC2 Container for longer period, without worrying that security token may not be usable, or public key certificate might be revoked or expired. CDOC2 Container may be later decrypted by Sender itself or Recipient, who knows the shared password.</p>
+<p>These use cases are useful when User wishes to protect confidential files by encrypting them with <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> generated from regular password. User may then store <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> for longer period, without worrying that security token may not be usable, or public key certificate might be revoked or expired. <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> may be later decrypted by Sender itself or Recipient, who knows the shared password.</p>
 <p>This group of UCs also include a special use case, when Recipient re-encrypts the content from received Container with a password.</p>
 <h2 id="ucclientp01-encrypt-cdoc2-container-with-password-for-long-term-storage">UC.Client.P.01 — Encrypt CDOC2 container with password for long-term storage<a class="headerlink" href="#ucclientp01-encrypt-cdoc2-container-with-password-for-long-term-storage" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>Encrypt local files for long-term storage using CDOC2 Client Application and password-based cryptography by creating a new CDOC2 Container. This use case is useful for occasions where decryption does not depend on availability of security tokens.</dd>
+<dd>Encrypt local files for long-term storage using CDOC2 Client Application and password-based cryptography by creating a new <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr>. This use case is useful for occasions where decryption does not depend on availability of security tokens.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -1188,7 +1188,7 @@ CDOC2 Client Application</p>
 <h2 id="ucclientp02-decrypt-cdoc2-container-with-password">UC.Client.P.02 — Decrypt CDOC2 container with password<a class="headerlink" href="#ucclientp02-decrypt-cdoc2-container-with-password" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application decrypts CDOC2 Container with password-based cryptography.</dd>
+<dd>CDOC2 Client Application decrypts <abbr title="File format for transmitting the encrypted payload and metadata information, &lt;br/&gt;including the capsule from Sender to Recipient">CDOC2 Container</abbr> with password-based cryptography.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -1254,8 +1254,8 @@ CDOC2 Client Application</p>
 <li>Client adds the files to an archive and creates a new CDOC2 container, which it saves to the target location.</li>
 <li>Client asks Recipient whether to delete the server capsule that was used during the previous decryption process. The purpose is to make it impossible that anybody could ever again decrypt the original message.</li>
 <li>Recipient chooses to delete the server capsule.</li>
-<li>Client, still having access to the original container decrypted container, reads again the recipient record from it and makes a request to CCS to delete the server capsule by providing the same transaction code.</li>
-<li>CCS deletes the server capsule and replies with a confirmation response.</li>
+<li>Client, still having access to the original container decrypted container, reads again the recipient record from it and makes a request to <abbr title="CDOC2 Capsule Server">CCS</abbr> to delete the server capsule by providing the same transaction code.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> deletes the server capsule and replies with a confirmation response.</li>
 <li>Client notifies the Recipient.</li>
 </ol>
 <p><strong>Extensions</strong></p>
@@ -1296,7 +1296,7 @@ CDOC2 Client Application</p>
 <li>Client assumes that the server capsule does no longer exist and notifies the Recipient.</li>
 <li>Use case ends.</li>
 </ol>
-<p>11a. Establishing a connection to the CCS fails:</p>
+<p>11a. Establishing a connection to the <abbr title="CDOC2 Capsule Server">CCS</abbr> fails:</p>
 <ol>
 <li>Client notifies the Recipient.</li>
 <li>Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise use case ends.</li>
@@ -1305,7 +1305,7 @@ CDOC2 Client Application</p>
 <h3 id="ucclient09-acquire-a-long-term-access-token">UC.Client.09 — Acquire a long-term access token<a class="headerlink" href="#ucclient09-acquire-a-long-term-access-token" title="Permanent link">&para;</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 Capsule Servers.</dd>
+<dd>CDOC2 Client Application asks User to authenticate in order to establish a long-term access token which is required to gain API access to any CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -1319,12 +1319,12 @@ CDOC2 Client Application</p>
 </ul>
 <p><strong>Success Guarantees</strong></p>
 <ul>
-<li>Client has a long-term access token to CDOC2 Capsule Server API-s.</li>
+<li>Client has a long-term access token to CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server API-s.</li>
 <li>Client allows User to encrypt CDOC2 containers for other Recipients besides the User.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client asks User to authenticate in order to gain access to CDOC2 Capsule Servers.</li>
+<li>Client asks User to authenticate in order to gain access to CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Servers.</li>
 <li>User agrees to authenticate.</li>
 <li>Client opens a web view and directs user to an authentication service (e.g. TARA) that follows the OpenID Connect protocol. The authentication request is inside the redirect URL and the request is mediated by a CDOC2 Authentication Server. User is shown a choice of authentication methods.</li>
 <li>User chooses an authentication method.</li>
@@ -1361,14 +1361,14 @@ CDOC2 Client Application</p>
 <li>Client notifies the User.</li>
 <li>Use case ends.</li>
 </ol>
-<h1 id="cdoc2-capsule-server-use-case-model">CDOC2 Capsule Server Use Case Model<a class="headerlink" href="#cdoc2-capsule-server-use-case-model" title="Permanent link">&para;</a></h1>
+<h1 id="cdoc2-capsule-server-use-case-model">CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server Use Case Model<a class="headerlink" href="#cdoc2-capsule-server-use-case-model" title="Permanent link">&para;</a></h1>
 <h2 id="uckts01-forward-capsules">UC.KTS.01 Forward Capsules<a class="headerlink" href="#uckts01-forward-capsules" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application forwards CDOC2 Capsule Server Server Capsules, which contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.</dd>
+<dd>CDOC2 Client Application forwards CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server Server Capsules, which contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.</dd>
 </dl>
 <p><strong>Scope</strong>
-CDOC2 Capsule Server (CCS)</p>
+CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</p>
 <dl>
 <dt><strong>Use Case Level</strong></dt>
 <dd>User goal</dd>
@@ -1382,42 +1382,42 @@ CDOC2 Capsule Server (CCS)</p>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client sends server capsules using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule.</li>
-<li>CCS validates the server capsules against specification rules.</li>
-<li>CCS generates a universally unique transaction code (UUID).</li>
-<li>CCS saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.</li>
-<li>CCS returns Client a transaction code for each capsule.</li>
+<li>Client sends server capsules using the appropriate API service to a <abbr title="CDOC2 Capsule Server">CCS</abbr>. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Receipient's capsule.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> validates the server capsules against specification rules.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> generates a universally unique transaction code (UUID).</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client a transaction code for each capsule.</li>
 </ol>
 <p><strong>Extensions</strong>
 1a. Client uses a orgnaization-specific external configuration service:</p>
 <ol>
 <li>Client first syncs default capsule expiration time from an orgnaization-specific external service using a long-term authentication token.</li>
 <li>External provides a default capsule expiration time.</li>
-<li>Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.</li>
+<li>Client sends a server capsule using the appropriate API service to a <abbr title="CDOC2 Capsule Server">CCS</abbr> using the expiration time from external configuration or when a Reciepent's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.</li>
 <li>Use case continues from step 2.</li>
 </ol>
 <p>2a. Server capsule exceeds the allowed length limit:</p>
 <ol>
-<li>CCS returns Client a error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client a error message.</li>
 <li>Use case ends.</li>
 </ol>
 <p>4a. Client did not provide an expiration time:</p>
 <ol>
-<li>CCS calculates the expiration time based on system configuration.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> calculates the expiration time based on system configuration.</li>
 <li>Use case continues from step 5.</li>
 </ol>
-<p>4b. The expiration time provided by Client is longer than allowed in the CCS system configuration:</p>
+<p>4b. The expiration time provided by Client is longer than allowed in the <abbr title="CDOC2 Capsule Server">CCS</abbr> system configuration:</p>
 <ol>
-<li>CCS returns Client a error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client a error message.</li>
 <li>Use case ends.</li>
 </ol>
-<h2 id="uckts02-request-capsule">UC.KTS.02 Request Capsule<a class="headerlink" href="#uckts02-request-capsule" title="Permanent link">&para;</a></h2>
+<h2 id="uckts02-request-capsule">UC.KTS.02 Request <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr><a class="headerlink" href="#uckts02-request-capsule" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the transaction code provided by CDOC2 Client Application.</dd>
+<dd>CDOC2 Client Application requests a Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> from CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC2 container. The Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> is identified by public key in Recipient certificate and the transaction code provided by CDOC2 Client Application.</dd>
 </dl>
 <p><strong>Scope</strong>
-CDOC2 Capsule Server (CCS)</p>
+CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</p>
 <dl>
 <dt><strong>Use Case Level</strong></dt>
 <dd>User goal</dd>
@@ -1427,33 +1427,33 @@ CDOC2 Capsule Server (CCS)</p>
 <p><strong>Preconditions</strong></p>
 <ul>
 <li>Recipient is authenticated.</li>
-<li>Client has a long-term access token from CDOC2 authentication server.</li>
+<li>Client has a long-term access token from <abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr>.</li>
 </ul>
 <p><strong>Success guarantees</strong></p>
 <ul>
-<li>Server Capsule is forwarded to CDOC2 Client Application.</li>
+<li>Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> is forwarded to CDOC2 Client Application.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client requests a Server Capsule using the appropriate API service, providing a transaction code as input.</li>
-<li>CCS validates the transaction code against specification rules.</li>
-<li>CCS finds the correct Server Capsule useing the transaction code and validates that the Recipient public key matches with the one in the Capsule.</li>
-<li>CCS sends the Client the Capsule.</li>
+<li>Client requests a Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> using the appropriate API service, providing a transaction code as input.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> validates the transaction code against specification rules.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> finds the correct Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> useing the transaction code and validates that the Recipient public key matches with the one in the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> sends the Client the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>.</li>
 </ol>
 <p><strong>Extensions</strong>
 2a. Transaction code is too long:</p>
 <ol>
-<li>CCS returns Client an error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client an error message.</li>
 <li>Use case ends.</li>
 </ol>
-<p>3a. Capsule was not found:</p>
+<p>3a. <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> was not found:</p>
 <ol>
-<li>CCS returns Client an error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client an error message.</li>
 <li>Use case ends.</li>
 </ol>
-<p>3b. Recipient public key does not match the one in the Capsule:</p>
+<p>3b. Recipient public key does not match the one in the <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr>:</p>
 <ol>
-<li>CCS returns Client an error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> returns Client an error message.</li>
 <li>Use case ends.</li>
 </ol>
 <h2 id="uckts03-delete-server-capsules">UC.KTS.03 Delete Server Capsules<a class="headerlink" href="#uckts03-delete-server-capsules" title="Permanent link">&para;</a></h2>
@@ -1462,7 +1462,7 @@ CDOC2 Capsule Server (CCS)</p>
 <dd>System timer deletes expired Server Capsules.</dd>
 </dl>
 <p><strong>Scope</strong>
-CDOC2 Capsule Server (CCS)</p>
+CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</p>
 <dl>
 <dt><strong>Use Case Level</strong></dt>
 <dd>User goal</dd>
@@ -1471,7 +1471,7 @@ CDOC2 Capsule Server (CCS)</p>
 </dl>
 <p><strong>Success guarantees</strong></p>
 <ul>
-<li>Expired Server Capsules are removed from the storing CCS.</li>
+<li>Expired Server Capsules are removed from the storing <abbr title="CDOC2 Capsule Server">CCS</abbr>.</li>
 </ul>
 <p><strong>Trigger</strong></p>
 <ul>
@@ -1479,8 +1479,8 @@ CDOC2 Capsule Server (CCS)</p>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>CCS identifies expired Server Capsules.</li>
-<li>CCS deletes expired Server Capsules.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> identifies expired Server Capsules.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> deletes expired Server Capsules.</li>
 </ol>
 <p><strong>Extensions</strong></p>
 <p>1a. No expired Server Capsules found.</p>
@@ -1490,17 +1490,17 @@ CDOC2 Capsule Server (CCS)</p>
 <h2 id="uckts04-authenticate-recipient">UC.KTS.04 Authenticate Recipient<a class="headerlink" href="#uckts04-authenticate-recipient" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application (Client) establishes a TLS-connection to CDOC2 Capsule Server and forwards Recipient certificate.</dd>
+<dd>CDOC2 Client Application (Client) establishes a TLS-connection to CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server and forwards Recipient certificate.</dd>
 </dl>
 <p><strong>Scope</strong>
-CDOC2 Capsule Server (CCS)</p>
+CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</p>
 <dl>
 <dt><strong>Use Case Level</strong></dt>
 <dd>Subfunction</dd>
 <dt><strong>Primary Actor</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Preconditions</strong></dt>
-<dd>Client has a long-term access token from CDOC2 authentication server.</dd>
+<dd>Client has a long-term access token from <abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr>.</dd>
 </dl>
 <p><strong>Success guarantees</strong></p>
 <ul>
@@ -1510,22 +1510,22 @@ CDOC2 Capsule Server (CCS)</p>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
 <li>Client initiates a TLS-connection and forwards Recipient certificate.</li>
-<li>CCS verifies certificate validity using an OCSP service.</li>
-<li>CCS establishes the TLS connection.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> verifies certificate validity using an OCSP service.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> establishes the TLS connection.</li>
 </ol>
 <p><strong>Extensions</strong></p>
 <p>2a. Recipient certificate is not valid:</p>
 <ol>
-<li>CCS replies to the Client with an error message.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> replies to the Client with an error message.</li>
 <li>Use case ends.</li>
 </ol>
-<h2 id="uckts05-request-to-delete-server-capsule">UC.KTS.05 Request To Delete Server Capsule<a class="headerlink" href="#uckts05-request-to-delete-server-capsule" title="Permanent link">&para;</a></h2>
+<h2 id="uckts05-request-to-delete-server-capsule">UC.KTS.05 Request To Delete Server <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr><a class="headerlink" href="#uckts05-request-to-delete-server-capsule" title="Permanent link">&para;</a></h2>
 <dl>
 <dt><strong>Context of Use</strong></dt>
 <dd>Client requests the CSS to delete a server capsule.</dd>
 </dl>
 <p><strong>Scope</strong>
-CDOC2 Capsule Server (CCS)</p>
+CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)</p>
 <dl>
 <dt><strong>Use Case Level</strong></dt>
 <dd>User goal</dd>
@@ -1534,19 +1534,19 @@ CDOC2 Capsule Server (CCS)</p>
 </dl>
 <p><strong>Success guarantees</strong></p>
 <ul>
-<li>Server capsule is removed from the storage of the CCS.</li>
+<li>Server capsule is removed from the storage of the <abbr title="CDOC2 Capsule Server">CCS</abbr>.</li>
 </ul>
 <p><strong>Preconditions</strong></p>
 <ul>
-<li>Recipient has received a server capsule from a CCS.</li>
+<li>Recipient has received a server capsule from a <abbr title="CDOC2 Capsule Server">CCS</abbr>.</li>
 <li>Recipient has completed the re-encryption flow in the Client.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
 <li>Client asks Recipient whether to delete server capsule and thus make it impossible that anybody could ever again decrypt the original message.</li>
 <li>Recipient chooses to delete the server capsule.</li>
-<li>Client makes request to CCS to delete the server capsule by providing the same transaction code as when originally requesting the capsule.</li>
-<li>CCS deletes the server capsule.</li>
+<li>Client makes request to <abbr title="CDOC2 Capsule Server">CCS</abbr> to delete the server capsule by providing the same transaction code as when originally requesting the capsule.</li>
+<li><abbr title="CDOC2 Capsule Server">CCS</abbr> deletes the server capsule.</li>
 </ol>
 <p><strong>Extensions</strong>
 2a. Recipient does not want to delete the server capsule:</p>
@@ -1564,7 +1564,7 @@ CDOC2 Capsule Server (CCS)</p>
 <li>Client assumes that the server capsule does no longer exist and notifies the Recipient.</li>
 <li>Use case ends.</li>
 </ol>
-<p>4a. Establishing a connection to the CCS fails:</p>
+<p>4a. Establishing a connection to the <abbr title="CDOC2 Capsule Server">CCS</abbr> fails:</p>
 <ol>
 <li>Client notifies the Recipient.</li>
 <li>Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise use case ends.</li>

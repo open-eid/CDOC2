@@ -643,20 +643,20 @@
 <p>Recent studies <a href="https://www.ecrypt.eu.org/csa/documents/D5.4-FinalAlgKeySizeProt.pdf">(1)</a>, <a href="https://doi.org/10.6028/NIST.SP.800-57pt1r5">(2)</a> give cause to assume that 128-bit security should be sufficiently secure even after 2031. This claim is also supported by a new study published in 2022 <a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf">(3)</a>. Based on these results, we use the following algorithms:</p>
 <ul>
 <li>HKDF-SHA-256</li>
-<li>HMAC-SHA-256</li>
+<li><abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr>-SHA-256</li>
 <li>ChaCha20-Poly1305</li>
 </ul>
 <p>The SHA2 hash function family is a long-standing standard. <a href="https://www.ria.ee/media/1473/download">Recent studies</a> show that the SHA2 hash functions are still secure and SHA-256 provides 128-bit security.</p>
 <p>The HKDF key derivation function used here (see section <a href="#key-derivation">Key derivation</a> for more details) has been subject to an <a href="https://ia.cr/2010/264">in-depth security analysis</a>. The use of HKDF with a secure hash function is also recommended in the <a href="https://www.ecrypt.eu.org/csa/documents/D5.4-FinalAlgKeySizeProt.pdf">aforementioned study</a>.</p>
-<p><a href="https://www.ria.ee/media/1473/download">A 128-bit key is sufficient for HMAC security</a>.</p>
+<p><a href="https://www.ria.ee/media/1473/download">A 128-bit key is sufficient for <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> security</a>.</p>
 <p>ChaCha20-Poly1305 is a secure (IND-CPA and INT-CTXT) authenticating encryption algorithm (see <a href="https://ia.cr/2014/613">e.g.</a>). As a stream cipher, <a href="https://www.ria.ee/media/1473/download">ChaCha20 also provides 256-bit security by itself</a>.</p>
-<p>XOR encryption (one-time pad) providing 256-bit security is used for FMK encryption.</p>
+<p>XOR encryption (one-time pad) providing 256-bit security is used for <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption.</p>
 <p>Key lengths used for symmetric keys:</p>
 <ul>
-<li>FMK – 256 bits.</li>
-<li>HHK – 256 bits.</li>
-<li>CEK – depends on the payload encryption algorithm used, 256 bits for ChaCha20-Poly1305.</li>
-<li>KEK – depends on the FMK encryption algorithm used, 256 bits for XOR.</li>
+<li><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> – 256 bits.</li>
+<li><abbr title="Header HMAC Key">HHK</abbr> – 256 bits.</li>
+<li><abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> – depends on the payload encryption algorithm used, 256 bits for ChaCha20-Poly1305.</li>
+<li><abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> – depends on the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption algorithm used, 256 bits for XOR.</li>
 </ul>
 <h2 id="key-derivation"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.2</span> Key derivation<a class="headerlink" href="#key-derivation" title="Permanent link">¶</a></h2>
 <p>For key derivation, the CDOC2 format utilizes the HKDF key derivation function, codified as <a href="https://rfc-editor.org/rfc/rfc5869.txt">IETF RFC 5869</a>.</p>
@@ -664,30 +664,30 @@
 <p>In all cases, key derivation is carried out using the SHA-256 hash function, meaning that the functions return a 256-bit value.
 To be used as input in functions, all textual constants must be UTF-8 encoded (in the present case, cryptographic functions take byte arrays and integers as input), quotation marks used in the specification are not part of the strings.</p>
 <p>Public symmetric keys are derived as follows.</p>
-<p><strong>File Master Key, FMK</strong></p>
-<p><em>FMK ← Extract(”CDOC20salt”, random)</em></p>
+<p><strong>File Master Key, <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr></strong></p>
+<p><em><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> ← Extract(”CDOC20salt”, random)</em></p>
 <p>Where <em>CDOC20salt</em> is a constant string and <em>random</em> is an at least 256-bit value generated using a cryptographically secure random number generator (CSPRNG).</p>
-<p><strong>Content Encryption Key, CEK</strong></p>
-<p><em>CEK ← Expand(FMK, ”CDOC20cek”, L<sub><sub>octets</sub></sub>)</em></p>
+<p><strong>Content Encryption Key, <abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr></strong></p>
+<p><em><abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> ← Expand(<abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, ”CDOC20cek”, L<sub><sub>octets</sub></sub>)</em></p>
 <p>L<sub>octets</sub> defines the output length of the Expand function in bytes and must be equal to the key length of the used symmetric encryption algorithm (see section <a href="#payload-assembly-and-encryption">Payload assembly and encryption</a>).</p>
-<p><strong>Header HMAC Key, HHK</strong></p>
-<p><em>HHK ← Expand(FMK, ”CDOC20hmac”, 32<sub><sub>octets</sub></sub>)</em></p>
-<p>Note that the length of the HHK derived in this manner is 256 bits, i.e. equal to the output length of the used SHA-256 hash algorithm. This is based on the recommendations presented in the <a href="https://rfc-editor.org/rfc/rfc2104.txt">HMAC standard</a>.</p>
-<p><strong>Key Encryption Key, KEK</strong></p>
-<p>KEK derivation is immediately tied to the used recipient type, and is described in connection with the relevant format elements:</p>
+<p><strong>Header <abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> Key, <abbr title="Header HMAC Key">HHK</abbr></strong></p>
+<p><em><abbr title="Header HMAC Key">HHK</abbr> ← Expand(<abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>, ”CDOC20hmac”, 32<sub><sub>octets</sub></sub>)</em></p>
+<p>Note that the length of the <abbr title="Header HMAC Key">HHK</abbr> derived in this manner is 256 bits, i.e. equal to the output length of the used SHA-256 hash algorithm. This is based on the recommendations presented in the <a href="https://rfc-editor.org/rfc/rfc2104.txt"><abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> standard</a>.</p>
+<p><strong>Key Encryption Key, <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr></strong></p>
+<p><abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> derivation is immediately tied to the used recipient type, and is described in connection with the relevant format elements:</p>
 <ul>
 <li>ECCPublicKeyCapsule – section <a href="#eccpublickeycapsule">ECCPublicKeyCapsule</a>.</li>
 <li>RSAPublicKeyCapsule – section <a href="#rsapublickeycapsule">RSAPublicKeyCapsule</a>.</li>
 <li>KeyServerCapsule – section <a href="#keyservercapsule">KeyServerCapsule</a>.</li>
 <li>SymmetricKeyCapsule – section <a href="#symmetrickeycapsule">SymmetricKeyCapsule</a>.</li>
 </ul>
-<h2 id="descriptions-of-header-elements-and-kek-computation"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3</span> Descriptions of header elements and KEK computation<a class="headerlink" href="#descriptions-of-header-elements-and-kek-computation" title="Permanent link">¶</a></h2>
+<h2 id="descriptions-of-header-elements-and-kek-computation"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3</span> Descriptions of header elements and <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation<a class="headerlink" href="#descriptions-of-header-elements-and-kek-computation" title="Permanent link">¶</a></h2>
 <p>The abstracted structure of the header is described in section <a href="../ch03_container_format/#cdoc2-container-format">CDOC2 container format</a>. Fields are described in the abstracted structure using primitive data types. The following section describes how to compute the fields and translate values to the primitive data type form.</p>
-<p>Key Encryption Key (KEK) computation depends on recipient type. Below, KEK computation is described with reference to each specific recipient type.</p>
+<p>Key Encryption Key (<abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>) computation depends on recipient type. Below, <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation is described with reference to each specific recipient type.</p>
 <h3 id="eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1</span> ECCPublicKeyCapsule<a class="headerlink" href="#eccpublickeycapsule" title="Permanent link">¶</a></h3>
-<p><code>ECCPublicKeyCapsule</code> (see <a href="#table-2-eccpublickeycapsule-elements">table 2</a>) refers to a recipient identified by their ECC public key. The CDOC2 format supports the use of any public key generated on a <em>secp384r1</em> elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
-For the <em>secp384r1</em> curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
-The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule capsi in the sense of the protocols presented in sections <a href="../ch02_encryption_schemes/#direct-key-agreement-based-ecdh">Direct key agreement-based ECDH</a> and <a href="../ch02_encryption_schemes/#key-server-based-ecdh">Capsule server-based ECDH</a>.</p>
+<p><code>ECCPublicKeyCapsule</code> (see <a href="#table-2-eccpublickeycapsule-elements">table 2</a>) refers to a recipient identified by their <abbr title="Elliptic-Curve Cryptography">ECC</abbr> public key. The CDOC2 format supports the use of any public key generated on a <em>secp384r1</em> elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
+For the <em>secp384r1</em> curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> 1.0.
+The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule capsi in the sense of the protocols presented in sections <a href="../ch02_encryption_schemes/#direct-key-agreement-based-ecdh">Direct key agreement-based <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr></a> and <a href="../ch02_encryption_schemes/#key-server-based-ecdh"><abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> server-based <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr></a>.</p>
 <h4 id="table-2-eccpublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.1</span> Table 2. <em>ECCPublicKeyCapsule</em> elements<a class="headerlink" href="#table-2-eccpublickeycapsule-elements" title="Permanent link">¶</a></h4>
 <table>
 <thead>
@@ -715,24 +715,24 @@ The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule capsi 
 </tr>
 </tbody>
 </table>
-<p>The sender computes the KEK using the secret key of the ephemeral key pair they have generated, and the recipient’s public key, using the elliptic-curve Diffie-Hellman key agreement protocol (ECDH), and passes the result to the specified key derivation function. The recipient performs a similar computation using the sender’s ephemeral public key and the ID-card authentication key pair. Details of the computations are provided below.</p>
+<p>The sender computes the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> using the secret key of the ephemeral key pair they have generated, and the recipient’s public key, using the elliptic-curve Diffie-Hellman key agreement protocol (<abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr>), and passes the result to the specified key derivation function. The recipient performs a similar computation using the sender’s ephemeral public key and the ID-card authentication key pair. Details of the computations are provided below.</p>
 <p>The sender’s ephemeral key pair is anonymous, i.e. not tied to the sender’s public identity in any way.</p>
-<p>In case there are multiple recipients, the sender can use the same ephemeral key pair over a single CDOC container.</p>
+<p>In case there are multiple recipients, the sender can use the same ephemeral key pair over a single <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> container.</p>
 <p>The sender’s ephemeral key pair consists of a public and a secret key:</p>
 <div class="arithmatex">\[(pk_{eph}, sk_{eph})\]</div>
 <p>The recipient holds their ID-card authentication key pair public key <em>pkrec</em> (assuming here that the recipient’s private key is not immediately accessible).</p>
 <p>This key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.</p>
-<h4 id="kek-computation-during-encryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.2</span> KEK computation during encryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
-<p>The shared ECDH secret is computed by the sender as follows:</p>
+<h4 id="kek-computation-during-encryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.2</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during encryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
+<p>The shared <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr> secret is computed by the sender as follows:</p>
 <div class="arithmatex">\[ S_{ecdh} ← (s_{keph} · pk_{rec})_x \]</div>
 <p>i.e. the shared secret is the elliptic curve x-coordinate computed in this manner. The shared secret is encoded as a big-endian byte array, the length of which in full bytes corresponds to the modulus length of the used elliptic curve in full bytes. For example, the modulus length of secp384r1 is 48 bytes.</p>
-<p>KEK is computed from the shared secret as follows:</p>
+<p><abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> is computed from the shared secret as follows:</p>
 <div class="arithmatex">\[ KEK_{pm} ← Extract(”CDOC20kekpremaster”, S_{ecdh}) \]</div>
 <div class="arithmatex">\[ KEK ← Expand(KEK_{pm}, ”CDOC20kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{&lt;sub&gt;octets&lt;/sub&gt;}) \]</div>
-<p><em>algId</em> is the identifier of the cryptographic algorithm used for the encryption of the FMK defined as a string corresponding to the field <em>Recipient.FMKEncryptionMethod</em> (section <a href="#fmk-encryption-and-decryption">FMK encryption and decryption</a>).</p>
-<p><em>L<sub><sub>octets</sub></sub></em> defines the output length of the <code>Expand</code> function in bytes and is defined by the symmetric encryption algorithm used for FMK encryption.</p>
-<h4 id="kek-computation-during-decryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.3</span> KEK computation during decryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
-<p>The Estonian ID-card supports the use of an authentication key pair as one of the ECDH parties.
+<p><em>algId</em> is the identifier of the cryptographic algorithm used for the encryption of the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> defined as a string corresponding to the field <em>Recipient.FMKEncryptionMethod</em> (section <a href="#fmk-encryption-and-decryption"><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption and decryption</a>).</p>
+<p><em>L<sub><sub>octets</sub></sub></em> defines the output length of the <code>Expand</code> function in bytes and is defined by the symmetric encryption algorithm used for <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption.</p>
+<h4 id="kek-computation-during-decryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.3</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during decryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
+<p>The Estonian ID-card supports the use of an authentication key pair as one of the <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr> parties.
 This functionality can advantageously be used through the PKCS#11 <code>C_DERIVEKEY</code> function, employing the <code>CKM_ECDH1_DERIVE</code> mechanism.
 Key derivation can also be performed using the Windows <code>NCryptSecretAgreement</code> and <code>NCryptDeriveKey</code> encryption functions. <code>NCryptSecretAgreement</code> computes the <em>Secdh</em> and <code>NCryptDeriveKey</code> computes the <em>KEKpm</em>. <code>NCryptDeriveKey</code> parameters must be set as follows:</p>
 <ul>
@@ -744,7 +744,7 @@ Key derivation can also be performed using the Windows <code>NCryptSecretAgreeme
 <li><code>KDF_SECRET_PREPEND</code> – parameter omitted.</li>
 <li><code>KDF_SECRET_APPEND</code> – parameter omitted.</li>
 </ul>
-<p>All ID-cards used today should be able to validate elliptic curve points used as input in ECDH key derivation, but additional validation may be implemented in software supporting the CDOC format to provide more user-friendly error management.</p>
+<p>All ID-cards used today should be able to validate elliptic curve points used as input in <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr> key derivation, but additional validation may be implemented in software supporting the <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> format to provide more user-friendly error management.</p>
 <p>In order to validate whether the point <em>Q = (x, y)</em> is located on the curve, it must be verified whether <em>x</em> and <em>y</em> fall in the interval [0…<em>p</em> – 1], whether they satisfy the curve equation, and whether the point falls in the correct subgroup. For example, the formula for the curve P-384 can be presented as</p>
 <div class="arithmatex">\[ y^2 ≡ x^3 - 3x+b\bmod p\; \]</div>
 <p>It must also be verified that <em>nQ</em> = 0 and <em>Q</em> != 0. The constants <em>b</em>, <em>p</em>, and <em>n</em> are described in the <a href="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf">Digital Signature Standard</a>.
@@ -752,11 +752,11 @@ The <code>C_DERIVEKEY</code> function takes the sender’s ephemeral public key 
 <div class="arithmatex">\[S_{ecdh}' \leftarrow (sk_{rec}\cdot pk_{eph})_{x}\;\]</div>
 <p>Thanks to the algebraic properties of the elliptic curve,
 <span class="arithmatex">\(S_{ecdh}=S_{ecdh}'\)</span>.</p>
-<p>This shared secret must be used to compute KEK as described above with reference to encryption.</p>
+<p>This shared secret must be used to compute <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> as described above with reference to encryption.</p>
 <h3 id="rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2</span> RSAPublicKeyCapsule<a class="headerlink" href="#rsapublickeycapsule" title="Permanent link">¶</a></h3>
 <p><em>RSAPublicKeyCapsule</em> (see <a href="#table-3-rsapublickeycapsule-elements">table 3</a>) refers to a recipient identified by their RSA public key.
-The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <em>capsi</em> in the sense of the protocols presented in sections <a href="../ch02_encryption_schemes/#direct-key-agreement-based-ecdh">Direct key agreement-based ECDH</a> and <a href="../ch02_encryption_schemes/#key-server-based-ecdh">Capsule server-based ECDH</a>.</p>
-<p>The sender generates a random KEK and encrypts it using the recipient’s RSA public key with OAEP padding. The recipient decrypts the encrypted KEK using their RSA private key. Details of the computations are provided below.</p>
+The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <em>capsi</em> in the sense of the protocols presented in sections <a href="../ch02_encryption_schemes/#direct-key-agreement-based-ecdh">Direct key agreement-based <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr></a> and <a href="../ch02_encryption_schemes/#key-server-based-ecdh"><abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> server-based <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr></a>.</p>
+<p>The sender generates a random <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> and encrypts it using the recipient’s RSA public key with OAEP padding. The recipient decrypts the encrypted <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> using their RSA private key. Details of the computations are provided below.</p>
 <p>The recipient’s public key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.</p>
 <h4 id="table-3-rsapublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.1</span> Table 3. RSAPublicKeyCapsule elements<a class="headerlink" href="#table-3-rsapublickeycapsule-elements" title="Permanent link">¶</a></h4>
 <table>
@@ -775,26 +775,26 @@ The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <em>capsi<
 </tr>
 <tr>
 <td>EncryptedKEK</td>
-<td>KEK encrypted using recipient’s public key</td>
+<td><abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> encrypted using recipient’s public key</td>
 <td>XXX</td>
 </tr>
 </tbody>
 </table>
-<h4 id="kek-computation-during-encryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.2</span> KEK computation during encryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
-<p>The symmetric encryption algorithm used for the encryption of the FKM defines the KEK length <em>L<sub>octets</sub></em>. The sender generates a random number KEK with a length of <em>L<sub>octets</sub></em>.</p>
-<p>For the encryption of the KEK, the sender uses the RSA-OAEP (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section 7.1</a>) encryption function. RSA-OAEP has three input parameters (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section A.2.1</a>):
+<h4 id="kek-computation-during-encryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.2</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during encryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
+<p>The symmetric encryption algorithm used for the encryption of the FKM defines the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> length <em>L<sub>octets</sub></em>. The sender generates a random number <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> with a length of <em>L<sub>octets</sub></em>.</p>
+<p>For the encryption of the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, the sender uses the RSA-OAEP (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section 7.1</a>) encryption function. RSA-OAEP has three input parameters (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section A.2.1</a>):
     • <code>hashAlgorithm</code> – hash function used by the algorithm. We use the SHA-256 hash function (<code>id-sha256</code>).
     • <code>maskGenAlgorithm</code> – mask generation function used by the algorithm. We use the MGF1 function (<code>id-mgf1</code>), parametrized by the SHA-256 hash function.
     • <code>pSourceAlgorithm</code> – label source function. We use an empty label (<code>pSpecified Empty</code>).</p>
-<h4 id="kek-computation-during-decryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.3</span> KEK computation during decryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
-<p>The recipient decrypts the encrypted KEK using their private key and the same parameters as were used for encryption.</p>
+<h4 id="kek-computation-during-decryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.3</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during decryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
+<p>The recipient decrypts the encrypted <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> using their private key and the same parameters as were used for encryption.</p>
 <h3 id="keyservercapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.3</span> KeyServerCapsule<a class="headerlink" href="#keyservercapsule" title="Permanent link">¶</a></h3>
-<p>The Capsule Server described by the <code>KeyServerCapsule</code> structure (see <a href="#table-4-keyservercapsule-elements">table 4</a>) returns the following structures which are handled as described in the referenced sections:</p>
+<p>The <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server described by the <code>KeyServerCapsule</code> structure (see <a href="#table-4-keyservercapsule-elements">table 4</a>) returns the following structures which are handled as described in the referenced sections:</p>
 <ul>
 <li><em>ECCPublicKeyCapsule</em>: section <a href="#eccpublickeycapsule">ECCPublicKeyCapsule</a>.</li>
 <li><em>RSAPublicKeyCapsule</em>: section <a href="#rsapublickeycapsule">RSAPublicKeyCapsule</a>.</li>
 </ul>
-<p>The details of using <em>KeyServerCapsule</em> are described in section <a href="../ch04_capsule_server/#key-server">Capsule server</a>.</p>
+<p>The details of using <em>KeyServerCapsule</em> are described in section <a href="../ch04_capsule_server/#key-server"><abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> server</a>.</p>
 <h3 id="symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4</span> SymmetricKeyCapsule<a class="headerlink" href="#symmetrickeycapsule" title="Permanent link">¶</a></h3>
 <p><em>SymmetricKeyCapsule</em> (see <a href="#table-5-symmetrickeycapsule-elements">table 5</a>) refers to a recipient identified by a key label.
 In this scheme, the sender and recipient are either the same person (use case: storage cryptography) or have previously exchanged a symmetric secret key outside the system (use case: transport cryptography).
@@ -816,7 +816,7 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 </tr>
 <tr>
 <td>KeyServerID</td>
-<td>Capsule server identifier.</td>
+<td><abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> server identifier.</td>
 <td>UTF-8 string asssigned by the software trust anchor configuration, see section <a href="../ch04_capsule_server/#server-identification-and-trust">Server identification and trust</a>.</td>
 </tr>
 <tr>
@@ -838,43 +838,43 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 <tbody>
 <tr>
 <td>Salt</td>
-<td>Random number generated by the sender, used as input for the HKDF-Extract function in KEK derivation</td>
+<td>Random number generated by the sender, used as input for the HKDF-Extract function in <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> derivation</td>
 <td>Byte array</td>
 </tr>
 </tbody>
 </table>
-<h4 id="kek-computation-during-encryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.3</span> KEK computation during encryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
-<p>The sender holds the symmetric key <em>sym</em> labelled <em>label</em>. The sender generates the random number <em>salt</em>. The purpose of this number is to ensure the generation of a new KEK even when reusing the key <em>sym</em>. Since no practical upper limit can be set for the reuse of the key, the length of <em>salt</em> is chosen with a significant margin, i.e. 256 bits.
-KEK is computed from the symmetric key and the generated random number as follows:</p>
+<h4 id="kek-computation-during-encryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.3</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during encryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
+<p>The sender holds the symmetric key <em>sym</em> labelled <em>label</em>. The sender generates the random number <em>salt</em>. The purpose of this number is to ensure the generation of a new <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> even when reusing the key <em>sym</em>. Since no practical upper limit can be set for the reuse of the key, the length of <em>salt</em> is chosen with a significant margin, i.e. 256 bits.
+<abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> is computed from the symmetric key and the generated random number as follows:</p>
 <div class="arithmatex">\[ KEK_{pm} \leftarrow Extract(salt, sym) \]</div>
 <div class="arithmatex">\[ KEK     \leftarrow Expand(KEK_{pm}, "CDOC20kek" \parallel algId \parallel label, L_{octets})
 \]</div>
-<p>Where <em>algId</em> is the identifier of the encryption algorithm used for the encryption of the FMK as a string, set as <code>Recipient.FMKEncryptionMethod</code> (section <a href="#fmk-encryption-and-decryption">FMK encryption and decryption</a>).</p>
-<p><em>L<sub>octets</sub></em> defines the output length of the <code>Expand</code> function in bytes, determined by the symmetric encryption algorithm used for the encryption of the FMK.</p>
-<h4 id="kek-computation-during-decryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.4</span> KEK computation during decryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
+<p>Where <em>algId</em> is the identifier of the encryption algorithm used for the encryption of the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> as a string, set as <code>Recipient.FMKEncryptionMethod</code> (section <a href="#fmk-encryption-and-decryption"><abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption and decryption</a>).</p>
+<p><em>L<sub>octets</sub></em> defines the output length of the <code>Expand</code> function in bytes, determined by the symmetric encryption algorithm used for the encryption of the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr>.</p>
+<h4 id="kek-computation-during-decryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.4</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during decryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
 <p>The recipient holds the symmetric key <em>sym</em> labelled <em>label</em>. The <em>Salt</em> field of the <em>SymmetricKeyCapsule</em> structure provides the random number <em>salt</em> generated by the sender.</p>
-<p>This information is used for computing the KEK just as described above with reference to encryption.</p>
-<h2 id="fmk-encryption-and-decryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.4</span> FMK encryption and decryption<a class="headerlink" href="#fmk-encryption-and-decryption" title="Permanent link">¶</a></h2>
-<p>The FMK is encrypted using the XOR operation.</p>
-<p>The FMK assumes that the KEK and FMK are of equal length, which can be ensured by using the HKDF key derivation method.</p>
-<p>For FMK encryption, the XOR operation is applied bitwise to the corresponding bits in the FMK and the KEK.</p>
-<p>For decryption, the XOR operation is applied bitwise to the corresponding bits in the cryptogram and the KEK.</p>
+<p>This information is used for computing the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> just as described above with reference to encryption.</p>
+<h2 id="fmk-encryption-and-decryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.4</span> <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption and decryption<a class="headerlink" href="#fmk-encryption-and-decryption" title="Permanent link">¶</a></h2>
+<p>The <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> is encrypted using the XOR operation.</p>
+<p>The <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> assumes that the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> and <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> are of equal length, which can be ensured by using the HKDF key derivation method.</p>
+<p>For <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> encryption, the XOR operation is applied bitwise to the corresponding bits in the <abbr title="File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.">FMK</abbr> and the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>.</p>
+<p>For decryption, the XOR operation is applied bitwise to the corresponding bits in the cryptogram and the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>.</p>
 <h2 id="header-authentication-code"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.5</span> Header authentication code<a class="headerlink" href="#header-authentication-code" title="Permanent link">¶</a></h2>
-<p>The header authentication code is computed with the <a href="https://rfc-editor.org/rfc/rfc2104.txt">HMAC algorithm</a>, using the SHA-256 hash function.</p>
-<p>The HHK (see section <a href="#key-derivation">Key derivation</a>) is used as the key.</p>
-<p>HHK length must be at least equal to the output length of the used hash function, i.e. 256 bits.</p>
+<p>The header authentication code is computed with the <a href="https://rfc-editor.org/rfc/rfc2104.txt"><abbr title="Hash-Based Message Authentication Code. Protects integrity of CDOC Container.">HMAC</abbr> algorithm</a>, using the SHA-256 hash function.</p>
+<p>The <abbr title="Header HMAC Key">HHK</abbr> (see section <a href="#key-derivation">Key derivation</a>) is used as the key.</p>
+<p><abbr title="Header HMAC Key">HHK</abbr> length must be at least equal to the output length of the used hash function, i.e. 256 bits.</p>
 <div class="arithmatex">\[ HMACValue_{header} \leftarrow HMAC_{SHA-256}(HHK, header) , \]</div>
 <p>where <em>header</em> is the serialized header in the form it is added to the envelope.</p>
-<p>Validation of the message authentication code requires computing the HHK from the parsed header, then computing a message authentication code for the serialized header read from the container and comparing the computed code with the message authentication code read from the container – the two values must be identical.</p>
+<p>Validation of the message authentication code requires computing the <abbr title="Header HMAC Key">HHK</abbr> from the parsed header, then computing a message authentication code for the serialized header read from the container and comparing the computed code with the message authentication code read from the container – the two values must be identical.</p>
 <h2 id="payload-assembly-and-encryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.6</span> Payload assembly and encryption<a class="headerlink" href="#payload-assembly-and-encryption" title="Permanent link">¶</a></h2>
 <p>NOTE: The section below describes the encryption of the payload as a byte array. The assembly of encrypted files into a single byte array is described in section <a href="../ch03_container_format/#unencrypted-payload">Unencrypted payload</a>.</p>
-<p>For payload encryption, <a href="https://www.rfc-editor.org/info/rfc8439">ChaCha20-Poly1305 AEAD encryption</a> is used with the following parameters:</p>
+<p>For payload encryption, <a href="https://www.rfc-editor.org/info/rfc8439">ChaCha20-Poly1305 <abbr title="Authenticated Encryption with Additional Data">AEAD</abbr> encryption</a> is used with the following parameters:</p>
 <ul>
 <li>Key length: 256 bits</li>
 <li>Nonce length: 96 bits</li>
 <li>Authentication label length: 128 bits</li>
 </ul>
-<p>CEK is used as the key.</p>
+<p><abbr title="Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.">CEK</abbr> is used as the key.</p>
 <p>The nonce (<em>nonce</em>) is always generated afresh, using a cryptographically secure random number generator (CSPRNG).</p>
 <p>Additional data (<em>additionalData</em>) comprises a predetermined UTF-8 encoded string, the serialized header, and the header message authentication code.</p>
 <div class="arithmatex">\[  additionalData \leftarrow "CDOC20payload" \parallel header \parallel headerHMAC \]</div>

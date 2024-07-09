@@ -812,20 +812,20 @@
 <h1 id="cdoc2-system-components">CDOC2 system components<a class="headerlink" href="#cdoc2-system-components" title="Permanent link">&para;</a></h1>
 <h2 id="cdoc2-reference-java-library">CDOC2 reference Java library<a class="headerlink" href="#cdoc2-reference-java-library" title="Permanent link">&para;</a></h2>
 <p>Implements client side functionality for CDOC2 system.</p>
-<h2 id="cdoc2-capsule-server-ccs">CDOC2 Capsule Server (CCS)<a class="headerlink" href="#cdoc2-capsule-server-ccs" title="Permanent link">&para;</a></h2>
+<h2 id="cdoc2-capsule-server-ccs">CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>)<a class="headerlink" href="#cdoc2-capsule-server-ccs" title="Permanent link">&para;</a></h2>
 <p>Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
 key material upload/download. For SID/MID use cases key material is distributed
 between multiple CDOC2 servers instances, so that compromising one server doesn't expose key material.
 Instances run on independent premises.</p>
-<h2 id="cdoc2-authentication-server">CDOC2 authentication server<a class="headerlink" href="#cdoc2-authentication-server" title="Permanent link">&para;</a></h2>
-<p>Web service to generate CKCTS and SID/MID proxy long-term authentication tokens.
+<h2 id="cdoc2-authentication-server"><abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr><a class="headerlink" href="#cdoc2-authentication-server" title="Permanent link">&para;</a></h2>
+<p>Web service to generate CKCTS and <abbr title="Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API">SID/MID proxy</abbr> long-term authentication tokens.
 Long-term authentication tokens are one-time, created once after installing CDOC2 client software.
 Long-term tickets are used to access API only (Bearer-Auth HTTP header), not used for key-material
 retrieval. Uses TARA OpenID Connect to authenticate. Token format is not yet decided.</p>
 <h2 id="cdoc2-cli-user-application">CDOC2 CLI user application<a class="headerlink" href="#cdoc2-cli-user-application" title="Permanent link">&para;</a></h2>
 <p>Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.</p>
 <h1 id="interfaces-between-system-components">Interfaces between system components<a class="headerlink" href="#interfaces-between-system-components" title="Permanent link">&para;</a></h1>
-<h2 id="cdoc2-capsule-server-ccs-interface">CDOC2 Capsule Server (CCS) interface<a class="headerlink" href="#cdoc2-capsule-server-ccs-interface" title="Permanent link">&para;</a></h2>
+<h2 id="cdoc2-capsule-server-ccs-interface">CDOC2 <abbr title="Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)&lt;br/&gt;which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.">Capsule</abbr> Server (<abbr title="CDOC2 Capsule Server">CCS</abbr>) interface<a class="headerlink" href="#cdoc2-capsule-server-ccs-interface" title="Permanent link">&para;</a></h2>
 <p>TODO: Add existing endpoints</p>
 <p>New endpoints for shared secrets supporting SID/MID:</p>
 <ul>
@@ -834,7 +834,7 @@ retrieval. Uses TARA OpenID Connect to authenticate. Token format is not yet dec
   Create nonce for transactionId (for authentication). <a href="https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#nonsside-v%C3%A4ljastamise-p%C3%A4ringud">Authentication ticket creation schema</a></li>
 <li><a href="https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L71">/shared-secrets/{transactionId}</a> GET Shamir Shared Secret for transactionId</li>
 </ul>
-<h2 id="cdoc2-authentication-server-interface">CDOC2 authentication server interface<a class="headerlink" href="#cdoc2-authentication-server-interface" title="Permanent link">&para;</a></h2>
+<h2 id="cdoc2-authentication-server-interface"><abbr title="Web service to generate access tokens for CKCTS and RIA SID/MID proxy">CDOC2 authentication server</abbr> interface<a class="headerlink" href="#cdoc2-authentication-server-interface" title="Permanent link">&para;</a></h2>
 <ul>
 <li>[/gen-token] TBD: Starts authentication process through TARA. If authentication is successful,
   <code>get-token</code> endpoint returns long-term token</li>
