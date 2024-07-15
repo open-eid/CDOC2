@@ -73,3 +73,32 @@ It is possible to build the documentation using Python utilities `mike` and `mkd
 6. When the ticket is completed or feedback is needed, create GitLab MR (Merge Request)
 7. After feedback and fixing problems, finish MR and merge changes to master branch
 8. Check the published website <https://cdoc2.pages.ext.cyber.ee/cdoc2-documentation/>
+
+# Publish to GitHub Pages (open-eid.github.io/CDOC2) 
+
+1. Add open-eid remote (if not done already)
+
+   ```
+   git remote add github.com/open-eid git@github.com:open-eid/CDOC2.git
+   git remote -v   
+   ```
+2. [Add your SSH public](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) key to your GitHub account  (if not done already)
+3. Publish to GitHub Pages
+ 
+   ```
+   mike deploy -F cdoc2-system-docs/mkdocs.yml --remote github.com/open-eid --deploy-prefix docs --branch gh-pages --push 1.1
+   mike set-default -F cdoc2-system-docs/mkdocs.yml --remote github.com/open-eid --deploy-prefix docs --branch gh-pages --push 1.1
+   ```
+   , where `1.1` is an arbitrary version
+   
+   Updated site is available at <http://open-eid.github.io/CDOC2>
+   
+   `mike` tool will generate mkdocs HTML site using `mkdocs` tool under directory `docs` and push it to `gh-pages` branch.
+   
+   Generated site files can be viewed https://github.com/open-eid/CDOC2/tree/gh-pages or by running
+   `git checkout gh-pages`
+    
+   CDOC2 Pages [configuration](https://github.com/open-eid/CDOC2/settings/pages) is configured to serve generated documentation from `gh-pages` branch and `docs` directory.
+   More info from [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch) 
+   
+  
