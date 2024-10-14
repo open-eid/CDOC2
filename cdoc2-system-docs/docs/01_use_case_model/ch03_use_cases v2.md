@@ -405,7 +405,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 2a. Recipient chooses to re-encrypt using eID means (e.g., Smart-ID or Mobile-ID):
 
-1. Continues use case UC.Client.03 — Encrypt CDOC2 container using Server Capsules shares.
+1. Continues use case UC.Client.03 — Encrypt CDOC2 container using key shares.
 
 5a. Password does not meet minimum requirements.
 
@@ -441,7 +441,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CDOC2 Capsule Servers. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
 
-### UC.Client.03 — Encrypt CDOC2 container using Server Capsules shares 
+### UC.Client.03 — Encrypt CDOC2 container using key shares 
 
 **Use Case Context**
 : CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient. Key material is divided into shares and uploaded to multiple CCS-s.
@@ -541,7 +541,7 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 1. Client displays Sender a notification.
 2. Use case ends.
 
-### UC.Client.04 — Decrypt CDOC2 Container by authenticating on multiple CDOC2 Capsule Servers
+### UC.Client.04 — Decrypt CDOC2 container using multiserver authentication
 
 **Use Case Context**
 : CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule constructed from shares obtained from multiple CDOC2 Capsule Servers.
