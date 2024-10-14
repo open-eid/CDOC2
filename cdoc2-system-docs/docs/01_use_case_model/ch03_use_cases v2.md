@@ -690,6 +690,10 @@ CDOC2 Client Application
 
 # CDOC2 Capsule Server Use Case Model
 
+## Use cases where CDOC2 Capsule Servers hold the whole Server Capsule
+
+These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. Server Capsule, which can be decrypted only with Recipient's security token, is stored on a single CCS server and must be accessed from there which enables expiration.
+
 ## UC.KTS.01 Forward Capsules
 
 **Context of Use**
@@ -904,6 +908,10 @@ CDOC2 Capsule Server (CCS)
 
 1. Client notifies the Recipient.
 2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
+
+## Use cases with multiple CDOC2 Capsule Servers holding shares of capsules
+
+These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CCS-s. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
 
 # UC.KTS.05 Forward Capsule Shares
 
