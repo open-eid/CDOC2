@@ -2,11 +2,11 @@
 title: 3. Use Case Model - Smart-ID and Mobile-ID
 ---
 
-## Use cases for Recipients to be authenticated by KCTS
+## Use cases for Recipients to be authenticated by CCS
 
-These use cases can be used, when Sender cannot use Recipient's specific public key certificate (because they don't know it or because Recipient's authentication means doesn't support suitable CDOC2 encryption scheme). In this case, Sender uploads the KC to one or multiple KCTS-s. Recipient authenticates to multiple KCTS-s at once and downloads the KC.
+These use cases can be used, when Sender cannot use Recipient's specific public key certificate (because they don't know it or because Recipient's authentication means don't support a suitable CDOC2 encryption scheme). In this case, Sender uploads the KC to one or KC shares to multiple CCS-s. Recipient authenticates to multiple CCS-s at once and downloads the KC shares.
 
-Additional use cases allow Sender to distribute KEK among multiple KCs according to some kind of secret-sharing scheme (<https://en.wikipedia.org/wiki/Secret_sharing>). Sender uploads each KC to different KCTS server. Recipient would need to authenticate to KCTS servers and download KCs and reconstruct KEK from them. With $(t,n)$-threshold secret-sharing schemes, Recipient doesn't need to download all $n$ KCs, in order to reconstruct KEK, but only $t$ KCs.
+Additional use cases allow Sender to distribute KEK among multiple KC-s according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>). Sender uploads each KC to a different CCS server. Recipient would need to authenticate to CCS servers and download KC-s and reconstruct KEK from them. With $(t,n)$-threshold secret-sharing schemes, Recipient doesn't need to download all $n$ KC-s, in order to reconstruct KEK, but only $t$ KC-s.
 
 ### UC.Client.03 — Encrypt CDOC2 container using key shares
 
@@ -24,7 +24,7 @@ TODO!
 
 **Preconditions**
 
-* Client has long-term token to use the required CDOC2 API service.
+* Client has a long-term token to use the required CDOC2 API service.
 * Client has configuration for N CDOC2 servers used to upload KEK shares.
 
 **Success Guarantees**
@@ -73,9 +73,9 @@ Scheme:
 
 10. Sender calculates header hmac using hmac key (HHK) and adds calculated hmac to CDoc
 11. Sender encrypts content with CEK (ChaCha20-Poly1305 with AAD)
-12. Sender sends CDOC2 document to Recipient
+12. Sender sends CDOC2 document to Recipient.
 
-### UC.Client.04 — Decrypt CDOC2 container using multi-server authentication
+### UC.Client.04 — Decrypt CDOC2 container using multiserver authentication
 
 TODO!
 
@@ -83,7 +83,7 @@ TODO!
 
 TODO!
 
-1. Recipient  will enter her _isikukood_ (id-code) and choose Smart-ID decryption method.
+1. Recipient enters ID-code and chooses Smart-ID decryption method.
 1. Recipient searches CDOC header for Smart-ID record with entered id-code.
 1. Recipient downloads Smart-ID certificate from SK LDAP using his id (isikukood).
 1. {--Recipient verifies that certificate serial from LDAP matches with certificate serial from CDOC SID recipient record.--}
@@ -92,7 +92,7 @@ TODO!
 
 1. Recipient creates [signed part of authentication_ticket](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#allkirjastatavate-andmete-koostamine)
     that includes transaction_id and SHA256(nonce) pairs from all servers
-    and signs it with Smart-ID RP-API v2 [/authentication](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session)
+    and signs it with Smart-ID RP API v2 [/authentication](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session)
     endpoint. `hash` parameter is `SHA256(authentication_ticket)`.
 1. Recipient will create [authentication ticket](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#autentimispiletite-koostamine)
     for each CDOC2 server and download matching secret share. CDOC2 server `GET /secret-share/${transactionId}` endpoint
@@ -144,7 +144,7 @@ TODO!
 7. CDOC2 Authentication Server requests the authentication service an identity token providing a client secret inside the request.
 8. CDOC2 Authentication Server receives the identity token and validates its signature, address and expiration time.
 9. Client receives a long-term access token from the CDOC2 Authentication Server.
-10. Client notifies User that the authentication is succesfully completed.
+10. Client notifies User that the authentication is successfully completed.
 
 **Extensions**
 
