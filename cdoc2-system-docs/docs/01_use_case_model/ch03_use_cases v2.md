@@ -403,10 +403,9 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 3. Client verifies the password. If password is not correct, the use case continues from the previous step.
 4. Use case continues from step 7.
 
-2a. Recipient chooses to re-encrypt using Smart-ID or Mobile-ID:
+2a. Recipient chooses to re-encrypt using eID means (e.g., Smart-ID or Mobile-ID):
 
-1. TODO!
-2. Use case continues from step 7.
+1. Continues use case UC.Client.03 — Encrypt CDOC2 container using Server Capsules shares.
 
 5a. Password does not meet minimum requirements.
 
@@ -440,9 +439,9 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 ## Use cases supporting Recipients authenticating to multiple CDOC2 Capsule Servers
 
-These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CCS-s. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
+These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CDOC2 Capsule Servers. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
 
-### UC.Client.01 — Encrypt CDOC2 container and distribute Server Capsules shares 
+### UC.Client.03 — Encrypt CDOC2 container using Server Capsules shares 
 
 **Use Case Context**
 : CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient. Key material is divided into shares and uploaded to multiple CCS-s.
@@ -518,7 +517,7 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 
 6c. The expiration time provided by Client is longer than allowed in the CCS system configuration:
 
-1. CCS returns Client a error message.
+1. CCS returns Client an error message.
 2. Client notifies Sender.
 3. Use case ends.
 
@@ -542,7 +541,7 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 1. Client displays Sender a notification.
 2. Use case ends.
 
-### UC.Client.02 — Decrypt CDOC2 Container by authenticating on multiple CDOC2 Capsule Servers
+### UC.Client.04 — Decrypt CDOC2 Container by authenticating on multiple CDOC2 Capsule Servers
 
 **Use Case Context**
 : CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule constructed from shares obtained from multiple CDOC2 Capsule Servers.
@@ -694,7 +693,7 @@ CDOC2 Client Application
 
 These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. Server Capsule, which can be decrypted only with Recipient's security token, is stored on a single CCS server and must be accessed from there which enables expiration.
 
-## UC.KTS.01 Forward Capsules
+### UC.KTS.01 Forward Capsules
 
 **Context of Use**
 : CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS), which contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application.
@@ -744,7 +743,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.02 Request Capsule
+### UC.KTS.02 Request Capsule
 
 **Context of Use**
 : CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server, which contains an encrypted content encryption key, used for decrypting the archive in CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the transaction code provided by CDOC2 Client Application.
@@ -790,7 +789,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.03 Delete Server Capsules
+### UC.KTS.03 Delete Server Capsules
 
 **Context of Use**
 : System timer deletes expired Server Capsules.
@@ -823,7 +822,7 @@ CDOC2 Capsule Server (CCS)
 
 1. Use case ends.
 
-## UC.KTS.04 Authenticate Recipient
+### UC.KTS.04 Authenticate Recipient
 
 **Context of Use**
 : CDOC2 Client Application (Client) establishes a TLS-connection to CDOC2 Capsule Server and forwards Recipient certificate.
@@ -858,7 +857,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS replies to the Client with an error message.
 2. Use case ends.
 
-## UC.KTS.05 Request To Delete Server Capsule
+### UC.KTS.05 Request To Delete Server Capsule
 
 **Context of Use**
 : Client requests the CSS to delete a server capsule.
@@ -913,7 +912,7 @@ CDOC2 Capsule Server (CCS)
 
 These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CCS-s. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
 
-# UC.KTS.05 Forward Capsule Shares
+### UC.KTS.05 Forward Capsule Shares
 
 **Context of Use**
 : CDOC2 Client Application forwards shares of all Server Capsules to CDOC2 Capsule Servers (CCS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CCS servers. All shares have to be combined in order to construct a capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Server Capsule shares are saved with an expiration time and a unique transaction code is created and returned to the CDOC2 Client Application from each CCS.
@@ -963,7 +962,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-## UC.KTS.06 Request Capsule Shares
+### UC.KTS.06 Request Capsule Shares
 
 **Context of Use**
 : CDOC2 Client Application requests Server Capsule shares from all CDOC2 Capsule Servers. The Server Capsule share is identified by the transaction code provided by CDOC2 Client Application, the CSS server ID and the public key in Recipient certificate.
