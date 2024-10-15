@@ -187,7 +187,7 @@ The Capsule Server described by the ``KeyServerCapsule`` structure (see [table 4
 - *ECCPublicKeyCapsule*: section [ECCPublicKeyCapsule](#eccpublickeycapsule).
 - *RSAPublicKeyCapsule*: section [RSAPublicKeyCapsule](#rsapublickeycapsule).
 
-The details of using *KeyServerCapsule* are described in section [Capsule server](ch04_capsule_server.md#key-server).
+The details of using *KeyServerCapsule* are described in section [Capsule server](../03_system_architecture/ch04_capsule_server.md#key-server).
 
 ### SymmetricKeyCapsule
 
@@ -200,7 +200,7 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 Field | Contents | Encoding
 ----------- | ----------- | -----------
 RecipientKey | Information on recipient key used by the recipient for authentication with the capsule server. | -
-KeyServerID | Capsule server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](ch04_capsule_server.md#server-identification-and-trust).
+KeyServerID | Capsule server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](../03_system_architecture/ch04_capsule_server.md#server-identification-and-trust).
 TransactionID | Transaction identifier | UTF-8 string assigned by the capsule server
 
 #### Table 5. SymmetricKeyCapsule elements

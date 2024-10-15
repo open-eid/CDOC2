@@ -356,7 +356,7 @@ Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 
 Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Authentication signature data format and authentication token details are specified in section [Capsule Server](ch_04_capsule_server.md).
+Authentication signature data format and authentication token details are specified in section [Capsule Server](../03_system_architecture/ch04_capsule_server.md).
 
 ```py linenums="1"
 # Recipient sends `Capsule_i_Share_j_ID` to corresponding CKCTS servers
