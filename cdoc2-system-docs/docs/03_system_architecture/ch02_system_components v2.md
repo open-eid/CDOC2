@@ -17,10 +17,13 @@ Instances run on independent premises.
 
 ## CDOC2 authentication server
 
-Web service to generate CKCTS and SID/MID proxy long-term authentication tokens.
+Web service to generate CCS and SID/MID proxy long-term authentication tokens.
 Long-term authentication tokens are one-time, created once after installing CDOC2 client software.
 Long-term tickets are used to access API only (Bearer-Auth HTTP header), not used for key-material
 retrieval. Uses TARA OpenID Connect to authenticate. Token format is not yet decided.
+
+## Authentication proxy
+A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.
 
 ## CDOC2 CLI user application
 
