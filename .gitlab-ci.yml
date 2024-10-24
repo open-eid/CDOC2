@@ -1,6 +1,3 @@
-variables:
-  DOC_VERSION: 0.2
-
 stages:
   - build
   - test
@@ -39,16 +36,24 @@ test:
       - cdoc2-system-docs/**/*
   allow_failure: true
 
-pages:
+deploy:
   stage: deploy
   image: $CI_REGISTRY_IMAGE
+  before_script:
+    - mkdir ~/.ssh && cp "${GITLAB_CI_KNOWN_HOSTS}" ~/.ssh/known_hosts && cp "${GITLAB_CI_SSH_PRIVATE}" ~/.ssh/id_ed25519
+    - chmod 600 ~/.ssh/id_ed25519
+    - git config user.name "${GIT_COMMITTER_NAME}"
+    - git config user.email "${GIT_COMMITTER_EMAIL}"
   script:
-    - cd cdoc2-system-docs && mike deploy $DOC_VERSION --ignore-remote-status
-  artifacts:
-    paths:
-    - cdoc2-system-docs/site
-  publish: cdoc2-system-docs/site
+    # to export DOC_VERSION in a format of x.y.z
+    - export DOC_VERSION=$(echo $CI_COMMIT_TAG | perl -pe '($_)=/([0-9]+([.][0-9]+)+)/')
+    - git branch -D gh-pages || true
+    - git remote rm cyber || true
+    - git remote add cyber $CDOC2_DOCUMENTATION_GIT || true
+    - git fetch cyber gh-pages:gh-pages || true
+    - mike deploy -F cdoc2-system-docs/mkdocs.yml -r cyber --deploy-prefix docs --branch gh-pages --push $DOC_VERSION --ignore-remote-status
+    - mike set-default -F cdoc2-system-docs/mkdocs.yml -r cyber --deploy-prefix docs --branch gh-pages --push $DOC_DEFAULT_VERSION --ignore-remote-status
   rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: 
-      - cdoc2-system-docs/**/*
+    - if: '$CI_COMMIT_TAG =~ /^v/'
+      when: always
+    - when: never
