@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+pages: 
+  stage: deploy
+  artifacts:
+    paths:
+      - docs
+  publish: docs
+  script: ls -la docs
