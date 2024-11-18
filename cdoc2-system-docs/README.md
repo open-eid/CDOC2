@@ -132,4 +132,4 @@ Finally, push the local tag to remote:
 
 When user navigates to the documentation URL, they are automatically redirected to a specific version of the docs.
 
-Default version is managed by CI/CD variable `DOC_DEFAULT_VERSION`. To change the default version please change `DOC_DEFAULT_VERSION` variable before publishing a new tag [under CI settings](https://gitlab.ext.cyber.ee/cdoc2/cdoc2-documentation/-/settings/ci_cd). It has to start with letter `v`, for example `v2.0`.
+Default version is managed by CI/CD variable `DOC_DEFAULT_VERSION`. To change the default version please change `DOC_DEFAULT_VERSION` variable before publishing a new tag [under CI settings](https://gitlab.ext.cyber.ee/cdoc2/cdoc2-documentation/-/settings/ci_cd). It has to start with a number and not letter `v`, for example `2.0`!
