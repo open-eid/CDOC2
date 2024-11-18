@@ -95,7 +95,7 @@ Known fields are defined in Appendix: [KeyLabel field specification v1](appendix
 
 Machine-readable `KeyLabel` examples:
 
-- `data:v=1&type=ID-card&serial_number=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
+- `data:,v=1&type=ID-card&serial_number=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
 - `data:application/x-www-form-urlencoded,v=1&type=ID-card&serial_number=PNOEE-38001085718&cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718`
 - `data:application/x-www-form-urlencoded;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4`
 - `data:;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4`
@@ -194,10 +194,10 @@ The envelope consists of the following data elements, presented sequentially as 
 Table 1 presents an overview of the envelope structure.
 Table 1. Envelope structure
 
-| Field | “CDOC” | Version | Header length | Header | HMAC | Payload |
-| ------------ | ------------- | ------------ | ------------ | ------------- | ------------ | ------------ |
-| Length | 4 | 1 | 4 | Header length | 32 | Until end of envelope |
-| Start | 1 | 5 | 6 | 10 | 10 + header length | 10 + header length + 32 |
+| Field  | “CDOC” | Version | Header length | Header        | HMAC               | Payload                 |
+|--------|--------|---------|---------------|---------------|--------------------|-------------------------|
+| Length | 4      | 1       | 4             | Header length | 32                 | Until end of envelope   |
+| Start  | 1      | 5       | 6             | 10            | 10 + header length | 10 + header length + 32 |
 
 ### Header and HMAC
 
