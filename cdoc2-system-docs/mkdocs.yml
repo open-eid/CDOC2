@@ -8,6 +8,7 @@ theme:
     - navigation.expand
     - content.tooltips
     - toc.follow
+  
 #    - toc.integrate
 # toc.integrate moves right-hand-side chapter-toc into the left-side nav-toc
 
@@ -24,6 +25,8 @@ theme:
 
 extra:
   generator: false
+  version:
+    provider: mike
 
 plugins:
   - search
