@@ -38,8 +38,6 @@ The specification describes:
 
 * `CCS` - CDOC2 Capsule Server
 
-* `CDOC2 authentication server` - Web service to generate access tokens for CKCTS and RIA SID/MID proxy
-
 * `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
 * `hardware security token` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys
