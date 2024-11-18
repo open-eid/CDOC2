@@ -101,4 +101,8 @@ It is possible to build the documentation using Python utilities `mike` and `mkd
    CDOC2 Pages [configuration](https://github.com/open-eid/CDOC2/settings/pages) is configured to serve generated documentation from `gh-pages` branch and `docs` directory.
    More info from [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch) 
    
-  
+# Publish to Gitlab Pages (https://cdoc2.pages.ext.cyber.ee/cdoc2-documentation)
+
+  Gitlab-CI handles publishing Gitlab Pages
+
+  Default version is managed by CI/CD variable `DOC_DEFAULT_VERSION`. To change the default version please change `DOC_DEFAULT_VERSION` variable before publishing a new tag.

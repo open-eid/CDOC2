@@ -140,7 +140,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 8c. The expiration time provided by Client is longer than allowed in the CCS system configuration:
 
-1. CCS returns Client a error message.
+1. CCS returns Client an error message.
 2. Client notifies Sender.
 3. Use case ends.
 
@@ -399,7 +399,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 3. Client verifies the password. If password is not correct, the use case continues from the previous step.
 4. Use case continues from step 7.
 
-2a. Recipient chooses to re-encrypt using eID means (e.g., Smart-ID or Mobile-ID):
+2b. Recipient chooses to re-encrypt using eID means (e.g., Smart-ID or Mobile-ID):
 
 1. Continues use case UC.Client.03 — Encrypt CDOC2 container using key shares.
 
