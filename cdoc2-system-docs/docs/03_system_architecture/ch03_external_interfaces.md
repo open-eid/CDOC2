@@ -3,17 +3,36 @@ title: 4. External components and services
 ---
 # External components and services
 
-This section will describe, how CDOC2 system is using external components and services.
+This section will describe, how CDOC2 system is using external components and services
 
-## TARA authentication service
+## MID/SID authentication proxy
 
-OpenID Connect for E-ID supported methods (Smart-ID/Mobile-ID/id-card/others)
+Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
-(<https://e-gov.github.io/TARA-Doku/TechnicalSpecification>)
+## Smart-ID RP API
 
-* Authentication request [/authorize](https://e-gov.github.io/TARA-Doku/TechnicalSpecification#41-authentication-request)
+Relaying Party API is used to start authentication with Smart-ID accessed through MID/SID authentication proxy
+
+* [/authentication](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session)
+  Starts authentication with Smart-ID
+* [/session](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#2311-session-status)
+  Poll authentication status
+
+## Mobile-ID REST API
+
+TODO
 
 ## LDAP and OCSP servers
 
-* LDAP: [SK public directory service](https://www.skidsolutions.eu/resources/ldap/)
+* LDAP: (<https://www.skidsolutions.eu/resources/ldap/>)
 * OCSP: SK validity confirmation service is described [here](https://github.com/SK-EID/ocsp/wiki) and [here](http://open-eid.github.io/#_comp_central_conf_server_interfaces).
+
+## Smart-ID app
+
+Enables to authenticate and sign using Smart-ID. Installed on user smartphone.
+
+(<https://www.smart-id.com/et/laadi-alla/>)
+
+## Mobile-ID SIM application
+
+TODO
