@@ -122,7 +122,7 @@ To create the tag and add it to a commit, use the following command:
 If the desired commit is the last one, the commit hash can be skipped:
 `git tag <tagname>` e.g., `git tag v2.0`
 
-Important! Tag names have to start with `v`, for example `v2.0`. They can be also longer and include an explanation after the number.
+Important! Tag names have to start with `v`, for example `v2.0`. They can be also longer and include additional data, e.g., `v2.0.0-rc.0`.
 
 Finally, push the local tag to remote:
 
