@@ -1,42 +1,58 @@
-# Appendix D: Keylabel field specificiation version 1
+# Appendix D: KeyLabel field specification
 
-KeyLabel field specification version 1 lists the following fields.
+`KeyLabel` field specification lists the following fields.
 
-**Note!** This is work in progress and additional values may be added!
-**Note!** V1 doesn't support key managers yet, these may be added once implementation is added.
+Implementers may define their own vendor-specific field specification, but it's recommended to share it publicly.
 
-Implementers may define their own vendor-specific field specification, but its recommended to share it publically.
+## Versioning
 
-## eID
+In current specification `type` and `v` fields are required, rest of fields are `type` specific. 
+`type` and `v` together define a KeyLabel type.
 
-| field         | description                                              | example                          | required |
-|---------------|----------------------------------------------------------|----------------------------------|----------|
-| v             | Version                                                  | 1                                | X        |
-| type          | eID type: `ID-card` or `Digi-ID` or `Digi-ID E-RESIDENT` | ID-card                          | X        |
-| cn            | Recipient common name as it is appears in certificate    | JÕEORG,JAAK-KRISTJAN,38001085718 | X        |
-| serial_number | SerialNumber as it appears in LDAP server                | PNOEE-38001085718                | X        |
-| last_name     | Recipient last name                                      | Jõeorg                           |          |
-| first_name    | Recipient first name                                     | Jaak-Kristjan                    |          |
+`v` describes type version. Version should only increase when there are breaking
+changes to type (basically define a new type). Adding/removing optional fields doesn't increase the version.
 
-## Certificate from file (type=cert)
+Required fields are required only for UI. When `KeyLabel` parsing fails, then CDOC2 decryption should 
+still succeed as required fields for decryption are in `FlatBuffers` structure.
 
-| field     | description                     | example                                  | required |
-|-----------|---------------------------------|------------------------------------------|----------|
-| v         | Version                         | 1                                        | X        |
-| type      | Certificate from file           | cert                                     | X        |
-| file      | Recipient x509 certificate file | 37101010021_cert.pem                     |          |
-| cn        | Common Name from certificate    | ŽAIKOVSKI,IGOR,37101010021               |          |
-| cert_sha1 | Certificate SHA1 Fingerprint    | 7F193CBFFA6A8D52C710FE961077817567449C59 |          |
+Exception to this (decryption should succeed without `KeyLabel`) is symmetric key, when there is more 
+than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between 
+symmetric key recipients). 
+ 
 
-## Public key from file (type=pub_key)
+## eID v1
 
-| field     | description           | example     | required |
-|-----------|-----------------------|-------------|----------|
-| v         | Version               | 1           | X        |
-| type      | Public key from file  | pub_key     | X        |
-| file      | Public key input file | bob_pub.pem |          |
+| field         | description                                                       | example                          | required | comments       |
+|---------------|-------------------------------------------------------------------|----------------------------------|----------|----------------|
+| v             | Version                                                           | 1                                | X        |                |
+| type          | eID type: `ID-card` or `Digi-ID` or `Digi-ID E-RESIDENT`          | ID-card                          | X        |                |
+| cn            | Recipient common name as it is appears in certificate             | JÕEORG,JAAK-KRISTJAN,38001085718 | X        |                |
+| serial_number | SerialNumber as it appears in LDAP server                         | PNOEE-38001085718                | X        |                |
+| last_name     | Recipient last name                                               | Jõeorg                           |          |                |
+| first_name    | Recipient first name                                              | Jaak-Kristjan                    |          |                |
+| server_exp    | Set expiration date in capsule server as Unix timestamp (seconds) | 1730992802                       |          | Added 18.11.24 |
 
-## Symmetric key (type=secret)
+## Certificate from file v1 (type=cert)
+
+| field      | description                                                       | example                                  | required | comments       |
+|------------|-------------------------------------------------------------------|------------------------------------------|----------|----------------|
+| v          | Version                                                           | 1                                        | X        |                |
+| type       | Certificate from file                                             | cert                                     | X        |                |
+| file       | Recipient x509 certificate file                                   | 37101010021_cert.pem                     |          |                |
+| cn         | Common Name from certificate                                      | ŽAIKOVSKI,IGOR,37101010021               |          |                |
+| cert_sha1  | Certificate SHA1 Fingerprint                                      | 7F193CBFFA6A8D52C710FE961077817567449C59 |          |                |
+| server_exp | Set expiration date in capsule server as Unix timestamp (seconds) | 1730992802                               |          | Added 18.11.24 |
+
+## Public key from file v1 (type=pub_key)
+
+| field | description                                                           | example          | required | comments         |
+|-------|-----------------------------------------------------------------------|------------------|----------|------------------|
+| v     | Version                                                               | 1                | X        |                  |
+| type  | Public key from file                                                  | pub_key          | X        |                  |
+| file  | Public key input file                                                 | bob_pub.pem      |          |                  |
+| label | label to identify public key from other keys, user-given or generated | file:bob_pub.pem |          | Addeded 18.11.24 |
+
+## Symmetric key v1 (type=secret)
 
 | field | description                                                              | example     | required |
 |-------|--------------------------------------------------------------------------|-------------|----------|
@@ -45,7 +61,7 @@ Implementers may define their own vendor-specific field specification, but its r
 | label | label to identify symmetric key from other keys, user-given or generated | yHqkRsP3kbQ | X        |
 | file  |                                                                          |             |          |
 
-## Password (type=pw)
+## Password v1 (type=pw)
 
 | field | description                                                              | example | required |
 |-------|--------------------------------------------------------------------------|---------|----------|
@@ -53,12 +69,10 @@ Implementers may define their own vendor-specific field specification, but its r
 | type  | user-given password                                                      | pw      | X        |
 | label | label to identify password from other passwords, user-given or generated | Arno    | X        |
 
-## Smart-ID/Mobile-ID (type=auth&v=2)
+## Smart-ID/Mobile-ID v1 (type=auth)
 
-Not supported by version 1, but version 2 Draft
-
-| field | description                | example                | required | from |
-|-------|----------------------------|------------------------|----------|------|
-| v     | Version                    | 2                      | X        | 2    |
-| type  | Smart-ID/Mobile-ID         | auth                   | X        | 2    |
-| pno   | (National) personal number | ETSI:PNOEE-48010010101 | X        | 2    |
+| field | description                | example                | required |
+|-------|----------------------------|------------------------|----------|
+| v     | Version                    | 1                      | X        |
+| type  | Smart-ID/Mobile-ID         | auth                   | X        |
+| pno   | (National) personal number | ETSI:PNOEE-48010010101 | X        |

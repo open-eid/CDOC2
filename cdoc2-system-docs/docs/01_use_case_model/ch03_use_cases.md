@@ -11,6 +11,7 @@ CDOC2 Client Application is an abstract component in the CDOC2 System. CDOC2 Cli
 * CDOC2 Client CLI Application
 
 Use cases specified here are written in a generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
+Use cases specified here are written in a generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
 
 ## Actors
 
@@ -65,6 +66,9 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 **Primary Actor**
 : Sender
+
+**Preconditions**
+: Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
 
@@ -181,6 +185,7 @@ CDOC2 Client Application
 **Preconditions**
 
 * Recipient's security token is connected.
+* Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
 
@@ -759,6 +764,9 @@ CDOC2 Capsule Server (CCS)
 **Primary Actor**
 : CDOC2 Client Application (Client)
 
+**Preconditions**
+: Client has a long-term access token from CDOC2 authentication server.
+
 **Success guarantees**
 
 * TLS-connection is established.
@@ -826,6 +834,7 @@ CDOC2 Capsule Server (CCS)
 4a. Establishing a connection to the CCS fails:
 
 1. Client notifies the Recipient.
+2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
 2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
 
 ## Use cases with multiple CDOC2 Capsule Servers holding shares of capsules
