@@ -8,28 +8,28 @@ This section describes a protocol and data formats for authenticating to multipl
 
 ## Authentication protocol requirements
 
-1. Multiple CCSs hold Capsules, which need to be downloaded by Client.
-2. Client need to authenticate to multiple CCSs, in order to download all Capsules.
-3. Client can only create one signature with its authentication means (ID-card, Mobile-ID, Smart-ID)
+1. Multiple CCSs hold Capsules, which all need to be downloaded by Client.
+2. Client needs to authenticate to multiple CCSs, in order to download all Capsules.
+3. Client should only need to create one signature with its authentication means (ID-card, Mobile-ID, Smart-ID) for authentication.
 4. CCS must not be able to replay the authentication ticket to another CCS.
 
 ## Non-suitable alternatives
 
 Before designing a custom authentication protocol, we should make sure that this is really needed and we cannot re-use existing protocols. Existing protocols may already have proven security properties and they might be well supported by existing software libraries.
 
-For example, traditionally, authentication and authorization requirements are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust.
+For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map the mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CCSs), it becomes cumbersome.
 
-If try to apply them to our situation and we try to map the mandatory roles from OpenID Connect and OAuth2 ecosystems our components (Client, CCSs), it becomes cumbersome.
+First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is tricky. This is usually handled by single-sign-on services. There's such a service called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CCS would be accepting such `id_tokens`, there's no cryptographic guarantee that the user's authentication has actually taken place and that the user's eID means was actually involved. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download all KeyShares on behalf of any user.
 
-First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is tricky. This is usually handled by single-sign-on services. There's such a service called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications and it is using a generic OpenID Connect protocol without connecting the issued `id_tokens` with user's authentication signatures. In case CCS would be accepting such `id_tokens`, there's no cryptographic guarantee that the user's authentication has actually taken place and that the user's eID means was actually involved. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download all KeyShares on behalf of any user.
-
-Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens and this would mean that CCS server can re-use the token and replay it to another CCS server. There are also things called "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create a central trusted component which would hand out those access tokens. That kind of component would be single source of failure and in case the security of such component would be breached, it would be able to download all KeyShares on behalf of any user.
+Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens and this would mean that CCS server can re-use the token and replay it to another CCS server. Possibility to replay tokens might be overcome with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create a central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download all KeyShares on behalf of any user.
 
 Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment. More tailored approach would be needed to come up with authentication protocol, that would satisfy all the requirements and would depend only on the eID authentication means or eID trust service providers.
 
-## Overview
+## Overview of the generic authentication protocol
 
-Recipient steps for downloading the Capsule information from servers is displayed in sequence diagram below:
+In the generalized form, the authentication protocol for downloading a Capsule information from servers can be explained with the following sequence diagram below.
+
+This is just an abstract overview of the authentication protocol. In the next sections, we describe what kind of data is used as the authentication data, how the eID means signing function is used and how only a minimal set of authentication data is revealed to each CCS server, in order to prevent replay.
 
 ```plantuml
 @startuml
@@ -40,6 +40,7 @@ autonumber
 
 box "User"
 Actor Recipient as R
+participant Client as C
 participant Authenticator as A
 end box
 
@@ -51,37 +52,44 @@ box "Trust infrastructure"
 participant "PKI/OCSP" as PKI
 end box
 
-R -> R: Read list of TXs from Container
+R -> C: Decrypt Container
+C -> C: Read list of TXs from Container
 loop for each Capsule Server
-    R -> S: Authentication request for TX_ID
-    S --> R: Nonce for TX_ID
+    C -> S: Authentication request for TX_ID
+    S --> C: Nonce for TX_ID
 end
-R -> R: Create authentication signature data
-R -> A: Create authentication signature
-A --> R: Authentication signature
+C -> C: Create \n authentication signature data
+C -> A: Create signature on \n authentication data
+A -> R: Authorize eID usage
+R -> A: Authorized
+A --> C: Authentication signature
 loop for each Capsule Server
-    R -> R: Create authentication token specific for server
-    R -> S: Present token with authentication signature \n and request Capsule
-    S -> PKI: Recipient certificate not revoked?
-    PKI --> S: Recipient certificate is good
+    C -> C: Create authentication token \n specific for a server
+    C -> S: Present token with \n authentication signature \n and request Capsule
+    S -> PKI: Recipient's certificate \n not revoked?
+    PKI --> S: Recipient's certificate \n is valid
     S -> S: AuthN: Verify authentication token \n and authentication signature
     S -> S: AuthZ: Verify that Recipient is \n allowed to download Capsule
-    S --> R: Capsule
+    S --> C: Capsule
 end
 @enduml
 ```
 
-## Authentication data
+## SD-JWT based CDOC2 authentication protocol
 
-In our protocol, the client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
+In this section the details of the authentication protocol are explained.
+
+### Authentication data
+
+In the generic protocol, there's a idea that Client signs a set of information, which expresses the proof of Recipient's identity and intent to download specific Capsule information. We will use the JWT standard (https://www.rfc-editor.org/rfc/rfc7519.html). Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
     "CDOC2_token_type": "CTS authentication token v0.1",
     "iss": "etsi/PNOEE-48010010101",
     "aud": [ 
-            "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3/nonce/59b314d4815f21f73a0b9168cecbd5773cc694b6", 
-            "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E/nonce/9d23660840b427f405009d970d269770417bc769"
+            "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
+            "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
         ],
     "iat": "1728995131",
     "exp": "1728995191"
@@ -106,9 +114,9 @@ It contains following sections, separated by periods ("."):
 
 It is not possible to modify the JWT claims anymore and to leave out some values from the "aud" claim, in order to not reveal the nonce values to some CCS servers and to prevent the replay possibility.
 
-## Intro to SD-JWT standard
+### Intro to SD-JWT standard
 
-SD-JWT standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) _defines a mechanism for selective disclosure of individual elements of a JSON object used as the payload of a JSON Web Signature (JWS) structure_. It assumes a ecosystem with following entities:
+SD-JWT standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object used as the payload of a JSON Web Signature (JWS) structure. It assumes a ecosystem with following entities:
 
 1. SD-JWT is created by an entity called _Issuer_. Issuer decides, what claims are included in SD-JWT and which claims are individually disclosable. Issuer signs the SD-JWT with its key pair and this way secures the SD-JWT against modifications.
 2. SD-JWT is received from Issuer by entity called _Holder_. Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which one it wishes to keep secret.
@@ -121,9 +129,9 @@ We are mapping those SD-JWT-specific entities to CDOC2 world in the following wa
 3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CCS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
 4. Role of SD-JWT Verifier is performed by CCS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
-## SD-JWT and selective disclosures
+### SD-JWT and selective disclosures
 
-How does this "selective disclosure" magic actually work behind the scenes? The idea is that Issuer will create special kind of `SD-CLAIMS` data items in the ordinary JWT, which are:
+How does this "selective disclosure" feature actually work behind the scenes? The idea is that Issuer will create special kind of `SD-CLAIMS` data items in the ordinary JWT, which are:
 
 ```text
 SD-CLAIMS = (
@@ -131,9 +139,9 @@ SD-CLAIMS = (
 )*
 ```
 
-where `SALT` is a random salt. This kind of operation effectively "hides" the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if he is provided with the salt and clear-text claim value. Such kind of `SD-CLAIMS` are included in the standard JWT structure, in a special structure, within claim name `_sd`.
+where `SALT` is a random salt. This kind of operation effectively "hides" the content of the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if he is provided with the salt and clear-text claim value. Such kind of `SD-CLAIMS` are included in the JWT structure, in a special claim with name `_sd`.
 
-In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES`, which are:
+In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES` data items, which are:
 
 ```text
 SD-RELEASES = (
@@ -141,7 +149,7 @@ SD-RELEASES = (
 )
 ```
 
-and include such info in a special structure in the JWT, with claim name `sd_release`. So, for example, if the original set of claims are following:
+and include such info in the JWT, in a special claim with name `sd_release`. So, for example, if the original set of claims are following:
 
 ```json
 {
@@ -151,7 +159,7 @@ and include such info in a special structure in the JWT, with claim name `sd_rel
 }
 ```
 
-Let's say that the Issuer wishes to make claim `given_name` disclosable. It generates a random salt and computes digest value from `SHA-256("eluV5Og3gSNII8EYnsxA_A" + "John")` and includes this value in `_sd` structure:
+Let's say that the Issuer wishes to make claim `given_name` disclosable. It generates a random salt and computes digest value from `SHA-256("eluV5Og3gSNII8EYnsxA_A" + "John")` and includes such `SD_CLAIM` data item in the `_sd` claim:
 
 ```json
 {
@@ -169,7 +177,7 @@ This JOSE is then signed as `<JWT_payload` and following JWT is created:
 <JWT_header>.<JWT_payload>.<JWT_signature>
 ```
 
-However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container is also added:
+However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container, which is simply a JSON array of `SD-RELEASES` data items, is also added:
 
 ```json
 { 
@@ -187,7 +195,9 @@ and it is encoded in Base64 and added to the original encoded JWT, after yet ano
 
 Now, Holder can decide which disclosable claim information from the Salt/Value Container it will include, when creating a presentation to Verifier, and which it removes. The signature of the original JWT is still valid, because original JWT will be unchanged.
 
-## Creating SD-JWT structure (authentication data and authentication signature)
+### Creating SD-JWT structure (authentication data and authentication signature)
+
+Applying SD-JWT data structure to the CDOC2 authentication protocol situation, we will reach the following specification:
 
 1. Client creates an SD-JWT with following example header:
 
@@ -198,7 +208,9 @@ Now, Holder can decide which disclosable claim information from the Salt/Value C
 }
 ```
 
-2. and initialises empty SD-JWT payload structure and adds always-disclosed claims with following example values to SD-JWT payload. Note that the `aud` claim contains only empty array at the moment.
+The values for the "alg" claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, the ID-card produces signatures with ES256 algorithm, Smart-ID produces signatures with RS256 algorithm.
+
+2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. Examples is provided here. Note that the `aud` claim contains only empty array at the moment.
 
 ```json
 {
@@ -213,14 +225,14 @@ Now, Holder can decide which disclosable claim information from the Salt/Value C
 
 ```json
 [
-    "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3/nonce/59b314d4815f21f73a0b9168cecbd5773cc694b6", 
-    "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E/nonce/9d23660840b427f405009d970d269770417bc769"
+    "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
+    "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
 ]
 ```
 
 4. Client signs the SD-JWT structure as SD-JWT Issuer with the user's authentication means.
 
-## Presenting SD-JWT (creating authentication ticket)
+### Presenting SD-JWT (creating authentication ticket)
 
 For each server, Client creates SD-JWT presentation and discloses only that `aud` array element, which contains the `key-share` and `nonce`, which is specific to that server.
 
@@ -276,14 +288,9 @@ if we decode the individual parts, we get the following pieces.
 ```json
 [
     "k-4EaZpAg-17QnMfOwMbOw",
-    "shareAccessData",
+    "aud",
     [
-        {
-            "...": "EEs_5efYCyYSch0ze2JgUlWEiIXsq6bsZ8QqAvyjeuM"
-        },
-        {
-            "...": "F_-6nsDCOCoJcNKfa87VgAMTTs87KF3zYysmJgC1wrE"
-        }
+        ...
     ]
 ]
 ```
@@ -294,22 +301,20 @@ if we decode the individual parts, we get the following pieces.
 [
     "LQ3tyLN4vUl4EjDtzGfEQg",
     {
-        "serverBaseURL": "https://cdoc-ccs.ria.ee:443/key-shares/",
-        "serverNonce": "42",
-        "shareId": "9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3"
+        ...
     }
 ]
 ```
 
-## Verifying SD-JWT (verifying authentication ticket)
+### Verifying SD-JWT (verifying authentication ticket)
 
 CCS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~`) and performs following authentication and authorization checks:
 
-1. Verify that SD-JWT is signed by the key pair, whose public key is included in the certificate, presented in the API method "GET /key-shares/{shareId}" parameter "X-Auth-x5c".
+1. Verify that SD-JWT is signed by the key pair, whose public key is included in the certificate, which is transmitted in the API method "GET /key-shares/{shareId}" parameter "X-Auth-x5c".
 2. Verify that certificate is issued by trustworthy CA.
 3. Verify that certificate is valid at current point of time and is not revoked.
 4. Verify that SD-JWT contains claim `aud`, which is an array, which contains exactly one JSON string.
-5. Parse the `aud` value (something like "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3/nonce/59b314d4815f21f73a0b9168cecbd5773cc694b6") into components `serverBaseURL`, `key-share` and `nonce`.
+5. Parse the `aud` value (something like "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6") into components `serverBaseURL`, `key-share` and `nonce`.
 6. Verify that `serverBaseURL` is correct for this CCS server.
 7. Verify that this CCS server has a Capsule with identifier `key-share` and it is not expired or deleted.
 8. Verify that this CCS server has previously generated a nonce for this `key-share` and the stored nonce value matches with `nonce` component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds)
