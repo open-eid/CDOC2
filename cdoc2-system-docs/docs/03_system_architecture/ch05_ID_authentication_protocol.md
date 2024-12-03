@@ -4,24 +4,24 @@ title: ID authentication protocol
 
 # ID authentication protocol
 
-This section describes a protocol and data formats for authenticating to multiple CCS servers in order to download every `KeySharesCapsule` from them.
+This section describes a protocol and data formats for authenticating to multiple CSS servers (cdoc2-shares-servers) in order to download every `KeySharesCapsule` from them.
 
 ## Authentication protocol requirements
 
-1. Multiple CCSs hold Capsules, which all need to be downloaded by Client.
-2. Client needs to authenticate to multiple CCSs, in order to download all Capsules.
+1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
+2. Client needs to authenticate to multiple CSSs, in order to download all Capsules.
 3. Client should only need to create one signature with its authentication means (ID-card, Mobile-ID, Smart-ID) for authentication.
-4. CCS must not be able to replay the authentication ticket to another CCS.
+4. CSS must not be able to replay the authentication ticket to another CSS.
 
 ## Non-suitable alternatives
 
 Before designing a custom authentication protocol, we should make sure that this is really needed and we cannot re-use existing protocols. Existing protocols may already have proven security properties and they might be well supported by existing software libraries.
 
-For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map the mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CCSs), it becomes cumbersome.
+For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map the mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CSSs), it becomes cumbersome.
 
-First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is tricky. This is usually handled by single-sign-on services. There's such a service called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CCS would be accepting such `id_tokens`, there's no cryptographic guarantee that the user's authentication has actually taken place and that the user's eID means was actually involved. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download all KeyShares on behalf of any user.
+First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is tricky. This is usually handled by single-sign-on services. There's such a service called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic guarantee that the user's authentication has actually taken place and that the user's eID means was actually involved. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download all KeyShares on behalf of any user.
 
-Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens and this would mean that CCS server can re-use the token and replay it to another CCS server. Possibility to replay tokens might be overcome with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create a central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download all KeyShares on behalf of any user.
+Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens and this would mean that CSS server can re-use the token and replay it to another CSS server. Possibility to replay tokens might be overcome with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create a central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download all KeyShares on behalf of any user.
 
 Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment. More tailored approach would be needed to come up with authentication protocol, that would satisfy all the requirements and would depend only on the eID authentication means or eID trust service providers.
 
@@ -29,7 +29,7 @@ Therefore, introducing additional trusted components to the CDOC2 ecosystem is n
 
 In the generalized form, the authentication protocol for downloading a Capsule information from servers can be explained with the following sequence diagram below.
 
-This is just an abstract overview of the authentication protocol. In the next sections, we describe what kind of data is used as the authentication data, how the eID means signing function is used and how only a minimal set of authentication data is revealed to each CCS server, in order to prevent replay.
+This is just an abstract overview of the authentication protocol. In the next sections, we describe what kind of data is used as the authentication data, how the eID means signing function is used and how only a minimal set of authentication data is revealed to each CSS server, in order to prevent replay.
 
 ```plantuml
 @startuml
@@ -44,8 +44,8 @@ participant Client as C
 participant Authenticator as A
 end box
 
-box "Capsule Servers"
-collections Server as S
+box "cdoc2-shares-servers (CSSs)"
+collections CCS as S
 end box
 
 box "Trust infrastructure"
@@ -53,18 +53,18 @@ participant "PKI/OCSP" as PKI
 end box
 
 R -> C: Decrypt Container
-C -> C: Read list of TXs from Container
-loop for each Capsule Server
-    C -> S: Authentication request for TX_ID
-    S --> C: Nonce for TX_ID
+C -> C: Read information about \n Capsules from Container
+loop for each CSS
+    C -> S: Authentication request for shareId of Capsule
+    S --> C: Nonce for shareId
 end
 C -> C: Create \n authentication signature data
 C -> A: Create signature on \n authentication data
-A -> R: Authorize eID usage
+A -> R: Authorize eID use for signature generation
 R -> A: Authorized
 A --> C: Authentication signature
-loop for each Capsule Server
-    C -> C: Create authentication token \n specific for a server
+loop for each CSS
+    C -> C: Create authentication token \n specific for a CSS server
     C -> S: Present token with \n authentication signature \n and request Capsule
     S -> PKI: Recipient's certificate \n not revoked?
     PKI --> S: Recipient's certificate \n is valid
@@ -85,14 +85,11 @@ In the generic protocol, there's a idea that Client signs a set of information, 
 
 ```json
 {
-    "CDOC2_token_type": "CTS authentication token v0.1",
     "iss": "etsi/PNOEE-48010010101",
     "aud": [ 
-            "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
-            "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
-        ],
-    "iat": "1728995131",
-    "exp": "1728995191"
+            "https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
+            "https://CSS.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
+        ]
 }
 ```
 
@@ -112,7 +109,7 @@ It contains following sections, separated by periods ("."):
 2. second section is base64-encoded JWT claims
 3. third section is base64-encoded signature value
 
-It is not possible to modify the JWT claims anymore and to leave out some values from the "aud" claim, in order to not reveal the nonce values to some CCS servers and to prevent the replay possibility.
+It is not possible to modify the JWT claims anymore and to leave out some values from the "aud" claim, in order to not reveal the nonce values to some CSS servers and to prevent the replay possibility.
 
 ### Intro to SD-JWT standard
 
@@ -126,8 +123,8 @@ We are mapping those SD-JWT-specific entities to CDOC2 world in the following wa
 
 1. SD-JWT data structure is used as both CDOC2 authentication data and CDOC2 authentication signature. In other words, information that is used to create authentication data and authentication signature, is expressed (encoded) as SD-JWT structure. Authentication signature corresponds to Issuer signature.
 2. SD-JWT presentation with selectively disclosed claims is used as server-specific CDOC2 authentication ticket.
-3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CCS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
-4. Role of SD-JWT Verifier is performed by CCS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
+3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates the SD-JWT structure, specifies that some claims are disclosable and later creates specific presentations to each CSS server. SD-JWT standard optionally supports the scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify this key binding during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
+4. Role of SD-JWT Verifier is performed by CSS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
 ### SD-JWT and selective disclosures
 
@@ -203,8 +200,9 @@ Applying SD-JWT data structure to the CDOC2 authentication protocol situation, w
 
 ```json
 {
-    "typ": "vnd.cdoc2.CCS-auth-token.v1+sd-jwt",
-    "alg": "ES256"
+    "typ": "vnd.cdoc2.auth-token.v1+sd-jwt",
+    "alg": "ES256",
+    "kid": "PNOEE-48010010101"
 }
 ```
 
@@ -215,18 +213,16 @@ The values for the "alg" claim depend on the signature algorithm that the user's
 ```json
 {
     "aud": [],
-    "iss": "etsi/PNOEE-48010010101",
-    "iat": "1715694253",
-    "exp": "1715694293"
+    "iss": "etsi/PNOEE-48010010101"
 }
 ```
 
-3. Client adds disclosable JSON strings to the array `aud` for each CCS server. For example, the `aud` claim may contain following StringOrURI values:
+3. Client adds disclosable JSON strings to the array `aud` for each CSS server. For example, the `aud` claim may contain following StringOrURI values:
 
 ```json
 [
-    "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
-    "https://ccs.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
+    "https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6", 
+    "https://CSS.example-org2.ee:443/key-shares/5BAE4603-C33C-4425-B301-125F2ACF9B1E?nonce=9d23660840b427f405009d970d269770417bc769"
 ]
 ```
 
@@ -260,7 +256,7 @@ if we decode the individual parts, we get the following pieces.
 ```json
 {
     "alg": "ES256",
-    "typ": "vnd.cdoc2.CCS-auth-token.v1+sd-jwt",
+    "typ": "vnd.cdoc2.auth-token.v1+sd-jwt",
 }
 ```
 
@@ -271,9 +267,7 @@ if we decode the individual parts, we get the following pieces.
     "_sd": [
         "1STjFlBH6jmF270Ify2StXnMzZ2TDrIKJX5By65gv-4"
     ],
-    "_sd_alg": "sha-256",
-    "exp": "1715694263",
-    "iat": "1715694253"
+    "_sd_alg": "sha-256"
 }
 ```
 
@@ -308,16 +302,16 @@ if we decode the individual parts, we get the following pieces.
 
 ### Verifying SD-JWT (verifying authentication ticket)
 
-CCS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~`) and performs following authentication and authorization checks:
+CSS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~`) and performs following authentication and authorization checks:
 
-1. Verify that SD-JWT is signed by the key pair, whose public key is included in the certificate, which is transmitted in the API method "GET /key-shares/{shareId}" parameter "X-Auth-x5c".
+1. Verify that SD-JWT is signed by the key pair, whose public key is included in the X.509 certificate, which is transmitted in the API method "GET /key-shares/{shareId}" parameter "x-cdoc2-auth-x5c".
 2. Verify that certificate is issued by trustworthy CA.
 3. Verify that certificate is valid at current point of time and is not revoked.
 4. Verify that SD-JWT contains claim `aud`, which is an array, which contains exactly one JSON string.
-5. Parse the `aud` value (something like "https://ccs.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6") into components `serverBaseURL`, `key-share` and `nonce`.
-6. Verify that `serverBaseURL` is correct for this CCS server.
-7. Verify that this CCS server has a Capsule with identifier `key-share` and it is not expired or deleted.
-8. Verify that this CCS server has previously generated a nonce for this `key-share` and the stored nonce value matches with `nonce` component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds)
-9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subject` from the X.509 certificate.
+5. Parse the `aud` value (something like "https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6") into components `serverBaseURL`, `shareId` and `nonce`.
+6. Verify that `serverBaseURL` is correct for this CSS server.
+7. Verify that this CSS server has a Capsule with identifier `shareId` and it is not expired or deleted.
+8. Verify that this CSS server has previously generated a nonce for this `shareId` and the stored nonce value matches with `nonce` component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds).
+9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subjectDN` from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".
 
-If all checks are positive, then the authentication and access control decision is successful and CCS server can return the capsule.
+If all checks are positive, then the authentication and access control decision is successful and CSS server can return the capsule.
