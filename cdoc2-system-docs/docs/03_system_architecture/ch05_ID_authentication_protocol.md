@@ -75,6 +75,24 @@ end
 @enduml
 ```
 
+## Security of the protocol
+
+We are analyzing security of the authentication protocol from the following aspects.
+
+### Protection against MITM network attack
+
+
+
+### Protection against DOS network attacks
+
+### Protection against authentication ticket replay
+
+### Protection against nonce reuse
+
+### Formal proof
+
+### Weakness against MITM signature
+
 ## SD-JWT based CDOC2 authentication protocol
 
 In this section the details of the authentication protocol are explained.
