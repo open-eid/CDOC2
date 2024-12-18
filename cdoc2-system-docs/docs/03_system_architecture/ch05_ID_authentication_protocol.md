@@ -81,7 +81,19 @@ We are analyzing security of the authentication protocol from the following aspe
 
 ### Protection against MITM network attack
 
+This is an existing security measure implemented in CDOC2 Clients and CSS servers. Clients need to verify that they are making the HTTPS connection to the correct CSS server, by verifying the server's certificate against the local whitelist.
 
+In order to show that this is mandatory security measure, we will describe the following scenario, when the attacker has breached the CSS-1 and is able to manipulate Client's network connections.
+
+1. Client connects to CSS-1 and asks for nonce `nonce1`. CSS-1 returns the value of `nonce1`.
+2. Client tries to connect with CSS-2, but attacker hijacks the connection. Attacker itself connects to real CSS-2, asks for the nonce `nonce2` and returns this to the Client.
+3. Client tries to connect with CSS-3, but attacker hijacks the connection. Attacker itself connects to real CSS-3, asks for the nonce `nonce3` and returns this to the Client.
+4. Client creates authentication signature, in the form of issuing SD-JWT.
+5. Client creates presentation of SD-JWT for CSS-1 and sends this to CSS-1. 
+6. Attacker is using the signed SD-JWT and knowledge of `nonce2` and `nonce3` to create another presentations for CSS-2 and CSS-3 and connects to those servers.
+7. Attacker has control of all shares of the Capsule and is able to decrypt the CDOC2 Container.
+
+Therefore, the communication security and verification of the HTTPS certificates is essential for the security of the protocol.
 
 ### Protection against DOS network attacks
 
