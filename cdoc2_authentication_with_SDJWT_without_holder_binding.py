@@ -67,10 +67,12 @@ def print_auth_ticket_components(name, ticket):
             jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split("~")[1]))
             )
 
-      print_SDJWT(
-            desc=name + " SD-JWT components, something (component after second ~ and before third ~):\n",
-            jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split("~")[2]))
+      if len(ticket.split("~")[2]) > 0: 
+            print_SDJWT(
+                  desc=name + " SD-JWT components, something (component after second ~ and before third ~):\n",
+                  jwt=json.loads(SDJWTHolder._base64url_decode(ticket.split("~")[2]))
             )
+      
 
 def receive_nonce_from_server1(share_id):
     return "42"
@@ -78,33 +80,51 @@ def receive_nonce_from_server1(share_id):
 def receive_nonce_from_server2(share_id):
     return "41"
 
-def create_and_sign_authentication_data(signing_key, server1_access_data, server2_access_data):     
+def create_and_sign_authentication_data(signing_key, aud1, aud2):     
 
-      server_1_structure = {
-            "serverBaseURL": server1_access_data['serverBaseURL'],
-            "shareId": server1_access_data['shareId'],
-            "serverNonce": server1_access_data['serverNonce'],
-            }
+      aud_array = []
+      print("empty array: " + json.dumps(aud_array,sort_keys=True, indent=4))
 
-      server_2_structure = {
-            "serverBaseURL": server2_access_data['serverBaseURL'],
-            "shareId": server2_access_data['shareId'],
-            "serverNonce": server2_access_data['serverNonce'],
-            }
+      aud_array.append(SDObj(aud1))
+      aud_array.append(SDObj(aud2))
+
+#      aud_array.append("blah")
+#      aud_array.append("boo")
+#      print("filled array: " + json.dumps(aud_array,sort_keys=True, indent=4))
+
+      aud_array_claim = {}
+      aud_array_claim.update({"aud": aud_array})
+
+#      print("dictionary with aud claim array: " + json.dumps(aud_array_claim,sort_keys=True, indent=4))
+
+      #print("aud_array: " + json.dumps(aud_array,sort_keys=True, indent=4))
+     
+      #server_1_structure = {
+      #      "serverBaseURL": server1_access_data['serverBaseURL'],
+      #      "shareId": server1_access_data['shareId'],
+      #      "serverNonce": server1_access_data['serverNonce'],
+      #      }
+
+      #server_2_structure = {
+      #      "serverBaseURL": server2_access_data['serverBaseURL'],
+      #      "shareId": server2_access_data['shareId'],
+      #      "serverNonce": server2_access_data['serverNonce'],
+      #      }
       
-      server_auth_data_array = json.loads('[]')
+      #server_auth_data_array = json.loads('[]')
       #print("server_auth_data_array: " + json.dumps(server_auth_data_array,sort_keys=True, indent=4))
-      server_auth_data_array.append(SDObj(server_1_structure))
-      server_auth_data_array.append(SDObj(server_2_structure))
+      #server_auth_data_array.append(SDObj(server_1_structure))
+      #server_auth_data_array.append(SDObj(server_2_structure))
       #print("server_auth_data_array with two elements: " + json.dumps(server_auth_data_array,sort_keys=True, indent=4))
-      disclosable_array = {
-           SDObj("shareAccessData"): server_auth_data_array
-      }
+      
+      #disclosable_array = {
+      #     SDObj("aud"): aud_array
+      #}
 
       #print("SD array: " + json.dumps(disclosable_array,sort_keys=True, indent=4))
 
       SDJWT_disclosable_claims = {}
-      SDJWT_disclosable_claims.update(disclosable_array)
+      SDJWT_disclosable_claims.update(aud_array_claim)
      
       SDJWT_claims = {}
       SDJWT_regular_claims = {
@@ -143,7 +163,7 @@ def create_authentication_ticket_for_server1(SDJWT_at_holder):
 
       SDJWT_at_holder.create_presentation(
             claims_to_disclose={
-                 'shareAccessData': [True, False]
+                 'aud': [True, False]
                  }
             )
 
@@ -155,7 +175,7 @@ def create_authentication_ticket_for_server2(SDJWT_at_holder):
              
       SDJWT_at_holder.create_presentation(
             claims_to_disclose={
-                 'shareAccessData': [False, True]
+                 'aud': [False, True]
                  }
             )
 
@@ -197,10 +217,13 @@ def verify_authentication_ticket_at_server1(user_public_key, auth_ticket):
             jwt=verified_payload
       )
     
-      if (verified_payload['shareAccessData'][0]['shareId'] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
-           return True
-      else:
-           return False
+      print("Verified aud claim content for server1: ", verified_payload['aud'])
+      return True
+
+#      if (verified_payload['aud'][0] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
+#           return True
+#      else:
+#           return False
     
 def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
 
@@ -236,10 +259,13 @@ def verify_authentication_ticket_at_server2(user_public_key, auth_ticket):
             jwt=verified_payload
       )
 
-      if (verified_payload['shareAccessData'][0]['shareId'] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
-           return True
-      else:
-           return False
+      print("Verified aud claim content for server2: ", verified_payload['aud'])
+      return True
+
+#      if (verified_payload['shareAccessData'][0]['shareId'] == expected_shareId) and (verified_payload['shareAccessData'][0]['serverNonce'] == expected_serverNonce):
+#           return True
+#      else:
+#           return False
 
 ## Main flow
 
@@ -270,22 +296,27 @@ share_ID2 = "5BAE4603-C33C-4425-B301-125F2ACF9B1E"
 nonce1 = receive_nonce_from_server1(share_id=share_ID1)
 nonce2 = receive_nonce_from_server2(share_id=share_ID2)
 
-server1_access_data = {
-     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
-     'shareId': share_ID1,
-     'serverNonce': nonce1
-}
+#server1_access_data = {
+#     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
+#     'shareId': share_ID1,
+#     'serverNonce': nonce1
+#}
 
-server2_access_data = {
-     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
-     'shareId': share_ID2,
-     'serverNonce': nonce2
-}
+aud1 = "https://CSS.example-org1.ee:443/key-shares/{share}?nonce={nonce}".format(share=share_ID1, nonce=nonce1)
+
+#server2_access_data = {
+#     'serverBaseURL': "https://cdoc-ccs.ria.ee:443/key-shares/",
+#     'shareId': share_ID2,
+#     'serverNonce': nonce2
+#}
+
+aud2 = "https://CSS.example-org2.ee:443/key-shares/{share}?nonce={nonce}".format(share=share_ID2, nonce=nonce2)
+
 
 signed_auth_data = create_and_sign_authentication_data(
       signing_key=user_EC_key_pair, 
-      server1_access_data = server1_access_data,
-      server2_access_data = server2_access_data
+      aud1 = aud1,
+      aud2 = aud2
       )
 
 print_signed_auth_data_components(auth_data=signed_auth_data)

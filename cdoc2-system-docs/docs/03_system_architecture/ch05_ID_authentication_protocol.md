@@ -75,36 +75,6 @@ end
 @enduml
 ```
 
-## Security of the protocol
-
-We are analyzing security of the authentication protocol from the following aspects.
-
-### Protection against MITM network attack
-
-This is an existing security measure implemented in CDOC2 Clients and CSS servers. Clients need to verify that they are making the HTTPS connection to the correct CSS server, by verifying the server's certificate against the local whitelist.
-
-In order to show that this is mandatory security measure, we will describe the following scenario, when the attacker has breached the CSS-1 and is able to manipulate Client's network connections.
-
-1. Client connects to CSS-1 and asks for nonce `nonce1`. CSS-1 returns the value of `nonce1`.
-2. Client tries to connect with CSS-2, but attacker hijacks the connection. Attacker itself connects to real CSS-2, asks for the nonce `nonce2` and returns this to the Client.
-3. Client tries to connect with CSS-3, but attacker hijacks the connection. Attacker itself connects to real CSS-3, asks for the nonce `nonce3` and returns this to the Client.
-4. Client creates authentication signature, in the form of issuing SD-JWT.
-5. Client creates presentation of SD-JWT for CSS-1 and sends this to CSS-1. 
-6. Attacker is using the signed SD-JWT and knowledge of `nonce2` and `nonce3` to create another presentations for CSS-2 and CSS-3 and connects to those servers.
-7. Attacker has control of all shares of the Capsule and is able to decrypt the CDOC2 Container.
-
-Therefore, the communication security and verification of the HTTPS certificates is essential for the security of the protocol.
-
-### Protection against DOS network attacks
-
-### Protection against authentication ticket replay
-
-### Protection against nonce reuse
-
-### Formal proof
-
-### Weakness against MITM signature
-
 ## SD-JWT based CDOC2 authentication protocol
 
 In this section the details of the authentication protocol are explained.
@@ -345,3 +315,290 @@ CSS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Discl
 9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subjectDN` from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".
 
 If all checks are positive, then the authentication and access control decision is successful and CSS server can return the capsule.
+
+## Security of the protocol
+
+We are analyzing security of the authentication protocol from the following aspects.
+
+### Protection against the passive network read
+
+In case the network between the CDOC2 Client and CSS servers is compromised and attacker is able to read network connections, the attacker is simply able to observe the values of the capsule shares as they are downloaded from CSS servers. The authentication protocol itself doesn't have built-in protection against this and assumes that connections from CDOC2 Client to every CSS server are authenticated and transmission is encrypted with HTTPS protocol.
+
+### Protection against the MITM attack with connection hijacking
+
+In case the attacker is able to hijack the network connections between the CDOC2 Client and CSS servers and redirect the connection attempts from the real CSS servers to attacker itself, attacker is also able to masquerade to Client as real CSS server and is also observe the values of the transmitted capsule shares. Attacker might be able to present a self-signed X.509 HTTPS certificate or it might be able to present a valid X.509 HTTPS certificate from the real CA as well. In case the CDOC2 Client doesn't verify the identity of the CSS server, it is not able to tell a difference between the attacker and real CSS server.
+
+It is essential that CDOC2 Clients authenticate, which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.
+
+### Protection against compromised CSS servers
+
+In case the attacker has compromised some of the CSS servers, the following attack scenario should be considered.
+
+1. Client connects to CSS-1 and asks for nonce `nonce1`. CSS-1 is controlled by attacker and they return the value of `nonce1`.
+2. Client connects to CSS-2 and asks for nonce `nonce2`. CSS-2 is secure and returns the value of `nonce2`.
+3. Client creates authentication signature, in the form of issuing SD-JWT.
+4. Client creates presentation of SD-JWT for CSS-1 with the disclosure of the value of `nonce1` and sends this to CSS-1. The value of `nonce2` is not revealed.
+5. Attacker uses the signed SD-JWT and tries to create another presentations for CSS-2. However, since the attacker doesn't know the salt value and clear-text value of the second component of the `aud` claim, it is not able to create valid presentation.
+
+Therefore, the protocol is secure against compromise of some CSS servers.
+
+### Protection against CSS server compromise and nonce reuse
+
+In case the attacker has compromised some of the CSS servers and tries to confuse Client by mixing nonces from different servers, the following attack scenario should be considered.
+
+1. Attacker has knowledge of all capsule share identification values, `shareId1` and `shareId2`, for example, from the captured CDOC2 container.
+2. Client connects to CSS-1 and asks for nonce value of the `shareId1`. CSS-1 is controlled by attacker and instead of returning freshly generated `nonce1`, attacker connects to CSS-2 and asks for the nonce value of the `shareId2` and returns this as `nonce2_1` to Client.
+3. Client connects to CSS-2 and asks for nonce value of the `shareId2`. CSS-2 generates another `nonce2_2` and returns this to Client.
+4. Client creates authentication signature, in the form of issuing a SD-JWT.
+5. Client creates presentation of SD-JWT for CSS-1 with the disclosure of the value of `nonce2_1` and sends this to CSS-1. The value of `nonce2_2` is not revealed.
+6. Attacker takes the SD-JWT presentation and replays it to CSS-2. Because it contains the value of `nonce2_1`, which is generated by CSS-2, attacker is hoping that CSS-2 responds with value of the capsule share.
+7. CSS-2 verifies that `nonce2_1` is associated with the wrong share identifiers, `shareId1`, which doesn't match with the share identifier that CSS-2 has and denies the request.
+
+Therefore, the protocol is secure against compromise of some CSS servers, which might be trying mixing and reusing nonces.
+
+### Protection against DOS attacks
+
+Protocol doesn't have a built-in protection against DOS attacks. When deploying CDOC2 system components, components in the network infrastructure, such as load balancers or application servers need to use DOS protection mechanisms, such as limiting the number of service requests from single IP-address or others.
+
+### Formal analysis
+
+Even though we have carefully designed the protocol with security requirements in mind and it has been reviewed multiple times and it includes protection against common network attacks, we are not able to proove the security of the solution. 
+
+However, we can increase the confidence by using formal analysis methods. We have implemented the protocol flow as a model of ProVerif (https://bblanche.gitlabpages.inria.fr/proverif/) tool. ProVerif is an automated verification tool for cryptographic protocols, which works in the formal logic model Dolev-Yao and can mathematically verify and prove, if the protocol has some security properties, such as confidentiality, authentication, etc. Proving such properties may involve finding proof of not-existance of some other property and verification of all possible combinations. Therefore, using manual methods can be very time-consuming and doesn't usually give full confidence. 
+
+Model has been presented in appendix A and it verifies the following properties.
+
+1. Described attacker is not able to download shares of capsules from CSS servers:
+
+```
+        Query not attacker(capsule[]) is true
+```
+
+2. Described attacker is not able to authenticate on behalf of the Client:
+
+```
+        Query event(FinishHandshake(x1,x2,x3,x4)) ==> 
+                event(StartHandshake(x1,x2,x3,x4)) is true.
+```
+
+Therefore, the described protocol should be secure against such properties. However, because ProVerif cannot analyse exactly the same CSS and CDOC2 Client source code. Therefore, there might be still unknown vulnerabilities in those areas. Still, this kind of additional formal analysis increases the confidence that protocol design doesn't have major security issues.
+
+### Weakness against MITM signature
+
+In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (ID-card, Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system. 
+
+Following authentication means have this potential weakness:
+
+1. ID-card used over the interface PKCS#11
+2. Mobile-ID REST API
+3. Smart-ID RP-API v2
+
+Following authentication means or APIs (some of them are in development) do not have this weakness:
+
+1. ID-card used over the web-eID JS interface
+2. Smart-ID RP-API v3
+
+In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
+
+1. Informing the users about risks of using non-trusted software/services (desktop applications, mobile applications, websites). This countermeasures is already in use by practice.
+2. Vetting and limiting the RPs, who can use the Mobile-ID and Smart-ID APIs. This countermeasure is already used by practice.
+
+# Appendix A - Formal model for authentication protocol
+
+```ocaml
+(*************************************************************
+Esitame siinkohal väljapakutud autentimisskeemi 
+(mõnevõrra lihtsustatud variandi) formaalse mudeli, mida on võimalik 
+Proverif-iga (https://bblanche.gitlabpages.inria.fr/proverif/) analüüsida.
+
+Käivitamine:
+proverif -in pitype threeservers.pv
+**************************************************************)
+
+free c: channel.
+
+type host.
+type nonce.
+type pkey.
+type skey.
+type expc.
+type dhpc.
+type exps.
+type dhps.
+type transactionid.
+
+fun nonce_to_bitstring(nonce): bitstring [data,typeConverter].
+
+(* Signatures *)
+
+fun spk(skey): pkey.
+fun sign(bitstring, skey): bitstring.
+reduc forall m: bitstring, k: skey; getmess(sign(m,k)) = m.
+reduc forall m: bitstring, k: skey; checksign(sign(m,k), spk(k)) = m.
+
+(* Hash function *)
+
+fun h(bitstring) : bitstring.
+
+(* Secure channels *)
+fun gpowc(expc): dhpc.
+fun gpows(exps): dhps.
+fun mkChannelc1(expc, dhps): channel.
+fun mkChannels1(exps, dhpc): channel.
+fun mkChannelc2(expc, dhps): channel.
+fun mkChannels2(exps, dhpc): channel.
+equation forall x : expc, y : exps; 
+    mkChannelc2(x, gpows(y)) = mkChannels2(y, gpowc(x)).
+equation forall x : expc, y : exps; 
+    mkChannelc1(x, gpows(y)) = mkChannels1(y, gpowc(x)).
+
+table honestUser(pkey).
+table transidtable(exps, transactionid, nonce).
+table honestServer(dhps).
+
+(* Queries *)
+
+free capsule : bitstring [private].
+query attacker(capsule).
+
+event StartHandshake(pkey, dhps, channel, transactionid).
+event FinishHandshake(pkey, dhps, channel, transactionid).
+
+query x1 : pkey, x2 : dhps, x3 : channel, x4 : transactionid; 
+    event(FinishHandshake(x1,x2,x3,x4)) ==> 
+        event(StartHandshake(x1,x2,x3,x4)).
+
+
+let clientInstance(pkS1 : dhps, pkS2 : dhps, pkS3 : dhps, skME : skey) =
+  get honestServer(=pkS1) in
+  get honestServer(=pkS2) in
+  get honestServer(=pkS3) in
+  new transID1 : transactionid;
+  new transID2 : transactionid;
+  new transID3 : transactionid;
+  new chs1 : expc;
+  new chs2 : expc;
+  new chs3 : expc;
+  let cto1 = mkChannelc1(chs1, pkS1) in
+  let cfrom1 = mkChannelc2(chs1, pkS1) in
+  let cto2 = mkChannelc1(chs2, pkS2) in
+  let cfrom2 = mkChannelc2(chs2, pkS2) in
+  let cto3 = mkChannelc1(chs3, pkS3) in
+  let cfrom3 = mkChannelc2(chs3, pkS3) in ( (
+  !out(c, gpowc(chs1)) |
+  !out(cto1, transID1) |
+  !out(c, gpowc(chs2)) |
+  !out(cto2, transID2) |
+  !out(c, gpowc(chs3)) |
+  !out(cto3, transID3) 
+  ) | (
+  in(cfrom1, challenge1 : nonce);
+  in(cfrom2, challenge2 : nonce);
+  in(cfrom3, challenge3 : nonce);
+  let tobesigned = (
+    (transID1, h(nonce_to_bitstring(challenge1))), 
+    (transID2, h(nonce_to_bitstring(challenge2))),
+    (transID3, h(nonce_to_bitstring(challenge3)))) in
+  let tkt1 = (
+        (transID1, challenge1), 
+        (transID2, h(nonce_to_bitstring(challenge2))), 
+        (transID3, h(nonce_to_bitstring(challenge3)))) in
+  let tkt2 = (
+        (transID1, h(nonce_to_bitstring(challenge1))), 
+        (transID2, challenge2), 
+        (transID3, h(nonce_to_bitstring(challenge3)))) in
+  let tkt3 = (
+        (transID1, h(nonce_to_bitstring(challenge1))), 
+        (transID2, h(nonce_to_bitstring(challenge2))), 
+        (transID3, challenge3)) in
+  let smsg = sign(tobesigned, skME) in
+  new chs4 : expc;
+  new chs5 : expc;
+  new chs6 : expc;
+  let cto4 = mkChannelc1(chs4, pkS1) in
+  let cto5 = mkChannelc1(chs5, pkS2) in
+  let cto6 = mkChannelc1(chs6, pkS3) in
+  let pkME = spk(skME) in
+  ( (
+  event StartHandshake(spk(skME), pkS1, cto4, transID1);
+  (!out(c, gpowc(chs4)) | 
+  !out(cto4, (tkt1, smsg, pkME)))
+  ) | (
+  event StartHandshake(spk(skME), pkS2, cto5, transID2);
+  (!out(c, gpowc(chs5)) |
+  !out(cto5, (tkt2, smsg, pkME)))
+  ) | (
+  event StartHandshake(spk(skME), pkS3, cto6, transID3);
+  (!out(c, gpowc(chs6)) |
+  !out(cto6, (tkt3, smsg, pkME)))
+  ) ) ) ).
+  
+let serverInstance1(sk : exps) =
+  in(c, dhc : dhpc);
+  let cfrom = mkChannels1(sk, dhc) in
+  let cto = mkChannels2(sk, dhc) in
+  in(cfrom, transID : transactionid);
+  new ch : nonce;
+  insert transidtable(sk, transID, ch);
+  out(cto, ch).
+
+let serverInstance2(sk : exps) =
+  in(c, dhc : dhpc);
+  let cfrom = mkChannels1(sk, dhc) in
+  let cto = mkChannels2(sk, dhc) in
+  in(cfrom, (tkt : bitstring, msgsig : bitstring, userpk : pkey));
+  let ((tID1 : transactionid, v1 : bitstring), 
+    (tID2 : transactionid, v2 : bitstring), 
+    (tID3 : transactionid, v3 : bitstring)) = tkt in
+  ((
+    get transidtable(=sk, =tID1, v1prim) in
+    if nonce_to_bitstring(v1prim) = v1 then
+    let sgndmsg1 = ((tID1, h(v1)), (tID2, v2), (tID3, v3)) in
+    if checksign(msgsig, userpk) = sgndmsg1 then
+    get honestUser(=userpk) in
+    event FinishHandshake(userpk, gpows(sk), cfrom, tID1);
+    out(cto, capsule)
+  ) | (
+    get transidtable(=sk, =tID2, v2prim) in
+    if nonce_to_bitstring(v2prim) = v2 then
+    let sgndmsg2 = ((tID1, v1), (tID2, h(v2)), (tID3, v3)) in
+    if checksign(msgsig, userpk) = sgndmsg2 then
+    get honestUser(=userpk) in
+    event FinishHandshake(userpk, gpows(sk), cfrom, tID2);
+    out(cto, capsule)
+  ) | (
+    get transidtable(=sk, =tID3, v3prim) in
+    if nonce_to_bitstring(v3prim) = v3 then
+    let sgndmsg3 = ((tID1, v1), (tID2, v2), (tID3, h(v3))) in
+    if checksign(msgsig, userpk) = sgndmsg3 then
+    get honestUser(=userpk) in
+    event FinishHandshake(userpk, gpows(sk), cfrom, tID3);
+    out(cto, capsule)
+  )).
+
+let mkHonestUser =
+  new s : skey;
+  let p = spk(s) in
+  insert honestUser(p);
+  out(c, p);
+  !(
+    in(c, (s1 : dhps, s2 : dhps, s3 : dhps));
+    clientInstance(s1, s2, s3, s)
+  ).
+
+let mkHonestServer =
+  new s : exps;
+  let p = gpows(s) in
+  insert honestServer(p);
+  out(c, p);
+  ((!(
+    serverInstance1(s)
+  )) | (!(
+    serverInstance2(s)
+  ))).
+
+process
+  !mkHonestUser | !mkHonestServer
+```
+
+
