@@ -7,6 +7,7 @@
         "CSRNG",
         "CTAP",
         "DigiDoc4",
+        "disclosable",
         "ECDH",
         "ECSVDP",
         "HKDF",
@@ -23,5 +24,6 @@
         "Yubico",
         "Yubikey"
     ],
-    "markdown.extension.orderedList.autoRenumber": false
+    "markdown.extension.orderedList.autoRenumber": false,
+    "plantuml.server": "https://plantuml.cyber.ee"
 }

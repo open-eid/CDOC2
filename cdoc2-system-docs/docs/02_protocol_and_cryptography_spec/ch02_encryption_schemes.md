@@ -7,7 +7,7 @@ title: 3. CDOC2 encryption schemes
 
 ## Introduction
 
-This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in [Cryptographic protocol details](ch05_cryptographic_details.md).
+This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form, and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in [Cryptographic protocol details](ch05_cryptographic_details.md).
 
 Encryption schemes are presented in an abstract form, where Sender wants to send a message `M` (payload of the CDOC2 Container) to total of `l` Recipients (`Recipient_1`, `Recipient_2`, ... `Recipient_l`) and Recipients are all similar, in a sense that they all have similar RSA key pairs or that they all have established a password with Sender. In the actual CDOC2 system, Sender may mix different kind of Recipients and different encryption schemes may be concurrently used in the same CDOC2 Container. In that sense, encryption schemes defined in this section are not comparable to use-cases, which describe interaction details of user and CDOC2 system software components. Use-cases are discussed in section [Client Application use cases](../01_use_case_model/ch03_use_cases.md).
 
@@ -24,7 +24,7 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 * `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).
 * Index `i` is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, `KEK_i`.
 
-## Standard cryptographic functions
+### Standard cryptographic functions
 
 Schemes use following standard functions:
 
@@ -45,7 +45,32 @@ In general, CDOC2 system implements encryption of payload of CDOC2 Container wit
 3. FMK is encrypted (wrapped) with a recipient-specific key encryption key (KEK) and added to the CDOC2 Container. It now depends on the capabilities of the Recipient, how this KEK is made available to Recipient, so that they could decrypt the encrypted FMK and in turn, the whole Container. For example, some Recipients may be able to use eID means, which are capable of Diffie-Hellman key exchange, some may be able to use authentication-only eID means and some may only be able to use pre-shared password.
 4. Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.
 
-*TODO: Possible place for explanatory diagram?*
+An example activity diagram about creating CDOC2 Container with multiple recipients, is given below:
+
+```plantuml title="Example diagram about creating CDOC2 Container with multiple recipients"
+@startuml
+start
+: Generate random FMK;
+: Derive CEK and HMAC keys; 
+fork
+   : ... ;
+fork again
+   : ... ;
+fork again
+   : Create KEK_i and capsule_i
+      for recipient i;
+   if (Encryption scheme uses \n Capsule Servers?) then (yes)
+      : Upload Capsule to server(s);
+   else (no)
+      : Add Capsule to container;
+   endif
+fork again
+   : ... ;
+end fork
+: Encrypt the payload of container with CEK;
+stop
+@enduml
+```
 
 <!--- no good place for this text: 
 
@@ -70,7 +95,7 @@ These schemes are usable in case Recipients have eID means with some type of asy
 
 ### SC01: Encryption scheme for Recipients with EC key pair
 
-This scheme can be used for transmitting encrypted messages to Recipients holding a EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.
+This scheme can be used for transmitting encrypted messages to Recipients holding an EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.
 
 The key exchange algorithm is almost the same as NIST key-establishment scheme `C(1e, 1s, ECC CDH)` (SP 800-56A Rev3, Section 6.2.2.2 - "(Cofactor) One-Pass Diffie-Hellman, C(1e, 1s, ECC CDH) Scheme"), with the only difference that NIST describes a key-establishment scheme with cofactor ECC CDH primitive, but we are using ECC DH primitive without a cofactor.
 
@@ -210,7 +235,7 @@ M = Dec(CEK, C)
 
 ## Encryption schemes with pre-shared secrets
 
-Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.
+Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols, and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.
 
 ### SC05: Encryption scheme for recipients with pre-shared symmetric secret
 
@@ -275,11 +300,11 @@ Capsule_i = {KeyMaterialSalt_i, PasswordSalt_i}
 EncryptedFMK_i = XOR(FMK, KEK_i)
 ```
 
-Sender creates a CDOC Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage for themself.
+Sender creates a CDOC2 Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.
 
 #### Decryption steps for Recipient or Sender
 
-After some time, Sender may wish to decrypt the Container themself (assuming the role of any Recipient `i`) or the Recipient `i` wishes to decrypt the Container.
+After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient `i`) or the Recipient `i` wishes to decrypt the Container.
 
 Recipient `i` receives CDOC2 `Container_i` with data `{C, EncryptedFMK, Capsule}` and has password `Password_i` and follows steps for decryption:
 
@@ -294,98 +319,118 @@ CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
 ```
 
-<!--- Commented out, until we continue with the task https://rm.ext.cyber.ee/redmine/issues/2827
-
 ## Encryption schemes with secret sharing
 
 ### SC07: Encryption scheme with (n-of-n) secret shared decryption key
 
-This scheme is used, when Sender wishes to use multiple CKCTS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CKCTS server. Scheme uses simple N-of-N solution, where recipient needs to download all `n` shares in order to reconstruct the key material.
+This scheme is used, when Sender wishes to use multiple CDOC2 Shares Servers (CSS) do distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all `n` shares in order to reconstruct the key material.
 
 #### Encryption steps by Sender
 
-We will create $n$ shares. $k$ shares are needed to reconstruct the KEK.
-
-Index $i$ is for enumerating over Recipients $(1..l)$
-Index $j$ is for enumerating over shares $(1..n)$ of `KEK_i`
-
-1. `FMK = HKDF_Extract(Static_FMK_Salt, CSRNG())`
-2. `CEK = HKDF_Expand(FMK)`
-3. `C = Enc(CEK, M)`
-4. `KeyMaterialSalt_i = CSRNG()`
-5. `KEK_i = HKDF_Expand(HKDF_Extract(KeyMaterialSalt_i, CSRNG())`
-6. `{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)`
-7. Client uploads all shares to available CKCTS servers and gets corresponding `transactionID` values for each `KEK_i_share_j`
-8. `RecipientInfo_i = "etsi/PNOEE-48010010101"`
-9. `DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]`
-10. `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}`
-11. `EncryptedFMK_i = XOR(FMK, KEK_i)`
-
-Sender gets a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`.
-
-TODO: `{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)` is undefined. We could use Jan's help here.
-
-#### Draft for reconstructing from shares
-
-Recipient receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]`.
-
-1. Recipient contacts CKCTS servers, sends `transactionID_i_j` and receives `nonce_i_j` (`j = 1..n`)
-2. Recipient creates authentication data `auth_data = {transactionID_i_j, SHA256(nonce_i_j)} [1..n]`
-3. Recipient computes `auth_hash = SHA256(auth_data)`
-4. Recipient performs ID-card/Mobile-ID/Smart-ID authentication and creates a signature `auth_signature` on `auth_hash` with authentication key pair.
-5. Recipient creates authentication ticket for each CKCTS server `auth_ticket_j = ... + auth_signature`
-   1. TODO: `auth_ticket_j` structure is too complex to show here, need to create another section
-6. Recipient downloads `share_i_j` from CKCTS server `j` with `auth_ticket_j`
-7. `KEK_i = SSS_reconstruct(share_i_j) (j = 1..n)`
-8. `FMK = XOR(KEK_i, CK_i)`
-9. `CEK = GenKeyExpand(FMK)`
-10. `M = Dec(CEK, C)`
-
-TODO: `KEK_i = SSS_reconstruct(share_i_j) (j = 1..n)` is undefined. We could use Jan's help here.
-
-### SC08: Encryption scheme with t-of-n secret shared decryption key
-
-This scheme is used, when Sender wishes to use multiple CKCTS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CKCTS server. Scheme uses Shamir Secret Sharing scheme,where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
-
-#### Creating CDOC2 Container
-
-Index $i$ is for enumerating over Recipients $(1..l)$
-Index $j$ is for enumerating over shares $(1..n)$ of `KEK_i`
+Following steps outline how to create CDOC2 Container with a Recipient header structure and a Capsule for Recipient `i`. Index `i` is for enumerating over Recipients from `(1, 2, 3, ..., l)`. Index `j` is for enumerating over shares from `(1, 2, 3, ..., n)` of `KEK_i`.
 
 ```py linenums="1"
-FMK = HKDF-Extract(StaticFMKSalt, CSRNG())
-CEK = HKDF-Expand(FMK)
+FMK = HKDF_Extract(Static_FMK_Salt, CSRNG())
+CEK = HKDF_Expand(FMK)
 C = Enc(CEK, M)
-KeyMaterialSalt_i = CSRNG()
-KEK_i = HKDF(KeyMaterialSalt_i, CSRNG()
-{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)
-# Client uploads all shares to available CKCTS servers and gets corresponding `transactionID` values for each `KEK_i_share_j`
-RecipientInfo_i = "etsi/PNOEE-48010010101"
-DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]
-Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}
-EncryptedFMK_i = XOR(FMK, KEK_i)
+
+for i in (1, 2, ... l): 
+   KeyMaterialSalt_i = CSRNG()
+   KEK_i = HKDF_Expand(HKDF_Extract(KeyMaterialSalt_i, CSRNG()))
+   for j in (2, 3, ..., n):
+      KEK_i_share_j = CSRNG() 
+   KEK_i_share_1 = XOR(KEK_i, KEK_i_share_2, KEK_i_share_3,..., KEK_i_share_n)
+   # Client uploads all shares of KEK_i to CSS servers and 
+   # gets corresponding Capsule_i_Share_j_ID for each KEK_i_share_j
+   RecipientInfo_i = "etsi/PNOEE-48010010101"
+   DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID}
+   Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}
+   EncryptedFMK_i = XOR(FMK, KEK_i)
+
+Container = {C, EncryptedFMK_i [1..l], Capsule_i [1..l]}
 ```
 
-Sender gets a CDOC2 containers `Container_i [1..l]` containing `{C, EncryptedFMK_i, Capsule_i}`.
+Sender has created a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}` for transmitting to Recipients `(1..l)`.
 
-TODO: `{KEK_i_share_1, KEK_i_share_2, KEK_i_share_3, ..., KEK_i_share_n} = SSS_divide(KEK_i, n)` is undefined. It might be rather complicated and there are no standards?
+#### Decryption steps by Recipient
 
-#### Draft for reconstructing from shares
+Recipient `i` receives a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Recipient receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, transactionID} [1..n]`.
+Authentication signature data format and authentication token details are specified in section [Capsule Server](../03_system_architecture/ch04_capsule_server.md).
 
-1. Recipient contacts CKCTS servers, sends `transactionID_i_j` and receives `nonce_i_j` (`j = 1..n`)
-2. Recipient creates authentication data `auth_data = {transactionID_i_j, SHA256(nonce_i_j)} [1..n]`
-3. Recipient computes `auth_hash = SHA256(auth_data)`
-4. Recipient performs ID-card/Mobile-ID/Smart-ID authentication and creates a signature `auth_signature` on `auth_hash` with authentication key pair.
-5. Recipient creates authentication ticket for each CKCTS server `auth_ticket_j = ... + auth_signature`
-   1. TODO: `auth_ticket_j` structure is too complex to show here, need to create another section
-6. Recipient downloads `share_i_j` from CKCTS server `j` with `auth_ticket_j`
-7. `KEK_i = SSS_reconstruct(share_i_j) (j = 1..n)`
-8. `FMK = XOR(KEK_i, CK_i)`
-9. `CEK = GenKeyExpand(FMK)`
-10. `M = Dec(CEK, C)`
+```py linenums="1"
+# Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers
+# and receives `nonce_i_j` from each server
+auth_data = {Capsule_i_Share_j_ID, SHA256(nonce_i_j)}
+auth_hash = SHA256(auth_data)
+# Recipient performs ID-card/Mobile-ID/Smart-ID authentication
+# and creates a signature `auth_signature` on `auth_hash` 
+# with authentication key pair.
+auth_signature = sign(auth_hash) 
+for j in [1, 2, 3, ... n]: 
+   auth_token_j = auth_data_for_server_j + auth_signature
+KEK_i = XOR(KEK_i_share_1, KEK_i_share_2, KEK_i_share_3,..., KEK_i_share_n)
+FMK = XOR(KEK_i, EncryptedFMK_i)
+CEK = HKDF_Expand(FMK)
+M = Dec(CEK, C)
+```
+<!---
+Commented out until we start working on this 
 
-TODO: `KEK_i = SSS_reconstruct(share_i_j) (j = 1..n)` is undefined. It might be rather complicated and there are no standards?
+### SC08: (WIP) Encryption scheme with t-of-n secret shared decryption key
 
---->
+This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
+
+This scheme is not fully specified. We don't have functions `SplitSecrets()` and `CombineSecrets()` yet.
+
+#### Encryption steps by Sender
+
+Following steps outline how to create CDOC Container with a Recipient header structure and a Capsule for Recipient `i`. Index `i` is for enumerating over Recipients from `(1, 2, 3, ..., l)`. Index `j` is for enumerating over shares from `(1, 2, 3, ..., n)` of `KEK_i`.
+
+```py linenums="1"
+FMK = HKDF_Extract(Static_FMK_Salt, CSRNG())
+CEK = HKDF_Expand(FMK)
+C = Enc(CEK, M)
+
+for i in (1, 2, ... l): 
+   KeyMaterialSalt_i = CSRNG()
+   KEK_i = HKDF_Expand(HKDF_Extract(KeyMaterialSalt_i, CSRNG()))
+   # TODO: undefined SplitSecrets()
+   {KEK_i_share_1, KEK_i_share_2, ..., KEK_i_share_n} = SplitSecrets(KEK_i, n, t)
+   # Client uploads all shares of KEK_i to CSS servers and 
+   # gets corresponding Capsule_i_Share_j_ID for each KEK_i_share_j
+   RecipientInfo_i = "etsi/PNOEE-48010010101"
+   DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID}
+   Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}
+   EncryptedFMK_i = XOR(FMK, KEK_i)
+
+Container = {C, EncryptedFMK_i [1..l], Capsule_i [1..l]}
+```
+
+Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}` for transmitting to Recipients `(1..l)`.
+
+#### Decryption steps by Recipient
+
+Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
+
+Authentication signature data format and authentication token details are specified in section [Capsule Server](ch_04_capsule_server.md).
+
+```py linenums="1"
+# Recipient i sends `Capsule_i_Share_j_ID` to corresponding CSS servers
+# and receives `nonce_i_j` from each server
+auth_data = {Capsule_i_Share_j_ID, SHA256(nonce_i_j)}
+auth_hash = SHA256(auth_data)
+# Recipient performs ID-card/Mobile-ID/Smart-ID authentication
+# and creates a signature `auth_signature` on `auth_hash` 
+# with authentication key pair.
+auth_signature = sign(auth_hash) 
+for j in [1, 2, 3, ... n]: 
+   auth_token_j = auth_data_for_server_j + auth_signature
+# Recipient downloads at least t shares KEK_i_share_j from CSS servers
+# TODO: undefined CombineSecrets()
+KEK_i = CombineSecrets(KEK_i_share_1, ..., KEK_i_share_t)
+FMK = XOR(KEK_i, EncryptedFMK_i)
+CEK = HKDF_Expand(FMK)
+M = Dec(CEK, C)
+```
+-->

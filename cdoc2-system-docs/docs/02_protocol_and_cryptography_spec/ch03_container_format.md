@@ -30,10 +30,12 @@ The header consists of one or several structures describing a recipient. Each re
 
 A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
 
-    Header = {
-        Recipients              = :Recipient[](1..k)
-        PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
-    }
+```c
+Header = {
+    Recipients              = :Recipient[](1..k)
+    PayloadEncryptionMethod = :enum(CHACHA20-POLY1305)
+}
+```
 
 A message authentication code is computed for the header (see section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code)):
 
@@ -41,7 +43,38 @@ A message authentication code is computed for the header (see section [Header au
         value = HMAC(HHK, Serialize(Header))
     }
 
+```plantuml
+@startyaml
+CDOC Container:
+    - Header
+    - HeaderChecksumBytesfsdfdsfds
+    - EncryptedPayload
+@endyaml
+```
+
+```plantuml
+@startyaml
+Header:
+    Recipients[]:
+        - Recipient_1
+        - Recipient_2
+        - ...
+    PayloadEncryptionMethod: ""
+@endyaml
+```
+
+```plantuml
+@startyaml
+Recipient:
+    Capsule: Capsule for Recipient i
+    KeyLabel: label
+    EncryptedFMK: ...WpezYaBzPbsQw+vUbDTvA==
+    FMKEncryptionMethod: "XOR"
+@endyaml
+```
+
 The recipient is described using the structure ``Recipient``. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of ``Recipient``.
+
 
     Recipient = {
         Capsule = Union(:ECCPublicKeyCapsule | :KeyServerCapsule | 
@@ -65,6 +98,50 @@ The following capsule types have been specified to ensure the support of a varie
 - ``RSAPublicKeyCapsule`` – the recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
 - ``KeyServerCapsule`` – the recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
 - ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
+
+```plantuml
+@startyaml
+Capsule:
+    RSAPublicKeyCapsule:
+        - RecipientPublicKey
+        - EncryptedKEK
+    ECCPublicKeyCapsule:
+        - Curve
+        - RecipientPublicKey
+        - SenderPublicKey
+    PBKDF2Capsule:
+        - KDFAlgorithmIdentifier
+        - KDFIterations
+        - PasswordSalt
+        - Salt
+    SymmetricKeyCapsule:
+        - Salt
+@endyaml
+```
+
+```plantuml
+@startyaml
+ContainerCapsule:
+    RSAPublicKeyCapsule:
+    ECCPublicKeyCapsule:
+    SymmetricKeyCapsule:
+    PBKDF2Capsule:
+    ReferenceCapsule:
+        - RecipientInfo
+        - CapsuleServerID
+        - CapsuleID
+@endyaml
+```
+
+```plantuml
+@startyaml
+ServerCapsule:
+    - ECCServerCapsule
+    - RSAServerCapsule
+    - NofNServerCapsule
+    - KofNServerCapsule
+@endyaml
+```
 
 This list may be expanded in future versions of the specification.
 
