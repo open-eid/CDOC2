@@ -323,7 +323,7 @@ M = Dec(CEK, C)
 
 ### SC07: Encryption scheme with (n-of-n) secret shared decryption key
 
-This scheme is used, when Sender wishes to use multiple CKCTS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CKCTS server. Scheme uses simple n-of-n solution, where recipient needs to download all `n` shares in order to reconstruct the key material.
+This scheme is used, when Sender wishes to use multiple CDOC2 Shares Servers (CSS) do distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all `n` shares in order to reconstruct the key material.
 
 #### Encryption steps by Sender
 
@@ -340,10 +340,10 @@ for i in (1, 2, ... l):
    for j in (2, 3, ..., n):
       KEK_i_share_j = CSRNG() 
    KEK_i_share_1 = XOR(KEK_i, KEK_i_share_2, KEK_i_share_3,..., KEK_i_share_n)
-   # Client uploads all shares of KEK_i to CKCTS servers and 
+   # Client uploads all shares of KEK_i to CSS servers and 
    # gets corresponding Capsule_i_Share_j_ID for each KEK_i_share_j
    RecipientInfo_i = "etsi/PNOEE-48010010101"
-   DistributedKEKInfo_i = {CKCTS_ID, Capsule_i_Share_j_ID}
+   DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID}
    Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}
    EncryptedFMK_i = XOR(FMK, KEK_i)
 
@@ -354,12 +354,12 @@ Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 
 #### Decryption steps by Recipient
 
-Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, Capsule_i_Share_j_ID} [1..n]`.
+Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
 Authentication signature data format and authentication token details are specified in section [Capsule Server](../03_system_architecture/ch04_capsule_server.md).
 
 ```py linenums="1"
-# Recipient sends `Capsule_i_Share_j_ID` to corresponding CKCTS servers
+# Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers
 # and receives `nonce_i_j` from each server
 auth_data = {Capsule_i_Share_j_ID, SHA256(nonce_i_j)}
 auth_hash = SHA256(auth_data)
@@ -379,7 +379,7 @@ Commented out until we start working on this
 
 ### SC08: (WIP) Encryption scheme with t-of-n secret shared decryption key
 
-This scheme is used, when Sender wishes to use multiple CKCTS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CKCTS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
+This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
 
 This scheme is not fully specified. We don't have functions `SplitSecrets()` and `CombineSecrets()` yet.
 
@@ -397,10 +397,10 @@ for i in (1, 2, ... l):
    KEK_i = HKDF_Expand(HKDF_Extract(KeyMaterialSalt_i, CSRNG()))
    # TODO: undefined SplitSecrets()
    {KEK_i_share_1, KEK_i_share_2, ..., KEK_i_share_n} = SplitSecrets(KEK_i, n, t)
-   # Client uploads all shares of KEK_i to CKCTS servers and 
+   # Client uploads all shares of KEK_i to CSS servers and 
    # gets corresponding Capsule_i_Share_j_ID for each KEK_i_share_j
    RecipientInfo_i = "etsi/PNOEE-48010010101"
-   DistributedKEKInfo_i = {CKCTS_ID, Capsule_i_Share_j_ID}
+   DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID}
    Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}
    EncryptedFMK_i = XOR(FMK, KEK_i)
 
@@ -411,12 +411,12 @@ Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 
 #### Decryption steps by Recipient
 
-Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CKCTS_ID, Capsule_i_Share_j_ID} [1..n]`.
+Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
 Authentication signature data format and authentication token details are specified in section [Capsule Server](ch_04_capsule_server.md).
 
 ```py linenums="1"
-# Recipient i sends `Capsule_i_Share_j_ID` to corresponding CKCTS servers
+# Recipient i sends `Capsule_i_Share_j_ID` to corresponding CSS servers
 # and receives `nonce_i_j` from each server
 auth_data = {Capsule_i_Share_j_ID, SHA256(nonce_i_j)}
 auth_hash = SHA256(auth_data)
@@ -426,7 +426,7 @@ auth_hash = SHA256(auth_data)
 auth_signature = sign(auth_hash) 
 for j in [1, 2, 3, ... n]: 
    auth_token_j = auth_data_for_server_j + auth_signature
-# Recipient downloads at least t shares KEK_i_share_j from CKCTS servers
+# Recipient downloads at least t shares KEK_i_share_j from CSS servers
 # TODO: undefined CombineSecrets()
 KEK_i = CombineSecrets(KEK_i_share_1, ..., KEK_i_share_t)
 FMK = XOR(KEK_i, EncryptedFMK_i)
