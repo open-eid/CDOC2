@@ -7,7 +7,7 @@ title: 3. CDOC2 encryption schemes
 
 ## Introduction
 
-This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in [Cryptographic protocol details](ch05_cryptographic_details.md).
+This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form, and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in [Cryptographic protocol details](ch05_cryptographic_details.md).
 
 Encryption schemes are presented in an abstract form, where Sender wants to send a message `M` (payload of the CDOC2 Container) to total of `l` Recipients (`Recipient_1`, `Recipient_2`, ... `Recipient_l`) and Recipients are all similar, in a sense that they all have similar RSA key pairs or that they all have established a password with Sender. In the actual CDOC2 system, Sender may mix different kind of Recipients and different encryption schemes may be concurrently used in the same CDOC2 Container. In that sense, encryption schemes defined in this section are not comparable to use-cases, which describe interaction details of user and CDOC2 system software components. Use-cases are discussed in section [Client Application use cases](../01_use_case_model/ch03_use_cases.md).
 
@@ -95,7 +95,7 @@ These schemes are usable in case Recipients have eID means with some type of asy
 
 ### SC01: Encryption scheme for Recipients with EC key pair
 
-This scheme can be used for transmitting encrypted messages to Recipients holding a EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.
+This scheme can be used for transmitting encrypted messages to Recipients holding an EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.
 
 The key exchange algorithm is almost the same as NIST key-establishment scheme `C(1e, 1s, ECC CDH)` (SP 800-56A Rev3, Section 6.2.2.2 - "(Cofactor) One-Pass Diffie-Hellman, C(1e, 1s, ECC CDH) Scheme"), with the only difference that NIST describes a key-establishment scheme with cofactor ECC CDH primitive, but we are using ECC DH primitive without a cofactor.
 
@@ -235,7 +235,7 @@ M = Dec(CEK, C)
 
 ## Encryption schemes with pre-shared secrets
 
-Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.
+Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols, and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.
 
 ### SC05: Encryption scheme for recipients with pre-shared symmetric secret
 
@@ -300,11 +300,11 @@ Capsule_i = {KeyMaterialSalt_i, PasswordSalt_i}
 EncryptedFMK_i = XOR(FMK, KEK_i)
 ```
 
-Sender creates a CDOC Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage for themself.
+Sender creates a CDOC2 Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.
 
 #### Decryption steps for Recipient or Sender
 
-After some time, Sender may wish to decrypt the Container themself (assuming the role of any Recipient `i`) or the Recipient `i` wishes to decrypt the Container.
+After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient `i`) or the Recipient `i` wishes to decrypt the Container.
 
 Recipient `i` receives CDOC2 `Container_i` with data `{C, EncryptedFMK, Capsule}` and has password `Password_i` and follows steps for decryption:
 
@@ -327,7 +327,7 @@ This scheme is used, when Sender wishes to use multiple CDOC2 Shares Servers (CS
 
 #### Encryption steps by Sender
 
-Following steps outline how to create CDOC Container with a Recipient header structure and a Capsule for Recipient `i`. Index `i` is for enumerating over Recipients from `(1, 2, 3, ..., l)`. Index `j` is for enumerating over shares from `(1, 2, 3, ..., n)` of `KEK_i`.
+Following steps outline how to create CDOC2 Container with a Recipient header structure and a Capsule for Recipient `i`. Index `i` is for enumerating over Recipients from `(1, 2, 3, ..., l)`. Index `j` is for enumerating over shares from `(1, 2, 3, ..., n)` of `KEK_i`.
 
 ```py linenums="1"
 FMK = HKDF_Extract(Static_FMK_Salt, CSRNG())
@@ -350,11 +350,11 @@ for i in (1, 2, ... l):
 Container = {C, EncryptedFMK_i [1..l], Capsule_i [1..l]}
 ```
 
-Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}` for transmitting to Recipients `(1..l)`.
+Sender has created a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}` for transmitting to Recipients `(1..l)`.
 
 #### Decryption steps by Recipient
 
-Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
+Recipient `i` receives a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
 Authentication signature data format and authentication token details are specified in section [Capsule Server](../03_system_architecture/ch04_capsule_server.md).
 
