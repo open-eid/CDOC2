@@ -398,11 +398,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 5. Recipient enters a password to be used for password-based cryptography.
 6. Client verifies that the password satisfies minimal requirements.
 7. Client adds the files to an archive and creates a new CDOC2 container, which it saves to the target location.
-8. Client asks Recipient whether to delete the server capsule that was used during the previous decryption process. The purpose is to make it impossible that anybody could ever again decrypt the original message.
-9. Recipient chooses to delete the server capsule.
-10. Client reads the recipient record from the original decrypted container. Client makes a request to CCS to delete the server capsule by providing the same transaction code.
-11. CCS deletes the server capsule and replies with a confirmation response.
-12. Client notifies the Recipient.
+8. Client notifies the Recipient.
 
 **Extensions**
 
@@ -422,26 +418,6 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 1. System notifies the Recipient.
 2. Use case ends.
-
-9a. Recipient does not want to delete the server capsule:
-
-1. Use case ends.
-
-10a. Recipient's authentication has expired:
-
-1. Client completes the use case UC.KTS.04 Authenticate Recipient.
-2. Use case resumes from step 10.
-
-11a. No non-expired Server Capsules found with the corresponding transaction ID:
-
-1. Server returns an error message.
-2. Client assumes that the server capsule does no longer exist and notifies the Recipient.
-3. Use case ends.
-
-11a. Establishing a connection to the CCS fails:
-
-1. Client notifies the Recipient.
-2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
 
 ## Use cases supporting Recipients authenticating to multiple CDOC2 Shares Servers
 
@@ -776,58 +752,6 @@ CDOC2 Capsule Server (CCS)
 
 1. CCS replies to the Client with an error message.
 2. Use case ends.
-
-### UC.KTS.05 Request To Delete Server Capsule
-
-**Context of Use**
-: Client requests the CCS to delete a server capsule.
-
-**Scope**
-CDOC2 Capsule Server (CCS)
-
-**Use Case Level**
-: User goal
-
-**Primary Actor**
-: CDOC2 Client Application (Client)
-
-**Success guarantees**
-
-* Server capsule is removed from the storage of the CCS.
-
-**Preconditions**
-
-* Recipient has received a server capsule from a CCS.
-* Recipient has completed the re-encryption flow in the Client.
-
-**Main Success Scenario**
-
-1. Client asks Recipient whether to delete server capsule and thus make it impossible that anybody could ever again decrypt the original message.
-2. Recipient chooses to delete the server capsule.
-3. Client makes request to CCS to delete the server capsule by providing the same share identifier as when originally requesting the capsule.
-4. CCS deletes the server capsule.
-
-**Extensions**
-2a. Recipient does not want to delete the server capsule:
-
-1. Use case ends.
-
-3a. Recipient's authentication has expired:
-
-1. Client completes the use case UC.KTS.04 Authenticate Recipient.
-2. Use case resumes from step 3.
-
-4a. No non-expired Server Capsules found with the corresponding transaction ID:
-
-1. Server returns an error message.
-2. Client assumes that the server capsule does no longer exist and notifies the Recipient.
-3. Use case ends.
-
-4a. Establishing a connection to the CCS fails:
-
-1. Client notifies the Recipient.
-2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
-2. Recipient chooses whether to try again. If yes then use case continues from step number 3. Otherwise, use case ends.
 
 ## Use cases with multiple CDOC2 Shares Servers holding shares of capsules
 
