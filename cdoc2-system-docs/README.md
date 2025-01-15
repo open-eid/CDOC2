@@ -6,7 +6,7 @@ This is documentation for CDOC2 system, including analysis, protocol and format 
 
 Please follow these conventions:
 
-* Approximately one chapter per one `.md` file. If needed, split larger files at section level. All files with `.md` extension will be automatically included. Also see [mkdocs user guide](https://www.mkdocs.org/user-guide/writing-your-docs/)).
+* Approximately one chapter per one `.md` file. If needed, split larger files at section level. All files with `.md` extension will be automatically included. Also see [mkdocs user guide](https://www.mkdocs.org/user-guide/writing-your-docs/).
 * Use numbers in beginning of filenames for sorting `.md` files.
 * Divide material under analysis/spec/architecture topics (subfolders `docs/01_use_case_model`, `docs/02_protocol_and_cryptography_spec`, `docs/03_system_architecture`). When needed, create additional topics.
 * Put common acronyms and terms into `docs/includes/abbreviations.md`
@@ -19,9 +19,9 @@ Please follow these conventions:
 markdownlint-cli2 "cdoc2-system-docs/**/*.md"
 ```
 
-# Generation toolchain
+# Local documentation generation tool-chain
 
-It is possible to build the documentation using Python utilities `mike` and `mkdocs`. `mike` is used for creating persistent versions of the documentation which will not be changed once the documentation has changed. Those versions are created under a special `gh-pages` branch.
+It is possible to build the documentation using Python utilities `mike` and `mkdocs`. `mike` is used for creating persistent versions of the documentation which will not be changed once the documentation has changed. Those versions are created under a special `gh-pages` branch. Only use this locally, CI already uses `mike`, see GitLab instructions below. 
 
 1. Visual Studio Code (<https://code.visualstudio.com>)
 2. Python with [`pip` package manager](<https://packaging.python.org/en/latest/tutorials/installing-packages/#ensure-you-can-run-pip-from-the-command-line>)
@@ -101,8 +101,35 @@ It is possible to build the documentation using Python utilities `mike` and `mkd
    CDOC2 Pages [configuration](https://github.com/open-eid/CDOC2/settings/pages) is configured to serve generated documentation from `gh-pages` branch and `docs` directory.
    More info from [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch) 
    
-# Publish to Gitlab Pages (https://cdoc2.pages.ext.cyber.ee/cdoc2-documentation)
+# Publish to GitLab Pages (https://cdoc2.pages.ext.cyber.ee/cdoc2-documentation)
 
-  Gitlab-CI handles publishing Gitlab Pages
+  GitLab-CI handles publishing GitLab Pages.
 
-  Default version is managed by CI/CD variable `DOC_DEFAULT_VERSION`. To change the default version please change `DOC_DEFAULT_VERSION` variable before publishing a new tag.
+  To trigger the pipeline, a tag has to be added to the commit, and it has to start with letter `v`, for example `v2.0`.
+
+## Creating and changing tags
+
+Tags are related to specific commits. It is important to know if tag already exists locally and in remote. Then, it should be removed from both first before adding it to a new commit.
+
+To change a commit, remove it locally first:
+`git tag -d <tagname>`
+
+Then remove it from remote [using UI](https://gitlab.ext.cyber.ee/cdoc2/cdoc2-documentation/-/tags)
+
+To create the tag and add it to a commit, use the following command:
+`git tag <tagname> <new-commit-hash>`
+
+If the desired commit is the last one, the commit hash can be skipped:
+`git tag <tagname>` e.g., `git tag v2.0`
+
+Important! Tag names have to start with `v`, for example `v2.0`. They can be also longer and include additional data, e.g., `v2.0.0-rc.0`.
+
+Finally, push the local tag to remote:
+
+`git push origin <tagname>`
+
+## Change default version of documentation
+
+When user navigates to the documentation URL, they are automatically redirected to a specific version of the docs.
+
+Default version is managed by CI/CD variable `DOC_DEFAULT_VERSION`. To change the default version please change `DOC_DEFAULT_VERSION` variable before publishing a new tag [under CI settings](https://gitlab.ext.cyber.ee/cdoc2/cdoc2-documentation/-/settings/ci_cd). It has to start with a number and not letter `v`, for example `2.0`!

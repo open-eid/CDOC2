@@ -22,18 +22,10 @@ Relaying Party API is used to start authentication with Smart-ID accessed throug
 
 TODO
 
-## TARA authentication service
-
-OpenID Connect for E-ID supported methods (Smart-ID/Mobile-ID/id-card/others)
-
-(<https://e-gov.github.io/TARA-Doku/TechnicalSpecification>)
-
-* Authentication request [/authorize](https://e-gov.github.io/TARA-Doku/TechnicalSpecification#41-authentication-request)
-
 ## LDAP and OCSP servers
 
 * LDAP: (<https://www.skidsolutions.eu/resources/ldap/>)
-* OCSP: TODO
+* OCSP: SK validity confirmation service is described [here](https://github.com/SK-EID/ocsp/wiki) and [here](http://open-eid.github.io/#_comp_central_conf_server_interfaces).
 
 ## Smart-ID app
 
