@@ -60,8 +60,8 @@ markdown_extensions:
       permalink: true
       separator: "-"
   - plantuml_markdown:
-      #server: https://plantuml.cyber.ee
-      plantuml_cmd: /usr/local/bin/plantuml
+      server: https://plantuml.cyber.ee
+      #plantuml_cmd: /usr/local/bin/plantuml
   - pymdownx.details
   - pymdownx.critic:
       mode: view
