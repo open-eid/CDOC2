@@ -1,0 +1,973 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../ch02_encryption_schemes/" rel="prev"/>
+<link href="../ch05_cryptographic_details/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.5.50" name="generator"/>
+<title>2. CDOC2 container format - CDOC2 System Documentation</title>
+<link href="../../assets/stylesheets/main.a40c8224.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#cdoc2-container-format">5. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="CDOC2 System Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            CDOC2 System Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              2. CDOC2 container format
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="CDOC2 System Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    CDOC2 System Documentation
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Introduction
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Use Case Model
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Use Case Model
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
+<span class="md-ellipsis">
+    Use Cases
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Protocol and Cryptography Specification
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Protocol and Cryptography Specification
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch02_encryption_schemes/">
+<span class="md-ellipsis">
+    Encryption Schemes
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Container Format
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Container Format
+  </span>
+</a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#abstracted-format">
+<span class="md-ellipsis">
+      Abstracted format
+    </span>
+</a>
+<nav aria-label="Abstracted format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-principles">
+<span class="md-ellipsis">
+      Basic principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-structure">
+<span class="md-ellipsis">
+      Header structure
+    </span>
+</a>
+<nav aria-label="Header structure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#keylabel-recommendations">
+<span class="md-ellipsis">
+      KeyLabel recommendations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capsule-types">
+<span class="md-ellipsis">
+      Capsule types
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-extension">
+<span class="md-ellipsis">
+      Format extension
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialized-format">
+<span class="md-ellipsis">
+      Serialized format
+    </span>
+</a>
+<nav aria-label="Serialized format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#general-description-of-the-format">
+<span class="md-ellipsis">
+      General description of the format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#envelope">
+<span class="md-ellipsis">
+      Envelope
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-and-hmac">
+<span class="md-ellipsis">
+      Header and HMAC
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#payload">
+<span class="md-ellipsis">
+      Payload
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-composition-procedure">
+<span class="md-ellipsis">
+      Format composition procedure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-parsing-procedure">
+<span class="md-ellipsis">
+      Format parsing procedure
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unencrypted-payload">
+<span class="md-ellipsis">
+      Unencrypted payload
+    </span>
+</a>
+<nav aria-label="Unencrypted payload" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-posix-tar-archive-assembly">
+<span class="md-ellipsis">
+      Requirements for POSIX tar archive assembly
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-payload-unpacking">
+<span class="md-ellipsis">
+      Requirements for payload unpacking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch05_cryptographic_details/">
+<span class="md-ellipsis">
+    Cryptographic Details
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_a_header_fbs/">
+<span class="md-ellipsis">
+    Appendix A: header.fbs
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_b_recipients_fbs/">
+<span class="md-ellipsis">
+    Appendix B: recipients.fbs
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_c_cdoc2-capsules/">
+<span class="md-ellipsis">
+    Appendix C: Capsules API
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_d_keylabel/">
+<span class="md-ellipsis">
+    Appendix D: KeyLabel field specification
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    System Architecture
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            System Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
+<span class="md-ellipsis">
+    System Context
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch02_system_components/">
+<span class="md-ellipsis">
+    System Components
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch03_external_interfaces/">
+<span class="md-ellipsis">
+    External Interfaces
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch04_capsule_server/">
+<span class="md-ellipsis">
+    Capsule Server
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
+<span class="md-ellipsis">
+    ID authentication protocol
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Test Plan
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Test Plan
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../04_test_plan/test_plan/">
+<span class="md-ellipsis">
+    Capsule Server Test Plan
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Appendixes
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Appendixes
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../09_Appendixes/A1_Security_level/">
+<span class="md-ellipsis">
+    Appendix 1: Security level
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#abstracted-format">
+<span class="md-ellipsis">
+      Abstracted format
+    </span>
+</a>
+<nav aria-label="Abstracted format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-principles">
+<span class="md-ellipsis">
+      Basic principles
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-structure">
+<span class="md-ellipsis">
+      Header structure
+    </span>
+</a>
+<nav aria-label="Header structure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#keylabel-recommendations">
+<span class="md-ellipsis">
+      KeyLabel recommendations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capsule-types">
+<span class="md-ellipsis">
+      Capsule types
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-extension">
+<span class="md-ellipsis">
+      Format extension
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialized-format">
+<span class="md-ellipsis">
+      Serialized format
+    </span>
+</a>
+<nav aria-label="Serialized format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#general-description-of-the-format">
+<span class="md-ellipsis">
+      General description of the format
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#envelope">
+<span class="md-ellipsis">
+      Envelope
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-and-hmac">
+<span class="md-ellipsis">
+      Header and HMAC
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#payload">
+<span class="md-ellipsis">
+      Payload
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-composition-procedure">
+<span class="md-ellipsis">
+      Format composition procedure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-parsing-procedure">
+<span class="md-ellipsis">
+      Format parsing procedure
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unencrypted-payload">
+<span class="md-ellipsis">
+      Unencrypted payload
+    </span>
+</a>
+<nav aria-label="Unencrypted payload" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-posix-tar-archive-assembly">
+<span class="md-ellipsis">
+      Requirements for POSIX tar archive assembly
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-payload-unpacking">
+<span class="md-ellipsis">
+      Requirements for payload unpacking
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="cdoc2-container-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> CDOC2 container format<a class="headerlink" href="#cdoc2-container-format" title="Permanent link">¶</a></h1>
+<h2 id="abstracted-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Abstracted format<a class="headerlink" href="#abstracted-format" title="Permanent link">¶</a></h2>
+<p>This section describes the CDOC2 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.</p>
+<h3 id="basic-principles"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.1</span> Basic principles<a class="headerlink" href="#basic-principles" title="Permanent link">¶</a></h3>
+<p>The basic principles outlined below will provide the user of this specification with points of reference for understanding the details of the specification.</p>
+<ul>
+<li>The abstracted format consists of a header and an encrypted payload.</li>
+<li>The abstracted format contains a single encrypted payload consisting of one or several encrypted files. File information, as well as the sizes and sequence of the files, in case there is more than one file, is also encrypted.</li>
+<li>The payload is encrypted using a single symmetric key (Content Encryption Key; CEK), using AEAD (Authenticated Encryption with Additional Data) encryption.</li>
+<li>The CEK is derived from the CDOC file master key (File Master Key; FMK). See section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>.</li>
+<li>The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per recipient. On KEK generation see section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>.</li>
+<li>The header describes the protection of the FMK (i.e. how the recipients can acquire the KEK required for decrypting the FMK).</li>
+<li>Header integrity is ensured using a message authentication code computed using the message authentication key derived from the FMK (Header HMAC Key; HHK). See section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</li>
+<li>To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the recipient is described with reference to their public key rather than their certificate.</li>
+<li>Decryption always follows the same pattern: 1) the recipient acquires a KEK, 2) the recipient decrypts the FMK, 3) the recipient derives the HHK and validates the header, 4) the recipient derives the CEK, 5) the recipient decrypts the payload.</li>
+</ul>
+<h3 id="header-structure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2</span> Header structure<a class="headerlink" href="#header-structure" title="Permanent link">¶</a></h3>
+<p>Header structure is described with the help of pseudocode that is based on no specific programming or schema language but should be intuitively understood.</p>
+<p>The header consists of one or several structures describing a recipient. Each recipient structure contains complete information on how the specific recipient can access the FMK (for identification, access to personal encrypted materials, etc.).</p>
+<p>A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section <a href="#serialized-format">Serialized format</a>).</p>
+<div class="highlight"><pre><span></span><code><span class="n">Header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Recipients</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">Recipient</span><span class="p">[](</span><span class="mf">1.</span><span class="p">.</span><span class="n">k</span><span class="p">)</span>
+<span class="w">    </span><span class="n">PayloadEncryptionMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="k">enum</span><span class="p">(</span><span class="n">CHACHA20</span><span class="o">-</span><span class="n">POLY1305</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>A message authentication code is computed for the header (see section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>):</p>
+<pre><code>Checksum = {
+    value = HMAC(HHK, Serialize(Header))
+}
+</code></pre>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYYAAAByCAIAAADYluEJAAAAKnRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cHM6Ly9wbGFudHVtbC5jb212zsofAAAA/WlUWHRwbGFudHVtbAABAAAAeJxVjs1OwzAQhO/7FKue2kOiJKUt8qmiLaCQiKh/F4SQiZdgKVlHjl0pb4+LBIjj7Mx+M+vBSetG2bXwSFKRFbCnWvea2A0vrwIi/NVv6T+VBRXHMVRybI1UO67t2DttuCT3aZTAyQTWxOobDlUr2Z3KAi9khxDCNM6SbBEn06MnzCVjssJ0JeYLMV/i6bjBqz2D6UNV4GC8rQmVHpzV7/5aMoNcXiTuPTvdkcDnnjjfPv0ccMcXbQ13YSnk5/IvsLyJ7rTDA9mwBM8lbOlD+taFj9oozY0I7ffRLRSSGy+bwCaGjQlcOwbvAF8dlWMJR7IcdAAAGSdJREFUeF7tnXd0FcXbxxd+iIASpAmEEkDKEaRDQDrKARUjYOgICCIhyBEQpQjSQxcpJwJSEgjCoUfKOQgISBGQphQRKUEE6WVVjkcBfb/vfU7GyezdzeaW3Hs3z+ePnN2Z2ZnZnZnvPLPZ+4z2L8MwTNCgqQEMwzCBgyWJYZgggiWJYZgggiWJYZgggiWJYZgggiWJYZgggiWJYZgggiWJYZgggiWJYRxLSkrKTu9ADmqmfoYliWEcyKJFi8qWLav5AuSTmJioFuA3WJIYxmnExMRASqpWrRoXF7d+/frNnoJrkQPyQW79+vVTi/EPLEkM4yhgH0FBoEq3b9/WfQHyIY3LHFuJJYlhHAXWWdWqVfOVHhHIrXr16s8884xamB9gSWIY53Du3DmYMxMmTFBFxWuwgkPOyF8t0tewJDGMc9izZw+EY/369aqieA3yRM7IXy3S17AkMYxz2LlzJ4Rj8+bNqqJ4DfJEzshfLdLXsCQxjHNgSWIYJrO5cePGhQsX/vnnHzWCJYlhmMzn0aNHM2fOzJUrV7FixerWrRsdHT169OiEhAToxfLly1mSGIYJAHv27MmfP78mkSNHjmzZsuFg0qRJqqJ4TXJyssavtxmGsQDmUtu2bUmGQMmSJYsWLar55yMAyJzGHwEwDGPkzp07iYmJnTp1+vvvv7du3frYY49BLEqVKlWnTp2rV6/66VPJGjVq8KeSDMO4AYoTHR29bNmyBw8edOvWDXoUHh7epUuXP//8E7FQK83XPyjp16+fFoQ/KPHe0QHDZD6Z717Dt5w+fXrcuHGRkZGbNm1S4/79t3jx4tmzZx8/frwcSAoC5Zo4caI3P7tNTk7Geq169epasP3s1oeODhgm80HvTUhIULt1EHP//n0sweh4xowZ7733HrT14cOHaVP9e/fu3bx5865du1YJ/9dlK2GdpT4Ij0A+mWMfEelLkq8cHTCMN2iu/21nFNm9Rt++fdXOHXwcOHCgRYsWYWFhqLYa5w6okhok4f3KJvNtzHQkyeeODhjGM9AP1SDbCPcaQWgr3bhxY8WKFfHx8XR67ty5devW/f7772lTZSHSkSR/vL1nGA/wRpJ0lyqhJ6M/q108EPzxxx90cOHCBRhErVu3Xrx4cdokWRcrSXLr6ODo0aO7du3at2+fCLl27douF0gvJfQBc+bM6dChw4ABA9QIJuvhpSQB9GQtU76sMePhw4fvvvtu9erVCxUq9ODBAxGYNlVWx0qS3Do6ePHFFxFYoEABEQIxcr0F8/03o927d0e25cuXVyOYrIf3kpRp7jUEx44dmzVrVufOnW/dukUh8+fPP3jwoNAjxoiVJO109xM+liQmIHgvSZv9/Cutv/76C2uIBQsW/PzzzxTSq1ev2NjYhISE3377LW1axhR/SdKaNWtee+215557rk6dOoMGDbp48SKFx8fHY+WMwEqVKtWvX3/w4MFoP3EVFvwjRoyAZduwYUM0pFGSzLKFPfz666/PmDEjKSkJ17Zs2VJcwjgDa0n66aefZrrAgRqXis8l6fz58xs3bhQCFB0dXbVqVXTakydPpk3IZAAPJenJJ5/8PBVaosuSNGbMGAqBmjz11FM4KFeu3KVLlxDVpEmTPHnyVKxYEZKUPXt2REGA7t27Rxf27duXLsyRIwf+0g92hCRZZPvss8/iNCIign7vU6ZMGbqEcQyauSSho1J/ADjAqZrChTeShJXXjh07Fi5ceOTIEQrp3bt3yZIlX3nlFc8yZMzwUJLcQpJ05swZ+tHNRx99hFPMIU8//TROhw4dqrt6z82bNymrtWvX0oVobPnCNm3aIM2+ffty586tpUqSdbYkSWDYsGG4UKkz4wA0c0mqW7cutT6BUzWFCzNJunPnTkpKCox9TG8UsnXr1piYmLZt265cuZJC4uLiGjdu3LNnz7179/53JeMHPJSknDlzvpYKmoq6AknS0qVL6bR58+avuyDtwHoKsVAfLNxg3cACKliwIKXEJbqkUKLEVq1aaamSZJ0tSVLNmjVFPRmHoZlLEmx26huC4cOHUxQORAhJ0ptvvkkh4lvEqVOnli5dGvb7kiVLRM+fO3cuOmTmfyjIeChJFu+S5s+fT6dYPZWXePXVV0+fPk29p3LlyrGxsT169KCUixcvxoVJSUl0Kgzvdu3aaamSZJGtnipJHTt2FLViHIZmLkleWklMUOF7Sfr666/pdPny5SLN9evXT506hVmIok6ePInAVatW0SlJ0jfffEOnEydOxClW7xEREVqqJFlkq6dKUpcuXUQU4zA0c0na6f93SUym4XtJAo0aNaLOMXDgwDFjxnTr1g3px48fv23bNkoZFRU1cuTIYsWK0SlJEoiMjNRcq8L27dtXq1aN3lWTJFlkq7MkZQE0c0nSA/QfN8Yf+EWSfv75Z6yh6G00gLJUqVIlOTkZUf369SOhCQsLmzJlCiUQknTkyJEKFSpQYIsWLaKjozVJkiyyZUlyPJqlJNmBJSkkyLAk2efatWsHDhw4fPjwlStX5PCUlJT9+/djzSUHCu7du3fo0CFajrnFLFvG2bAkZRH8KEkM40NYkrIILElMaOAASfLee1GIkqFvKViSmNAgpCWJ/bLad+zJksSEBlrISlIW98sqO/aMjY1Vn46B9CWJYZxEJksS+2UlhGPPdN14py9Jm9lKYoIALTStJPbLKrDp2JMliQkNQlGS3PplPXHiBHlh3bdv34ULF+QoD5g0adK8efPUUAM2k/mE06dP4+6E4yAZO449WZKY0CAUJcmtX9YuXbrkyJGjQIECYWFhiK1Xrx79vsozoqOj+/fvr4YasJnMjN69e48dO1YNNbBgwQL6MTz47LPP1Gh7jj0zLEnke5vYu3fvqVOnhLcjbxg0aFCHDh1mzZqlRhiwn9K3DBkypEMqq1evvnHjhjgFx48fVy9gfEooSpLbEQRJIvcV4NixY6VKlQp+j4OoYWxsrBpqYMuWLeRSykyS7DRBhiXJ6C+pRIkS9KsOb7D/ixD7KdNlxIgRyO3ll19WI9xBe37myZMH88CMGTOuXbuGA+FfBQKtXsD4FM2JkgQGDhyIXiTF///P0SEBVapUadOmze7du0X4mjVr0FcrV67cuHFj9EAKxFIoPj6ejj/66CMowuTJk2vXrl23bl0RriTTTYrA5YsWLcJkHxkZ2aBBA5EeZRUrVqxcuXLkFOjHH38U+ZihZb4kPfbYY7gl2JzkGRIm6K1bt+RkGWXlypW4h23btqkRBuynTJeePXtqtn17kyShA8mBJ06cYEnKHJwqSa1bt5Z7IITgiSeewCppw4YNw4YNy5079zfffIPw2bNnY9ANHjz4iy++gHCIftiqVau3336bjps0aVKkSBFkuHbtWuSA9FAoYzKzInB58eLFscRbsWLF6NGjMbSRQHf9iBWdH+N9qQs7P+QKgCSJn92+8847NCYPHTok0ph5yAa4yXbt2lWtWhU32b59+wMHDlC4cJ4tHycmJqLxqlWrNnz4cCF5ckrCojiRePny5ZhbMHt8+OGH9O8PNGqZMmU0l9Nekn/cKdqma9euSIYJ5IUXXsDlwjU4S1Jg0SwlKTg9AbgdQZCk0qVLjx8/fsyYMTBScubMuWTJEopCzyxUqNDUqVNFYvRGjBd0/vz586PrinCBIknI+e7du3Q6YMCAChUqKMnMitBdl8tepzHSRc42F24CLYCS1L9/f83lTkQMXQsP2RBmisqWLRt0Wq63vByjY3K8TU64gXg6ysLNojiRWHhBIehFHSRMDgTTp0+nHMLDw2Ee582bV5OkliUpsGjmkrQzWP0luR1B6LoYPtAIDCVMh6+88oqYbvfv34/0vXr1gvEydOjQIUOGYF5EVyRXYmTLKCiS1KNHDxGVnJyMgXbt2jU5mVkRdLmsO2+99VZUVBQdh4AkQYNwkzBh/ueCnK7plh6yRRSWe7QJJUwk8ZSNkpQrVy6sctFa5FsS2nT69GklpUVxcra4dt26dSiUPJ+gArrLIUHnzp0116fuP7mASUzlUitiuvjyyy+FurEkBRbNXJKCwaskupNw3S1wO4LkhdupU6cKFiz4/vvv0+mOHTuQHtbNGAnY+JTPsWPH/sslFUWS+vbtK6K2bt2Kq1AxOZlZEXS53L2RHlfRcQhIkkz9+vXF5xUWHrJFFEa+nCFhlCTxb4jt27fThatWrVJSWhQnZ4t5gE67deuGUxi3dKq8S4IqPf744whBL2nQoEGfPn3ke2dJCiyauSR55nt71KhR1M9nzZpVqVKlpk2bih9hffvtt0lJSej/YkvIdEFZYWFhmBrv378vAt2OIOVd0scff4xZkN4ZX7x4MXv27Cj6v9QuMNciPDExUQnXDZIERBTuC1VSkpkVoVtKEg5iYmJEVLpomS9JMI+PHj06d+5cmEuaNOYtPGSLqJ3u7GqjJLVt25aihANcahI5pUVxxmz1VA0qWbKkfFpeerkIuUTXpCUbsWzZMopiSQosmrkkeWkl3b17F9YKwsWObOvXr+/atSt6AsYVhWB4Y00UFxcH7fjvyrQ0a9YMwwGTIgY8hbgdQYok3bx5s3jx4mLAd+rUCVOmWD1AHGkKb9++PTo5vXu9ffv2li1bKIEiSViyfP755zj+4YcfkF58iyQnMyvCQpJgfOGpnj179tdff7X46AfLi0MucNfjxo3DgfJqz6wJZDyUJPEuCRYg9QP6HszCQ7aIGjx4sIjCHdKBUZJKlChB2ytNnz6dLtyzZ4+S0qI4Y7a6QZJo2zhxipamV4N46CdPnsQCG7FvvPEGxbIkBRbNXJJ2+v9dEkb4woULYWodPHiQQtDzo6KiPvjgAwxUCoESFS1aFDZIsWLF6tSpgzHvdgQpkgQ++eQTmOf0XuLq1avocjly5MifP3+ePHnwd+bMmQi/cuUKJuls2bLBhIfwvfTSS3StIkndu3evVq0a0qAajRo1unz5sjGZWREWkvT999/Xq1ePNjGT/5GlQK8+ZFAfOYGdJvBWks6fP4+7Qsjzzz9PIRYesnHPVFFk0qtXLwxyi9fb5McWkwMtpmrVqmVMaV2cMbEiSULsUBB6yaZNm8LDw1GxsWPHovPly5dPc20MR4lZkgKLZi5JeiD+44YVUHJy8qRJk8TetseOHaMPskGRIkUKFy7cvHlzzTCC7AABgqIh5zt37sjhKSkpCDe7R6EpWMFARNTotJgV4VfsNIG3kqS7/tFOzYAhrVt6yP7ll19gD9NaD0BrVq5cSZkYJalNmzYtW7aklOXKlRParKiMRXHGxIokYbpo3bo1SY/mqj8MWjoGmGcwDSINJWZJCiyapSTZwc548JhHjx5hVn7mmWdE/9FcXQh/MVOqVfEPipkThNhpggxLkk0sPGRTFCSG/rFlRNYRGMxY64pPLcywKC6jXLp06VsXwuglSJLQ52DNYp2I5SEOmjVrRp2PJcnfaMEtSbCssRTC0gYGOybIihUr9unTZ9q0aR6PIA/ALE7/evYrsNHEtrIyZrabjJ0m8JckeYNi2gQJeOji9Xl8fDxE8L/X6eXLi28+GT8RzJJ07949LNkiIyNHjhy5fft28U+3QI0gv4Kev9IdZhaGjJ0mCEZJatiw4dNPPy1/YcEwwSxJ/7pUSQ0K3AgKWuw0QTBKEsMYCXJJcguNIEbBuglYkpjQQAtZSeIRJLDTBOlLEsM4Cevx4FtYkhR8I0n8QJlgQGMrKfSx0wQsSUxo4BhJcrbv7UOHDiUlJS1btsyt9147TcCSxIQGjpGkLs71vV27du3s2bOXLVu2XLlyuEfxyweBnSZgSWJCAydJklN9b8MWO3v2LB3Pnj0b9759+3Y5gZ0myLAkydsB7N69+8yZMxa/DLaPn5z8z5kzB9kOGDCATuXKC7w3nv2KD5+MuP3vvvtODj9y5AiFe7ypga8qqbSXjCMlSXeo721w9+7dnDlzKl3CThNkWJKM/pLCw8Plu/UMP32x3b17d01yP2KsPICcp70okBh3KPDhkxG3X7hwYfKyAC5fvkwePgHkIO0VbjDWUPddJZX2ktEcKkmO9L2tp7qvVO7dThN4KEm0HUDTpk3JDYCW6l/NY3zVpxXcShJWubUl0ABpLwokRhdOK323/YGsyMIHA4xtEWhHkow11H3XfFlEkhzve/vGjRsYWVBeZQllpwk8lCThCeCrr76i3kx+hSDAEOk6depUqlSpfv36EHXhkxumI6w++bFSCGZd3V2fxlCMioqCmVqrVq2YmJgTJ05QuEURuuuJI0M8WTyOhIQEt5IkuzEQWGwcQKS7kUFSUhIKrVixosVtyumNmx0MdLdDgXH7A7MnI2fu9i7o9mkWIWcv6DFly5YVgbIkud1kwW0Ndan53Jarm9fZur1kNAdJkrN9b6NNcSHU8Pz580qUnSbwVpJOnTqluRBCi86NYQm9IM8MQncxAjWXhUK/GIaO0n8cpkyZohskaeTIkZRtrly58FhxkC9fPlIBiyL0VK9sVJCWuqeAIknoB59LUJtRBdxuHKDb2MggIiKC6kmeds1uU6R3u9mBcYeCTz/91P6TEZmb3QXdPvQCwqq5egaUAgcQETwiTZKkMSabLLitYbrlWtTZur1kNAdJkoN9b9+5c6dt27aYt9y+crLTBB5KEtafsDxHjRqFSZ66FN0VLhEvKbCgpSg8Bd2lneHh4TjFMhWnmE41l8skmn7lgYeboQ6KSRhXHT9+nHZwpH9MWBQhdgeAPYw0+/btIz941u+SaMamCrjdOMDORgaay9kbSoQxZXGbIr3bzQ6MOxRALu0/Geu70CVJgqWJg06dOpFzFVRSliSLTRbc1tC6XIs6p9teMpoTJUl3lu9trBmxgChZsqTZZw12msBDSZLBvIduSsYnpAGrKsyomO7ETrBLly6layFhmssbP4waVF2THGzLAw9La7pQOBgmex7GkXURQqFEnfEoNYMkYfUu+3kh85Iq4HbjADsbGdSsWVOEWNymSG+22YHxTY39JyMSu70LXZKk69evw86FHKDtSpUqhZ4kS5L1JgvGGuqW5VrUOd32ktEcKklO8r3dtWtXrCFWr15NHriB8u9sO03goSSRlRQXF7dw4cLDhw9TFOZ52isCS1OYeVjWUodbvHgxJUD9MCEgBOsFSkkeu/W0A084+Sdn23qqeU+mhEUR0H463ZnqfZlsEDvvkuQK6Gn9T9rZyKBjx44ixOI2RXqzzQ6MA97mkzEm1g1eNIUk6a5/21NW5BRYliTrTRaMNdQty7Woc7rtJaM5VJJ0B/neJp/UMsrXknaawENJcjuqxXxIZhumfToVkqS7dFRLfemAyUH8d0Du07t27aILp02bprtewdaoUQOnSGNdhBjetK8cDLeIiAjNa0myv5GBwOw29dT0ZpsdKDsUiPTpPhljYt1SkjCLYkZFJ6N/DsiSZL3JgrGGumW5FnVOt71kNKdIkh3MHGOz7203D9RiVG/bto16WFRU1MiRI8XLTlmSMPAoEAwZMkSEK326fv36muuFC+QcUwqlj4+PT7eIyMhIzbU0g6GL6YJepiqSBGhHTIKExmJQ6a7GpgtftNzIQGB2m3pqerPNDpQdCqACNp+MnLnZXciSpLtevYu3crIk6ZabLBhrqKdXrkWdrdtLRstKkuQZipkThNhpAitJonElLzp0S0kC/fr1o14VFhY2ZcoU6nyyJAFYgJprTMrfCit9GrNBmzZtoBeUA4qbPHkyRVkXceTIEXq3Clq0aBEdHa25kyQZakXrQWVzIwMZt7epp6Y32+xA2aEA4fafjMjc7C4USZJRJMlikwVjDfX0yrWos3V7yWheSxJ6suayRtWO7jcyWZKc73v73LlzuH7ChAlqxpag/+3fvx92vhqRCiQA2cr/GjADK2HYlui1RvPVoggsDTBOxFZuPiTdjQxkzG5THr02NzswYvZkfIsPN1nQzetss728lyT0ZGSCXq12dL+RyZKUOQTS9zYoW7YszGn5mzdvSEhIgK1BL8nEvkbOw/o2zawqxhovJQl9GD0Z/Vnt4v7EkZLkDT6QJCyIkEVMTIxPVIns+UKFCsXFxalxDsL6NhvyZgce4Y0kofeiDyMHzBZqF/cnJEmMgleSBOg/LFWrVsUAw2p8sxds3Lhxw4YNaqjjyCK3mcloLnMjo6DHot/S1+qxsbFq5/YzbCUpbPbeSiJgK9EvoRgmFEHvzWT7iGBJUvCZJBEpKSk7GSbUQL9Vu3JmsZMlKS0+liSGYTIES5ICSxLDBBKWJAWWJIYJJCxJCixJDBNIWJIUWJIYJpCwJCmwJDFMIGFJUmBJYphAwpKkwJLEMIGEJUmBJYlhAglLkgJLEsMEEpYkBZYkhgkkbiVp3rx5wqe1fGw8dR4sSQwTSNz6ZR02bJjYy0g+Np46DzuOPVmSGMZfeOaX1cHYcezJksQwfsS3fllDGpuOPVmSGMaP+NYva+giHHsmJiaqzygtLEkM41986Jc1FMmoY0+WJIbxO+yX1b5jT5Ykhskksqxf1gw59mRJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiGBJYhgmiPg/ueWXGXP6mTIAAAAASUVORK5CYII=" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgcAAAB6CAIAAACk4GdaAAAAKnRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cHM6Ly9wbGFudHVtbC5jb212zsofAAABHmlUWHRwbGFudHVtbAABAAAAeJxFT9tqwkAQfZ+vGHxSisFL1bIgWG+FmKD11vZxk4x2Ic6GzW5K/PquxbZPM8w5cy6T0kpja3nJYUupKhSxFTCTRelyEnhf8KQN/uGoYEV1JBPKBea3AQtOTV1YypbxSmAQBG8FXT/k9LpJytevh+qQzPfV83gMHr9zleaY7KfOBDbe19sGTIiznyCwySXbQxxhRab0POwGvU5vEHSae0cYSsbOCLsj0R+I/hAP+xne4BY0XzYRltqZlDBTpTUqcTefFoSykrh1bNXFt1oXxOF89XvABVfKaL74bhAe43/C8LE9VRZ3ZHwSPMYwp5N0ufUfqc4Un4V3X7afIJJ8dvLstYlhpr2uqT22g2/ka3MqTP72fAAAKF9JREFUeF7tnXl0FMX2x5uEBEgCBJBNEUEWFTSEPSKbuEQNSwQTVIiIKIFEhIiiCCo8FkFEEA8IKI/lIRgFEhURhaPsRFSQJahsEcMmPIT+/3eOv+/0fakU1d01k8lMluF+/pjTXVVdVd1dfb91u3v6Gv8wDMMwTBGGmsAwDMNcx7AqMAzDMMWwKjAMwzDFsCowDMMwxbAqMAzDMMWwKjAMwzDFsCowDMMwxbAqMAzDMMWUQBUKCgq+ZxiGuZ6A3VNNYajjkyosW7bs1ltvNRiGYa4/YP1WrFihmsXQxbsqpKen47jExcXNmDEjJyfnK4bxBgaMmsQwlRBYPNg9WD8M6YyMDNU4liGlv1Xju9PjRRXgJeBwQBguX75sMoxvYMyoSQxTaYH1o8lxuXgMy5cvD9StmhYtWviyC15UAb1p164dSwJTIgxWBSa0gA2Mj4+HVVVNZJAZNWqUEYhbNeT0wJgbPjg9OlU4ceIEqpg+fbp8dPbv37+tiF27duXn51+9elUu4B9ZWVmpqanvvfeemmHD95JMecGqwIQesIQY2LCKqqEMGvASjIDeqvHR6dGpws6dO7E9REau97777hP+CNGkSZPc3Fy5jB/ccccdqOrJJ59UM2z4XtIrkyZNQm0PP/ywmsGUDoNVgQk5YAkxsGEVVUNZCmCmV61adeXKFTXDIhi3anxxenSq8P333xvWY0O5UlKFiIiIxMTEhISEsLAwrNaqVeu///2vXKykZGdnL126dMuWLWqGDd9LemX48OHofKtWrdQMpnSwKjCViMLCwu+++w6/asa1fGW9RgGrqBrK0rFt27a6des+9thjX3/99f/93/+JdMdbNQFhxowZhtbp8VMVsBu0mpmZ6fEXDOPHH38UZdatW9e/f/8777yzc+fOWVlZf/zxh8j64osvsP9xcXHQq5SUlLy8PEp/4YUXBg4c+O6778rLcHO6d+8OtZw4caJQHbkkoWlOFF6zZk3Pnj07der02muvkfaOGzeuefPm6HlMTMxAC2VPGb9hVWAqCzAO1apVw4jFr2xV7ARJFf6xhKGqRf369V955ZVff/31H5dbNQHBq9NTWlV4/vnnsRoZGXn69GlKmTJlCukE5uCxsbFYaNmy5Z9//omsqVOnUlaVKlWio6OxgFk/bSXfF6LlRo0a4RdHijZ57rnn7CX1zYnCjRs3pjIEuoEsqIicCBYtWkRbMaXEYFVgKgN79uwJDw8XFgDLSFELFRE8VQConHoCYwU7RhNcw2Z+A4LXHfFTFSADSUlJmMiHW8ycOZNyf//994iICBR4/fXXsQqpaNCgAVYhgCIrISEBzgty4SiIc2BXherVq+/YsQMuAnwLw5IHSKhSUtOcXC223bBhAxpt3bo1dQBZBQUFTzzxhGH9ReWYxYULF2grppQYrApMZWDWrFnGtdx///2UNXHiRErBAqUMGTKEUjATJQsppqSlTCHGjBlD6YZlYGlh8uTJxd0NEMFSBZlu3bqdOnWKcletWkWJOLh0W4bMNPRDZH3++edyhYRdFRITEylr69attOGnn36qlNQ0J1fbp08fWk1LS8Nqs2bNaJWfKwQJg1WBqQz8+9//JgMiQIpaqAivxrQ0bNu2LSoqivqAefbNN988cuRIw2Z+A4LXHfFTFeDj7N+//4MPPiBNE2Z3yZIltGPNmzdvJdG3b1+RhWrlCgm7Kjz66KOUBX+CNlyxYoVSUtOcvVqzSAZwxOXVVqwKgcZgVWAqAxcvXmzTpg3ZEIBlpKiFivBqTP0GklC9enXDukGSmpp69OjRf1zMb0DwuiN+qoJ4rjB27Fg6oPRUZPv27bS6Zs0asclff/2Vn58vssaPHy+yzp07Rwt2VWjSpMmlS5ew+s4779CGO3fuVEpqmrNXa9pUgf4hIlaZQGGwKjCVhMLCwpdffjkpKQm/+teQvBpT/7hy5Ur9+vU7deoEIya/g1SJnzafPHmSHJ+7776bUnr06GFYzsS4ceOmTJmSlpaGwtOmTUNWr169yIijkmeeeSY+Pl7ztLlKlSp33XVXSkoKvSHQsWNHe0l9c/bCiioIvUFD3bt3F1rClBKDVYEJOYKkCv9YwqAmBfPN1JkzZxpBfTPVtN7+JNu6ceNG03rkO3jwYHoIbBQZd/qbG6R4yJAh4kEKzH12djZVYleF5OTkxMREKtmyZUvx5qti6DXN2QsrqnD+/PkBAwbUrl2btpVfrmVKg8GqwIQcwVMFN4L0L7b27dsH+F9sPnLhwoW8vLyffvrp7NmzjlkwwW7v/Mim/OjRo/v27YOWqoWuRdMcU/awKjChR9mrwooVK4xAf/Fi9OjRRmm+eFEaVSgNygSfqXSwKjChR9mrAsjIyECj8BhK/3W8mTNnBuDreOWlCt27d2/QoMGoUaPUDKaSwKrAhB5flYcq/GN5DC1atDACQQC+pF1eqsBUdgxWBSbkKC9VICpK1J3vWRUYv2BVYEKP8lWFssS7KjAMwzAEqwL7Cow/GOwrMCEH+woeWBUY/2BVYEIPVgUPrAqMf7AqMKEHq4IHvSrk5eWtXLnyo48++vrrrzWflAo2HMa5AuKmCpcuXdq0adPSpUvXr19P30UvM956663Fixerqd748ssv09PTMcAOHTqk5vnM4cOHKc757t27xdeF/cbHHfGxmH8EtfIKC6uCBzdV+Pbbb9u2bWs9evkfderUwfWjFCsb+C9vFRBHVVi7dm3jxo1jYmI6deqE8RMREZGcnHz16lW1XHBISkoSgZt8BEYcnZwwYcK8efNOnjypZvsMBmfVqlXr1q1bq1YtwwrvceTIEbWQzwwaNOj5559XU234WMyNZ599loJTOVLKyisprAoeHFUBkkCfqwsPD3/kkUcyMjL69u1bs2bN8gpkxqpQAbGrwldWqKnMzMy//vqLUuArpKSkBOqv/F7xQxXefvttqJeaWnIwOEXAjwMHDjRt2lTEDqmwoIejR49WU69vWBU8OKrCXXfdhcSwsDDZOSgsLMRwx8LChQsHDBjQuXPnNm3adOvWbfz48SJyp+ktIPOePXuGDBmCiSSa6NOnDwrTtsOHD8dWwmOdPXs2VsXnuO2qoAnjzJQNdlXAaY2Li3PzDDZv3owz2LFjx65du44ZM0YEWH399dc/+uijWbNmYXNkYXSJTfbu3QtRQZ04y0OHDj127Biljxs3Tnxy0bRGC91dVFTh008/heHDSIO/smPHDpEueOuttyAJsbGxGGzCPqIDGLcYWo8//jgNeIL6OXfuXHQyLS1NpBOyKphWD+vVqyflu3YGI/nhhx9GN3r27ClCCk+fPl0cB83xkYuZLk1g82XLluH4dOnS5Z577hHl0Ra8upYtW1Ikq99++03UQyiVXyewKniwq8LBgwcNC5h+6XAV06tXr6ioqNtuuw2qAOVAyfj4eGELyII7BmSGAFDU5RtvvBGXAZwPo+gjphReDU4JVYJhStXKdQpVENHvWjmFcWbKBuNaVSgoKKhSpQqMl5woM3PmTBia3NzcNWvWJCQkYD5B6RhODRs2xGBbv3791KlTIyIiYARNK1hK/fr1R4wYsXHjxs8++2zChAn79++nTWCyxXfUTWu0PPXUU+a1qgCLFh0djQq/+OKLV199tUaNGvZovVu3bk1NTW3WrNmqVavQumkJDEpCLbAKLxmWXUw40E+MWzSB6Q76c01FNlXA7siBntw6s2DBAuwvZj+ff/45bDe0hMrLO+J2fJRibk1g85tuumnQoEFr16598803ccGiANK3bduG6wsqssrC/sVJPxyvEIBVwYNdFTBAyea+8cYb0uEqBptQqByAkUqFv/vuO0ohC+4YkBmzRcqiD6lCSL755huy5qQKmEJSJRpV8BrGmSkbjGtVYdeuXUj55JNP5EQ3Tp06ZRRNCGC2YJfFF3PHjh3bunVr07oPgzKOz6u9qsLly5dvuOGGt99+W5SBh4qhKFYFmGGIYYatMMkQNWP15ptvhhrRKvp5++23u3lCGJzYC2yLCjFVj4yMXLlyJWW5dQZXR506dV577TWRLlBUwfH4yMXcmjCtzeVJ23333Sdq1t9BYlUIbUqmCpiaecy8u52FAGDmguk5HAJMpqgwphuUSxbcMSDzsWPH6HEFtoIzO3LkSNGu76rgNYwzUzYY16oCxVj9z3/+IyfKnDx58sUXX+zRowfcRJxQOBbr1q0zLbM1bNgwUQzOBLIwb4ClgzPatGlT2EHMVMRNSNMHVdi7dy8688wzz2DWjGEMy96nTx/H5weyKpAOYVuRm5aW9tBDD9Ey+gnHRWQpYHDWrVsXHYDZjYmJgZ8hOuzWGTpidg/GtKmC4/GRi7k1QZvLph+70K9fP1pmVbDDquDBrgrHjx/HsEMiLmDpcP0PzN0w6JGLMYchhfFKNloEyCYL7haQGZd379696d4RsXr1arNIFTIzM2krXIqGiyp4DePMlA3Gtapw7ty58PDwN998U06U6dChw4MPPpiTk4MhsW/fPjh8H3/8sWmZLfnTud9++y1qLigoMK0658+fT286YL588OBBKqOoAgabogqYuKASyMkUCXHXXkZWhd27d2Mr0QrAxEVcBeinuMNjR76DlJ+fj3nPSy+9RKtunaFLT350IVBUwe34+LK/SrdRHlvRMquCHVYFD3ZVAJiGk+WVbxPv2rULheEXUxa9eAcPgFYVVXAMyIzZHznC8GexOb35OnToUKTArGO5f//+WP7zzz/hWRsuquA1jDNTNhi2p82wMjjvyv9aaBVuIsr//PPPlIgFrApVAKL8e++9V6tWLbFKQB5at24Nq0ersL/C5oL27dsrqvDHH3+EhYVpHBfBFEkVzp49i/mQPK7g0Yp5uu+qAObOnVu9enV6hOvWmdOnTyOdZksKiiq4HR9f9lejClhIT08XWQqsCqFNiVXh0KFDNHk3rFCXmC7dcsstWF60aNGWLVsoHX7o5MmTGzduTKuKKjgGZP7xxx9vvPFG+LlTp06dOHEiRc2Ez4ssevwA7r333ptuuomcFUdVML2FcWbKBsOmCrD1MFhwCOAKmNbN7tzc3Li4OCxcuHABzsG8efOQfubMmT59+uAUC1WAk0HLR48ehQtIr8lj3rBhwwaaRsDqIV28XD9mzJiWLVtivozpxYIFC7C5/Wnz448/DvdC3J9Bl+Cn0rKMrAqmNQ7hiNDLTh9++CE6KR6YlUgVMCXCMBY2160zuECwX3l5eaZ1uDZv3kwFFFVwPD5KMbcmNKoAF6Rr167Hjx+H6Nqfl7AqhDYlVgXTulOUmppao0YNMtagS5cucBeQlZGRQVYbJmD27NmUq6iCY0BmjGkM3P9VZ735Cmk5f/68ad3SFUEnBg0a1LdvX8NdFfRhnJmywbCpgmn9GR5mCGcWM2XYsoYNGwpTPmfOnMjISKRER0fPmDEjKipKqAJsert27erVq4cNIfmQDdO694ipCTaBecXcAkNCRHuFIYPtrlq1KqqCf4lRZFcFjCu4oSgDvxNt4Xf+/PmUJaOowokTJ2Dc0Q1MWehlJJFVIlUAkEB0m56Wu3UG3smjjz6KAYx9x56KZxiKKjgeH6WYWxMaVTh48GBCQgJd4/Z45qwKoY0/qkBgyoMJIC51MRAJTNP27t0r/qwkI1twx4DMf/755z4LpU4UgzbY35t2g8M4ly+OqkBAtmHTf//9dyW9sLAQw0Y578Js7d+/X76nT8Cqoir7/1Ewt0VhDDAlXQFjA5vD7fj777/VPHeoUbeQ437j1hlcTUgX/8ZQ0B8fBbcmGB9hVfCgVwU/UOb1TKiiUYUSoZ+DM3x8yhJWBQ8BVwUOyHydEChVSE5Opr+eMI7w8SlLWBU8BFwVmOuEQKkCw1QcWBU8sCow/sGqwIQerAoeSBUYhmEYglWBfQXGHwz2FZiQg30FD6wKjH+wKjChB6uCB1YFxj9YFZjQg1XBA6sC4x+sCkzowargwVEV9u/fT3HJRcqpU6coWLnXf1dqsFfrI1lZWampqRRvq0T4vSHjFbsq+BL/fcqUKcuXL1dTveFLzQxTelgVPDiqwn333YfEunXr0urhw4ebNm2KlMaNG//0009yyRKhVOs7fv9f2u8NGa/YVcGXL+f4909dX2pmmNLDquDBqyr88ssvTZo0MaywmiJEon+wKoQSrApM6MGq4EGvCj///DPEwLDiJSj3jtatW9e/f/8777yzc+fOWVlZ9P2y6dOnDxw4UA46SCmTJk0ytaqwcOHCAQMGoKo2bdp069Zt/Pjxp0+fFrnCuK9YsaJ79+7t2rWbOHGiHJzLsTPyhqIkEyj0qrB582Yc9o4dO3bt2nXMmDEiqjapgmNsetMlHr3JqsCUFawKHjSqUKNGjUaNGmGhadOmhw8flgtMmTLFsGjVqlVsbKxhfS4bVz6stmFFaaYPQF68eLFWrVpImT17tqjWURVgLKKiom677TaoQlhYmGF9Rlt8852MO3UGlVPTwky4dUZsyKoQDAytKsycORMTgtzc3DVr1iQkJEDpKb2Xe2x6t3j0Ss0MEzxYFTxoVIGAFVZuHP3+++8U24A+2oVJPYXoeeWVVy5fvky+BUVqhEXAcrVq1WjyrlEFdINitwHYC2paBDwh4169enXMH+EiUIgedOzXX3/VdEZsyKoQDAytKsicOnXKKPqCfy+X2PSaePSme80ME1hYFTx4VQXw4IMPymEXV61aRen333//QAsyxBR15I033sAyrnzM9FNSUgwphrNGFSAAmD9ijg+HoF69elQ/GqJcMu6JiYm0unXrVirw6aef6jvDqhA8DK0qnDx58sUXX+zRo0fbtm1xFqpUqbJu3TrTUgXH2PSaePRKzQwTPFgVPGhUAeY7MzOTbO4DDzwghGHJkiWU2Lx581YSffv2Na2JISb1yM3Ozo6JicFCTk6OUq1oiMCUn0rCCowePRpWg+pX4rsJddmzZw8VWLFihb4zrArBw9CqQocOHTCZwKnHydq3bx/8ORF5zTE2vSYevVIzwwQPVgUPelXA8gsvvEBmF5NxCr62fft2SpHjniMrPz+fluH7G9ZrrPi96aabxO0CN1VYuXIlVXjkyBHTeuRIq4oqNGnShO4yvfPOO1Rg586d+s6wKgQPw10Vjh07htyff/6Z0rGAVaEKvZxi02vi0ZusCkxZwargwasqgHHjxpHlhVNPwtCjRw+sxsbGIgtzurS0NBSeNm0alYexpvJgwoQJSrUgXGL8+PFbtmyh9H79+k2ePJnkxLCpAsVnTklJqVatGlY7duxIuZrOsCoED8NdFS5cuADnYN68eVg+c+YMhg3OnVAFt9j0bvHoTVYFpqxgVfDgiyoA2G6y1CQMp0+fHjx4MD3mFfY6NzdXlE9ISKD0Q4cOiUTlcQVBb69nZGSgMFYxc5w9ezZlKaqQnJycmJhIWS1bthTxxzWdYVUIHoa7KoA5c+ZERkY2bNgwOjp6xowZUVFRQhXcYtO7xaNXamaY4MGq4MFRFXwEU8K8vLyffvrp7NmzSha5F/K9Aq8UFBTs3buXfBENmGBiFinuSgk0nWGCgV0VFAoLC3FChdFXcItNz/HomXKEVcFDaVTBkeXLlw8ZMqRGjRqoVvYemBDDqyowTKWDVcFDwFVh+PDhqPCGG26YMWOGmseEEKwKTOjBquAh4Kpw5coV9v2vB1gVmNCDVcEDqQLDMAxDsCoE2FdgrhMM9hWYkIN9BQ+sCox/sCowoQerggdWBcY/WBWY0INVwQOrAuMfrApM6MGq4MFRFSjAssKpU6fkMpWa999/PzU1dezYsbSq31+R+8svvxRXYX3eh9LF/7ftgakDEu+6YuKfKvz222/imxYEVuVPtV+5cgWHS8RNCgg7d+789ddflcQdO3agM0qizOHDh+ncbd++Hafv8uXLagkbYhOMATlslOlvwOoLFy7k5OQsXrx4w4YN58+fV7ODxo8//kgfJRPgjGC/RMgTt92Rj0B+fr4obxadWUfEJ9Q0oCqUVHoVcFgVPDiqguOnKRYsWCCXKV8mTZp0xx13PPzww2qGbzz11FOGFaWHVvX7K3Lr168vgkCcOXMmOjqa0iEwcknxpZBAxbuumBh+qcLSpUurVq167tw5WsUCVm+++WZRgD6iJUJrBITMzEw0If/pfeHChTVq1Dhw4IBUSuXJJ59E3+pahIeHN2jQwO3jfQKxSc2aNbEXvXv3pvBTpl+hSWF2UVWjRo26deuGIVSnTh1HQxwMOnXqhGtETsGJwx6JTw+47Y44ArGxsWFhYbVq1Ro2bNiJEydM64smUUVERkaiNrE6evRotSIbubm52ISicQQPVgUPGlXA2e0ksXbtWrlM+UL/lRNmvaQ4qoLb/sqagWuDEt966y2R6KgKAYx3XTEx/FIFzNmxIWa+tLp+/fpmzZrBLog5IA5sTExMYP/yghk3zrWI64A+wFrJEX4cgYGjKB2m9RVebF69enVUdW2pa5A3+eGHH2DQk5OTadXNjLrxxRdfVKlSZcKECXQoMNF+7bXXkCK+GFgixowZUyJF6VQKVRBH4OLFi3B0MHvD3KigoEAuNmfOnGrVqskpXhk0aBBqhjx/++23al7gYFXwoFEF+yeviRdeeGHgwIHvvvvumjVrevbsiQGE8Sr71xjQjz32WFxcXHx8fEpKSl5enrwVJlw4u4mJifogz6K8PVYzhmPz5s3RQ5gPirQj+u8WwBndQ7XoD6rC5eGoCm77S7mwXEbRh1rhzN56660i0a4KmnjXIYN/qgBw7nBqaBmnEtYWJuaDDz6glKSkpAceeICWX3/99Y8++qhEQZ7hk9GQENAA27p1KwwKqdH999+PYSBubriFmJYNnFlkL0jg3VpRNsEYbtiwIS2TGbXvy969e3GN4GLBiB06dKjwLTp06IAxT8sCbIsxbFpRqoTVPn36NDqwZMkSWv34448pEKEMDhTkVknMzs5OT0+XU95//33aER9Vwb47yhEwrc+q4zIRZ5ywq4KmMwAnBZKMOQQuMTlqU8BhVfCgUQXY3I8lxCyJPkQqvndNTJ06lXKxQCmY19A9Fppf01a33HILfRsVpkEf5JnKO8ZqhtGnVcGiRYtMbQDnUaNGURZVRdUqquC2v5SL0Y9L17BGDEYwFqCIqMGwqYIm3nUoYfirCjA3sIC0jKP64Ycf4uIfMmSIacltnTp1/vWvf1Fur5IHeT516tS/i8CoqF279uOPP06bwIpBqqdNm4YN5fPiFmJaNnDHjx+H7cbopXmJWyuKTYSVx+yBlh33BWO+fv36I0aM2Lhx42effQbPgFSHYprShSAzf/58pJ84cYJcLopgsXr1atTWpUsXKvPII49kZmZes5mLKlDcC/GYB+4Ijg8V80UV7Ltj2o4AAdGCeMspdlXQdAbMnTsX1xTcpmXLluE6lT223bt3L3UBZ82XAjKsCh40qqAgLiSy1zCvmHlhgLZu3RqruJxMKaQzVulmIhwFOtO0FcA1jPOEFvVBnqm8Y6xmeKNPPPEEVnHJHbPAKNEEcBZZmFReunQJrdPH+/TPFcT+ClWAJcICrv97773XsOL8OKoCYY93HWIY/qrCUuvRwnkLOqGwiTC4pnUBG9Y1SSV7+RXkmYDAwBi1bdtWfLQVJpgG1XvvvSeXlJFDTMPAibNpWDOJ7du3K+WVVrAJzB+cDwzvN954A3snpu2O+3LgwAHUbH8STg9XPvnkEyWd7q1v27YNyxh7FKvu2WefffrppyMjI8+ePQu7iakVvChlQ0dVANASEd8iJycHl8nJkydN31TBvjumiyq8+OKLiiNuVwXTvTOgffv2cLxM61YednDx4sViKxyEeBfofHktIMOq4EGjChhn/SXEGaJLq0+fPrSalpZmWIGaTSmks/3uJ20Fv1hO1AR5pvKOsZpNp+cKmgDOmM5QltjNpKQkeXP9/gpVwIjE4MZghbsDPwCXhEYVDFu86xDD8FcVaJ6Lyx6zChIDiDoOfn5+/qxZs2rWrCkeKvTyK8gzAUsEO3706FE5EUJiN0ZuIaZh4HDSD1vs2rULM3pIkfK2jNIKNsGOYK6D4XH33Xdjsi/urDruC7SkTZs2KAyrikuGHBGzKAat/eE2Oal0SxZi0K9fP9OSBzhM7dq1g4rgMoEU0XP1iRMnVisiLCwM6WJ106ZNVCGcD1wm1ElcgLguKN0XVbDvDk6Noypg79CKnOKoCm6dodMt3Ai0a28iULAqeNCogtt9diWUDRloeo1ERFEW0z0BbTV48GA5URPkmco7xmo2nVRBE8AZVxdliV6R56Gogtv+ClXAclZWFlVFsd4cVaGuS7zrEMPwVxVM69HC+PHjYVLpxhHo2rUrziDMnJgHmJbp8SPIs1n0ihHNqWUcjZFbiGnFwGHigjMr37K3t+JoEwm3fTl37hysIUYp5BDTI3oKhcTw8HDMmUR5Yvr06cLor169OjY2FoKEKwjGGkcD9cNRxpGkwvChdxXRrVs3zLXFqngHrLCwEJtjpgV9wr7QjoPevXtjXkXLxNy5cyF4wjlw2x3HI4DrQvSKcDwRbp3JyMjA0UgookWLFlAg8Zr4Z599NtoFesfMawEZVgUPgVUFEUUZ17woT0NQ2UrgFuSZyjvGajaLnhPIbzRqAjgLRZk5cyYSMSPDFNXwSxVwEWKAYsjS2+huqmA6xbsOMYxSqALmoTATXbp0oQdCpiW3Q4cOrSvFeTUt09Or5EGev/zyS1gceRgI7MZIE2JaMXAYmXXq1BEv3ji24mgTCbd9EeAyad26tfgPDYQKw1t4D6Z13wxqKmbQGIE4CCNHjqRq4XjhkoHHI8fEFbjdQTKtd3sGDBiwYMECeEKiOVzUqE0u9txzz8lvhbrtjv0I4MLEJaO0bj8RhL0z+MVyWlraIgl4Vy+//DJtsnbt2uEu0Gn1WkCGVcGDRhUMW4BlytWogmkNF9oWlcDHj4+PXyo9bbargluQZyrvFqtZiARyMQrJr9cEcIYBMqx7RKgKvjY98fZDFUzr9rT414JGFUyneNehhGFThcWLFwubJS/bVzEkIizEHwDXrVtHL3TJU+9eJQ/yjOu8du3aJP927MZIE2L6SevFpAMWMG1PP/00rPDmzZtN91bsNlHguC9HjhyBNaeZEKQOieKtjR9++CE6OhrOE/3VDuqVnJwMyys/rMLFhSFNj+XoLhz2RbmWCY0qrF+/HscE19Fo6U8DOAs4DugMRju6h06iM/L+Ou6OKR00HKJvvvlm0qRJ8IFwTBSP2X4iCHtn4BLhsCuPXuCxyTPIAMKq4EGvCjJilqRXBbiBmP7Tv1QM6+lxdna2fSsZxyDPVN4tVvP58+cxp8CVSVmUrgngjDFKT8UN63Y/piSGv6ogo1cF0xbvWqSHAIZNFV599VUx/5WX7av0aOHGG28UKbDIsDIoI/9ToVfJgzxjmkkHXCCbaUdj5BZi+knpaTNMG4wdLBRt4taKXhXs+wJVa9CgAVqHjUPH+vbtK79ds2PHjs6dO2MYx8TE4Ldt27b0REFA0w5xX/See+6BFyumLDIaVcABJ099165dcjqUkv6Jho7hmhoxYoTsuDjujikdNJxNZCEd9dj/Fu54Ikynzjz00EM9e/a8ttT/XDrxr5cAwqrgwVEVSg9FUYax1v/rh3AM8iyriFusZkeoaXsA56tXr6I/vvy3nvEFw6YKAadX0V+lgh3kWR9iOrDY9wUaib1w+8jH8ePHYSKHDRsGI1vG/5CHNcclg75pPrZh351KDauChyCpgo9ogjxrfAumIlCWqsBgSoS5eVJSki/TLMZvWBU8lK8q0N0nxyDP8MThXMvvOTAVijJQheTkZPr3CcOUDawKHspXFa5wkOdKSxmoAsOUMawKHspXFZjKC6sCE3qwKnggVWAYhmEIVgX2FRh/MNhXYEIO9hU8sCow/sGqwIQerAoeWBUY/2BVYEIPVgUPjqoQkDjGXoMY61upsGRlZaWmpmq+xuwjPh5GPwhUD01bgGsZRRX+/vvv7du30+fTBUeOHBEfpSAuuAcilkP+VvxhwIQkrAoeHFXB8YsXJY1jrHz+wR7EWN9KRcAxOnSg/l7n42H0ir2TgeqhaQtlKmPYfIWBAwfGxcWJ7yIcP34cZ1982Mf0Foj4yaKQvxR8KSEhIdih2xlGgVXBg0YVShnHWFYFxyDG+lYqAvQnO8UmZmdnY6+3bNkiJ/qBj4fRK/ZOlpcqFBQUNGjQ4NVXX6XVpKQknFDxfxSvgYjljwgdOHAAcwj5q9oMUwawKnjQqIL+a3Fe4xiLStyCGOtbqbDRocUmokLoRL9+/dq2bYujkZ6eLoK46XfBx8NIuMWjduykUAXHdk33DpveAlzLGDZVMK2gwRERETt37lyyZEn16tXF1wxNb4GITdun5bBr9erVE6sMUwawKnjQqEIp4xhTMU0QY30rZNoqYHRoZSY+efJkyoURpEZr165NEqXfBR8Po6mNR+3YSX27mg6b3gJcyxhOqgDQ7dtvvx39hPqKRK+BiE2bKgwYMMCxXYYJHqwKHjSqoFDSOMZyJY5BjPWtkGmrWsGiQ4tNSBV+++03sp6YpKOhQ4cOYXprFAUW1eyC2H2vh1ETj9q0btrYO6lpV99hrwGuZQwXVcChg9jcdttt8jdufQlEjEParFmzadOmQQXRgcjIyJUrVyrlGSaosCp40KhCKeMYK0bfHsRY3wqZtooWHVpsQqoAs0XlKRiLWXQjPioqSpR03AXT58OoiUdN9dg7qWlX32GvAa5lDBdVGDlyJHYnPDycbD2hD0RMH9PHIcWGaBFHBh7kI488In/Qn2HKAFYFDxpVcLvjL8yZqY1jLCpxC2Ksb0W5USPH9inH6NBiE+qY6AnFDTWL7sBgPq6UNG3hiXw8jJp41HK1dlVwbFffYa8BrmUMJ1XAQIIebNq0Cerbpk0b8W6VJhBxWFiYCNgipC4/Px9OzEsvvXRNaYYJMqwKHkqpCpo4xnIljkGM9a1oTFs5RocWm1ATmA5T+Tlz5pjW4+L27dtj9Q4r5q1mF0yfD6MmHjUt2zupaVffYa8BrmUMmyqcP38eHgl9/JzeR5JDrmJO4BiIGEOCVpXnCnPnzoWWU3xKhikbWBU8lFIVTPc4xkol9iDGVMCobNGhlSa6detmWE8mhg4dijJUfuHChfaSGlUw3Q+jqY1HbTp1Ut+upsOmtwDXMoZNFZ577jlYefG+wOrVqyMiIsTfGB0DESMF6VRAUQUcDeh3enq6SGGYYMOq4KH0qiCjUQXTFsRYqIJMxY8OrTSBSTE2h55RGezvrFmz5MrddsHHw2hq41GbTp3Ut6vpsOktwLWMca0qiHtHcuKjjz4aFxcnXopVAhFDfZEiCiuqYFqhg3FmlUjuDBM8WBU80CRa3GevXJRjdGgFiswOkxq8IEJu8aj9Q9NhHwNcK6rgO8ePH0fT9KIww1QoYAkN6wayaihDDp0qnDhxAkdBfrU89ODo0MHAb1VgmArLjBkzDOsPNKqhDDl0qgBuvfXWdu3ayf99DTHoFgpHhw4srApMiAEbGB8f36JFC9VEhiJeVAFTaVzh6enpoSoMHB06GLAqMKEErB9soGG9la6ayFDEiyqA0aNH43DExcVhNp2Tk/MVw3jDsF5SYJjKDiwe7F67du0wpDMyMlTjGKJ4VwUAhYTrZDAMw1x/wPpdJ14C4ZMqEAUFBd8zDMNcT8DuqaYw1CmBKjAMwzAhD6sCwzAMUwyrAsMwDFMMqwLDMAxTDKsCwzAMUwyrAsMwDFMMqwLDMAxTDKsCwzAMUwyrAsMwDFPM/wNJsLq/8rRUQgAAAABJRU5ErkJggg==" title=""/></p>
+<p>The recipient is described using the structure <code>Recipient</code>. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of <code>Recipient</code>.</p>
+<pre><code>Recipient = {
+    Capsule = Union(:ECCPublicKeyCapsule | :KeyServerCapsule | 
+            :SymmetricKeyCapsule | :RSAPublicKeyCapsule )
+    KeyLabel = :string
+    EncryptedFMK = :byte[]
+    FMKEncryptionMethod = :enum(XOR)
+}
+</code></pre>
+<p>The <code>Recipient</code> structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.</p>
+<ul>
+<li><code>Capsule</code> – encryption method specific data that the recipient can use to decrypt the FMK.</li>
+<li><code>EncryptedFMK</code> – encrypted FMK.</li>
+<li><code>FMKEncryptionMethod</code> –FMK encryption method type.</li>
+<li><code>KeyLabel</code> – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. <code>KeyLabel</code> is a UTF-8 string.</li>
+</ul>
+<p>Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as <code>FMKEncryptionMethod</code>. See section 6.4 on the details of cryptographic operations.
+The following capsule types have been specified to ensure the support of a variety of encryption methods (<a href="../ch02_encryption_schemes/">CDOC2 encryption schemes</a>).</p>
+<ul>
+<li><code>ECCPublicKeyCapsule</code> – the recipient is identified by ECC public key <code>RecipientPublicKey</code> (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the <a href="../ch02_encryption_schemes/#sc01-direct-encryption-scheme-for-recipient-with-ec-keys">SC.01 encryption method</a>.</li>
+<li><code>RSAPublicKeyCapsule</code> – the recipient is identified by RSA public key <code>RecipientPublicKey</code>. The KEK is derived by decrypting the capsule using the RSA private key. Used in the <a href="../ch02_encryption_schemes/#sc03-capsule-server-scheme-for-recipients-with-ec-keys">SC.03 encryption method</a>.</li>
+<li><code>KeyServerCapsule</code> – the recipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an <code>ECCPublicKeyCapsule</code> or a <code>RSAPublicKeyCapsule</code> used as described above. Used in the  <a href="../ch02_encryption_schemes/#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys">SC.02</a> and <a href="../ch02_encryption_schemes/#sc04-capsule-server-scheme-for-recipients-with-rsa-keys">SC.04</a> encryption methods.</li>
+<li><code>SymmetricKeyCapsule</code> – the recipient is identified by key label <code>KeyLabel</code>. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the <a href="../ch02_encryption_schemes/#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key">SC.05 encryption method</a>.</li>
+</ul>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYoAAAD2CAIAAABHi1dJAAAAKnRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cHM6Ly9wbGFudHVtbC5jb212zsofAAABEWlUWHRwbGFudHVtbAABAAAAeJxlkE2PgkAMhu/zK3rUAwZx1Q0nV9CNfGQJqPcRCpkEOmSYIeHf7+yXxuytfd727ZvuBs2VnnjXskCS5oJQBbwfTIs+y4u3zNxaUcY43eEhCP7DYuo61OoZZvs4PHoPN6xRIZV4Jw7kWIpeIOkT1dL2v1KBakR1Ch/E1juk6jsoy1pO+pImYIcGIQmWC8/11gt3djYIESdwt7Dc+qu1v9rA5RzAlzxns/csgUEaVSJUYrB5b0bb/TmL+MghN6RFhz589EhRGP8BONAolKTO5mTRNX0MbF6cvdDwExeuKQux5qbVdqOUlaDGt9ePzitLODWGN9YbyT7a+qrJagX7BJ5jf62DxQVsAAA3iElEQVR4Xu2dd3wWVdbHhw4JHRYXUAgJuKKSINLWICjsioUmQhARw8JqaEJYfbMughCFKKICIhZagEjvihUhoARYurSlhCYlIEgc6y6CvD/nmMvkPlOeMk8yz5Pz/SOfmXvvnJm5mfubc+eZOUe5yjAM40oUuYBhGMYdsDwxDONSWJ4YhnEpLE8Mw7gUlieGYVwKyxPDMC6F5YlhGJfC8sQwjEtheWKYEOPYsWOZgQELslFXwvLEMCFDenp6dHS04gSwA2vyDlwGyxPDhAYDBgyArMTGxo4dO3b58uUf+Au2hQXYgTXYlHfjJlieGCYEmDVrFtQkKSnpm2++UZ0AdmANNmFZ3plrYHlimBAgJiYmLi7OKW0iYA02YVnemWtgeWIYt5OdnQ03Z8yYMbLABAxswjLsy7t0ByxPDON2vvjiC4jI8uXLZXUJGNiEZdiXd+kOWJ4Yxi3k5OT8+uuvcunVq5mZmRCRDz74QFaXgIFNWIZ9eZfugOWJYdzCunXrIiMjr7vuuubNmycmJo4aNSo9PR3aMW/ePJYnhmEKGShUREQERKp06dI1a9aMiYmJjo4uUaIEROSVV16R1SVgWJ4YhvEBKFS1atXq1q2r5EHyxN4TwzCFwKlTp3766SdaXrBgwapVq8qVK0fa9Mc//nHhwoUKPxpnGKaAGTVqVFRUVPXq1bdv3y4KZ8yYUbJkyTJlyrRr1+7nn3/mFwsYhgk6+/fvf+WVVzp16rRo0SIq2bJly4EDB/K3utqoUaNixYqNHDlSlMTExDRu3Njx1zJhk1/LZJgiyuXLlzdv3rxt2zZanTlz5pNPPrl48eILFy7kb3gNqEaVKlWWLl2qL6SPWvr37++UQsEOrCn8UQvDFE3ef//9ChUqxMXFzZ49W66zBNohF129OnDgQKgJrKWlpQX4STAswA6swaa8GzfB8sQwzpCbm/v222937979oYceEiUXL17M3yog4OlgLkaPzAMEdtzsNxEsTwzjP99+++0nn3xCyzk5OYmJiXPmzDlz5kz+Vg7D4egYhrHiypUrrVu3xtytQ4cOly9flqsZJ2B5YhivuHDhQkZGRq9evU6cOEEl27Zt+9///pe/FeMkLE8MY8WlS5doISEhoWvXrtOnT8eELn8TJliwPDGMAbt27Ro8eHBUVNSbb74p1zEFBcsTw/zOjz/+KN6Q/Oijj9LS0vbv35+/CVOgsDwxzG+/hT344IOVKlUaOnSoXMcUHixPTBHll19+Wbt2LS2rqjp79uzc3Nz8TZhChuWJKYo8//zztWrVatWqlYgTwLgQliemKAJfad++fXIp4zJYnpgiQU5OzhNPPDF69Gi5gnExPshT4K/SM4whwf7GYu/evdWqVUtJSXH2Czgm2HglTw5+iMgwhgT7C9XTp0/LRYzrsZcnpzK7M2GPosXD9hVcVLi0cIEpjsb3gKOUmJi4ZMkSuYIJHWzkKT09XXE0szsTxuBSkYu8BhcYLjPFoeho27dvr1279pAhQ3744Qe5jgkdbOQpOjra8czuTLgSiDypmkLhYsMlJ1+FvvP9999nZWXJpUyoYSVP1gHYN2/ePHv27OnTp3/00Udff/21XB18hg0blpCQMGnSJLnCUQr9NImCOdkACVCe1IAj8y9cuPDQoUNyadgR+I9Uwf4twims5Mkss/unn356yy23/P5IU6NKlSrvv/++1MxXnn322YYNG953331yhQlojF0/8sgjcoVDBOk0/SPYJ+sISsDy5Hdeo+PHj997772xsbE7d+6U68KI9PR0eJf6a9JvYAfW5B24DCt5yjTK7I5BW6ZMGUVLDXj//fcPHDiwQ4cOFSpUePPNN/XN/OBvf/sbzDZo0ECuMAG3yqlTp65evVqucILgnaZ/FBF5+sDfrJD79+8fP378L7/8IleEEU79SKX/LQI25d24CZ/lqVGjRigsXry43o84efIk7lq0DNXo2LEj/I7bb789KSlpz549otmQIUO6du362muvzZs3r3Xr1k2bNh0+fDg92EpOTq5Xrx4sly9fvqsG7XfKlCmdO3du1qzZzTfffMcddzz11FMnTpyQrNkaJ5YsWdKpU6dbb70V1jBXwv1W2jAjI6NVq1bt27dX7U7T4qj0BmfNmgWDcXFx//rXvy5cuEC1Gzdu7NWrFw4Pu2jbti0a07ZQZ2z19ttvU7Nx48ZhFZZp1VOezE6nELGWJ0y7JmpgQa7L4wNf5AmS9I9//KOIRF+iTC0O/kjl7G8RQcI3efryyy8VDQxO3ZleY8SIEdSgbNmyxYoVw0KlSpU2b95MtTTGatasSW2I1NRUVGGY6QsB+Slt2rSJiIj405/+BCGAWKC8cePGuCKFNTFiLYyD0aNHUwm8s8qVK2Ohfv36X331ldiwbt26dMBQSdvTtDgqNc/gH//4R/wtWbIkmXr88cdRBSWivdeqVQsKDncMy1u3bkVVjRo1FO2XdTICbSKzepviZC1OpxBRzOUJ1xIdJ8ACVuUWGt7LE277+F/jejNMahJ+xMTEOP4jFf0WEap57jzlaeXKlXSFPffcc7rT/J0DBw7QaMTQwpnv3r27WrVqWCV/RM0bY2izbNmy7OzsG2+8EastW7ZE1bFjx3r27KloU+JDGmfPnlW1y/r8+fO0+dKlS2nva9euFdYkeTI0fvDgwVKlSmF15MiRqqYRpAX//Oc/xYbgmWeeycrKwvlan6ZqeVRqnkEI9Oeffw6nqVu3bop2YP/5z38+/vhjqqKzo0D6JCt0SE8++SQZsZAn69MpRBRzeWrRogX1EoFVuYWGmTxt3749LS2te/fuIvvbkSNHwnsqp8f6R6pACPC3iGDjmzytWrWKLi/DkTB79myqxSCkksceewyrcDRolcYYZjS02rt3b6xGRUXRquGzJ4x5uDBwDeCMkNiBOXPmqCbyZGgc7WnDv/zlLzRzpPGMmZfYsEmTJr/v0u40VcujUvMMClH+7LPPqMGiRYsgu/RIC1vFx8c/8cQTonu9lyfr0ylEFHN5wpydjlmACS9VYUGUkDz16dOHSkaNGkWXIm45KSkp8+fPxxw23zVaNDD7kSpw/P4tomDwTZ4OHz5MM6A777xTd46/884779BVhbOlEkpDCseBViVBIT264YYb9Kt6eYK7QZc15kFw5hMTE8n+zJkzPa1ZGBcHholbAx0dOnQQG/bo0eP3vdqdpvVRqXkGH3zwQVrduHEjNcAkX9U80LvuuoumdcS7776r5snToEGDaKt7771XMZEn69MpRBRzeQrQeyrieI5Ep3B5h/smTwB3bLrCXnrpJVG4YcMGNF63bh1VjR8/XtVmLrfddhtWMbSomYWCqHlaJlZVnTu2d+9erML7oFVf5Wn9+vW04bx58343rarnzp3bt2+f54aExWlaH5WaZ/D666+nCeArr7xCDaDamPPm5uaqWudgc3px4dFHH0UJ9AXLnTp1wjKme1WqVFFM5Mn6dAoRxVyeMp1+9hSW5OTk/Prrr3KpyUh0BJd3uM/ytHv3brrPK9rgh39Rt25dJe9J9h133KFoz1Yw5DDXoGZTpkyhbS0URNUN40aNGmFbDLbVq1dTSceOHUeMGCEee/sqTwDHqWgDIzk5efTo0Zj6Va1a9YUXXvDckLA4TeujEgbhf+FEunfvTrO522+/HVVbt26tVatW3759U1NTMZepVKmSoj3zQhU9ogJ333137dq1yX0zlCfV8nQKEcVcntQg/HIXfuAGHxkZWadOnTZt2sArx9w2PT0dvYH7kOIxEh3B5R3uszyp2uwmISGhXLlyNJxA8+bN4Vmo2hPuLl26lChRgsoxZvTeh7WC4NbRuXNnGrFK3u9ZAwcOpIFasWLFcePGUZUf8nTixAlM3+iJspKnHStWrPDcUGBxmhZHpeYZRD+0b9+equrXr0+ns3///qioqN/NaS8uQONw4qjauXOnCAvx0EMPYaammMuTxekUIoqlPHmDy0dLAbBmzZrSpUvjBo/bGC4VXDlQKxpQuH/L/RUwLu9wf+SJwMxl+/btmzdvPnXqlFSFko0bN6L24sWLUpUfQPI2bdqEyYtc4Ttnz57FAW/btu306dNynQlmp2lxVHopgR5t2bKFJnQCzN22aEg20QwideDAAX2hBX6cTlBheXIE+FC4SeufTkKwFH40LmEtT4wZZu5Y2MPyFCCY+bZt2zYtLW3VqlURERGkTTVr1szKylL4xQIJlif/aNWqVY0aNfr37y9XhDssT76CSfrMmTNFVvQ33ngDPfDDDz9kZGRAnjCnw7X0888/X9Vey8RM3/HXMmEzfF7LZBgLWJ58YvDgwbiN9ezZc8+ePVJVmzZt0A9DhgwRJfRRC+55TikU7NBv5eHzUQvDWMDyZMGuXbuGDRsWFxeXmppKJWZfC0I4KlWqNHfuXKl84MCB6BxYwOwvwE+CYQF2FEfDkwYDe3limAImPOTp/PnzyzRodd26dS+++OLmzZsvX76cv6EBZh8SznIu6n+wg7s7gr08fcDeE+MdSpH3noSsrF+/Hh5Qhw4dMjIy8jdxAA5H9xuZLE+MLxRZeYKj1KVLlxo1asTHx1NJ0flcOaiwPDGOUUTk6cqVK+np6YMGDWrVqhWWr2pitHDhwq+++kpuygQGyxPjGOEqT/v27Zs7d+6wYcNE3pcnnnhi4sSJmzdvJnligoTP8rRjx451eWzYsAH/ORGGTYCSNWvWzJw5EzeZVatWeQZyPHv2LFnAFF3aXG//888/P3jwoKd9M6zzBUi11o0FdDxZWVmi5OjRo3R4X3755bV2/hJOqRbCQ55ULcjElClTzpw5QyUdOnTo3r37K6+8kpubm78tE1x8lqd27dop+bn++uv1X3vt2bNHyiAApk6dqrNx7etf8OGHH+qrPO3XqlVLfFRsjfXr2tbf6JlBx1O1alVaxdnVqVNH0d7l3bZtW/62vhF+qRaUEJSn7777buvWrbhDHD58mEp69OjRrFmzpKSkopD0xeX4KU+lSpVq3759y5YtKZRtxYoVRSxtCkVSqVKlPn36YH5+//33V6hQ4fXXX9cbadKkiRiTvXv31lfp7d91113i1f5FixbpmxliPcakWi8zKejladeuXdBiRVNMeFVyU18Iy1QLiqU8uSFiARz5lStXvvrqq7t376aSv/3tb7gae/bsiX9u/rZM4eOnPAlvAgJE8kFf5ANIFVb1wT3OnTt35MgRsYqWtAmFKCtfvjxFtiUk+5gkUmMKiuRlvgDDHATSCJQyKYD33nuvW7dusbGxjRs3hjNPIdLF8Wzfvh2qpGjeojStM8xKMGbMGNgfPny4aEYlzz77rGqXakG1zLbg2lQLirk8ZRZgvKdLly7Rwtq1a5955hmc1PLly6nkpZdewm0gOTkZF+G1DRi3Eqg8DR48WNG+qBaDh/wL/E1NTcXEzfN5Cq51RXO4tmzZQtfr9OnTRa1kf9++fdQGwqF6ly/AMAeBqDWb3OFoqX2xYsUiIyOVvAkpHU+5cuXILGZ2+twzqnlWAvoKAYdBzgL6gYQbumCbakG1zLZgcZqFm2pBMZenAKNlXrx48ZgG2lAJZtbvvPMOjnPDhg1UMn78eJp3w0GjEtxvxo4d++6774qP2pjQwk95gh498MADuHWX0EhLSxMNMI+jWEgExhgcn6NHj1Jtbm4u+SDkDdEsTwQIV3VyAP/rueeeo1fvAbk53gTkNsxBIGoN5UkkF8B0NTs7W9WeWMMNUfM/C4MpaU5nkZXgm2++oTMdNWoUqiiiGCZ0NL8gg2apFlTLbAsWp1m4qRYUc3nyL9Y4xIUuRXg9URqY/FIJHCIoMuRJaBluAEUzEnkY46c86cHUQ6gPsXr16sTExBtuuEG0+ctf/kJVK1asoBIKXoPrT9HmOKQgqpF9iF3Pnj1p8uLNGDPMQSBqDeVJJBeAcFCtQDqee+65R+8PWmclgPooWjoGyARmi0peAHLbVAuqZbYFi9Ms3FQLirk8Beg9MUUTP+UJDj/8iLfeeosCZendHz07d+5s1qyZot3b6UvrhIQEukD//Oc/43KnVKWKLiGd3nuCeGHep/+BzJt8AWY5CCzkSSQX8HwmIiab4inbX//6V6FQ1lkJoNpwZFC7cOFCch9IlK1TLah22RasT7MQUy0o5vJUkM+emLDBT3kSz4aGDh1K15wI5ZeSkiLybgIaWhhs8CBOnz6tj42r509/+hO1l+xLNPAiX4BhDgJRayhPIrmAeFQMzpw5o+Y/niFDhlAzuBUUJ9M2K0GvXr2UvOSgtWvXFmEzLVItqN7lgDA8zcJNtaCYy5Pqjl/umNAiUHk6cuQI/fYPb4hK6C4dExMDl0o4R3Srf+ONN2gV9/OdeTz//PNUSCPTWp68yRdgmINA1BrKk6o9iibLOIC+ffvCpv7RuDie5ORkaoazI4WyzkpAGcoICDcVqpapFlRtdkxVhtkWLE6zcFMtKJby5A0sT4yeQOVJ1fkUq1atUjV/CpMCKlG050qYR9BvLvHx8YrmROhfBD9+/Dg9iKXfnjzt6/EmX4BhDgJRayZPJ0+ehKdDc1VFe4aNGZlqdDzwsKgNKZRtVoKWLVtSOSRJFKqWqRZUy2wLFqdZuKkWFJYnxlF8licvwWjHgNm4caNnooQA8TJfgGEOAlsouQCOXP8qljdYZCUghwvemVROmKVaUM2zLeilxPA0CyvVAssT4yzBkicGpKenwyMj/8jW9fAeydNxDyxPBQPHe/qNTJanwKBce9WrVx87dqxcFwCuTbXA8hRscMOLjo5WnAB2YE3egctgeQoimEw5kukvVFBYnoLJgAED0DmxsbG42wUYaxwW6Gcr2JR34yZYnhjHYHkKHvSNVFJSkoOZWmBNCfVMLQxTwLA8eRITExMXF+eUNhGwBpuc544pEijsPQXM+vXrz58/LxVmZ2crnCVYguWJ8QmWp8A5fPhw1apV+/Xrp48/RS/3ig8zHAQ2Fe17A90huAiWJ8YxWJ4coVevXsWLF4dIxcfHL1my5JdffgneSHR5h/ssT/pY4AIpYoFqF0LbsLaoRRlXTfqh4PGyQ2xheXKEK1euUNC0kiVLVtbo0aOH50h0BJd3uM/y5BnwBOhj9VqH0Lao9bQcrlHGVct+KHi87BBbFJYn7xBZ8NauXfvyyy+npKTgiqKSvn37jh49WsR6JujzJv3X407h8g73U56g6011zJ8/n2qtQ2hb15LlsI8yrtr1Q8Fj3Xveo7A86diyZcusWbNSU1PFU6SnnnqKvu7GeKESXIdPP/00dEc8nMaMAd4TpnUU5Kt06dLwnv7+978rHiPREVze4X7Kk9knu9YhtK1rJcuhG2VcDSzQuONRxlWve49WVfPzskaxlKdQD6jy008/fffdd7S8adOmt956C24ONIhKsBwVFYX/qYjnOW3atD59+owcOVLENcd/6vTp07RsAbqouEZ0dDSEDK4WPxo3wEKeypcvP1cHfUBrHULbulb1kKfQjTKOKnqJzr9A445HGVe96z3RIRbnZY1iLk+Zbg1HB8XBxAp7PHjwIJVkZWVB2aEsS5cupZIXXnhB0a4EKA6VQDWSkpLQUbiTUQn+xceOHbt8+TKt+k1ubi6GQPPmzXGzEYX8YoEBFvIkQePWOoS2da2qk4NQjzKuai+8+R1oPNPpKOOqd70ndYjheVmjmMuTI8F8Mfi///57WsbpQw5wDxPJMvfu3TtLAwtUgk7r378/hGbx4sVUkp6eDh+nbt264mMOCE2TJk3uuuuuCRMmUMm///3vSZMmwY5INlXA2TcvXrwoF2mvZeL/5fhrmbAZVq9l0qDFlLiTDsoTZR1C27pWNRK+0I0yrgYQaNzxKOOqd70ndYjZeVmgmMuTf6kQxo8fT5ci/D5FE2Lx1OaZZ55B38LBxD+OSuDz9tFAD1PJunXrMAWD0IgpGHwliFooZkwgfxxq65RCwQ6sKaH+UYuhPBk+e7IOoW1dq+b3nkI9yrjqb6DxYEQZV73rPalDzM7LAsVcnhzxnoo4pNGYVaSlpQX4STAs0OwENuXduAkn5Um1C6FtXWttuYEXobINw2+LWkN5Cl6UcdWvQOPBiDKuetd7UodYnJcZirk8Zbr12VNogfuQCHkaILDjZr+J8FOeFO1HcYEY29YhtK1rreXJm1DZhuG3Ra2hPKlBizKu+hVoPBhRxlXvek90iO15maGYy5Ma+r/cuQcOR/cbmZbypAfXsWhgHULbotZanrwJlW0YflvUmslT8KKMq34FGnc8yrjqXe+JDvHmvAxRLOXJG1ieGD0+y5OXWITQtq01w8tQ2Ybht20JRpRx1d9A445HGVe97j2B9XkZwvLEOEuw5IkJRqBxyc1xGyxPjLOwPAWLYAQad22UcYLliXEWlqdgUdQCjassT4zTsDwxjsHyxDiLvTwxTAHD8sQQ9vLE3hPjJQp7T4yjsDwxjsHyxDgLyxPjGCxPjLP4I0/ffvvtmjVrZs6cmZ6evmrVKi9jlbkZ74NtBzsAeUhHH2d5YpzFZ3nas2ePFCRbyYvf5kKeffbZhg0b3nfffXJFfrx/3VH60sXBAORhEH1cYXliHMVneaKv7StVqtSnT59Bgwbdf//9FSpU0KdCcBX0bmSDBg3kivx4GX1czS9PDgYgD4/o4yxPjLP4LE8UlFb//fq5c+coHJ11gO3Bgwd31eJkv/XWW82aNYuPj1+wYMGFCxfQvnHjxlC9Dz/8UGzoU2OzwNjJycn16tVTtNDDFFmNzkVE7M7IyGjVqlX79u29jD6u6uTJLAC52cFYd47f0cdVfwOQByP6uLU8ccQCxld8lifyF/A3NTUVGqF/PkIB/QwDbKt5IYdEIBFF8xRat24tVsuVK3fw4EEy5X1ji8DYGEuiPUHOCI29unXrUmAASJg0Gs2ij6u6mHmGAcgtDsaicwKJPq7mnY6vAcipb52NPq6Yy1Mmx3tifMdnecI8jkY1gWHz6KOPUhpOiwDbap7iYGCvXbsWzggZwSQRt3dMbciamMt42dg6MPaxY8d69uyJ1ejo6EMaFI2Axp6ihUPKysrCCepHo0X0cTV/PBkpALn1wVh0TiDRx9W80/E1ALn34X2tz0uPYi5PHC3TQTje029kGskTWL16dWJi4g033CCuNsy2qMoswLaapzj33HMPrVK8tB49etAq3fZp6Hrf2DYwtuGzJxp7TZo0kUpoNFpEH1c9wl3pA5DbHoxZ5wQSfVzNO3hfA5B7L0+25yVQzOXJkVjjYMaMGVRCscYBhJ5KJk+e3LFjR2wLI1Sybt06+H2YGotUTqdPn8YNCYMTck8loUV6ejrutdQVAQI7sCbvwGX4I0+CnTt3NmvWTNHu1RSh3SzAtpqnOGK+IA0PzN2wOmLECJ8a2wbGtpAnIXaihHZnEX1ctQxAbnswZp0TSPRxNe/gfQ1ATl3qbPRxxVyenPKerly5QguUqQVgKyqBFr/33nuzdJla1qxZA3mCtIlMLUuWLLnjjjsgasOHD6eS+fPnYzUmJkZIIbaCnzhal8Pu5MmT2BH+y7QaVOACw72VSzXw30fnxMbGjh07NsBY47AAO7AmMta4E5/lKSUlRTwnBjRaMH7EoxCzANsNvFMcnxrbBsamXBRw9ESt6vFgRSqxiD6uWgYgtz0Y1bxz/I4+ruYdvK8ByKmHnY0+rpjLU6Zbnz398MMPkB7cIaBuVILzev755yFPK1asoJKJEydCwqpXr46+pZI333wTjjM8tY8++ohK9u/fj8OmB4tU4h85OTlwdTEz+PHHH/Xl9OwyKSnJwUwtsKaEWaYWUgrcbdq2bUsCrOhu3ap5gG0vFcfXxtaBscVYbdSoESYjNKKs5Uk1jz6uerz3JAUgtz4Y1bxz/I4+ruYdvK8ByIMRfVwxlyc1vH65wyl8/PHHGNgHDhygEkwh4aXius3IyKCSF198ESXoK7hjYiv8R06cOEGrZgwePBjTEVwPwtRVLc9dXFycU9pEwBpshlWeu6FDh9Kv9UTx4sUxLyAfW2AYYNt7xfGpsXVgbNyLOnfuTMNSyfvRylaezKKPqx7ypOYPQH7w4EGLgyEMO0f1N/q4mnfwvgYgD0b0ccVSnrwhVOTJG+gBNpxfkYM3LS0Nt406derMmTOHSjCj7KMlOhcpPyEZ+AdhOoJOhhsF+cBsnbMEG2AoTwQGMAYAOs4zprVqF2A7GPgRGNuWkIg+ruaXEp8CkDsefZzlyVfwv4YLBt8WNycq6devH/zTYcOG0Rs8uBNHRkaSOy8e4zoIbCrac4D8x+UW/JQnM4IRYDtsCFLneDqDhQXLk1O8++674hU2AZwvub8CxuUd7rA8BSPAdtgQpM5xTwByheXJCT799FN6fIHZNKbzDzzwAL0W69NI9BKXd7jD8lQEA2x7T9h3DstT4Hz77bfly5eHRzxy5Egx4/NjJHqJyzvcYXliijIsT46Ae5hUEryR6PIOt5cnhilgXDtaCgt6H4UfjecjeJrNhCUKe0/BgV8sMIDlifEJlqfgERMT07hxY8dfy4TNsHotk2HMYHkKHvRRS//+/Z1SKNihT77C6qMWhjGD5SmoUNiGuLi4tLS0AD8JhgXYUbSAX/Ju3ITP8kS5AIjPP//84MGD4mNgqXbDhg379u3T14oGFqkEhIUvvvhi69atnjHP9LsQUMApAnYWL178zjvv4N+gL9cT0hkHXAvLU7CBpyM+RQoQ2HGz30T4LE9SwCNFi8Q4ZcoUs9rrrrsOQiBtbpFKwNMC+vHll18WMufZAIhg582bN9eXlytXLjU1laqIMMg44FoUlqcCgcPR/UamuTyVKlWqffv2d911V0REBA3yRYsWidqyZcs+/vjjiYmJkCGsli5dWoSm1suTYSoBalCyZMmmTZtCuSh2LejatSsplL6BYP78+bR5vXr1sPrcc8+NGDFCxAAQgSXDI+OAa1Es5SmcIhYwBYOf8iTcnzVr1pAEUBQhqVbEMxFJUEQDs1QCkoXdu3cLhwhzMc8GEpjoieW5c+fShuPHj6cSvzMO+JduQA1OxgHXopjLU6Zb4z0xbiZQedq3bx9dc926dRO18EfoCRzFCSpfvrzkPZmlEhAN9OqDBrQLiu1LDWBzrg7DoAIiCi15doFkHCAd8TXdgBqcjAOuRTGXJ6eiZTJFCj/lCfrywgsvYA5Fz/8BZWGiWj3FihXTT530DaRUAvoGknNEflZ0dLRoICFpnKo9cYfQKFrUJPrSLZCMA6QjvqYbUD0iVVnIk/cZB1yLYi5P/sUaHzVqFF2KcFq7d+8+aNAgoVxqYEEpmZDAT3nSAwHq2bMnzXSEeCUnJ2NMUjjNMmXKYA5ouLk+lYC+gSRPFGoWciMalC5dupMOSrQngKMEvwPNMEsSVYFkHCAd8TXdgOqLPHmfccC1KObyFKD3hH/iwoULJ0+enJWVRSWpqam4Pdx4440op5Ls7OzTp09f24YJffyUJ/Kexo4dO336dH3ybklccnJyaCqUmJgoNfBMJWBoAcAZoZYPPfSQYQMJHPYf/vAHtIFY6NNVBpJxgHTE13QDanAyDrgWxVyegvHs6X//+x/+a7jGaDUtLQ33FfwXlixZQiWoPXPmzLUNmFDDT3kyUwepFnM3UgRPeVI9Ugl4Njh27FhGRgbN7ABlBrY+ALgz9GMi5l+eLzT5nXGAdMTXdANqcDIOuBbFXJ7UgvrlDv+Fn376iZZTUlJwe0CfY0pOJcePH//vf/97rTXjboIiT/CYMAIxsaK8SVCoxYsX6xuIzaVUAqKBov32TwtkQby+ZH0AQstwF62Yh3jM4XfGAdIRX9MNqMHJOOBaFEt58obA5ckT3FFE1pOEhARck7GxsQcPHqQSVis3ExR5EsCRadq06bRp06QG+s31qQSgUMICRjKmkJjpYIRjfmdhQY+QJz0Y7aKBfxkHSEd8TTegBifjgGtRXClPEpgSwqkXqhQdHY3/wsMPP/zdd9/lb8gUPj7LU3jga8YBvY74lG5ADULGAdcSEvIk8euvv8KnnjNnDhaweunSpSZNmiQmJk6ePJlKmEKkiMqTr0huDmNIKMqTxOXLl3ft2jV16lRMz6nk4sWLQ4YMeffdd0WeTqbAYHnyCvekG3AzYSBPnkCeXnvttW7dunXt2pVK4HrT04b8DRnnYXliHCMs5cmT7du3t2nTJjIyUkQj4efrQcJenhimgHG5PBGYBn799de0PG3atCpVqnTs2HHlypX5WzEBYS9P7D0xXqIUDe/JkLNnzy5btmzDhg20OnXq1OTk5KVLl37zzTf5GzI+wPLEOEZRlieJXbt2jRs3rlOnTsKf2rhxo8hbZ8GcOXMOHDggl+aH4z39RibLE+MLLE8WjBgxol69etWrV9+9e7dcpyMnJwdt3njjDblCIz09PTo6WsyCAwF2YE3egctgeWIcQ2F5suPUqVPiOXrDhg3bt28/ZsyYH374Qd9m2LBhivaZwYULF/TlAwYMQHlsbOzYsWMDjDUOC/S5Pmzqd+E2fJYn22ji1qxfvx5z8ocffjghIQEOsFztYjg8uS0sTz6Rm5uLqV9KSsrly5evas/aR48evWbNmqNHj0ZERJQoUaJy5cqrV6+mxpSpJSkpycFMLbCmhFmmFumzFUX7UNbLDy+ysrIogEHx4sXLlCkjYuy6HA5P7iUKy1MAfP/998OHD4+Pj09LS8NNiAI8lC1bduDAgZcuXYqJiYmLi3NKmwhYg82wynNH8kSxxlu2bElRJStWrCgi21qQmpqqaKGaQigCJIcn9x6WJ0e4cuUKdEp8egmFog/XOUtwPizkSXyRK8I2ifC1qknA7JEjR950002KJm0Ubo0+WzNsTIgI3xkZGa1atRLR4Mw2Ee3nzZvXunXrpk2b4t+sv+G899573bp1w6y7cePG3bt3x3xNVJnZ9Ds8uepvhPLQDU+uWMpTwQRUCXWgFPg/6sN1iGwgZlFeA2H58uWKFhdIPg53EKg8DR48WNEcIjEszQJmt2nThsoFEA6zxmSKhiJuHRRIoF69ehb2RXsRC4UQkVjId1O0SACRkZFYmDp1qvUxBxKeXM07Hl8jlIdueHLFXJ4ygxCOLvzA/A7XCS4GXPO4n+FGNWHCBPQGbreKx0h0BJd3uJ/yBD164IEH0IMlNDBbplqLgNlYpjSn6P1DGhaNyRoNRUULn5SVlYUjsd6E2uMfvGzZMtyFbrzxRqxiBqo/MKyiStUedcN/sT7mQMKTq3nH42uEcu/j/1ocOTUuYBRzeQowmG/RQcTS02M4Eh3B5R3upzzpwaRGJOO1Dpj99NNPK9qDKm8aq3lDsUmTJrRquwm1x0SJGvfu3RurUVFR+g2hOMIaYWEzkPDkat7x+Bqh3Ht5sjhyalzAKOby5EcqBHjBM2bMkC/KIonhSHSE8JQn+Oc7dux466234EYpOkWwDpgtyZN1YzVvKPbo0YNWbTeRJj7wjRUtKqZ+w0yPaYWFzUDCk6t5x+NrhHKSmFAMT66Yy5Mf3tPJkydFpPDJkycvWbLkl19+0V+fRQfDkegI4SlP4tnT0KFD6YJbvny5ahcwW5In68aqh9yodptYyJPYUDxjBrj69VWGNv0OT67mHY+vEcobhGx4csVcnjIDe/a0YsWKNm3a1KpVCxNYqaoogAtGyRtizhLmj8aPHDlCqQf+/Oc/U4lFwGxJnqwbqx5yY7uJhTyp2mNsbXQoOIW+fftiwItH4xY2/Q5PruYdj68RykM3PLliLk+qE7/ciQDhcKOKlE5lZ2cr/GKBhDfypOoSrqxatUq1DJjtKU8WjVWPoWi7ibU8YbLQq1cvmo0qWva9hQsX2tpU/Q1PruYdj68RykM3PLliKU/eYC1PAnRR9erV+/Xr59px5Ti4JHANOP5aJmyG6muZgbiUPgXM9qkx4ccmBG0IjfDMe25t09fw5Gp+KfEpQnmIhicPXJ68n2tcvHgR3iJ8MbkiTJmlfdTSv39/pxQKdmBNCd2PWoLnUhYRDL2/MCZwefJ7rjF9+nRIvFwaXtB7OXFxcWlpaQF+EgwLsKNor9fJu3ETVvJ0VUuz4/iXPkWHohahPEB5CuQTsOHDh1etWvX//u//wju9CjwdMfEPENhxs99E2MgTuZQOfifNhDFKAPIU+Af0OTk5b7/9tlwajnA4umuQSxl4lBkm7FG0H1J8hcIPOTvXmDlz5rRp0yhQCRO62MvTVUddSoYxxNm5xrZt2+6+++6bb7756NGjch0TOnglT0TgLiXDGBKkucYnn3xy6dIluZQJHXyQJ4YJUdatW/fYY4+dPHlSrmDcDcsTE/58//33I0eOrFat2rJly+Q6xsWwPDFFha+++urs2bNyKeNiWJ6YIse5c+dat269fv16uYJxGSxPTFFkwYIFUVFR//rXv+QKxk2wPDFFlP/+97/WX88sXbpULmIKFpYnpqjz66+/tmvXbubMmdIHMRERETt27NCXMAUMyxPDXN26dWt8fHzbtm31hYoWjScnJ0dfyBQkLE8M8zsHDhzQrypakMUWLVr8/PPP+nKmwGB5YhgZeiZFX9vAq3rkkUfkFkyBwPLEMNf48ccfP/vss+HDh990000UBzUyMjI2NnbMmDFyUyb4sDwxzO9Am0RKXj21atWqUqUK/5BX8LA8Mcw1Dh06tGDBgjfeeGPo0KEdOnS47bbbrr/++vLly0dERJQtW3bq1Kny18yMj/j0+TfLE8P8xowZM6Kjo2XHiQkC6Of09HT5H2AEyxPDXKVAnRxzMdhQ6EH0s6KldZD/DR6wPDFFHfhNCkesLkBE4GZbH4rliSnqcL6PgofSXqDn5X9GfliemCKNYba0PXv2rNPIyso6evSovsoPXnzxxbffflsu9cDLZt6Ds9i2bZtcasT7778PdyYhIWH37t1yXdDwJmkYyxNTpDHMNfvII4+ULFmyatWqFStWRG3Lli337t2rb+ATDz300ODBg+VSD7xsZsbf//731NRUfQnOolWrVvoSQyDBpUqVSklJmTBhwpEjR+TqoOFNylWWJ6ZIk5mZqWgJZvQjRz+wd+7cWadOnfbt2+sbuBAc4YABA/QlXsrTyy+/fMstt8ilwecDLxLWszwxRRpbeQLJycnVqlXT1auLFi2CHDRq1KhLly6ff/65KF+yZMl9992H0d66devXXnuNCjGLmTJlCi2PHDly+vTpL730UtOmTVu0aCHKpWaqyS6w+YwZMyZNmtS8efP4+HjRHvuqWbNm/fr1u2ocOHBAzX8WZhtiRomjrVy5MrYS6oZabHjrrbc+/PDDUGcqdByWJ4axwRt56ty5c4MGDcQqRm9kZCRmUu+9994zzzxTrly5jRs3ovz111/HLOmpp55auXIltACiRu0feOCBxx9/nJbbtGlz3XXXweDSpUthAe2hVp7NzHaBzWvXro1p4Pz580eNGlW8eHE0QPm6desaN24MOZujcfr0aTX/WZht+NlnnyUkJERFRWErHBJKxo0bh91BtrB6//33Q5ePHz9ORpyF5YlhbDCTJ4zYF154YfTo0XBeSpcuPXv2bKr65ptvqlevjgmRaNyrV69u3bpduHChSpUqw4cPF+UCSZ5gOTc3l1aHDh164403Ss3MdqFqm0OGvv32Wypv166dsGw9ubPYEOeIKlrGruFJ4cTF6g033JCSkkKrzsLyxDA2mMlT1apVoRcYxuXLl4cTAfWhqk2bNqF937594dT885//xNBt27Yt5kfwblBOPo6EJE+JiYmiasWKFcWKFTt79qy+mdkuaHO9BvXr169jx460bCtPZhvq5QlTOewaByBa9u7d+9577xWrDsLyxDA2mMmTGNj79u3DBOfpp5+m1bVr16I9vJ7ROl577TWyY/ikRpKn/v37i6pPP/0UWx07dkzfzGwXtLmYMwK0x1a0bCtPZhuO1slTVlYWdv3ll1+Klk888cSdd94pVh2E5YlhbLCVJ/Dqq6+WLVuWnjcfP368ePHiGRkZ11prnDhxAuWzZs2SylUPeQKiatKkSRUrVpSame1CtVQZLCQlJYkq1S95On36NLy5efPmiZbx8fF6d89BWJ4YxgZv5On8+fO1a9cWg//hhx+OiooS87gtW7asXLkSC927d69Xr97mzZtV7anNxx9/TA0keSpRosTcuXOxvH//frQX7zrpm5ntwkJl4JS1aNHi8OHDZ86coWdMfsgT6Nat26233nro0CEsT5s2DWoFb07UOgjLE8PY4I08gQkTJpQpU+Y///kPlnNych599NGSJUtWqVIlIiICfydOnKhqrseDDz6I8YzJYOnSpcUjG0meHnvssbi4OLSBi4R506lTpzyb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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p>This list may be expanded in future versions of the specification.</p>
+<h4 id="keylabel-recommendations"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2.1</span> KeyLabel recommendations<a class="headerlink" href="#keylabel-recommendations" title="Permanent link">¶</a></h4>
+<p>Although not required by the specification, <code>KeyLabel</code> should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.</p>
+<p>Dependent upon the encryption method the following formatting rules are used in the reference implementation:</p>
+<p><strong>1. For machine parsable text <a href="https://datatracker.ietf.org/doc/html/rfc2397">data url</a> format was chosen, that starts with <code>data:</code></strong></p>
+<pre><code>data:[&lt;mediatype&gt;][;base64],&lt;data&gt;
+</code></pre>
+<p>The <code>mediatype</code> can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. <code>;base64</code> encoding is optional and means then that Base64 encoded has been applied to the <code>&lt;data&gt;</code> part.</p>
+<p><code>type</code> and <code>v</code> fields are required, rest of fields are <code>type</code> specific.</p>
+<p>Examples:</p>
+<ul>
+<li>Smart-ID/Mobile-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
+Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
+<li>Password, with an integrated password manager - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.</li>
+<li>Symmetric key - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;FILE=~/folder/secret.pem&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.</li>
+<li>Certificate - FILE=~/folder/filename&amp;CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.</li>
+<li>ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&amp;cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined</li>
+</ul>
+<p>Known fields are defined in Appendix: <a href="../appendix_d_keylabel/">KeyLabel field specification v1</a>.</p>
+<p>Machine-readable <code>KeyLabel</code> examples:</p>
+<ul>
+<li><code>data:,v=1&amp;type=ID-card&amp;serial_number=PNOEE-38001085718&amp;cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718</code></li>
+<li><code>data:application/x-www-form-urlencoded,v=1&amp;type=ID-card&amp;serial_number=PNOEE-38001085718&amp;cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718</code></li>
+<li><code>data:application/x-www-form-urlencoded;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4</code></li>
+<li><code>data:;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4</code></li>
+</ul>
+<p><strong>2. The second format for <code>KeyLabel</code> is free text format and it doesn't start with <code>data:</code></strong></p>
+<p>This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used.</p>
+<p>Free text <code>KeyLabel</code> examples:</p>
+<ul>
+<li>"131:40:16"</li>
+<li>"kevade"</li>
+<li>"poem"</li>
+<li>"password manager, key: hello.cdoc2"</li>
+</ul>
+<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> Capsule types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
+<p>ECC public key capsule. The recipient is identified by ECC public key <code>RecipientPublicKey</code>.</p>
+<pre><code>ECCPublicKeyCapsule = {
+    Curve              = :enum(secp384r1)
+    RecipientPublicKey = :byte[]
+    SenderPublicKey    = :byte[]
+}
+</code></pre>
+<ul>
+<li><code>Curve</code> – identifier of the elliptic curve employed.</li>
+<li><code>RecipientPublicKey</code> – recipient’s ECC public key, used by the recipient to establish the corresponding recipient record.</li>
+<li><code>SenderPublicKey</code> – sender’s public key used by the recipient to derive the KEK using ECDH.</li>
+</ul>
+<p>RSA public key capsule. The recipient is identified by RSA public key <code>RecipientPublicKey</code>.</p>
+<pre><code>RSAPublicKeyCapsule = {
+    RecipientPublicKey = :byte[]
+    EncryptedKEK       = :byte[]
+}
+</code></pre>
+<ul>
+<li><code>RecipientPublicKey</code> - recipient’s RSA public key, used by the recipient to establish the corresponding recipient record.</li>
+<li><code>EncryptedKEK</code> -  key encryption key encrypted with the receipient's public key.</li>
+</ul>
+<p>Server capsule. The receipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>.</p>
+<pre><code>KeyServerCapsule = {
+    RecipientKey = Union(:EccKeyDetails | :RsaKeyDetails)
+    KeyServerID         = :string
+    TransactionID       = :string
+}
+
+RsaKeyDetails = {
+    RecipientPublicKey  = :byte[]
+}
+
+EccKeyDetails = {
+        Curve              = :enum(secp384r1)
+        RecipientPublicKey = :byte[]
+}
+</code></pre>
+<ul>
+<li><code>RecipientKey</code> – information on the recipient key, used by the recipient for authentication on the Capsule Server.</li>
+<li><code>KeyServerID</code> – Capsule Server identifier. The recipient must be able to use this to establish the Capsule Server’s network address and connect to the server.</li>
+<li><code>TransactionID</code> – identifier of the capsule sent to the key exchange server by the sender for transmission to the recipient.</li>
+</ul>
+<p>Symmetric key capsule. The recipient is identified by the label of the symmetric key held by the user, <code>KeyLabel</code>.</p>
+<pre><code>SymmetricKeyCapsule = {
+    Salt   = :byte[]
+}
+</code></pre>
+<ul>
+<li><code>Salt</code> – random number generated by the sender, used by the sender as input for the HKDF-Extract function.</li>
+</ul>
+<h3 id="format-extension"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.4</span> Format extension<a class="headerlink" href="#format-extension" title="Permanent link">¶</a></h3>
+<p>To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.</p>
+<h2 id="serialized-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Serialized format<a class="headerlink" href="#serialized-format" title="Permanent link">¶</a></h2>
+<p>The specification describes the implementation of the abstracted format using the FlatBuffers format.</p>
+<h3 id="general-description-of-the-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.1</span> General description of the format<a class="headerlink" href="#general-description-of-the-format" title="Permanent link">¶</a></h3>
+<p>The format consists of an envelope, which is essentially made up of a serialized and concatenated header, a message authentication code, and a payload.
+The message authentication code and payload are serialized using simple serialization.
+For the sake of extensibility and the necessity of transmitting messages identical to the header from the point of view of processing logic via the capsule server, the header is described here with reference to the FlatBuffers format.
+Aside from the header extension mechanism, the envelope used in this format also defines another point of extension.
+This point of extension is provided by the version identifier, set as 2 (byte value) in the specification. The identifier must be changed in the descriptions of new versions.</p>
+<h3 id="envelope"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.2</span> Envelope<a class="headerlink" href="#envelope" title="Permanent link">¶</a></h3>
+<p>The envelope consists of the following data elements, presented sequentially as bytes. The designation of the start and end of the envelope is outside the scope of the specification, insofar as the main and natural use case of the format is one where a CDOC file contains a single envelope.</p>
+<ul>
+<li>4 bytes: the string “CDOC” – format designator (prelude), UTF-8 encoded.</li>
+<li>1 byte: version identifier, set as 2 in the specification.</li>
+<li>4 bytes: length of the following header, big-endian order. Header length is a 32-bit signed integer, i.e. the maximum header size is 2 GB. For the sake of the simplicity of implementation, header size is limited to 1 MB (2<sup>20</sup> bytes).</li>
+<li>x bytes, where x is as defined above: serialized FlatBuffers header.</li>
+<li>32 bytes: header message authentication code (see section 6.5).</li>
+<li>The rest of the bytes, until the end of the envelope: payload encrypted using the method and key specified in the header.</li>
+</ul>
+<p>Table 1 presents an overview of the envelope structure.
+Table 1. Envelope structure</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>“CDOC”</th>
+<th>Version</th>
+<th>Header length</th>
+<th>Header</th>
+<th>HMAC</th>
+<th>Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length</td>
+<td>4</td>
+<td>1</td>
+<td>4</td>
+<td>Header length</td>
+<td>32</td>
+<td>Until end of envelope</td>
+</tr>
+<tr>
+<td>Start</td>
+<td>1</td>
+<td>5</td>
+<td>6</td>
+<td>10</td>
+<td>10 + header length</td>
+<td>10 + header length + 32</td>
+</tr>
+</tbody>
+</table>
+<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.3</span> Header and HMAC<a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
+<p>The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under <code>cdoc2-schema/</code>.
+The schema is described in two files and reproduced as appendices to the specification.</p>
+<ul>
+<li>
+<p><code>src/main/fbs/header.fbs</code> Description of the FlatBuffers header.</p>
+</li>
+<li>
+<p><code>src/main/fbs/recipients.fbs</code> Descriptions of recipient types; can be shared with schemas presented in other files.</p>
+</li>
+</ul>
+<p>The header, serialized following the FlatBuffers rule set, is written to the envelope, preceded a 4-byte length field as per the envelope description.
+The Header Message Authentication Code (HMAC) is computed as described in section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a> and written, bytewise, immediately after the header. The message authentication code algorithm and, consequently, HMAC length are defined in this specification.</p>
+<h3 id="payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.4</span> Payload<a class="headerlink" href="#payload" title="Permanent link">¶</a></h3>
+<p>Lastly, the payload is written to a container composed following the CDOC format, immediately after the HMAC. The format presumes that the end-of-payload indicator is defined outside the format, e.g. as end-of-file.</p>
+<p>Note that the end-of-payload indicator is purely optional: the true integrity of the payload is determined by whether the payload can be completely decrypted.</p>
+<p>The composition of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>.</p>
+<p>The encryption of the payload is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
+<h3 id="format-composition-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.5</span> Format composition procedure<a class="headerlink" href="#format-composition-procedure" title="Permanent link">¶</a></h3>
+<p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
+The following steps are needed to compose a CDOC2 container.</p>
+<ul>
+<li>Compile the list of all recipients.</li>
+<li>Generate FMK, HHK, and CEK.</li>
+<li>Compose the header along with all corresponding cryptographic operations.</li>
+<li>Compute the HMAC.</li>
+<li>Generate the payload plaintext.</li>
+<li>Encrypt the payload.</li>
+<li>Generate the serialized envelope.</li>
+<li>Securely delete the FMK, HHK, and CEK values used during the procedure.</li>
+</ul>
+<p>Generation of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>, <code>container.Tar.archiveFiles()</code>.</p>
+<p>Next, the cryptographic material used for the protection of the header and payload must be prepared. Generation and derivation of the corresponding keys (FMK, HHK, CEK) is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>container.Envelope.prepare()</code> and <code>container.Envelope()</code>.</p>
+<p>The list of all desired recipients must then be compiled and serialized, as the cryptographic methods used for ensuring the integrity of the container operate with an integral serialized header.</p>
+<p>The requisite cryptographic procedures described in sections <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a> and <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a> must be executed for each recipient.</p>
+<p>The HMAC is then computed as per section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</p>
+<p>Payload encryption is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>, <code>crypto.ChaChaCipher.encryptPayload()</code> and <code>crypto.ChaChaCipher.initChaChaOutputStream()</code>.</p>
+<p>The detailed serialized envelope format is presented in section <a href="#envelope">Envelope</a>.</p>
+<p>At the end of the encryption process, the employed cryptographic materials (symmetric keys, ephemeral private keys) must be securely deleted. Secure deletion significantly depends on the operational environment; in some cases (e.g. in JVM) it might not be possible. The developer must evaluate what options for secure deletion are provided by the employed programming language and operational environment.</p>
+<h3 id="format-parsing-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.6</span> Format parsing procedure<a class="headerlink" href="#format-parsing-procedure" title="Permanent link">¶</a></h3>
+<p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.</p>
+<p>The container parsing reference implementation is found in the function <code>container.Envelope.decrypt()</code>. This functions serves as the primary entry point into the decryption logic and its main purpose is to take the encrypted container provided as input and write all the files contained therein to the selected folder.</p>
+<p>The function does the following and all its alternative implementations must do the same while employing all relevant security checks.</p>
+<ul>
+<li>Parsing the envelope and decoding the envelope header.</li>
+<li>Decrypting/deriving the KEK.</li>
+<li>Decrypting/deriving the container-specific keys, i.e. FMK, HHK, and CEK.</li>
+<li>Checking the HMAC.</li>
+<li>Decrypting the archive.</li>
+<li>Extracting files from the encrypted archive and writes the files to the selected folder. In stream processing mode, decryption and extraction form a single operation.</li>
+</ul>
+<p>The envelope parsing and header decryption reference implementation is found in the function <code>container.Envelope.readFBSHeader()</code>.</p>
+<p>The header must be parsed using the FlatBuffers library, utilizing the root type fbs.header.Header (in the reference implementation, this is implemented as the function <code>fbs.header.Header.getRootAsHeader()</code> generated from the FlatBuffers schema).</p>
+<p>Parsing of the complete header is implemented as the reference implementation function <code>container.Envelope.deserializeFBSHeader()</code>.</p>
+<p>A recipient (Recipient) corresponding to the party processing the container must be found in the header and the KEK, FMK, and HHK must be derived or decrypted.</p>
+<p>Recipient identification methods corresponding to each encryption method are described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. In case no recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm must return a “container not meant for opening by the processor” error and terminate.</p>
+<p>KEK computation is described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class <code>crypto.KekTools</code>.</p>
+<p>FMK decryption is described in section <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a>,  <code>crypto.Crypto.xor()</code>.</p>
+<p>HHK derivation procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>crypto.Crypto.deriveHeaderHmacKey()</code>.</p>
+<p>The HHK and the original serialized form of the header must be used to check the HMAC using <code>container.Envelope.checkHmac()</code>.</p>
+<p>After a successful message authentication code check, the payload may be decrypted. In case the HMAC check was unsuccessful, the algorithm must return an error and terminate.</p>
+<p>Decryption requires deriving the CEK. The corresponding procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>Crypto.deriveContentEncryptionKey()</code>.</p>
+<p>Payload decryption is carried out in three stages: decryption, cryptogram authentication, and unpacking the decrypted archive.</p>
+<p>Decryption and cryptogram authentication are described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
+<p>Archive unpacking is described in section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a>.</p>
+<h2 id="unencrypted-payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Unencrypted payload<a class="headerlink" href="#unencrypted-payload" title="Permanent link">¶</a></h2>
+<p>This section provides a more detailed description of the format and processing of the unencrypted payload.</p>
+<p>Main features of the format:</p>
+<ul>
+<li>The transmitted files are archived using the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">POSIX tar format</a>.</li>
+<li>The archived files are packed using ZLIB, standardized in <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">IETF RFC 1950</a>.</li>
+</ul>
+<p>The container payload plaintext is formed as follows: the transmitted files (or file) are added to a POSIX tar archive which is then packed into the ZLIB format as a single bloc.</p>
+<pre><code>Implementation note: the DD4 client uses the relevant Qt wrapper functions to call the zlib library. Since these functions cannot be used in streaming mode, the specification recommends replacing the use of Qt wrappers with streaming mode zlib calls. This becomes especially crucial in storage cryptography where data volumes may be very high and encryption of the data in memory buffers in one piece may be unfeasible.
+</code></pre>
+<h3 id="requirements-for-posix-tar-archive-assembly"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.1</span> Requirements for POSIX tar archive assembly<a class="headerlink" href="#requirements-for-posix-tar-archive-assembly" title="Permanent link">¶</a></h3>
+<p>Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC2. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.</p>
+<ul>
+<li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">Standardized POSIX tar dialect</a> is used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.</li>
+<li>All file names are UTF-8 encoded.</li>
+<li>
+<blockquote>
+<p>100B filenames supported by <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">PAX extended header</a>.</p>
+</blockquote>
+</li>
+<li>
+<blockquote>
+<p>8 GiB files supported by <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">PAX extended header</a>.</p>
+</blockquote>
+</li>
+<li>Filenames are added to the archive without basenames.</li>
+<li>Permission bits and other security attributes added to the archive are ignored (can be written but not read).</li>
+<li>Only normal files (type 0) are added to the archive.</li>
+<li>Files are processed as binary files.</li>
+</ul>
+<h3 id="requirements-for-payload-unpacking"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2</span> Requirements for payload unpacking<a class="headerlink" href="#requirements-for-payload-unpacking" title="Permanent link">¶</a></h3>
+<p>The payload format is chosen to enable unpacking in streaming mode. This means the encrypted payload does not have to be loaded to memory in one piece. The payload can be decrypted, unpacked, and files written to the disk in plaintext sequentially.</p>
+<p>When data is processed in streaming mode, the decrypted data will be used before encryption checksum verification. Unpacking must be done with account of the possibility that the payload could be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker must always be accounted for, even if the encryption checksums match.</p>
+<p>When processing data in streaming mode, errors encountered in processing the plaintext (packing or archival errors) cannot be handled before the entire payload has been processed and the cryptogram authenticated. If cryptogram authentication fails, this must be reported as an error. Errors encountered in plaintext processing can only be reported if cryptogram authentication was successful. In case of an error, all created files must be deleted.</p>
+<pre><code>Below, we have described two types of attacks that software based on this specification must be able to deploy countermeasures against.
+The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
+</code></pre>
+<p>Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.</p>
+<p>Attack 2: The attacker may manipulate the attributes of the files in the tar archive – file names, permission bits, security attributes and types. In case such a tar file is unpacked without additional checks, the attacker may be able to overwrite existing system files, add new files, create files invisible to normal users but necessary for certain attacks, etc.</p>
+<p>Since the CDOC2 container is not meant to serve as a universal archive format but simply provide a means for the simultaneous encryption of multiple files while retaining original file names for the user’s convenience, a number of rules have been set out for the unpacking of tar files which will ensure protection from the forms of manipulation described above if enforced:</p>
+<ul>
+<li>File creation must ignore permission bits, file owner and group identifiers and other security attributes found in the archive – all files must be created non-executable, owned by the user running the application, and readable and writable by this    user.</li>
+<li>Only normal files (type 0) must be created. If the archive contains a file of some other type, abort unpacking, delete files written to the disk before this point, and return an error message. A correctly implemented CDOC2 client application should not create files containing files of other types.</li>
+<li>Validate file name safety before writing a file to the disk. If a file name containing unpermitted symbols is found, abort unpacking, delete files written to the disk before this point, and return an error message.</li>
+</ul>
+<p>File name safety verification serves the following purposes:</p>
+<ul>
+<li>Prevention of <a href="https://capec.mitre.org/data/definitions/126.html">path traversal attacks</a> and creation of files outside the folder selected by the user.</li>
+<li>Prevention of the creation of files with names containing special symbols, inaccessible or difficult to access for the user.</li>
+</ul>
+<p>Different operating systems have different requirements for file names. The pragmatic solution is to use a tried and tested method for validating file names received from untrusted sources. Using multiple validation mechanisms is advantageous.</p>
+<p><a href="https://github.com/thombashi/pathvalidate">Pathvalidate</a> is a comprehensive Python library for file name validation – similar checks must also be used in other programming languages.</p>
+<p>The <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream">SEI CERT coding standard</a> describes an additional method for preventing path traversal.</p>
+<p>List of requirements for file names used in the reference implementation container.FileNameValidator:</p>
+<ul>
+<li>Cannot begin with a space or hyphen.</li>
+<li>Cannot end with a space or period.</li>
+<li>Cannot be any of the following: CON, PRN, AUX, NUL, COM[1-9], LPT[1-9].</li>
+<li>Cannot contain any of the following symbols: &lt;, &gt;, :, \, /, |, ?, *.</li>
+<li>Cannot contain <a href="https://en.wikipedia.org/wiki/Control_character">control characters</a>.</li>
+<li>Cannot contain the Unicode character Right-To-Left Override (U+202E).</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Encryption Schemes" class="md-footer__link md-footer__link--prev" href="../ch02_encryption_schemes/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                Encryption Schemes
+              </div>
+</div>
+</a>
+<a aria-label="Next: Cryptographic Details" class="md-footer__link md-footer__link--next" href="../ch05_cryptographic_details/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Cryptographic Details
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+<script src="../../javascripts/katex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+</body>
+</html>
