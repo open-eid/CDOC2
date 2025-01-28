@@ -141,7 +141,7 @@ Each CSS-based Capsule type describes a specific recipient identification and au
 This version of the specification defines two CSS-based Capsule types:
 
 1. ``KeyServerCapsule`` -- public key based authentication and access control
-2. ``KeySharesCapsule`` -- national identity code based authentication and access control
+2. ``KeySharesCapsule`` -- authentication and access control based on ETSI natural person semantics identifier (national identity code) or private company issuer identifier.
 
 This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.
 
@@ -155,6 +155,37 @@ After successful authentication, the server reads the client’s public key from
 
 ### The ``KeySharesCapsule`` authentication scheme
 
-In this scheme, the recipient is identified by the national identity code (*isikukood*). Identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``.
+In this scheme, the recipient is identified by ETSI natural person semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``. 
 
 The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch05_ID_authentication_protocol.md).
+
+The two following `recipient_id` naming patters are supported:
+
+**ETSI natural person semantics identifier**:
+
+The identifier must adhere to the following pattern:
+
+- Starts with `etsi/` identifier scheme in order to separate from other identifiers.
+- 3 character natural person identity type reference; e.g. `PNO`
+- 2 character ISO 3166-1 [2] country code; e.g. `EE`
+- hyphen-minus "-" (0x2D (ASCII), U+002D (UTF-8)); and
+- identifier (according to country and identity type reference). E.g., in case of personal ID code, just ID code.
+
+All but the `etsi/` prefix are also defined in [ETSI EN 319 412-1, section 5.1.3.](https://www.etsi.org/deliver/etsi_en/319400_319499/31941201/01.04.04_60/en_31941201v010404p.pdf).
+
+Example:
+
+`ETSI/PNOEE-48010010101`
+
+**Private company issuer identifier**:
+
+The identifier must adhere to the following pattern:
+
+- Starts with `private/` identifier scheme in order to separate from other identifiers.
+- Vendor identifier; e.g. `PAS`
+- forward slash "/" (0x2F (ASCII), U+002F (UTF-8)); and
+- identifier (according to vendor reference). 
+
+Example:
+
+`PRIVATE/JIO/70000349`

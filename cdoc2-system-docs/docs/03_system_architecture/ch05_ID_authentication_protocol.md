@@ -81,7 +81,7 @@ In this section the details of the authentication protocol are explained.
 
 ### Authentication data
 
-In the generic protocol, there's a idea that Client signs a set of information, which expresses the proof of Recipient's identity and intent to download specific Capsule information. We will use the JWT standard (https://www.rfc-editor.org/rfc/rfc7519.html). Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
+In the generic protocol, there's an idea that Client signs a set of information, which expresses the proof of Recipient's identity and intent to download specific Capsule information. We will use the JWT standard (https://www.rfc-editor.org/rfc/rfc7519.html). Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
@@ -362,7 +362,7 @@ Protocol doesn't have a built-in protection against DOS attacks. When deploying 
 
 ### Formal analysis
 
-Even though we have carefully designed the protocol with security requirements in mind and it has been reviewed multiple times and it includes protection against common network attacks, we are not able to proove the security of the solution. 
+Even though we have carefully designed the protocol with security requirements in mind and it has been reviewed multiple times and it includes protection against common network attacks, we are not able to prove the security of the solution. 
 
 However, we can increase the confidence by using formal analysis methods. We have implemented the protocol flow as a model of ProVerif (https://bblanche.gitlabpages.inria.fr/proverif/) tool. ProVerif is an automated verification tool for cryptographic protocols, which works in the formal logic model Dolev-Yao and can mathematically verify and prove, if the protocol has some security properties, such as confidentiality, authentication, etc. Proving such properties may involve finding proof of not-existance of some other property and verification of all possible combinations. Therefore, using manual methods can be very time-consuming and doesn't usually give full confidence. 
 
