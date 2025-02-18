@@ -161,8 +161,8 @@ The `mediatype` can be omitted and is application/x-www-form-urlencoded if not s
 
 Examples:
 
-- Smart-ID/Mobile-ID - PNO=ETSI:{ETSI identifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
-Example: type=Smart-ID&PNO=ETSI%3APNOEE-48010010101
+- Smart-ID/Mobile-ID - PNO=etsi/{ETSI identifier} e.g. "etsi/PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
+Example: type=auth&PNO=ETSI%3APNOEE-48010010101
 - Password, with an integrated password manager - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.
 - Symmetric key - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
 - Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
