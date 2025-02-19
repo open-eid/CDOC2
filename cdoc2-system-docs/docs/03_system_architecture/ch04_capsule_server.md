@@ -1,10 +1,10 @@
 ---
-title: CDOC2 CSS
+title: CDOC2 CCS
 ---
 
-# CDOC2 CSS
+# CDOC2 CCS
 
-This section defines the CDOC2 CSS (CCS, herein also simply ‘the server’), what interfaces it provides to other system components and rules of use.
+This section defines the CDOC2 CCS (CCS, herein also simply ‘the server’), what interfaces it provides to other system components and rules of use.
 
 ## Introduction
 
@@ -19,8 +19,8 @@ Multiple CCSs may be used in parallel, operated by different organizations. Secu
 In the simplest case, the CCS operates as follows.
 
 1. The Sender generates a Capsule for a specific Recipient during encryption.
-2. The Sender chooses a CSS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
-3. The CSS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
+2. The Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
+3. The CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
 4. The sender adds the selected server’s identifier, transaction identifier, and recipient identifier to the container.
 5. The sender transmits the container to the recipient.
 6. The recipient finds information concerning the Capsule generated for them in the container.

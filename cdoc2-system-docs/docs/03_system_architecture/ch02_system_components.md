@@ -34,3 +34,4 @@ New endpoints for shared secrets supporting SID/MID:
 * [/shared-secrets/{transactionId}/nonce](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L136)
   Create nonce for transactionId (for authentication). [Authentication ticket creation schema](https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#nonsside-v%C3%A4ljastamise-p%C3%A4ringud)
 * [/shared-secrets/{transactionId}](https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L71) GET Shamir Shared Secret for transactionId
+

@@ -10,7 +10,8 @@
         recipients.RSAPublicKeyCapsule,
         recipients.KeyServerCapsule,
         recipients.SymmetricKeyCapsule,
-        recipients.PBKDF2Capsule
+        recipients.PBKDF2Capsule,
+        recipients.KeySharesCapsule
     }
 
     // FMK encryption method enum.

@@ -311,6 +311,7 @@ CSS server receives the compact SD-JWT presentation (`<Issuer-signed JWT>~<Discl
 5. Parse the `aud` value (something like "https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6") into components `serverBaseURL`, `shareId` and `nonce`.
 6. Verify that `serverBaseURL` is correct for this CSS server.
 7. Verify that this CSS server has a Capsule with identifier `shareId` and it is not expired or deleted.
+
 8. Verify that this CSS server has previously generated a nonce for this `shareId` and the stored nonce value matches with `nonce` component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds).
 9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subjectDN` from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".
 
