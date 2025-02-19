@@ -5,7 +5,7 @@ Failide krüpteerimine tugeva parooliga lisab täiendava kaitsekihi, tagades, et
 **Samm 1: Tutvuge parooli tugevuse nõuetega**
 Enne failide krüpteerimist on oluline teadvustada parooli tugevuse nõudeid. Minimaalsed paroolikriteeriumid on järgmised:
 
-- Pikkus: 18 - 50 tähemärki
+- Pikkus: 8 - 64 tähemärki
 - Sisaldab:
   - Vähemalt üks number (0-9)
   - Vähemalt üks suurtäht
@@ -16,12 +16,10 @@ Sul on kaks võimalust tugeva parooli valimiseks:
 
 a) Kasuta automaatset paroolisoovitust, et genereerida juhuslik parool. Nõnda loodud paroolil on järgmised omadused:
 
-- Pikkus: 18 tähemärki
+- Pikkus: 8 tähemärki
 - Sisaldab:
   - Vähemalt üks number (0-9)
   - Vähemalt üks suurtäht (A-Z)
-  - Täpselt kaks sidekriipsu "-"
-  - Täpselt 16 väiketähte (a-z)
 
 b) Loo käsitsi parool, mis vastab määratud kriteeriumidele. Soovitatav on kasutada paroolihaldurit tugeva juhusliku parooli genereerimiseks vastavalt eeltoodu miinimumnõuetele ja seejärel parool ka paroolihaldurisse salvestada.
 

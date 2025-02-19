@@ -1,5 +1,6 @@
 ---
 title: CDOC2 CCS
+title: CDOC2 CCS
 ---
 
 # CDOC2 CCS
@@ -17,6 +18,8 @@ The communication channel provided by the CCS is more secure than public channel
 In the simplest case, the CCS operates as follows.
 
 1. The Sender generates a Capsule for a specific Recipient during encryption.
+2. The Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
+3. The CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
 2. The Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
 3. The CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
 4. The sender adds the selected server’s identifier, transaction identifier, and recipient identifier to the container.

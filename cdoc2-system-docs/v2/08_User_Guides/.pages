@@ -1,4 +1,0 @@
-title: "User Guides"
-nav:
-    - 'Password Strength User Guide': password_guide.md
-    - 'CDOC2 Container Storage User Guide': container_storage_guide.md

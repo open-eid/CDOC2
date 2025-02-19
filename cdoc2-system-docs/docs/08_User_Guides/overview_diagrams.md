@@ -1,4 +1,4 @@
-# Juhend failide krüpteerimiseks tugeva parooliga
+# Overview diagrams
 
 ## CDOC1 VS CDOC2 format
 

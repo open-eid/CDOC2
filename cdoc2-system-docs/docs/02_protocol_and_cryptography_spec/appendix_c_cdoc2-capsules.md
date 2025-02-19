@@ -1,23 +1,23 @@
-# Appendix C: Key Capsules API, version 2.0 of cdoc2services API
+# Appendix C: Key Capsules API, version 2.1.0 of cdoc2services API
 
     openapi: 3.0.3
     info:
     contact:
-        url: http://cyber.ee
+        url: http://ria.ee
     title: cdoc2-key-capsules
-    version: '2.0'
-    description: API for exchanging CDOC2 ephemeral key material in capsules
+    version: 2.1.0
+    description: API for exchanging CDOC2 ephemeral key material in key capsules
     servers:
-    - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8443'
-        description: RIA test TLS
-    - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8444'
-        description: RIA test mutualTLS
+    - url: 'https://localhost:8443'
+        description: no auth (for creating key capsules). Regular TLS (no mutual TLS required).
+    - url: 'https://localhost:8444'
+        description: mutual TLS authentication (for retrieving key capsules)
 
     paths:
     '/key-capsules/{transactionId}':
         get:
-        summary: Get capsule for transactionId
-        description: Get capsule for transactionId
+        summary: Get key capsule for transactionId
+        description: Get key capsule for transactionId
         tags:
             - cdoc2-key-capsules
         parameters:
@@ -36,6 +36,12 @@
                 application/json:
                 schema:
                     $ref: '#/components/schemas/Capsule'
+            headers:
+                x-expiry-time:
+                schema:
+                    type: string
+                    format: date-time
+                description: Key capsule may be deleted by server after expiry time. Format rfc3339#section-5.6
             '400':
             description: 'Bad request. Client error.'
             '401':
@@ -45,11 +51,26 @@
         operationId: getCapsuleByTransactionId
         security:
             - mutualTLS: []
-    '/key-capsules':
+
+    /key-capsules:
         post:
-        summary: Add Capsule
+        summary: Add Key Capsule
         description: Save Capsule and generate transaction id using secure random. Generated transactionId is returned in Location header
         operationId: createCapsule
+        parameters:
+            - schema:
+                type: string
+                format: date-time
+            in: header
+            name: x-expiry-time
+            description: Key capsule may be deleted by server after expiry time. Format rfc3339#section-5.6
+            required: false
+        requestBody:
+            required: true
+            content:
+            application/json:
+                schema:
+                $ref: '#/components/schemas/Capsule'
         responses:
             '201':
             description: Created
@@ -60,15 +81,11 @@
                     example: /key-capsules/KC0123456789ABCDEF
                 description: 'URI of created resource. TransactionId can be extracted from URI as it follows pattern /key-capsules/{transactionId}'
             '400':
-            description: 'Bad request. Client error.'
-        requestBody:
-            content:
-            application/json:
-                schema:
-                $ref: '#/components/schemas/Capsule'
+            description: Bad request. Client error.
         security: []
         tags:
             - cdoc2-key-capsules
+
     components:
     schemas:
         Capsule:
@@ -97,7 +114,7 @@
                     * recipient_id is EC pub key with secp384r1 curve in TLS format (0x04 + X coord 48 bytes + Y coord 48 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
                     * ephemeral_key_material contains sender public EC key (generated) in TLS format.
                 - rsa:
-                    * recipient_id is DER encoded RSA recipient public key - RsaPublicKey encoding [https://www.rfc-editor.org/rfc/rfc8017#page-54](RFC8017 RSA Public Key Syntax A.1.1)
+                    * recipient_id is DER encoded RSA recipient public key - RsaPublicKey encoding [RFC8017 RSA Public Key Syntax A.1.1](https://www.rfc-editor.org/rfc/rfc8017#page-54)
                     * ephemeral_key_material contains KEK encrypted with recipient public RSA key
         required:
             - recipient_id

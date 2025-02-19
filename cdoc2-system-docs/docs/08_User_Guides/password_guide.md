@@ -1,11 +1,11 @@
-# Guide to Encrypting Files with a Strong Password
+# Guide to Encrypting Files with a Strong Password 
 
 Encrypting files with a strong password adds an additional layer of protection, ensuring that only you can access your sensitive information. It also has the advantage of not requiring access to a key device or any EID service via internet. Below is a step-by-step guide on how to encrypt your files with a strong password:
 
 **Step 1: Assess Password Strength Requirements**
 Before encrypting your files, it's important to understand the password strength requirements. The minimum password criteria are as follows:
 
-- Length: 18 - 50 characters
+- Length: 8 - 64 characters
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter
@@ -16,12 +16,10 @@ You have two options for selecting a strong password:
 
 a) Use the auto-suggest feature to generate a random password. The password will have the following criteria:
 
-- Length: 18 characters
+- Length: 8 characters
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter (A-Z)
-  - Exactly two hyphens "-"
-  - Exactly 16 lowercase letters (a-z)
 
 b) Manually create a password meeting the specified criteria. It is recommended to utilize a password manager to generate a strong, random password that meets the criteria and then store the password there.
 
