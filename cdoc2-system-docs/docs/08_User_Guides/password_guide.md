@@ -1,4 +1,4 @@
-# Guide to Encrypting Files with a Strong Password 
+# Guide to Encrypting Files with a Strong Password
 
 Encrypting files with a strong password adds an additional layer of protection, ensuring that only you can access your sensitive information. It also has the advantage of not requiring access to a key device or any EID service via internet. Below is a step-by-step guide on how to encrypt your files with a strong password:
 

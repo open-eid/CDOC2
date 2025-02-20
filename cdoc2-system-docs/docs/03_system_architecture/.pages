@@ -4,4 +4,4 @@ nav:
     - 'System Components': ch02_system_components.md
     - 'External Interfaces': ch03_external_interfaces.md
     - 'Capsule Server': ch04_capsule_server.md
-    - 'ID authentication protocol': ch05_ID_authentication_protocol.md
+    - 'Client authentication protocol': ch05_ID_authentication_protocol.md

@@ -39,9 +39,11 @@ Header = {
 
 A message authentication code is computed for the header (see section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code)):
 
+```c
     Checksum = {
         value = HMAC(HHK, Serialize(Header))
     }
+```
 
 ```plantuml
 @startyaml
@@ -75,7 +77,7 @@ Recipient:
 
 The recipient is described using the structure ``Recipient``. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of ``Recipient``.
 
-
+```c
     Recipient = {
         Capsule = Union(:ECCPublicKeyCapsule | :KeyServerCapsule | 
                 :SymmetricKeyCapsule | :RSAPublicKeyCapsule )
@@ -83,6 +85,7 @@ The recipient is described using the structure ``Recipient``. The format of the 
         EncryptedFMK = :byte[]
         FMKEncryptionMethod = :enum(XOR)
     }
+```
 
 The ``Recipient`` structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
 
@@ -98,7 +101,6 @@ The following capsule types have been specified to ensure the support of a varie
 - ``RSAPublicKeyCapsule`` – the recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
 - ``KeyServerCapsule`` – the recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
 - ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
-
 
 ```plantuml
 @startyaml
@@ -154,7 +156,9 @@ Dependent upon the encryption method the following formatting rules are used in 
 
 **1. For machine parsable text [data url](https://datatracker.ietf.org/doc/html/rfc2397) format was chosen, that starts with `data:`**
 
+```c
     data:[<mediatype>][;base64],<data>
+```
 
 The `mediatype` can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. `;base64` encoding is optional and means then that Base64 encoded has been applied to the `<data>` part.
 
@@ -193,11 +197,13 @@ Free text `KeyLabel` examples:
 
 ECC public key capsule. The recipient is identified by ECC public key ``RecipientPublicKey``.
 
+```c
     ECCPublicKeyCapsule = {
         Curve              = :enum(secp384r1)
         RecipientPublicKey = :byte[]
         SenderPublicKey    = :byte[]
     }
+```
 
 - ``Curve`` – identifier of the elliptic curve employed.
 - ``RecipientPublicKey`` – recipient’s ECC public key, used by the recipient to establish the corresponding recipient record.
@@ -205,30 +211,38 @@ ECC public key capsule. The recipient is identified by ECC public key ``Recipien
 
 RSA public key capsule. The recipient is identified by RSA public key ``RecipientPublicKey``.
 
+```c
     RSAPublicKeyCapsule = {
         RecipientPublicKey = :byte[]
         EncryptedKEK       = :byte[]
     }
+```
 
 - ``RecipientPublicKey`` - recipient’s RSA public key, used by the recipient to establish the corresponding recipient record.
 - ``EncryptedKEK`` -  key encryption key encrypted with the receipient's public key.
 
 Server capsule. The receipient is identified by ECC or RSA public key ``RecipientPublicKey``.
 
+```c
     KeyServerCapsule = {
         RecipientKey = Union(:EccKeyDetails | :RsaKeyDetails)
         KeyServerID         = :string
         TransactionID       = :string
     }
+```
 
+```c
     RsaKeyDetails = {
         RecipientPublicKey  = :byte[]
     }
+```
 
+```c
     EccKeyDetails = {
             Curve              = :enum(secp384r1)
             RecipientPublicKey = :byte[]
     }
+```
 
 - ``RecipientKey`` – information on the recipient key, used by the recipient for authentication on the Capsule Server.
 - ``KeyServerID`` – Capsule Server identifier. The recipient must be able to use this to establish the Capsule Server’s network address and connect to the server.
@@ -236,9 +250,11 @@ Server capsule. The receipient is identified by ECC or RSA public key ``Recipien
 
 Symmetric key capsule. The recipient is identified by the label of the symmetric key held by the user, ``KeyLabel``.
 
+```c
     SymmetricKeyCapsule = {
         Salt   = :byte[]
     }
+```
 
 - ``Salt`` – random number generated by the sender, used by the sender as input for the HKDF-Extract function.
 
@@ -383,7 +399,7 @@ Main features of the format:
 
 The container payload plaintext is formed as follows: the transmitted files (or file) are added to a POSIX tar archive which is then packed into the ZLIB format as a single bloc.
 
-    Implementation note: the DD4 client uses the relevant Qt wrapper functions to call the zlib library. Since these functions cannot be used in streaming mode, the specification recommends replacing the use of Qt wrappers with streaming mode zlib calls. This becomes especially crucial in storage cryptography where data volumes may be very high and encryption of the data in memory buffers in one piece may be unfeasible.
+Implementation note: the DD4 client uses the relevant Qt wrapper functions to call the zlib library. Since these functions cannot be used in streaming mode, the specification recommends replacing the use of Qt wrappers with streaming mode zlib calls. This becomes especially crucial in storage cryptography where data volumes may be very high and encryption of the data in memory buffers in one piece may be unfeasible.
 
 ### Requirements for POSIX tar archive assembly
 
@@ -406,8 +422,9 @@ When data is processed in streaming mode, the decrypted data will be used before
 
 When processing data in streaming mode, errors encountered in processing the plaintext (packing or archival errors) cannot be handled before the entire payload has been processed and the cryptogram authenticated. If cryptogram authentication fails, this must be reported as an error. Errors encountered in plaintext processing can only be reported if cryptogram authentication was successful. In case of an error, all created files must be deleted.
 
-    Below, we have described two types of attacks that software based on this specification must be able to deploy countermeasures against.
-    The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
+ Below, we have described two types of attacks that software based on this specification must be able to deploy countermeasures against.
+
+The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
 
 Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.
 
