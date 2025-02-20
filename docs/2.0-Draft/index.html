@@ -237,6 +237,13 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">
+<span class="md-ellipsis">
+    Appendix E: Key Shares API
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -285,7 +292,7 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="03_system_architecture/ch05_ID_authentication_protocol/">
 <span class="md-ellipsis">
-    ID authentication protocol
+    Client authentication protocol
   </span>
 </a>
 </li>
@@ -320,12 +327,64 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
-    Appendixes
+    User Guides
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            User Guides
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    Password Strength User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="08_User_Guides/parooli_juhend/">
+<span class="md-ellipsis">
+    Parooli juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    CDOC2 Container Storage User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="08_User_Guides/konteineri_s%C3%A4ilitamise_juhend/">
+<span class="md-ellipsis">
+    CDOC2 konteineri säilitamise juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    Overview diagrams
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Appendixes
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             Appendixes
           </label>
@@ -399,7 +458,7 @@
 <li>Supported encryption schemes.</li>
 <li>Abstract and serialized data format.</li>
 <li>Details of cryptographic operations.</li>
-<li>Use of a CDOC2 capsule server.</li>
+<li>Use of a CDOC2 capsule server and CDOC2 shares servers.</li>
 <li>Implementation guidelines.</li>
 </ul>
 <h2 id="terms-and-acronyms"><span class="enumerate-headings-plugin enumerate-heading-plugin">1.3</span> Terms and acronyms<a class="headerlink" href="#terms-and-acronyms" title="Permanent link">¶</a></h2>
@@ -426,7 +485,16 @@
 <p><code>Container Capsule</code> - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.</p>
 </li>
 <li>
-<p><code>CCS</code> - CDOC2 Capsule Server</p>
+<p><code>Shares Capsule</code> - Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers.</p>
+</li>
+<li>
+<p><code>Key Share</code> - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.</p>
+</li>
+<li>
+<p><code>CCS</code> - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient.</p>
+</li>
+<li>
+<p><code>CSS</code> - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient.</p>
 </li>
 <li>
 <p><code>SID/MID proxy</code> - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API</p>

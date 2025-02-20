@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../../02_protocol_and_cryptography_spec/appendix_d_keylabel/" rel="prev"/>
+<link href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/" rel="prev"/>
 <link href="../ch02_system_components/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.50" name="generator"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#system-context">11. 
+<a class="md-skip" href="#system-context">12. 
           Skip to content
         </a>
 </div>
@@ -195,6 +195,13 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">
+<span class="md-ellipsis">
+    Appendix E: Key Shares API
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -272,7 +279,7 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../ch05_ID_authentication_protocol/">
 <span class="md-ellipsis">
-    ID authentication protocol
+    Client authentication protocol
   </span>
 </a>
 </li>
@@ -307,12 +314,64 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
-    Appendixes
+    User Guides
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            User Guides
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    Password Strength User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/parooli_juhend/">
+<span class="md-ellipsis">
+    Parooli juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    CDOC2 Container Storage User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/konteineri_s%C3%A4ilitamise_juhend/">
+<span class="md-ellipsis">
+    CDOC2 konteineri säilitamise juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    Overview diagrams
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Appendixes
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             Appendixes
           </label>
@@ -362,22 +421,23 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="system-context"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.</span> System Context<a class="headerlink" href="#system-context" title="Permanent link">¶</a></h1>
+<h1 id="system-context"><span class="enumerate-headings-plugin enumerate-heading-plugin">12.</span> System Context<a class="headerlink" href="#system-context" title="Permanent link">¶</a></h1>
 <p><img alt="SID/MID" src="../../img/SID_MID_full.png"/></p>
-<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.1</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<h2 id="overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">12.1</span> Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
 <p>"CDOC2 system" - IT system, which contains following primary components:</p>
 <ol>
 <li>CDOC2 Capsule Server (CCS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 Capsule Server uses local database component as well.</li>
-<li>CDOC2 reference library, to be used by CDOC2 servers, CLI client ~~and DigiDoc4 client application~~</li>
-<li>CDOC2 CLI client, which is a command-line Java application and which implements all CDOC2 end-user usecases, but without graphical user interface.</li>
+<li>CDOC2 Shares Server (CSS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 Shares Server uses local database component as well.</li>
+<li>CDOC2 reference library, to be used by CDOC2 servers, CLI client.</li>
+<li>CDOC2 CLI client, which is a command-line Java application and which implements all CDOC2 end-user use cases, but without graphical user interface.</li>
 </ol>
 <p>DigiDoc4 client application is not in the scope of CDOC2 system, even though, it is the main client application, through which the end-user actually uses the system use-cases.</p>
-<h2 id="external-systems"><span class="enumerate-headings-plugin enumerate-heading-plugin">11.2</span> External Systems<a class="headerlink" href="#external-systems" title="Permanent link">¶</a></h2>
+<h2 id="external-systems"><span class="enumerate-headings-plugin enumerate-heading-plugin">12.2</span> External Systems<a class="headerlink" href="#external-systems" title="Permanent link">¶</a></h2>
 <p>There are other components, which are supporting CDOC2 system in some way:</p>
 <ol>
 <li>CDOC2 authentication portal, which issues long term access tokens to MID/SID proxy.</li>
 <li>MID/SID authentication services proxy, which relays the MID/SID authentication requests to actual Mobile-ID/Smart-ID RP-API services.
-TARA, which is a EE government provided central authentication service, used by CDOC2 authentication portal</li>
+TARA, which is an EE government provided central authentication service, used by CDOC2 authentication portal</li>
 <li>OCSP and LDAP services, which provide ID-card/MID/SID certificate validity and certificate search services.</li>
 </ol>
 </article>
@@ -387,7 +447,7 @@ TARA, which is a EE government provided central authentication service, used by 
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Appendix D: KeyLabel field specification" class="md-footer__link md-footer__link--prev" href="../../02_protocol_and_cryptography_spec/appendix_d_keylabel/">
+<a aria-label="Previous: Appendix E: Key Shares API" class="md-footer__link md-footer__link--prev" href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -396,7 +456,7 @@ TARA, which is a EE government provided central authentication service, used by 
                 Previous
               </span>
 <div class="md-ellipsis">
-                Appendix D: KeyLabel field specification
+                Appendix E: Key Shares API
               </div>
 </div>
 </a>

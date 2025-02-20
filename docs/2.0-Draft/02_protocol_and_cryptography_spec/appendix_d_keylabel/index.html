@@ -6,7 +6,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
 <link href="../appendix_c_cdoc2-capsules/" rel="prev"/>
-<link href="../../03_system_architecture/ch01_system_context/" rel="next"/>
+<link href="../appendix_e_cdoc2-shares/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.50" name="generator"/>
 <title>Appendix D: KeyLabel field specification - CDOC2 System Documentation</title>
@@ -259,6 +259,13 @@
 </ul>
 </nav>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_e_cdoc2-shares/">
+<span class="md-ellipsis">
+    Appendix E: Key Shares API
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -307,7 +314,7 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
 <span class="md-ellipsis">
-    ID authentication protocol
+    Client authentication protocol
   </span>
 </a>
 </li>
@@ -342,12 +349,64 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
-    Appendixes
+    User Guides
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            User Guides
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    Password Strength User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/parooli_juhend/">
+<span class="md-ellipsis">
+    Parooli juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    CDOC2 Container Storage User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/konteineri_s%C3%A4ilitamise_juhend/">
+<span class="md-ellipsis">
+    CDOC2 konteineri säilitamise juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    Overview diagrams
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Appendixes
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             Appendixes
           </label>
@@ -436,15 +495,10 @@
 <p><code>KeyLabel</code> field specification lists the following fields.</p>
 <p>Implementers may define their own vendor-specific field specification, but it's recommended to share it publicly.</p>
 <h2 id="versioning"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.1</span> Versioning<a class="headerlink" href="#versioning" title="Permanent link">¶</a></h2>
-<p>In current specification <code>type</code> and <code>v</code> fields are required, rest of fields are <code>type</code> specific. 
-<code>type</code> and <code>v</code> together define a KeyLabel type.</p>
-<p><code>v</code> describes type version. Version should only increase when there are breaking
-changes to type (basically define a new type). Adding/removing optional fields doesn't increase the version.</p>
-<p>Required fields are required only for UI. When <code>KeyLabel</code> parsing fails, then CDOC2 decryption should 
-still succeed as required fields for decryption are in <code>FlatBuffers</code> structure.</p>
-<p>Exception to this (decryption should succeed without <code>KeyLabel</code>) is symmetric key, when there is more 
-than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between 
-symmetric key recipients). </p>
+<p>In current specification <code>type</code> and <code>v</code> fields are required, rest of fields are <code>type</code> specific. <code>type</code> and <code>v</code> together define a KeyLabel type.</p>
+<p><code>v</code> describes type version. Version should only increase when there are breaking changes to type (basically define a new type). Adding/removing optional fields doesn't increase the version.</p>
+<p>Required fields are required only for UI. When <code>KeyLabel</code> parsing fails, then CDOC2 decryption should still succeed as required fields for decryption are in <code>FlatBuffers</code> structure.</p>
+<p>Exception to this (decryption should succeed without <code>KeyLabel</code>) is symmetric key, when there is more than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between symmetric key recipients).</p>
 <h2 id="eid-v1"><span class="enumerate-headings-plugin enumerate-heading-plugin">10.2</span> eID v1<a class="headerlink" href="#eid-v1" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -725,13 +779,13 @@ symmetric key recipients). </p>
               </div>
 </div>
 </a>
-<a aria-label="Next: System Context" class="md-footer__link md-footer__link--next" href="../../03_system_architecture/ch01_system_context/">
+<a aria-label="Next: Appendix E: Key Shares API" class="md-footer__link md-footer__link--next" href="../appendix_e_cdoc2-shares/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                System Context
+                Appendix E: Key Shares API
               </div>
 </div>
 <div class="md-footer__button md-icon">

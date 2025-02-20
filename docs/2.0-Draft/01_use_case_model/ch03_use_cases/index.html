@@ -313,6 +313,13 @@
   </span>
 </a>
 </li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">
+<span class="md-ellipsis">
+    Appendix E: Key Shares API
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -361,7 +368,7 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
 <span class="md-ellipsis">
-    ID authentication protocol
+    Client authentication protocol
   </span>
 </a>
 </li>
@@ -396,12 +403,64 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
-    Appendixes
+    User Guides
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            User Guides
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    Password Strength User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/parooli_juhend/">
+<span class="md-ellipsis">
+    Parooli juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    CDOC2 Container Storage User Guide
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/konteineri_s%C3%A4ilitamise_juhend/">
+<span class="md-ellipsis">
+    CDOC2 konteineri säilitamise juhend
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    Overview diagrams
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Appendixes
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             Appendixes
           </label>
@@ -568,7 +627,7 @@ Use cases specified here are written in a generic form, so that they are applica
 <dt><strong>CDOC2 Capsule Server (CCS)</strong></dt>
 <dd>CCS mediates CDOC2 Server Capsules between Sender and Recipient. Sender's Client can upload a Server Capsule to one or multiple CCS servers. Recipient's Client can download Server Capsule from CCS server after authentication.</dd>
 <dt><strong>CDOC2 Shares Server (CSS)</strong></dt>
-<dd>CDOC2 Shares Server mediates Key Shares between Sender and Recipient. Sender's Client splits Shares Capsule into multiple Key Shares and each Key Share is uploaded into a single Shares Server. Recipient's Client can download Shares Capsule from Shares Servers after authentication.</dd>
+<dd>CDOC2 Shares Server mediates Key Shares between Sender and Recipient. Sender's Client splits Shares Capsule into multiple Key Shares and each Key Share is uploaded into a single Shares Server. Recipient's Client can download Key Shares from Shares Servers after authentication.</dd>
 <dt><strong>Capsule</strong></dt>
 <dd>Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.</dd>
 <dt><strong>Server Capsule</strong></dt>
@@ -576,9 +635,9 @@ Use cases specified here are written in a generic form, so that they are applica
 <dt><strong>Container Capsule</strong></dt>
 <dd>A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.</dd>
 <dt><strong>Shares Capsule</strong></dt>
-<dd>Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers.</dd>
+<dd>A capsule that stores all Key Shares of a Recipient record.</dd>
 <dt><strong>Key Share</strong></dt>
-<dd>A share of Shares Capsule that on its own provides no knowledge of the key value. Sometimes called a cryptographic key component or key split. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.</dd>
+<dd>Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.</dd>
 <dt><strong>LDAP-server</strong></dt>
 <dd>An application used for publishing public keys.</dd>
 </dl>
@@ -925,7 +984,7 @@ CDOC2 Client Application</p>
 <h3 id="ucclient03-encrypt-cdoc2-container-using-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.7.1</span> UC.Client.03 — Encrypt CDOC2 container using key shares<a class="headerlink" href="#ucclient03-encrypt-cdoc2-container-using-key-shares" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK. KEK is generated by Sender's Client and then divided into Key Shares. Each share is uploaded to different CDOC2 Shares Server. </dd>
+<dd>CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK. KEK is generated by Sender's Client and then divided into Key Shares. Each share is uploaded to different CDOC2 Shares Server.</dd>
 <dt><strong>Scope</strong></dt>
 <dd>CDOC2 Client Application (Client)</dd>
 <dt><strong>Use Case Level</strong></dt>
@@ -937,17 +996,17 @@ CDOC2 Client Application</p>
 <ul>
 <li>CDOC2 container is saved into file system.</li>
 <li>For each server capsule a share is sent to each CDOC2 Shares Server.</li>
-<li>Client has received a share identifier for each Shares Capsule share.</li>
+<li>Client has received a share identifier for each Key Share.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
 <li>Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.</li>
-<li>Sender enters identifiers for each Recipient. </li>
+<li>Sender enters identifiers for each Recipient.</li>
 <li>Client creates a capsule for each Recipient.</li>
-<li>Client splits the capsules by creating a share for each CSS. </li>
+<li>Client splits the capsules by creating a share for each CSS.</li>
 <li>Client creates a TLS-connection with each CSS and receives the server certificates.</li>
 <li>Client verifies the server certificates against the configuration.</li>
-<li>Client forwards a share per Recipient together with their natural person identifier to each of the CDOC2 Shares Servers. Client provides a shares capsule expiration time from internal application configuration for each capsule share. Client receives a share identifier for each shares capsule share.</li>
+<li>Client forwards a share per Recipient together with their natural person identifier to each of the CDOC2 Shares Servers. Client receives a share identifier for each Key Share.</li>
 <li>Client creates a container into file system in the chosen target path and adds a header.</li>
 <li>Client verifies that the header does not exceed the size limit defined by the specification.</li>
 <li>Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.</li>
@@ -974,7 +1033,7 @@ CDOC2 Client Application</p>
 <ol>
 <li>Client first syncs default capsule expiration time from an organization-specific external service.</li>
 <li>External configuration service provides a default capsule expiration time.</li>
-<li>Client sends a shares capsule share to CSS API service using the expiration time from external configuration. Client receives a share identifier for each shares capsule share.</li>
+<li>Client sends a Key Share to CSS API service using the expiration time from external configuration. Client receives a share identifier for each Key Share.</li>
 <li>Use case continues from step 9.</li>
 </ol>
 <p>6c. The expiration time provided by Client is longer than allowed in the CSS system configuration:</p>
@@ -988,7 +1047,7 @@ CDOC2 Client Application</p>
 <li>Client displays Sender a notification.</li>
 <li>Use case ends.</li>
 </ol>
-<p>7b. CDOC2 Shares Server does not return a share identifier for each shares capsule share:</p>
+<p>7b. CDOC2 Shares Server does not return a share identifier for each Key Share:</p>
 <ol>
 <li>Client displays Sender a notification.</li>
 <li>Use case ends.</li>
@@ -1006,7 +1065,7 @@ CDOC2 Client Application</p>
 <h3 id="ucclient04-decrypt-cdoc2-container-using-multiserver-authentication"><span class="enumerate-headings-plugin enumerate-heading-plugin">2.7.2</span> UC.Client.04 — Decrypt CDOC2 container using multiserver authentication<a class="headerlink" href="#ucclient04-decrypt-cdoc2-container-using-multiserver-authentication" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Use Case Context</strong></dt>
-<dd>CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a shares capsule constructed from shares obtained from multiple CDOC2 Shares Servers.</dd>
+<dd>CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using the key material constructed from Key Shares obtained from multiple CDOC2 Shares Servers.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Client Application</p>
@@ -1018,7 +1077,7 @@ CDOC2 Client Application</p>
 </dl>
 <p><strong>Preconditions</strong></p>
 <ul>
-<li>The CDOC2 container has been encrypted using Shares Capsule shares and supports authentication-based decryption. </li>
+<li>The CDOC2 container has been encrypted using Key Shares and supports authentication-based decryption.</li>
 </ul>
 <p><strong>Success Guarantees</strong></p>
 <ul>
@@ -1029,7 +1088,7 @@ CDOC2 Client Application</p>
 <li>Recipient chooses the CDOC2 Container to be decrypted and specifies the target filename and path for the files.</li>
 <li>Client verifies that the header does not exceed the size limit defined by the specification.</li>
 <li>Recipient enters their personal identification number and chooses an eID authentication method.</li>
-<li>Client finds Capsule Share matching to recipient identification number. Client reads share identifiers and their matching Shares Server URLs from Capsule Share and requests a nonce for each share identifier. </li>
+<li>Client finds Capsule Share matching to recipient identification number. Client reads share identifiers and their matching Shares Server URLs from Capsule Share and requests a nonce for each share identifier.</li>
 <li>Client uses share identifier, Share Server URL and the nonce of each Key Share to generate an AuthenticationToken.</li>
 <li>Client shows Recipient an authentication form with input options specific to the authentication service (e.g., phone number input field, QR code scanning option). The Recipient initiates authentication using one of the options.</li>
 <li>Client initiates AuthenticationToken signing with authentication service.</li>
@@ -1083,7 +1142,7 @@ CDOC2 Client Application</p>
 <h3 id="uckts01-forward-capsules"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1.1</span> UC.KTS.01 Forward Capsules<a class="headerlink" href="#uckts01-forward-capsules" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS). Server Capsules contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in a CDOC2 container. Server Capsule is saved with an expiration time and a unique share identifier is created and returned to the CDOC2 Client Application.</dd>
+<dd>CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS). Server Capsules contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in a CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction ID is created and returned to the CDOC2 Client Application.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Capsule Server (CCS)</p>
@@ -1132,7 +1191,7 @@ CDOC2 Capsule Server (CCS)</p>
 <h3 id="uckts02-request-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1.2</span> UC.KTS.02 Request Capsule<a class="headerlink" href="#uckts02-request-capsule" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server. Server Capsule contains an encrypted content encryption key, used for decrypting the archive in a CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the share identifier provided by CDOC2 Client Application.</dd>
+<dd>CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server. Server Capsule contains an encrypted content encryption key, used for decrypting the archive in a CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the transaction identifier provided by CDOC2 Client Application.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Capsule Server (CCS)</p>
@@ -1152,13 +1211,13 @@ CDOC2 Capsule Server (CCS)</p>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client requests a Server Capsule using the appropriate API service, providing a share identifier as input.</li>
-<li>CCS validates the share identifier against specification rules.</li>
-<li>CCS finds the correct Server Capsule using the share identifier and validates that the Recipient public key matches with the one in the Capsule.</li>
+<li>Client requests a Server Capsule using the appropriate API service, providing a transaction identifier as input.</li>
+<li>CCS validates the transaction identifier against specification rules.</li>
+<li>CCS finds the correct Server Capsule using the transaction identifier and validates that the Recipient public key matches with the one in the Capsule.</li>
 <li>CCS sends the Client the Capsule.</li>
 </ol>
 <p><strong>Extensions</strong>
-2a. Share identifier is too long:</p>
+2a. transaction identifier is too long:</p>
 <ol>
 <li>CCS returns Client an error message.</li>
 <li>Use case ends.</li>
@@ -1237,11 +1296,11 @@ CDOC2 Capsule Server (CCS)</p>
 <li>Use case ends.</li>
 </ol>
 <h2 id="use-cases-with-multiple-cdoc2-shares-servers-holding-shares-of-capsules"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Use cases with multiple CDOC2 Shares Servers holding shares of capsules<a class="headerlink" href="#use-cases-with-multiple-cdoc2-shares-servers-holding-shares-of-capsules" title="Permanent link">¶</a></h2>
-<p>These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into shares according to a <a href="https://en.wikipedia.org/wiki/Secret_sharing">secret-sharing scheme</a> and distribute those among multiple independent CSS-s. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.</p>
+<p>These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a <a href="https://en.wikipedia.org/wiki/Secret_sharing">secret-sharing scheme</a> and distribute those among multiple independent CSS-s. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.</p>
 <h3 id="uckts06-forward-capsule-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.1</span> UC.KTS.06 Forward Capsule Shares<a class="headerlink" href="#uckts06-forward-capsule-shares" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application forwards shares of all Shares Capsules to CDOC2 Shares Servers (CSS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CSS servers. All shares have to be combined in order to construct a capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Shares Capsule shares are saved with an expiration time and a unique share identifier is created and returned to the CDOC2 Client Application from each CSS.</dd>
+<dd>CDOC2 Client Application forwards Key Shares of all Shares Capsules to CDOC2 Shares Servers (CSS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CSS servers. All the shares have to be combined in order to construct a capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Key Shares are saved, and a unique share identifier is created and returned to the CDOC2 Client Application from each CSS.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Shares Server (CSS)</p>
@@ -1253,26 +1312,19 @@ CDOC2 Shares Server (CSS)</p>
 </dl>
 <p><strong>Success Guarantees</strong></p>
 <ul>
-<li>Shares of all Shares Capsules are saved with Recipient natural person identifier and an expiration time to all receiving CSS servers.</li>
+<li>Key Shares of all Shares Capsules are saved with Recipient natural person identifier to all receiving CSS servers.</li>
 <li>Share identifiers are forwarded to the CDOC2 Client Application.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
-<li>Client sends shares of each Shares Capsule to appropriate CSS servers using an API service. Shares are matched to CSS servers by server IDs. Client provides a natural person identifier corresponding to the Recipient. Client provides a shares capsule expiration time from internal application configuration for each capsule share. </li>
-<li>Each CSS validates the shares capsule shares against specification rules.</li>
+<li>Client sends Key Shares of each Shares Capsule to appropriate CSS servers using an API service. The shares are matched to CSS servers by server IDs. Client provides a natural person identifier corresponding to the Recipient.</li>
+<li>Each CSS validates the Key Shares against specification rules.</li>
 <li>Each CSS generates a share identifier.</li>
-<li>Each CSS saves the shares capsule share.</li>
-<li>Each CSS returns Client a share identifier for each capsule.</li>
+<li>Each CSS saves the Key Share.</li>
+<li>Each CSS returns Client a share identifier for each Key Share.</li>
 </ol>
 <p><strong>Extensions</strong>
-1a. Client uses an organization-specific external configuration service:</p>
-<ol>
-<li>Client first syncs default capsule expiration time from an organization-specific external service.</li>
-<li>External provides a default capsule expiration time.</li>
-<li>Client sends a shares capsule share using the appropriate API service to all CSS-s.</li>
-<li>Use case continues from step 2.</li>
-</ol>
-<p>2a. Shares capsule exceeds the allowed length limit:</p>
+2a. Shares capsule exceeds the allowed length limit:</p>
 <ol>
 <li>CSS returns Client an error message.</li>
 <li>Use case ends.</li>
@@ -1280,7 +1332,7 @@ CDOC2 Shares Server (CSS)</p>
 <h3 id="uckts07-request-capsule-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.2</span> UC.KTS.07 Request Capsule Shares<a class="headerlink" href="#uckts07-request-capsule-shares" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Context of Use</strong></dt>
-<dd>CDOC2 Client Application requests Shares Capsule shares from all CDOC2 Shares Servers. The Shares Capsule share is identified by the share identifier provided by CDOC2 Client Application, the CSS server ID and the Recipient identification (ETSI semantics identifier) that can be matched to Recipient public certificate.</dd>
+<dd>CDOC2 Client Application requests Key Shares from all CDOC2 Shares Servers. The Key Share is identified by the share identifier provided by CDOC2 Client Application, the CSS server ID and the Recipient identification (ETSI semantics identifier) that can be matched to Recipient public key.</dd>
 </dl>
 <p><strong>Scope</strong>
 CDOC2 Shares Server (CSS)</p>
@@ -1293,17 +1345,17 @@ CDOC2 Shares Server (CSS)</p>
 <p><strong>Success guarantees</strong></p>
 <ul>
 <li>Recipient is authenticated.</li>
-<li>Shares Capsule shares from all CDOC2 Shares Servers are forwarded to CDOC2 Client Application.</li>
+<li>Key Shares from all CDOC2 Shares Servers are forwarded to CDOC2 Client Application.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
 <li>Client requests a nonce from each CSS API service, providing the share identifier as input.</li>
 <li>Client calculates an authentication hash.</li>
-<li>Client asks the Recipient to authenticate. </li>
-<li>Recipient signs the authentication token and Client receives Recipient certificate that matches the Recipient identification used in the accessed Shares Capsule.</li>
+<li>Client asks the Recipient to authenticate.</li>
+<li>Recipient signs the authentication token and Client receives Recipient public key that matches the Recipient identification used in the accessed Shares Capsule.</li>
 <li>Client constructs server-specific authentication tickets and sends one to each CSS.</li>
 <li>Each CSS validates the received authentication ticket, which includes validating the ticket type, nonce, signature, key pair and public keys.</li>
-<li>CSS returns the Shares Capsule share. </li>
+<li>CSS returns the Key Share.</li>
 </ol>
 <p><strong>Extensions</strong></p>
 <p>1a. Capsule share was not found:</p>
