@@ -1,8 +1,8 @@
 ---
-title: ID authentication protocol
+title: Client authentication protocol
 ---
 
-# ID authentication protocol
+# Client authentication protocol
 
 This section describes a protocol and data formats for authenticating to multiple CSS servers (cdoc2-shares-servers) in order to download every `KeySharesCapsule` from them.
 
@@ -40,8 +40,8 @@ autonumber
 
 box "User"
 Actor Recipient as R
-participant Client as C
-participant Authenticator as A
+participant "CDOC2 Client" as C
+participant "eID means \n (ID-card, Mobile-ID, Smart-ID)" as A
 end box
 
 box "cdoc2-shares-servers (CSSs)"
@@ -58,11 +58,11 @@ loop for each CSS
     C -> S: Authentication request for shareId of Capsule
     S --> C: Nonce for shareId
 end
-C -> C: Create \n authentication signature data
+C -> C: Create \n authentication data
 C -> A: Create signature on \n authentication data
 A -> R: Authorize eID use for signature generation
 R -> A: Authorized
-A --> C: Authentication signature
+A --> C: Signature
 loop for each CSS
     C -> C: Create authentication token \n specific for a CSS server
     C -> S: Present token with \n authentication signature \n and request Capsule
@@ -81,7 +81,7 @@ In this section the details of the authentication protocol are explained.
 
 ### Authentication data
 
-In the generic protocol, there's a idea that Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We will use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>). Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
+In generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
@@ -93,7 +93,7 @@ In the generic protocol, there's a idea that Client signs a set of information, 
 }
 ```
 
-If the Client would create (in JWT and SD-JWT terminology, "issue") an ordinary signed JWT with these claims, the resulting data structure would look something like that:
+If the Client would create (in JWT and SD-JWT terminology, "issue") an ordinary signed JWT with these claims, the resulting data structure would look (linebreaks are used only for display purposes) something like that:
 
 ```text
 eyJ0eXAiOiJKV1QiLA0KICJhbGciOiJIUzI1NiJ9
@@ -109,11 +109,11 @@ It contains following sections, separated by periods ("."):
 2. second section is Base64-encoded JWT claims
 3. third section is Base64-encoded binary signature value
 
-Because of the signature, it is not possible to modify the JWT claims anymore. If we wish to skip some values from the array of "aud" claim, in order to hide nonce values from other CSS servers and to prevent the replay possibility, this is not possible without breaking the signature.
+Because of the signature, it is not possible to modify JWT claims anymore. If we wish to skip some values from the array of "aud" claim (in order to hide nonce values from other CSS servers and to prevent a replay possibility), this is not possible without breaking the signature.
 
 ### Intro to SD-JWT standard
 
-SD-JWT standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with following entities:
+SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with following entities:
 
 1. SD-JWT is created by an entity called _Issuer_. Issuer decides, which claims are included in SD-JWT and which claims will be individually disclosable. Issuer signs the SD-JWT with its key pair and secures the SD-JWT against modifications.
 2. SD-JWT is received from Issuer by an entity called _Holder_. Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which claims it wishes to keep secret from Verifier.
@@ -210,7 +210,7 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
    The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, the ID-card produces signatures with ES256 algorithm, Smart-ID produces signatures with RS256 algorithm.
 
-2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. Examples is provided here. Note that the `aud` claim contains only empty array at the moment.
+2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. Example is provided here. Note that the `aud` claim contains only empty array at the moment.
 
    ```json
    {
@@ -325,7 +325,7 @@ We are analyzing security of the authentication protocol from following aspects.
 
 ### Protection against the passive network read
 
-In case the network between the CDOC2 Client and CSS servers is compromised and attacker is able to read network connections, the attacker is simply able to observe the values of the capsule shares as they are downloaded from CSS servers. The authentication protocol itself doesn't have built-in protection against this and assumes that connections from CDOC2 Client to every CSS server are authenticated and transmission is encrypted with HTTPS protocol.
+In case the network between the CDOC2 Client and CSS servers is compromised and attacker is able to read network connections, the attacker is simply able to observe the values of the capsule shares as they are downloaded from CSS servers. The authentication protocol itself doesn't have built-in protection against this and assumes that connection from CDOC2 Client to every CSS server is authenticated and transmission is encrypted with HTTPS protocol.
 
 ### Protection against the MITM attack with connection hijacking
 
@@ -404,9 +404,9 @@ Following authentication means or APIs (some of them are in development) do not 
 In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
 
 1. Informing the users about risks of using non-trusted software/services (desktop applications, mobile applications, websites). This countermeasure is already in use in practice.
-2. Vetting and limiting the RPs, who can use the Mobile-ID and Smart-ID APIs. This countermeasure is already used in practice.
+2. Vetting and limiting RPs, who can use the Mobile-ID and Smart-ID APIs. This countermeasure is already used in practice.
 
-# Appendix A - Formal model for authentication protocol
+## Appendix A - Formal model for authentication protocol
 
 ```ocaml
 (*************************************************************
