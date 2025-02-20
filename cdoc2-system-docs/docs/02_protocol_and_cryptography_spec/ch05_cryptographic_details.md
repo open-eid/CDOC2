@@ -192,7 +192,7 @@ The details of using *KeyServerCapsule* are described in section [Capsule server
 
 #### Table 4. KeyServerCapsule elements
 
-| Field | Contents | Encoding
+Field | Contents | Encoding
 ----------- | ----------- | -----------
 RecipientKey | Information on recipient key used by the recipient for authentication with the capsule server. | -
 KeyServerID | Capsule server identifier. | UTF-8 string assigned by the software trust anchor configuration, see section [Server identification and trust](../03_system_architecture/ch04_capsule_server.md#server-identification-and-trust).

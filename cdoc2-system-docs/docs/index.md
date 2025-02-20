@@ -40,7 +40,7 @@ The specification describes:
 
 * `Key Share` - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.
 
-* `CCS` - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient. 
+* `CCS` - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient.
 
 * `CSS` - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient.
 
