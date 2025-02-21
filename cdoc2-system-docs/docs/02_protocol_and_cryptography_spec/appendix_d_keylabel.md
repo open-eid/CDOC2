@@ -65,8 +65,8 @@ Exception to this (decryption should succeed without `KeyLabel`) is symmetric ke
 
 ## Smart-ID/Mobile-ID v1 (type=auth)
 
-| field | description                | example                | required |
+| field | description                | example(s)                | required |
 |-------|----------------------------|------------------------|----------|
 | v     | Version                    | 1                      | X        |
 | type  | Smart-ID/Mobile-ID         | auth                   | X        |
-| pno   | (National) personal number | ETSI:PNOEE-48010010101 | X        |
+| sn    | Serial number - could be a (national) personal number or [private company issuer identifier](ch05_shares_server.md#private-company-issuer-identifier) | ETSI:PNOEE-48010010101 ; private/vnd/serial | X        |
