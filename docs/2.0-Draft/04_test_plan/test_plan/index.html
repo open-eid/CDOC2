@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../../03_system_architecture/ch05_ID_authentication_protocol/" rel="prev"/>
+<link href="../../03_system_architecture/ch06_ID_authentication_protocol/" rel="prev"/>
 <link href="../../08_User_Guides/password_guide/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.50" name="generator"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#purpose-and-scope-of-testing">18. 
+<a class="md-skip" href="#purpose-and-scope-of-testing">19. 
           Skip to content
         </a>
 </div>
@@ -248,7 +248,14 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_shares_server/">
+<span class="md-ellipsis">
+    Shares Server
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_ID_authentication_protocol/">
 <span class="md-ellipsis">
     Client authentication protocol
   </span>
@@ -421,17 +428,17 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="purpose-and-scope-of-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.</span> Purpose and scope of testing<a class="headerlink" href="#purpose-and-scope-of-testing" title="Permanent link">¶</a></h1>
+<h1 id="purpose-and-scope-of-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">19.</span> Purpose and scope of testing<a class="headerlink" href="#purpose-and-scope-of-testing" title="Permanent link">¶</a></h1>
 <p>The test plan presented herein describes tasks related to testing the CDOC2 capsule server (hereinafter also simply ‘server’). The test plan does not cover the client-side components of CDOC2; it is solely focused on the server side of the system.</p>
 <p>Within the scope of the test plan presented here, server testing serves two main purposes:</p>
 <ul>
 <li>Functional testing, to verify that the implemented functionality of the server is in line with what is prescribed in the documentation and the server can fulfil the established goals.</li>
 <li>Load testing, to establish the operation and behaviour of the server under different usage loads and patterns.</li>
 </ul>
-<h2 id="functional-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.1</span> Functional testing<a class="headerlink" href="#functional-testing" title="Permanent link">¶</a></h2>
+<h2 id="functional-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">19.1</span> Functional testing<a class="headerlink" href="#functional-testing" title="Permanent link">¶</a></h2>
 <p>The purpose of functional testing is to verify that the implemented functionality of the server is in line with what is prescribed in the documentation and the server can fulfil the established goals.</p>
 <p>Functional testing uses unit tests and automated API tests written by the developers that cover all scenarios described in server use cases and potential API error situations.</p>
-<h2 id="load-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.2</span> Load testing<a class="headerlink" href="#load-testing" title="Permanent link">¶</a></h2>
+<h2 id="load-testing"><span class="enumerate-headings-plugin enumerate-heading-plugin">19.2</span> Load testing<a class="headerlink" href="#load-testing" title="Permanent link">¶</a></h2>
 <p>Although no explicit requirements have been set out for server capability, it is important to be aware of the capacity limits of the developed software on a specific existing platform. This information is provided by load tests which seek answers to the following questions:</p>
 <ul>
 <li>What is the system’s response time to users under different system loads?</li>
@@ -440,7 +447,7 @@
 <li>How will the system recover after peak load?</li>
 <li>How will the system perform under conditions of long-term moderate or higher load?</li>
 </ul>
-<h1 id="test-procedure-and-results"><span class="enumerate-headings-plugin enumerate-heading-plugin">19.</span> Test procedure and results<a class="headerlink" href="#test-procedure-and-results" title="Permanent link">¶</a></h1>
+<h1 id="test-procedure-and-results"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.</span> Test procedure and results<a class="headerlink" href="#test-procedure-and-results" title="Permanent link">¶</a></h1>
 <p>Test planning is a continuous process, regularly repeated throughout the project after the addition of significant new information. The result of this process is the test plan (the present document).</p>
 <p>In the case of the capsule server, functional testing is covered by unit tests and API tests run against the server API.</p>
 <p>Unit tests are created by the developers and can be used by the development team, as well as in a continuous integration environment. The output of the tests is a human- and machine-readable test report. The source code for the unit tests is maintained along with the server’s source code, following the same principles as the application source code.</p>
@@ -454,9 +461,9 @@
 </ul>
 <p>Note that the scope of load test development only includes the capability of stressing the system and the load tests do not include solutions for monitoring the system during load testing. Tools created for system monitoring must be used for this purpose.</p>
 <p>The result of load testing is a test report containing information on the questions covered in the corresponding section of the test plan. The report provides information on the loads applied to the server, as well as the usage of system resources (memory usage, processor load, storage usage) required for servicing queries.</p>
-<h1 id="designed-test-scenarios"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.</span> Designed test scenarios<a class="headerlink" href="#designed-test-scenarios" title="Permanent link">¶</a></h1>
+<h1 id="designed-test-scenarios"><span class="enumerate-headings-plugin enumerate-heading-plugin">21.</span> Designed test scenarios<a class="headerlink" href="#designed-test-scenarios" title="Permanent link">¶</a></h1>
 <p>Test ideas and scenarios are normally not explicitly covered in a test plan. However, as the capsule server is an application with limited functionality, there would be little need for a separate document for test scenario management. The present section also describes the scenarios designed to be used in load testing.</p>
-<h2 id="capsule-server-api-functionality-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.1</span> Capsule server API functionality tests<a class="headerlink" href="#capsule-server-api-functionality-tests" title="Permanent link">¶</a></h2>
+<h2 id="capsule-server-api-functionality-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">21.1</span> Capsule server API functionality tests<a class="headerlink" href="#capsule-server-api-functionality-tests" title="Permanent link">¶</a></h2>
 <p>Server functionality is tested by emulating the end-user client application utilizing the server API interfaces. These tests are run for both ECC and RSA keys.
 Positive scenarios:</p>
 <ul>
@@ -484,7 +491,7 @@ Positive scenarios:</p>
 <li>Recipient requests a capsule with a valid transaction ID but the recipient’s public key does not match the ID
 (<code>[ECC|RSA]-GET_CAPSULE-NEG-06-PUBLIC_KEY_NOT_MATCHING</code>)</li>
 </ul>
-<h2 id="server-load-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.2</span> Server load tests<a class="headerlink" href="#server-load-tests" title="Permanent link">¶</a></h2>
+<h2 id="server-load-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">21.2</span> Server load tests<a class="headerlink" href="#server-load-tests" title="Permanent link">¶</a></h2>
 <p>To receive information about the server’s behaviour under stress, the server must be overloaded with queries designed to be as close as possible to the behavioural patterns of real-life users.</p>
 <p>Depending on the design and functionality of the capsule server, queries made to the server can be divided into two main groups: transmission of capsules to the server, and capsule requests via user authentication. As two different levels of authentication are used on the server, it can be said to essentially comprise two independent web servers with different configurations, sharing a common database for storing key shares.</p>
 <p>Putting a load on the server requires the use of queries for transmitting key shares to the server and requesting key shares from the server.</p>
@@ -493,7 +500,7 @@ Positive scenarios:</p>
 <li>In the case of capsule request queries, the capsule to be used and the user to be authenticated are selected randomly and the reply returned by the server may be either positive (i.e. contain a capsule) or negative (i.e. contain an error code).</li>
 </ul>
 <p>The contents of the query are irrelevant for load testing, as the same internal queries and comparisons are required for both positive and negative results.</p>
-<h3 id="load-generation"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.2.1</span> Load generation<a class="headerlink" href="#load-generation" title="Permanent link">¶</a></h3>
+<h3 id="load-generation"><span class="enumerate-headings-plugin enumerate-heading-plugin">21.2.1</span> Load generation<a class="headerlink" href="#load-generation" title="Permanent link">¶</a></h3>
 <p>Both the functional tests and the load tests utilize the Gatling test framework where the desired load on the tested software can be adjusted using the following parameters:</p>
 <ul>
 <li>start-users-per-second: Number of active users (queries per second) immediately applied at the start of the test</li>
@@ -517,7 +524,7 @@ Positive scenarios:</p>
 <li>increment-cycles = 10</li>
 <li>cycle-duration-seconds = 60</li>
 </ul>
-<h2 id="implementation-of-scenarios-in-load-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">20.3</span> Implementation of scenarios in load tests<a class="headerlink" href="#implementation-of-scenarios-in-load-tests" title="Permanent link">¶</a></h2>
+<h2 id="implementation-of-scenarios-in-load-tests"><span class="enumerate-headings-plugin enumerate-heading-plugin">21.3</span> Implementation of scenarios in load tests<a class="headerlink" href="#implementation-of-scenarios-in-load-tests" title="Permanent link">¶</a></h2>
 <ul>
 <li>What is the system’s response time to users under different system loads?</li>
 <li>How many users can the system serve simultaneously without exceeding the defined response time?</li>
@@ -542,7 +549,7 @@ Positive scenarios:</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: Client authentication protocol" class="md-footer__link md-footer__link--prev" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
+<a aria-label="Previous: Client authentication protocol" class="md-footer__link md-footer__link--prev" href="../../03_system_architecture/ch06_ID_authentication_protocol/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>

@@ -366,7 +366,14 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_shares_server/">
+<span class="md-ellipsis">
+    Shares Server
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_ID_authentication_protocol/">
 <span class="md-ellipsis">
     Client authentication protocol
   </span>
@@ -1296,7 +1303,7 @@ CDOC2 Capsule Server (CCS)</p>
 <li>Use case ends.</li>
 </ol>
 <h2 id="use-cases-with-multiple-cdoc2-shares-servers-holding-shares-of-capsules"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Use cases with multiple CDOC2 Shares Servers holding shares of capsules<a class="headerlink" href="#use-cases-with-multiple-cdoc2-shares-servers-holding-shares-of-capsules" title="Permanent link">¶</a></h2>
-<p>These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a <a href="https://en.wikipedia.org/wiki/Secret_sharing">secret-sharing scheme</a> and distribute those among multiple independent CSS-s. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.</p>
+<p>These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a <a href="https://en.wikipedia.org/wiki/Secret_sharing">secret-sharing scheme</a> and distribute those among multiple independent CSSs . Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.</p>
 <h3 id="uckts06-forward-capsule-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.1</span> UC.KTS.06 Forward Capsule Shares<a class="headerlink" href="#uckts06-forward-capsule-shares" title="Permanent link">¶</a></h3>
 <dl>
 <dt><strong>Context of Use</strong></dt>

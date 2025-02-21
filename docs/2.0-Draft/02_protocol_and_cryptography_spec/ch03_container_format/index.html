@@ -391,7 +391,14 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch05_ID_authentication_protocol/">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_shares_server/">
+<span class="md-ellipsis">
+    Shares Server
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_ID_authentication_protocol/">
 <span class="md-ellipsis">
     Client authentication protocol
   </span>
@@ -720,8 +727,8 @@ The following capsule types have been specified to ensure the support of a varie
 <p><code>type</code> and <code>v</code> fields are required, rest of fields are <code>type</code> specific.</p>
 <p>Examples:</p>
 <ul>
-<li>Smart-ID/Mobile-ID - PNO=ETSI:{ETSI indentifier} e.g. "ETSI:PNOEE-48010010101", where PNO means personal number issued by a national authority and {ETSI identifier} is replaced by the Recipient's identifier.
-Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
+<li>Smart-ID/Mobile-ID - ETSI semantics identifier formatted as PNO=etsi/{identifier} e.g. "etsi/PNOEE-48010010101", where PNO means personal number issued by a national authority and {identifier} is replaced by the Recipient's identifier.
+Example: type=auth&amp;sn=ETSI%3APNOEE-48010010101</li>
 <li>Password, with an integrated password manager - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.</li>
 <li>Symmetric key - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;FILE=~/folder/secret.pem&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.</li>
 <li>Certificate - FILE=~/folder/filename&amp;CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.</li>
