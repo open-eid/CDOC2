@@ -16,7 +16,7 @@
 *[Container Capsule]: A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
 *[CCS]: CDOC2 Capsule Server
- 
+
 *[CDOC2 authentication server]: Web service to generate access tokens for CKCTS and RIA SID/MID proxy
 
 *[SID/MID proxy]: Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API

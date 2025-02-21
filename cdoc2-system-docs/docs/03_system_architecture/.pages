@@ -5,4 +5,4 @@ nav:
     - 'External Interfaces': ch03_external_interfaces.md
     - 'Capsule Server': ch04_capsule_server.md
     - 'Shares Server': ch05_shares_server.md
-    - 'ID authentication protocol': ch06_ID_authentication_protocol.md
+    - 'Client authentication protocol': ch06_ID_authentication_protocol.md
