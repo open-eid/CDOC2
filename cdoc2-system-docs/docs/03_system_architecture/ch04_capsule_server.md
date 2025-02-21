@@ -1,6 +1,5 @@
 ---
 title: CDOC2 CCS
-title: CDOC2 CCS
 ---
 
 # CDOC2 CCS
@@ -9,7 +8,7 @@ This section defines the CDOC2 Capsule Server (CCS), what interfaces it provides
 
 ## Introduction
 
-The CCS is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 Container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md#cdoc2-encryption-schemes). CDOC2 Capsule server only uses the encryption schemes which assume a single CCS. This is in contrast to CDOC2 Shares Servers (CSS-s) which must use encryption schemes with multiple servers (CSSs) that are independent and operated by separate organizations.
+The CCS is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 Container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md#cdoc2-encryption-schemes). CDOC2 Capsule server only uses the encryption schemes which assume a single CCS. This is in contrast to CDOC2 Shares Servers (CSSs ) which must use encryption schemes with multiple servers (CSSs) that are independent and operated by separate organizations.
 
 The communication channel provided by the CCS is more secure than public channels of communication used for the transmission of CDOC2 Containers. A properly operating CCS ensures that the attacker, who is monitoring the public communication channel and may store all CDOC2 Containers and may be able to break public key encryption algorithms in the future with sufficiently powerful quantum computer, is not able to do so, because the Capsule information is transmitted in a separate channel. Thus, the CDOC2 System gains some additional protection against quantum computers. The CCS does not need to transmit large encrypted documents, meaning that its operating costs will be low.
 

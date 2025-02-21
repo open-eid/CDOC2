@@ -753,7 +753,7 @@ CDOC2 Capsule Server (CCS)
 
 ## Use cases with multiple CDOC2 Shares Servers holding shares of capsules
 
-These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSS-s. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
+These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSSs . Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
 
 ### UC.KTS.06 Forward Capsule Shares
 
