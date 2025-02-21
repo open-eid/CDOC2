@@ -18,20 +18,6 @@ Multiple CCSs may be used in parallel, operated by different organizations. Secu
 
 In the simplest case, the CCS operates as follows.
 
-1. The Sender generates a Capsule for a specific Recipient during encryption.
-2. The Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
-3. The CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
-4. The sender adds the selected server’s identifier, transaction identifier, and recipient identifier to the container.
-5. The sender transmits the container to the recipient.
-6. The recipient finds information concerning the Capsule generated for them in the container.
-7. The recipient connects to the server chosen by the sender and authenticates with the server.
-8. The recipient transmits the transaction identifier found in the container to the server.
-9. The server looks up the Capsule based on the transaction identifier and the recipient identifier established during authentication.
-10. The server returns the Capsule to the recipient.
-11. The recipient uses the information found in the Capsule for decrypting the container.
-
-TODO: this diagram doesn't match the steps yet.
-
 ```plantuml
 @startuml
 skinparam ParticipantPadding 20
@@ -39,38 +25,56 @@ skinparam BoxPadding 30
 hide footbox
 autonumber
 
-box "User"
-Actor Recipient as R
-participant Authenticator as A
+Actor Sender as Sender
+
+box "Recipient"
+Actor Recipient as Recipient
+participant "eID means\n(ID-card, Mobile-ID, \nSmart-ID)" as eID
 end box
 
-box "CSSs"
-collections Server as S
+box "CDOC2 servers"
+collections "CSS" as Server
 end box
 
-box "Trust infrastructure"
-participant "PKI/OCSP" as PKI
-end box
-
-R -> R: Read list of TXs from Container
+Sender -> Sender: generate Capsule for\na specific Recipient
 loop for each CSS
-    R -> S: Authentication request for TX_ID
-    S --> R: Nonce for TX_ID
+    Sender -> Server: Transmit Capsule to CSS
+    Server -> Server: Generate identifier\nand store Capsule
+    Server -> Sender: Capsule identifier
+    Sender -> Sender: add identifiers for \nRecipient, CSS, Capsule\ninside Container
 end
-R -> R: Create authentication signature data
-R -> A: Create authentication signature
-A --> R: Authentication signature
+Sender -> Recipient: transmit Container
+Recipient -> Recipient: find information about Capsules \n required to decrypt Container
+loop for each Capsule
+    Recipient -> Server: query nonce from CSS
+    Server -> Recipient: return nonce
+end
+Recipient -> eID: create authentication signature
+eID -> Recipient: authentication signature
 loop for each CSS
-    R -> R: Create authentication token specific for server
-    R -> S: Present token with authentication signature \n and request Capsule
-    S -> PKI: Recipient certificate not revoked?
-    PKI --> S: Recipient certificate is good
-    S -> S: AuthN: Verify authentication token \n and authentication signature
-    S -> S: AuthZ: Verify that Recipient is \n allowed to download Capsule
-    S --> R: Capsule
+    Recipient -> Server: query capsule and authenticate with \n authentication signature
+    Server -> Server: authentication\n and authorisation\n decision
+    Server -> Recipient: return Capsule
 end
+Recipient -> Recipient: decrypt Container
 @enduml
 ```
+
+1. Sender generates a Capsule for a specific Recipient during encryption.
+2. Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
+3. CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
+4. CSS returns the generated identifier to Sender
+5. Sender adds selected CCS identifier, transaction identifier, and Recipient identifier inside Container.
+6. The Sender transmits Container to Recipient.
+7. The Recipient finds information concerning the Capsule generated for them in Container.
+8. The Recipient queries nonce from CCS.
+9. CCS returns nonce.
+10. Recipient uses eID means to create authentication signature.
+11. eID means returns the authentication signature.
+12. Recipient authenticates to CCS and queries capsule.
+13. CCS looks up Capsule based on the transaction identifier and verifies the authentication signature and makes authentication decision and access control decision.
+14. CCS returns Capsule to Recipient.
+15. Recipient uses the information found in Capsule for decrypting Container.
 
 ## Server state
 
@@ -108,7 +112,7 @@ To ensure protocol security, it is important to make sure that the Capsule is on
 
 ## Server identification and trust
 
-Enhanced security features provided by CDOC2 are only valid if the Capsule is transmitted via servers meeting the requirements of the specific encryption scenario (see section 3. TODO link?).
+Enhanced security features provided by CDOC2 are only valid if the Capsule is transmitted via servers meeting the requirements of the specific encryption scenario (see section [02_protocol_and_cryptography_spec/ch02_encryption_schemes.md]).
 
 To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CSSs either as a part of the DigiDoc software package or in some other form. This list is also used for TLS key pinning.
 
