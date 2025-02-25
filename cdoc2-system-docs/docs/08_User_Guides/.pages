@@ -1,0 +1,7 @@
+title: "User Guides"
+nav:
+    - 'Password Strength User Guide': password_guide.md
+    - 'Parooli juhend': parooli_juhend.md
+    - 'CDOC2 Container Storage User Guide': container_storage_guide.md
+    - 'CDOC2 konteineri säilitamise juhend': konteineri_säilitamise_juhend.md
+    - 'Overview diagrams': overview_diagrams.md

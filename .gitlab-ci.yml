@@ -61,10 +61,13 @@ deploy:
     - export DOC_VERSION=$(echo $CI_COMMIT_TAG | sed 's/^v//')
     - git branch -D gh-pages || true
     - git remote rm cyber || true
-    - git remote add cyber $CDOC2_DOCUMENTATION_GIT || true
+    - git remote rm gh || true
+    - git remote add cyber $CDOC2_DOCUMENTATION_GITLAB || true
+    - git remote add gh $CDOC2_DOCUMENTATION_GITHUB || true
     - git fetch cyber gh-pages:gh-pages || true
     - mike deploy -F cdoc2-system-docs/mkdocs.yml -r cyber --deploy-prefix docs --branch gh-pages --push $DOC_VERSION --ignore-remote-status
     - mike set-default -F cdoc2-system-docs/mkdocs.yml -r cyber --deploy-prefix docs --branch gh-pages --push $DOC_DEFAULT_VERSION --ignore-remote-status
+    - git push gh gh-pages:gh-pages
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v/'
       when: always

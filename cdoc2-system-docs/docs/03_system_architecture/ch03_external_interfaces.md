@@ -20,7 +20,7 @@ Relaying Party API is used to start authentication with Smart-ID accessed throug
 
 ## Mobile-ID REST API
 
-TODO
+* <https://github.com/SK-EID/MID>
 
 ## LDAP and OCSP servers
 
@@ -35,4 +35,4 @@ Enables to authenticate and sign using Smart-ID. Installed on user smartphone.
 
 ## Mobile-ID SIM application
 
-TODO
+* Needs SIM that supports Mobile-ID <https://www.mobiil-id.ee/mobiil-id-tellimine/>

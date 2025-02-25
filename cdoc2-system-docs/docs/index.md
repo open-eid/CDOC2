@@ -17,7 +17,7 @@ The specification describes:
 * Supported encryption schemes.
 * Abstract and serialized data format.
 * Details of cryptographic operations.
-* Use of a CDOC2 capsule server.
+* Use of a CDOC2 capsule server and CDOC2 shares servers.
 * Implementation guidelines.
 
 ## Terms and acronyms
@@ -36,7 +36,13 @@ The specification describes:
 
 * `Container Capsule` - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
-* `CCS` - CDOC2 Capsule Server
+* `Shares Capsule` - Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers.
+
+* `Key Share` - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.
+
+* `CCS` - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient.
+
+* `CSS` - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient.
 
 * `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 

@@ -6,19 +6,13 @@ Implementers may define their own vendor-specific field specification, but it's 
 
 ## Versioning
 
-In current specification `type` and `v` fields are required, rest of fields are `type` specific. 
-`type` and `v` together define a KeyLabel type.
+In current specification `type` and `v` fields are required, rest of fields are `type` specific. `type` and `v` together define a KeyLabel type.
 
-`v` describes type version. Version should only increase when there are breaking
-changes to type (basically define a new type). Adding/removing optional fields doesn't increase the version.
+`v` describes type version. Version should only increase when there are breaking changes to type (basically define a new type). Adding/removing optional fields doesn't increase the version.
 
-Required fields are required only for UI. When `KeyLabel` parsing fails, then CDOC2 decryption should 
-still succeed as required fields for decryption are in `FlatBuffers` structure.
+Required fields are required only for UI. When `KeyLabel` parsing fails, then CDOC2 decryption should still succeed as required fields for decryption are in `FlatBuffers` structure.
 
-Exception to this (decryption should succeed without `KeyLabel`) is symmetric key, when there is more 
-than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between 
-symmetric key recipients). 
- 
+Exception to this (decryption should succeed without `KeyLabel`) is symmetric key, when there is more than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between symmetric key recipients).
 
 ## eID v1
 
@@ -71,8 +65,8 @@ symmetric key recipients).
 
 ## Smart-ID/Mobile-ID v1 (type=auth)
 
-| field | description                | example                | required |
+| field | description                | example(s)                | required |
 |-------|----------------------------|------------------------|----------|
 | v     | Version                    | 1                      | X        |
 | type  | Smart-ID/Mobile-ID         | auth                   | X        |
-| pno   | (National) personal number | ETSI:PNOEE-48010010101 | X        |
+| sn    | Serial number - could be a (national) personal number or [private company issuer identifier](ch05_shares_server.md#private-company-issuer-identifier) | ETSI:PNOEE-48010010101 ; private/vnd/serial | X        |

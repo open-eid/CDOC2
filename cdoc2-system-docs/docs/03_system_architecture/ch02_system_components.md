@@ -16,6 +16,7 @@ between multiple CDOC2 servers instances, so that compromising one server doesn'
 Instances run on independent premises.
 
 ## Authentication proxy
+
 A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.
 
 ## CDOC2 CLI user application
