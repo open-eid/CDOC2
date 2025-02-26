@@ -260,6 +260,13 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-shares-server-css">
+<span class="md-ellipsis">
+      CDOC2 Shares Server (CSS)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#authentication-proxy">
 <span class="md-ellipsis">
       Authentication proxy
@@ -436,6 +443,13 @@
 </a>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-shares-server-css">
+<span class="md-ellipsis">
+      CDOC2 Shares Server (CSS)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#authentication-proxy">
 <span class="md-ellipsis">
       Authentication proxy
@@ -461,23 +475,30 @@
 <p>Implements client side functionality for CDOC2 system.</p>
 <h2 id="cdoc2-capsule-server-ccs"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.2</span> CDOC2 Capsule Server (CCS)<a class="headerlink" href="#cdoc2-capsule-server-ccs" title="Permanent link">¶</a></h2>
 <p>Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download. For SID/MID use cases key material is distributed
-between multiple CDOC2 servers instances, so that compromising one server doesn't expose key material.
+key material upload/download. </p>
+<h2 id="cdoc2-shares-server-css"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.3</span> CDOC2 Shares Server (CSS)<a class="headerlink" href="#cdoc2-shares-server-css" title="Permanent link">¶</a></h2>
+<p>Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipient has to authenticate with the CSSs in order to download the shares contained in a Shares Capsule.
+Shares Capsules are distributed between multiple CDOC2 Shares Server instances, so that compromising one server doesn't expose key material.
 Instances run on independent premises.</p>
-<h2 id="authentication-proxy"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.3</span> Authentication proxy<a class="headerlink" href="#authentication-proxy" title="Permanent link">¶</a></h2>
+<h2 id="authentication-proxy"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.4</span> Authentication proxy<a class="headerlink" href="#authentication-proxy" title="Permanent link">¶</a></h2>
 <p>A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.</p>
-<h2 id="cdoc2-cli-user-application"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.4</span> CDOC2 CLI user application<a class="headerlink" href="#cdoc2-cli-user-application" title="Permanent link">¶</a></h2>
+<h2 id="cdoc2-cli-user-application"><span class="enumerate-headings-plugin enumerate-heading-plugin">13.5</span> CDOC2 CLI user application<a class="headerlink" href="#cdoc2-cli-user-application" title="Permanent link">¶</a></h2>
 <p>Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.</p>
 <h1 id="interfaces-between-system-components"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.</span> Interfaces between system components<a class="headerlink" href="#interfaces-between-system-components" title="Permanent link">¶</a></h1>
 <h2 id="cdoc2-capsule-server-ccs-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.1</span> CDOC2 Capsule Server (CCS) interface<a class="headerlink" href="#cdoc2-capsule-server-ccs-interface" title="Permanent link">¶</a></h2>
-<p>TODO: Add existing endpoints</p>
-<p>New endpoints for shared secrets supporting SID/MID:</p>
+<p>CSS interface provides the following endpoints:</p>
 <ul>
-<li><a href="https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L111">/shared-secrets</a> Upload Shamir Secret Share and get transactionId</li>
-<li><a href="https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L136">/shared-secrets/{transactionId}/nonce</a>
-  Create nonce for transactionId (for authentication). <a href="https://gitlab.cyber.ee/id/ee-ria/ria_tender_test_assignment_2023/-/blob/master/exercise-2.3-authentication-multi-server/multi-server-auth-protocol.md?ref_type=heads#nonsside-v%C3%A4ljastamise-p%C3%A4ringud">Authentication ticket creation schema</a></li>
-<li><a href="https://gitlab.ext.cyber.ee/cdoc2/cdoc20_java/-/blob/RM-55885/cdoc2-openapi/cdoc2-key-capsules.yaml#L71">/shared-secrets/{transactionId}</a> GET Shamir Shared Secret for transactionId</li>
+<li><code>/key-capsules/{transactionId}</code> Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.</li>
+<li><code>/key-capsules</code> Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.</li>
 </ul>
+<p>For full CCS OpenAPI specification, see Appendix C in <a href="../../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules/">protocol and cryptography spec</a>.</p>
+<h2 id="cdoc2-shares-server-css-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.2</span> CDOC2 Shares Server (CSS) interface<a class="headerlink" href="#cdoc2-shares-server-css-interface" title="Permanent link">¶</a></h2>
+<ul>
+<li><code>/key-shares/{shareId}</code> Get key share for share identifier. Used by recipient to request a key share.</li>
+<li><code>/key-shares</code> Upload a key share and receive a share identifier. Used by sender to upload key share.</li>
+<li><code>/key-shares/{shareId}/nonce</code> Create nonce for creating an authentication ticket. Used by recipient to request a nonce.</li>
+</ul>
+<p>For full CSS OpenAPI specification, see Appendix E in <a href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">protocol and cryptography spec</a>.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

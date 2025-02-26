@@ -1162,22 +1162,22 @@ CDOC2 Capsule Server (CCS)</p>
 <p><strong>Success Guarantees</strong></p>
 <ul>
 <li>Server Capsules are saved with an expiration time.</li>
-<li>Share identifiers are forwarded to the CDOC2 Client Application.</li>
+<li>Transaction identifiers are forwarded to the CDOC2 Client Application.</li>
 </ul>
 <p><strong>Main Success Scenario</strong></p>
 <ol>
 <li>Client sends a server capsule using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.</li>
 <li>CCS validates the server capsules against specification rules.</li>
-<li>CCS generates a universally unique share identifier (UUID).</li>
+<li>CCS generates a universally unique transaction identifier (UUID).</li>
 <li>CCS saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.</li>
-<li>CCS returns Client a share identifier for each capsule.</li>
+<li>CCS returns Client a transaction identifier for each capsule.</li>
 </ol>
 <p><strong>Extensions</strong>
 1a. Client uses an organization-specific external configuration service:</p>
 <ol>
 <li>Client first syncs default capsule expiration time from an organization-specific external service.</li>
 <li>External provides a default capsule expiration time.</li>
-<li>Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.</li>
+<li>Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration.</li>
 <li>Use case continues from step 2.</li>
 </ol>
 <p>2a. Server capsule exceeds the allowed length limit:</p>

@@ -791,8 +791,7 @@ dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 </ol>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">"typ"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vnd.cdoc2.auth-token.v1+sd-jwt"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"alg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ES256"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"kid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PNOEE-48010010101"</span>
+<span class="w">    </span><span class="nt">"alg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ES256"</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>The values for the <code>alg</code> claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, the ID-card produces signatures with ES256 algorithm, Smart-ID produces signatures with RS256 algorithm.</p>
@@ -882,22 +881,22 @@ dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 <li>Verify that SD-JWT contains claim <code>aud</code>, which is an array, which contains exactly one JSON string.</li>
 <li>Parse <code>aud</code> value (it should be something like "<a href="https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6">https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6</a>") into components <code>serverBaseURL</code>, <code>shareId</code> and <code>nonce</code>.</li>
 <li>Verify that <code>serverBaseURL</code> is correct for this CSS server.</li>
-<li>Verify that this CSS server has a Capsule with identifier <code>shareId</code> and it is not expired or deleted.</li>
+<li>Verify that this CSS server has a Capsule with identifier <code>shareId</code> and it is not deleted.</li>
 <li>Verify that this CSS server has previously generated a nonce for this <code>shareId</code> and one of the nonce values matches with <code>nonce</code> component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds).</li>
 <li>Verify that <code>recipient_id</code> from the <code>KeySharesCapsule</code> matches with the <code>subjectDN</code> from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".</li>
 </ol>
-<p>If all checks are positive, then the authentication and access control decision is positive and CSS server can return the capsule.</p>
+<p>If all checks are positive, then the authentication and access control decision is positive, and CSS server can return the capsule.</p>
 <h2 id="security-of-the-protocol"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5</span> Security of the protocol<a class="headerlink" href="#security-of-the-protocol" title="Permanent link">¶</a></h2>
 <p>We are analyzing security of the authentication protocol from following aspects.</p>
 <h3 id="protection-against-the-passive-network-read"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.1</span> Protection against the passive network read<a class="headerlink" href="#protection-against-the-passive-network-read" title="Permanent link">¶</a></h3>
 <p>In case the network between the CDOC2 Client and CSS servers is compromised and attacker is able to read network connections, the attacker is simply able to observe the values of the capsule shares as they are downloaded from CSS servers. The authentication protocol itself doesn't have built-in protection against this and assumes that connection from CDOC2 Client to every CSS server is authenticated and transmission is encrypted with HTTPS protocol.</p>
 <h3 id="protection-against-the-mitm-attack-with-connection-hijacking"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.2</span> Protection against the MITM attack with connection hijacking<a class="headerlink" href="#protection-against-the-mitm-attack-with-connection-hijacking" title="Permanent link">¶</a></h3>
-<p>In case the attacker is able to hijack the network connections between the CDOC2 Client and CSS servers and redirect the connection attempts from the real CSS servers to attacker itself, attacker is also able to masquerade to Client as real CSS server and is also observe the values of the transmitted capsule shares. Attacker might be able to present a self-signed X.509 HTTPS certificate or it might be able to present a valid X.509 HTTPS certificate from the real CA as well. In case the CDOC2 Client doesn't verify the identity of the CSS server, it is not able to tell a difference between the attacker and real CSS server.</p>
+<p>In case the attacker is able to hijack the network connections between the CDOC2 Client and CSS servers and redirect the connection attempts from the real CSS servers to attacker itself, attacker is also able to masquerade to Client as real CSS server and is also observe the values of the transmitted capsule shares. Attacker might be able to present a self-signed X.509 HTTPS certificate, or it might be able to present a valid X.509 HTTPS certificate from the real CA as well. In case the CDOC2 Client doesn't verify the identity of the CSS server, it is not able to tell a difference between the attacker and real CSS server.</p>
 <p>It is essential that CDOC2 Clients authenticate, which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.</p>
 <h3 id="protection-against-compromised-css-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.3</span> Protection against compromised CSS servers<a class="headerlink" href="#protection-against-compromised-css-servers" title="Permanent link">¶</a></h3>
-<p>In case the attacker has compromised some of the CSS servers, the following attack scenario should be considered.</p>
+<p>In case the attacker has compromised some CSS servers, the following attack scenario should be considered.</p>
 <ol>
-<li>Client connects to CSS-1 and asks for nonce <code>nonce1</code>. CSS-1 is controlled by attacker and they return the value of <code>nonce1</code>.</li>
+<li>Client connects to CSS-1 and asks for nonce <code>nonce1</code>. CSS-1 is controlled by attacker, and they return the value of <code>nonce1</code>.</li>
 <li>Client connects to CSS-2 and asks for nonce <code>nonce2</code>. CSS-2 is secure and returns the value of <code>nonce2</code>.</li>
 <li>Client creates authentication signature, in the form of issuing SD-JWT.</li>
 <li>Client creates presentation of SD-JWT for CSS-1 with the disclosure of the value of <code>nonce1</code> and sends this to CSS-1. The value of <code>nonce2</code> is not revealed.</li>
@@ -905,7 +904,7 @@ dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 </ol>
 <p>Therefore, the protocol is secure against compromise of some CSS servers.</p>
 <h3 id="protection-against-css-server-compromise-and-nonce-reuse"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.4</span> Protection against CSS server compromise and nonce reuse<a class="headerlink" href="#protection-against-css-server-compromise-and-nonce-reuse" title="Permanent link">¶</a></h3>
-<p>In case the attacker has compromised some of the CSS servers and tries to confuse Client by mixing nonces from different servers, the following attack scenario should be considered.</p>
+<p>In case the attacker has compromised some CSS servers and tries to confuse Client by mixing nonces from different servers, the following attack scenario should be considered.</p>
 <ol>
 <li>Attacker has knowledge of all capsule share identification values, <code>shareId1</code> and <code>shareId2</code>, for example, from the captured CDOC2 container.</li>
 <li>Client connects to CSS-1 and asks for nonce value of the <code>shareId1</code>. CSS-1 is controlled by attacker and instead of returning freshly generated <code>nonce1</code>, attacker connects to CSS-2 and asks for the nonce value of the <code>shareId2</code> and returns this as <code>nonce2_1</code> to Client.</li>
@@ -919,9 +918,9 @@ dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 <h3 id="protection-against-dos-attacks"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.5</span> Protection against DOS attacks<a class="headerlink" href="#protection-against-dos-attacks" title="Permanent link">¶</a></h3>
 <p>Protocol doesn't have a built-in protection against DOS attacks. When deploying CDOC2 system components, components in the network infrastructure, such as load balancers or application servers need to use DOS protection mechanisms, such as limiting the number of service requests from single IP-address or others.</p>
 <h3 id="formal-analysis"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.6</span> Formal analysis<a class="headerlink" href="#formal-analysis" title="Permanent link">¶</a></h3>
-<p>Even though we have carefully designed the protocol with security requirements in mind and it has been reviewed multiple times and it includes protection against common network attacks, we are not able to prove the security of the solution.</p>
+<p>Even though we have carefully designed the protocol with security requirements in mind, and it has been reviewed multiple times, and it includes protection against common network attacks, we are not able to prove the security of the solution.</p>
 <p>However, we can increase the confidence by using formal analysis methods. We have implemented the protocol flow as a model of ProVerif (<a href="https://bblanche.gitlabpages.inria.fr/proverif/">https://bblanche.gitlabpages.inria.fr/proverif/</a>) tool. ProVerif is an automated verification tool for cryptographic protocols, which works in the formal logic model Dolev-Yao and can mathematically verify and prove, if the protocol has some security properties, such as confidentiality, authentication, etc. Proving such properties may involve finding proof of not-existence of some other property and verification of all possible combinations. Therefore, using manual methods can be very time-consuming and doesn't usually give full confidence.</p>
-<p>Model has been presented in appendix A and it verifies the following properties.</p>
+<p>Model has been presented in appendix A, and it verifies the following properties.</p>
 <ol>
 <li>Described attacker is not able to download shares of capsules from CSS servers:</li>
 </ol>
@@ -933,7 +932,7 @@ dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk
 <div class="highlight"><pre><span></span><code>        Query event(FinishHandshake(x1,x2,x3,x4)) ==&gt; 
                 event(StartHandshake(x1,x2,x3,x4)) is true.
 </code></pre></div>
-<p>Therefore, the described protocol should be secure against such properties. However, because ProVerif cannot analyse exactly the same CSS and CDOC2 Client source code. Therefore, there might be still unknown vulnerabilities in those areas. Still, this kind of additional formal analysis increases the confidence that protocol design doesn't have major security issues.</p>
+<p>Therefore, the described protocol should be secure against such properties. However, because ProVerif cannot analyze exactly the same CSS and CDOC2 Client source code. Therefore, there might be still unknown vulnerabilities in those areas. Still, this kind of additional formal analysis increases the confidence that protocol design doesn't have major security issues.</p>
 <h3 id="weakness-against-mitm-signature"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.5.7</span> Weakness against MITM signature<a class="headerlink" href="#weakness-against-mitm-signature" title="Permanent link">¶</a></h3>
 <p>In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (ID-card, Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system.</p>
 <p>Following authentication means have this potential weakness:</p>
