@@ -21,7 +21,7 @@
         `x-cdoc2-auth-ticket` is signed by Smart-ID [authentication](https://github.com/SK-EID/smart-id-documentation?tab=readme-ov-file#2310-authentication-session) 
         certificate or [Mobile-ID authentication](https://github.com/SK-EID/MID?tab=readme-ov-file#32-initiating-signing-and-authentication) certificate.
         * `x-cdoc2-auth-x5c` is PEM encoded X509 certificate (without newlines) that was used to sign x-cdoc2-auth-ticket. 
-        Certificate holders identify is specified in Subject "serialnumber" field. Example certificate subject: 
+        The certificate holder's identifier is specified in the Subject's "serialNumber" field. Example certificate subject: 
         'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
         Certificate full structure is defined in 
         [Certificate and OCSP Profile for Smart-ID](https://www.skidsolutions.eu/wp-content/uploads/2024/10/SK-CPR-SMART-ID-EN-v4_7-20241127.pdf)
@@ -60,7 +60,7 @@
             required: true
             description: |
                 PEM encoded X509 certificate (without newlines) that was used to sign x-cdoc2-auth-ticket. 
-                Certificate holders identify is specified in Subject "serialnumber" field. Example certificate subject: 
+                The certificate holder's identifier is specified in the Subject's "serialNumber" field. Example certificate subject: 
                 'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
                 Certificate full structure is defined in 
                 [Certificate and OCSP Profile for Smart-ID](https://www.skidsolutions.eu/wp-content/uploads/2024/10/SK-CPR-SMART-ID-EN-v4_7-20241127.pdf)

@@ -8,7 +8,7 @@ This section defines the CDOC2 Capsule Server (CCS), what interfaces it provides
 
 ## Introduction
 
-The CCS is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 Container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md#cdoc2-encryption-schemes). CDOC2 Capsule server only uses the encryption schemes which assume a single CCS. This is in contrast to CDOC2 Shares Servers (CSSs ) which must use encryption schemes with multiple servers (CSSs) that are independent and operated by separate organizations.
+The CCS is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 Container from the sender to the recipient following the rules set out for specific encryption methods in section [CDOC2 encryption schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md#cdoc2-encryption-schemes). CDOC2 Capsule server only uses the encryption schemes which assume a single CCS. This is in contrast to CDOC2 Shares Servers (CCSs ) which must use encryption schemes with multiple servers (CCSs) that are independent and operated by separate organizations.
 
 The communication channel provided by the CCS is more secure than public channels of communication used for the transmission of CDOC2 Containers. A properly operating CCS ensures that the attacker, who is monitoring the public communication channel and may store all CDOC2 Containers and may be able to break public key encryption algorithms in the future with sufficiently powerful quantum computer, is not able to do so, because the Capsule information is transmitted in a separate channel. Thus, the CDOC2 System gains some additional protection against quantum computers. The CCS does not need to transmit large encrypted documents, meaning that its operating costs will be low.
 
@@ -27,33 +27,23 @@ Actor Sender as Sender
 
 box "Recipient"
 Actor Recipient as Recipient
-participant "eID means\n(ID-card, Mobile-ID, \nSmart-ID)" as eID
+participant "eID means\n(ID-card, Mobile-ID" as eID
 end box
 
 box "CDOC2 servers"
-collections "CSS" as Server
+collections "CCS" as Server
 end box
 
 Sender -> Sender: generate Capsule for\na specific Recipient
-loop for each CSS
-    Sender -> Server: Transmit Capsule to CSS
-    Server -> Server: Generate identifier\nand store Capsule
-    Server -> Sender: Capsule identifier
-    Sender -> Sender: add identifiers for \nRecipient, CSS, Capsule\ninside Container
-end
+Sender -> Server: transmit Capsule to CCS
+Server -> Server: Generate transaction identifier\nand store Capsule
+Server -> Sender: transactions identifier
+Sender -> Sender: add identifiers for \nRecipient, CCS, Capsule\ninside Container
 Sender -> Recipient: transmit Container
-Recipient -> Recipient: find information about Capsules \n required to decrypt Container
-loop for each Capsule
-    Recipient -> Server: query nonce from CSS
-    Server -> Recipient: return nonce
-end
-Recipient -> eID: create authentication signature
-eID -> Recipient: authentication signature
-loop for each CSS
-    Recipient -> Server: query capsule and authenticate with \n authentication signature
-    Server -> Server: authentication\n and authorisation\n decision
-    Server -> Recipient: return Capsule
-end
+Recipient -> Recipient: find information about the Capsule \n required to decrypt Container
+Recipient -> Server: authenticate using eID means\n and query capsule
+Server -> Server: authentication\n and authorisation\n decision
+Server -> Recipient: return Capsule
 Recipient -> Recipient: decrypt Container
 @enduml
 ```
@@ -61,16 +51,15 @@ Recipient -> Recipient: decrypt Container
 1. Sender generates a Capsule for a specific Recipient during encryption.
 2. Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.
 3. CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.
-4. CSS returns the generated identifier to Sender
+4. CCS returns the generated identifier to Sender.
 5. Sender adds selected CCS identifier, transaction identifier, and Recipient identifier inside Container.
 6. The Sender transmits Container to Recipient.
 7. The Recipient finds information concerning the Capsule generated for them in Container.
 8. The Recipient queries nonce from CCS.
 9. CCS returns nonce.
-10. Recipient uses eID means to create authentication signature.
-11. eID means returns the authentication signature.
+10. Recipient uses eID means to authenticate to CCS.
 12. Recipient authenticates to CCS and queries capsule.
-13. CCS looks up Capsule based on the transaction identifier and verifies the authentication signature and makes authentication decision and access control decision.
+13. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
 14. CCS returns Capsule to Recipient.
 15. Recipient uses the information found in Capsule for decrypting Container.
 
@@ -112,7 +101,7 @@ To ensure protocol security, it is important to make sure that the Capsule is on
 
 Enhanced security features provided by CDOC2 are only valid if the Capsule is transmitted via servers meeting the requirements of the specific encryption scenario (see section [02_protocol_and_cryptography_spec/ch02_encryption_schemes.md]).
 
-To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CCSs either as a part of the DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
+To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CCCS either as a part of the DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
 
 The server list consists of the following elements.
 
@@ -131,7 +120,7 @@ This would result in the recipient contacting the wrong CCS, authenticating with
 
 The CCS used by the recipient will receive a transaction identifier but since it will be unable to authenticate with the correct CCS on the behalf of the recipient, it will also be unable to download the Capsule from the correct server.
 
-The Capsule type supported by the server allows the sender to choose the correct Capsule type and enables the recipient to authenticate with the server using the correct protocol. As the servers are lightweight, an organization seeking to support multiple different recipient types will be able to run multiple separate CCSs. This ensures that the CCSs can be simplified and thus made more secure. This is especially important in the case of the recipient interface, as the authentication protocols used may widely differ in their features, making secure implementation difficult.
+The Capsule type supported by the server allows the sender to choose the correct Capsule type and enables the recipient to authenticate with the server using the correct protocol. As the servers are lightweight, an organization seeking to support multiple different recipient types will be able to run multiple separate CCCS. This ensures that the CCCS can be simplified and thus made more secure. This is especially important in the case of the recipient interface, as the authentication protocols used may widely differ in their features, making secure implementation difficult.
 
 The identifier of the organization maintaining the server does not necessarily have to be explicitly tied to the organization’s name, but it must enable the identification of servers controlled by the same organization. This information is required to support future secret sharing-based encryption methods.
 
@@ -144,7 +133,7 @@ This version of the specification defines a single CCS-based Capsule type:
 
 - ``KeyServerCapsule`` -- public key based authentication and access control
 
-The specification also defines a CSS-based Capsule type:
+The specification also defines a CCS-based Capsule type:
 - ``KeySharesCapsule`` -- authentication and access control based on ETSI semantics identifier (national identity code) or private company issuer identifier.
 
 This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.

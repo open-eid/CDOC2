@@ -9,6 +9,7 @@ Enne failide krüpteerimist on oluline teadvustada parooli tugevuse nõudeid. Mi
 - Sisaldab:
   - Vähemalt üks number (0-9)
   - Vähemalt üks suurtäht
+  - Vähemalt üks väiketäht
 
 **Samm 2: Valige tugev parool**
 
@@ -20,6 +21,7 @@ a) Kasuta automaatset paroolisoovitust, et genereerida juhuslik parool. Nõnda l
 - Sisaldab:
   - Vähemalt üks number (0-9)
   - Vähemalt üks suurtäht (A-Z)
+  - Vähemalt üks väiketäht (a-z)
 
 b) Loo käsitsi parool, mis vastab määratud kriteeriumidele. Soovitatav on kasutada paroolihaldurit tugeva juhusliku parooli genereerimiseks vastavalt eeltoodu miinimumnõuetele ja seejärel parool ka paroolihaldurisse salvestada.
 

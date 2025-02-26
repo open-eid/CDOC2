@@ -3,8 +3,6 @@ title: 2. System Context
 ---
 # System Context
 
-![SID/MID](../img/SID_MID_full.png)
-
 ## Overview
 
 "CDOC2 system" - IT system, which contains following primary components:
@@ -20,7 +18,5 @@ DigiDoc4 client application is not in the scope of CDOC2 system, even though, it
 
 There are other components, which are supporting CDOC2 system in some way:
 
-1. CDOC2 authentication portal, which issues long term access tokens to MID/SID proxy.
-2. MID/SID authentication services proxy, which relays the MID/SID authentication requests to actual Mobile-ID/Smart-ID RP-API services.
-TARA, which is an EE government provided central authentication service, used by CDOC2 authentication portal
-3. OCSP and LDAP services, which provide ID-card/MID/SID certificate validity and certificate search services.
+1. MID/SID authentication services proxy, which relays the MID/SID authentication requests to actual Mobile-ID/Smart-ID RP-API services.
+2. OCSP and LDAP services, which provide ID-card/MID/SID certificate validity and certificate search services.

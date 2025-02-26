@@ -25,12 +25,10 @@ In the simplest case, the CSS operates as follows.
 5. The sender transmits the container to the recipient.
 6. The recipient finds information concerning the Shares Capsule generated for them in the container.
 7. The recipient connects to each CSS server chosen by the sender and authenticates with the servers (by signing authentication tokens).
-8. The recipient transmits the share identifier found in the container to the servers.
+8. The recipient transmits the share identifiers found in the container to the servers.
 9. Each CSS server looks up the Key Share based on the share identifier and the recipient identifier established during authentication.
 10. Each server returns the Key Share to the recipient.
 11. The recipient combines all the Key Shares to reconstruct the key material for decrypting the container.
-
-TODO: this diagram doesn't match the steps yet.
 
 ```plantuml
 @startuml
@@ -39,36 +37,38 @@ skinparam BoxPadding 30
 hide footbox
 autonumber
 
-box "User"
-Actor Recipient as R
-participant Authenticator as A
+Actor Sender as Sender
+
+box "Recipient"
+Actor Recipient as Recipient
+participant "eID means\n(Smart-ID, Mobile-ID" as eID
 end box
 
-box "CSSs"
-collections Server as S
+box "CDOC2 servers"
+collections "CSS" as Server
 end box
 
-box "Trust infrastructure"
-participant "PKI/OCSP" as PKI
-end box
-
-R -> R: Read list of TXs from Container
+Sender -> Sender: generate Shares Capsule for\na specific Recipient
 loop for each CSS
-    R -> S: Authentication request for TX_ID
-    S --> R: Nonce for TX_ID
+    Sender -> Server: Transmit a Key Share to CSS
+    Server -> Server: Generate Key Share identifier\nand store Capsule
+    Server -> Sender: Share identifier
+    Sender -> Sender: Add identifiers for \nRecipient, CSS, Key Share\ninside Container
 end
-R -> R: Create authentication signature data
-R -> A: Create authentication signature
-A --> R: Authentication signature
+Sender -> Recipient: Transmit Container
+Recipient -> Recipient: Find information about Shares Capsules \n required to decrypt Container
+loop for each Key Share
+    Recipient -> Server: Query nonce from CSS
+    Server -> Recipient: Return nonce
+end
+Recipient -> eID: Create authentication signature
+eID -> Recipient: Authentication signature
 loop for each CSS
-    R -> R: Create authentication token specific for server
-    R -> S: Present token with authentication signature \n and request Key Share
-    S -> PKI: Recipient certificate not revoked?
-    PKI --> S: Recipient certificate is good
-    S -> S: AuthN: Verify authentication token \n and authentication signature
-    S -> S: AuthZ: Verify that Recipient is \n allowed to download the Key Share
-    S --> R: Key Share
+    Recipient -> Server: Query Key Share and authenticate with \n authentication signature
+    Server -> Server: authentication\n and authorisation\n decision
+    Server -> Recipient: Return Key Share
 end
+Recipient -> Recipient: Combine Key Shares to decrypt Container
 @enduml
 ```
 
@@ -103,7 +103,7 @@ The recipient authenticates with the servers and transmits a share identifier to
 
 Interface security is ensured using the TLS 1.3 protocol. The server holds a certificate issued by a publicly available and trusted CA. The clients can validate this certificate on each connection using the OCSP protocol.
 
-To ensure protocol security, it is important to make sure that the Key Share is only received by the CSS. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced1 use of TLS inspection does not compromise the confidentiality of the keying material.
+To ensure protocol security, it is important to make sure that the Key Share is only received by the CSS. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.
 
 ## Server identification and trust
 

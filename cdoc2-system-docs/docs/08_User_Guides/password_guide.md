@@ -9,6 +9,7 @@ Before encrypting your files, it's important to understand the password strength
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter
+  - At least one lowercase letter
 
 **Step 2: Choose a Strong Password**
 
@@ -20,6 +21,7 @@ a) Use the auto-suggest feature to generate a random password. The password will
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter (A-Z)
+  - At least one lowercase letter (a-z)
 
 b) Manually create a password meeting the specified criteria. It is recommended to utilize a password manager to generate a strong, random password that meets the criteria and then store the password there.
 
