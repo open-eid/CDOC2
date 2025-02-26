@@ -95,7 +95,7 @@ The recipient authenticates with the server and transmits a transaction identifi
 
 Interface security is ensured using the TLS 1.3 protocol. The server holds a certificate issued by a publicly available and trusted CA. The clients can validate this certificate on each connection using the OCSP protocol.
 
-To ensure protocol security, it is important to make sure that the Capsule is only received by the CCS. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced1 use of TLS inspection does not compromise the confidentiality of the keying material.
+To ensure protocol security, it is important to make sure that the Capsule is only received by the CCS. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.
 
 ## Server identification and trust
 
