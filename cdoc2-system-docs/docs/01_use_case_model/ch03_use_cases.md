@@ -605,22 +605,22 @@ CDOC2 Capsule Server (CCS)
 **Success Guarantees**
 
 * Server Capsules are saved with an expiration time.
-* Share identifiers are forwarded to the CDOC2 Client Application.
+* Transaction identifiers are forwarded to the CDOC2 Client Application.
 
 **Main Success Scenario**
 
 1. Client sends a server capsule using the appropriate API service to a CCS. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.
 2. CCS validates the server capsules against specification rules.
-3. CCS generates a universally unique share identifier (UUID).
+3. CCS generates a universally unique transaction identifier (UUID).
 4. CCS saves the server capsule, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.
-5. CCS returns Client a share identifier for each capsule.
+5. CCS returns Client a transaction identifier for each capsule.
 
 **Extensions**
 1a. Client uses an organization-specific external configuration service:
 
 1. Client first syncs default capsule expiration time from an organization-specific external service.
 2. External provides a default capsule expiration time.
-3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule.
+3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration.
 4. Use case continues from step 2.
 
 2a. Server capsule exceeds the allowed length limit:
