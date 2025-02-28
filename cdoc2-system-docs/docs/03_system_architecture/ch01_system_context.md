@@ -3,8 +3,7 @@ title: 2. System Context
 ---
 # System Context
 
-![SID/MID](../../../vp/CDOC2_v2.png)
-
+![SID/MID](../img/CDOC2_v2.png)
 
 ## Overview
 
