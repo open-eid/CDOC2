@@ -75,9 +75,6 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 **Primary Actor**
 : Sender
 
-**Preconditions**
-: Client has a long-term access token from CDOC2 authentication server.
-
 **Success Guarantees**
 
 * CDOC2 container is saved into file system.
@@ -193,7 +190,6 @@ CDOC2 Client Application
 **Preconditions**
 
 * Recipient's security token is connected.
-* Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
 
@@ -729,9 +725,6 @@ CDOC2 Capsule Server (CCS)
 
 **Primary Actor**
 : CDOC2 Client Application (Client)
-
-**Preconditions**
-: Client has a long-term access token from CDOC2 authentication server.
 
 **Success guarantees**
 
