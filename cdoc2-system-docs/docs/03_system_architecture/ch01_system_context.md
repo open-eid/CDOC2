@@ -3,6 +3,8 @@ title: 2. System Context
 ---
 # System Context
 
+![SID/MID](../img/CDOC2_v2.png)
+
 ## Overview
 
 "CDOC2 system" - IT system, which contains following primary components:
