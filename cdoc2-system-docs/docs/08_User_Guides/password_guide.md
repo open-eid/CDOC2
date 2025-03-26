@@ -5,7 +5,7 @@ Encrypting files with a strong password adds an additional layer of protection, 
 **Step 1: Assess Password Strength Requirements**
 Before encrypting your files, it's important to understand the password strength requirements. The minimum password criteria are as follows:
 
-- Length: 8 - 64 characters
+- Length: 20 - 64 characters
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter
@@ -17,7 +17,7 @@ You have two options for selecting a strong password:
 
 a) Use the auto-suggest feature to generate a random password. The password will have the following criteria:
 
-- Length: 8 characters
+- Length: 20 characters
 - Contains:
   - At least one digit (0-9)
   - At least one uppercase letter (A-Z)
