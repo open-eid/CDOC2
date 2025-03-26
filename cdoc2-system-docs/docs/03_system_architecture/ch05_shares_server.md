@@ -145,13 +145,13 @@ This list may be expanded in future versions of the specification. Various authe
 
 ### The ``KeySharesCapsule`` authentication scheme
 
-In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``. 
+In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``.
 
-The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch05_ID_authentication_protocol.md).
+The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch06_ID_authentication_protocol.md).
 
 The two following `recipient_id` naming patters are supported:
 
-**ETSI semantics identifier**:
+#### ETSI semantics identifier
 
 The identifier must adhere to the following pattern:
 
@@ -167,7 +167,7 @@ Example:
 
 `etsi/PNOEE-48010010101`
 
-**Private company issuer identifier**:
+#### Private company issuer identifier
 
 The identifier must adhere to the following pattern:
 

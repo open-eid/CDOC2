@@ -10,16 +10,16 @@ This section describes a protocol and data formats for authenticating to multipl
 
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
 2. Client needs to authenticate to multiple CSSs, in order to download all Capsules.
-3. Client should only need to create one signature with its authentication means (ID-card, Mobile-ID, Smart-ID) for authentication.
+3. Client should only need to create one signature with its authentication means (Mobile-ID, Smart-ID) for authentication.
 4. CSS must not be able to replay the authentication ticket to another CSS.
 
 ## Non-suitable alternatives
 
-Before designing a custom authentication protocol, we should make sure that we cannot re-use existing protocols. Existing protocols may already have proven security properties and they might be well supported by existing software libraries.
+Before designing a custom authentication protocol, we should make sure that we cannot re-use existing protocols. Existing protocols may already have proven security properties, and they might be well-supported by existing software libraries.
 
 For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CSSs), the situation becomes cumbersome.
 
-First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
+First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications, and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
 
 Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens. This would mean that CSS server can re-use the token and replay it to another CSS server. It might be possible to overcome the threat of token replay with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create yet another central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download every `KeySharesCapsule` on behalf of any user.
 
@@ -41,7 +41,7 @@ autonumber
 box "User"
 Actor Recipient as R
 participant "CDOC2 Client" as C
-participant "eID means \n (ID-card, Mobile-ID, Smart-ID)" as A
+participant "eID means \n (Mobile-ID, Smart-ID)" as A
 end box
 
 box "cdoc2-shares-servers (CSSs)"
@@ -53,9 +53,9 @@ participant "PKI/OCSP" as PKI
 end box
 
 R -> C: Decrypt Container
-C -> C: Read information about \n Capsules from Container
+C -> C: Read information about \n Shares Capsules from Container
 loop for each CSS
-    C -> S: Authentication request for shareId of Capsule
+    C -> S: Authentication request for shareId of Key Share
     S --> C: Nonce for shareId
 end
 C -> C: Create \n authentication data
@@ -65,13 +65,14 @@ R -> A: Authorized
 A --> C: Signature
 loop for each CSS
     C -> C: Create authentication token \n specific for a CSS server
-    C -> S: Present token with \n authentication signature \n and request Capsule
+    C -> S: Present token with \n authentication signature \n and request Key Share
     S -> PKI: Recipient's certificate \n not revoked?
     PKI --> S: Recipient's certificate \n is valid
     S -> S: AuthN: Verify authentication token \n and authentication signature
-    S -> S: AuthZ: Verify that Recipient is \n allowed to download Capsule
-    S --> C: Capsule
+    S -> S: AuthZ: Verify that Recipient is \n allowed to download Key Share
+    S --> C: Key Share
 end
+C -> C: Combine Key Shares \n of a Shares Capsule
 @enduml
 ```
 
@@ -81,7 +82,7 @@ In this section the details of the authentication protocol are explained.
 
 ### Authentication data
 
-In generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (ID- card, Mobile-ID, Smart-ID), using the authentication key pair.
+In generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
@@ -207,7 +208,7 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
    }
    ```
 
-   The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, the ID-card produces signatures with ES256 algorithm, Smart-ID produces signatures with RS256 algorithm.
+   The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, Smart-ID produces signatures with RS256 algorithm.
 
 2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. Example is provided here. Note that the `aud` claim contains only empty array at the moment.
 
@@ -312,7 +313,7 @@ CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosur
 4. Verify that SD-JWT contains claim `aud`, which is an array, which contains exactly one JSON string.
 5. Parse `aud` value (it should be something like "<https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6>") into components `serverBaseURL`, `shareId` and `nonce`.
 6. Verify that `serverBaseURL` is correct for this CSS server.
-7. Verify that this CSS server has a Capsule with identifier `shareId` and it is not deleted.
+7. Verify that this CSS server has a Capsule with identifier `shareId`, and it is not deleted.
 8. Verify that this CSS server has previously generated a nonce for this `shareId` and one of the nonce values matches with `nonce` component value and that nonce wasn't generated too long ago (configuration parameter, for example 300 seconds).
 9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subjectDN` from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".
 
@@ -387,7 +388,7 @@ Therefore, the described protocol should be secure against such properties. Howe
 
 ### Weakness against MITM signature
 
-In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (ID-card, Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system.
+In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system.
 
 Following authentication means have this potential weakness:
 
