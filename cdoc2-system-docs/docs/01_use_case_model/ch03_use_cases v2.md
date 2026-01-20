@@ -441,7 +441,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CDOC2 Capsule Servers. Recipient would need to authenticate to CCS servers and download all the shares in order to reconstruct the KEK from those.
 
-### UC.Client.03 — Encrypt CDOC2 container using key shares 
+### UC.Client.03 — Encrypt CDOC2 container using key shares
 
 **Use Case Context**
 : CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient. Key material is divided into shares and uploaded to multiple CCS-s.
@@ -467,16 +467,16 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 **Main Success Scenario**
 
 1. Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.
-2. Sender enters identifiers for each Recipient. 
+2. Sender enters identifiers for each Recipient.
 3. Client creates a capsule for each Recipient.
-4. Client splits the capsules by creating a share for each CCS. 
+4. Client splits the capsules by creating a share for each CCS.
 5. Client creates a TLS-connection with each CCS and receives the server certificates.
 6. Client verifies the server certificates against the configuration.
 7. Client forwards a share per Recipient together with their natural person identifier to each of the CDOC2 Capsule Servers. Client provides a server capsule expiration time from internal application configuration for each capsule share.  Client receives a transaction code for each server capsule share.
-9. Client creates a container into file system in the chosen target path and adds a header.
-10. Client verifies that the header does not exceed the size limit defined by the specification.
-11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
-12. Client saves the CDOC2 container and displays Sender a notification.
+8. Client creates a container into file system in the chosen target path and adds a header.
+9. Client verifies that the header does not exceed the size limit defined by the specification.
+10. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
+11. Client saves the CDOC2 container and displays Sender a notification.
 
 **Extensions**
 
@@ -557,7 +557,7 @@ CDOC2 Client Application
 
 **Preconditions**
 
-* The CDOC2 container has been encrypted using CC shares and supports authentication-based decryption. 
+* The CDOC2 container has been encrypted using CC shares and supports authentication-based decryption.
 * Client has a long-term access token from CDOC2 authentication server.
 
 **Success Guarantees**
@@ -578,7 +578,7 @@ CDOC2 Client Application
 9. Client reads Recipient certificate from the authentication response.
 10. Client verifies that the container has a Recipient record with the same Recipient ID (personal identification number).
 11. Client constructs server-specific authentication tickets and sends one to each CSS. Each CSS validates the received authentication ticket.
-12. Client receives the server capsule share from each CCS. 
+12. Client receives the server capsule share from each CCS.
 13. Client combines the shares into a full secret and derives the KEK. Client uses the key material to decrypt the encrypted archive in the CDOC2 container and calculate HMAC to validate the integrity of the container.
 14. Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage.
 
@@ -929,7 +929,7 @@ CDOC2 Capsule Server (CCS)
 
 **Main Success Scenario**
 
-1. Client sends shares of each Server Capsule to appropriate CCS servers using an API service. Shares are matched to CCS servers by server IDs. Client provides a natural person identifier corresponding to the Recipient. Client provides a server capsule expiration time from internal application configuration for each capsule share. 
+1. Client sends shares of each Server Capsule to appropriate CCS servers using an API service. Shares are matched to CCS servers by server IDs. Client provides a natural person identifier corresponding to the Recipient. Client provides a server capsule expiration time from internal application configuration for each capsule share.
 2. Each CCS validates the server capsule shares against specification rules.
 3. Each CCS generates a universally unique transaction code (UUID).
 4. Each CCS saves the server capsule share, validates the expiration time provided by Client based on its system configuration settings and sets the expiration time of the capsules.
@@ -988,7 +988,7 @@ CDOC2 Capsule Server (CCS)
 3. Client asks the Recipient to authenticate with an authentication service. Recipient enters their ID code, performs authentication and creates a signature on the authentication hash with authentication key pair.
 4. Client constructs server-specific authentication tickets and sends one to each CSS.
 5. Each CSS validates the received authentication ticket, which includes validating the ticket type, nonce, signature, key pair and public keys.
-6. CSS returns the server capsule share. 
+6. CSS returns the server capsule share.
 
 **Extensions**
 

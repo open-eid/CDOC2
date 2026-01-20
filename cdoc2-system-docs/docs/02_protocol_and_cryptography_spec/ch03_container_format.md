@@ -116,7 +116,7 @@ Free text `KeyLabel` examples:
 ECC public key capsule. The recipient is identified by ECC public key ``RecipientPublicKey``.
 
     ECCPublicKeyCapsule = {
-        Curve              = :enum(secp384r1)
+        Curve              = :enum(secp384r1, secp256r1)
         RecipientPublicKey = :byte[]
         SenderPublicKey    = :byte[]
     }
@@ -133,9 +133,9 @@ RSA public key capsule. The recipient is identified by RSA public key ``Recipien
     }
 
 - ``RecipientPublicKey`` - recipient’s RSA public key, used by the recipient to establish the corresponding recipient record.
-- ``EncryptedKEK`` -  key encryption key encrypted with the receipient's public key.
+- ``EncryptedKEK`` -  key encryption key encrypted with the recipient's public key.
 
-Server capsule. The receipient is identified by ECC or RSA public key ``RecipientPublicKey``.
+Server capsule. The recipient is identified by ECC or RSA public key ``RecipientPublicKey``.
 
     KeyServerCapsule = {
         RecipientKey = Union(:EccKeyDetails | :RsaKeyDetails)
@@ -148,7 +148,7 @@ Server capsule. The receipient is identified by ECC or RSA public key ``Recipien
     }
 
     EccKeyDetails = {
-            Curve              = :enum(secp384r1)
+            Curve              = :enum(secp384r1, secp256r1)
             RecipientPublicKey = :byte[]
     }
 
