@@ -23,6 +23,7 @@ Long-term tickets are used to access API only (Bearer-Auth HTTP header), not use
 retrieval. Uses TARA OpenID Connect to authenticate. Token format is not yet decided.
 
 ## Authentication proxy
+
 A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.
 
 ## CDOC2 CLI user application

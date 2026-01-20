@@ -29,7 +29,6 @@ test:
   image: $CI_REGISTRY_IMAGE
   script:
     - markdownlint-cli2 "cdoc2-system-docs/**/*.md"
-    - cd cdoc2-system-docs && mike deploy $DOC_VERSION --ignore-remote-status
   rules:
     - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
       changes: 

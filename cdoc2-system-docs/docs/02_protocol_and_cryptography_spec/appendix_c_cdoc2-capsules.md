@@ -1,17 +1,17 @@
-# Appendix C: Key Capsules API, version 2.0 of cdoc2services API
+# Appendix C: Key Capsules API, version 2.1.0 of cdoc2services API
 
     openapi: 3.0.3
     info:
     contact:
-        url: http://cyber.ee
+        url: http://ria.ee
     title: cdoc2-key-capsules
-    version: '2.0'
+    version: 2.1.0
     description: API for exchanging CDOC2 ephemeral key material in capsules
     servers:
-    - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8443'
-        description: RIA test TLS
-    - url: 'https://cdoc2-keyserver-01.test.riaint.ee:8444'
-        description: RIA test mutualTLS
+    - url: 'https://cdoc2.id.ee:8443'
+        description: post TLS
+    - url: 'https://cdoc2.id.ee:8444'
+        description: fetch mutualTLS
 
     paths:
     '/key-capsules/{transactionId}':
@@ -78,7 +78,7 @@
             recipient_id:
             type: string
             format: byte
-            minLength: 97 # EC public key
+            minLength: 65 # EC public key
             maxLength: 2100 # 16 K RSA public key = 2086 bytes
             description: 'Binary format is defined by capsule_type'
             ephemeral_key_material:
@@ -90,15 +90,22 @@
             type: string
             enum:
                 - ecc_secp384r1
+                - ecc_secp256r1
                 - rsa
             description: |
                 Depending on capsule type, Capsule fields have the following contents:
                 - ecc_secp384r1:
                     * recipient_id is EC pub key with secp384r1 curve in TLS format (0x04 + X coord 48 bytes + Y coord 48 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
                     * ephemeral_key_material contains sender public EC key (generated) in TLS format.
+                - ecc_secp256r1:
+                  * recipient_id is EC pub key with secp256r1 curve in TLS format (0x04 + X coord 32 bytes + Y coord 32 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
+                  * ephemeral_key_material contains sender public EC key (generated) in TLS format.
                 - rsa:
                     * recipient_id is DER encoded RSA recipient public key - RsaPublicKey encoding [https://www.rfc-editor.org/rfc/rfc8017#page-54](RFC8017 RSA Public Key Syntax A.1.1)
                     * ephemeral_key_material contains KEK encrypted with recipient public RSA key
+
+                This is a extensible enum — servers may add values. Clients MUST tolerate unknown values.
+            x-extensible-enum: true
         required:
             - recipient_id
             - ephemeral_key_material
