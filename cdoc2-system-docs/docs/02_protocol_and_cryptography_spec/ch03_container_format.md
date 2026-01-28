@@ -215,7 +215,7 @@ ECC public key capsule. The recipient is identified by ECC public key ``Recipien
 ```
 
 - ``Curve`` – identifier of the elliptic curve employed.
-- ``RecipientPublicKey`` – recipient’s ECC public key, used by the recipient to select the correct private key for key exchange.
+- ``RecipientPublicKey`` – recipient’s ECC public key, used by the recipient to select the correct private key ECDH.
 - ``SenderPublicKey`` – sender’s public key used by the recipient to derive the KEK using ECDH.
 
 RSA public key capsule. The recipient is identified by RSA public key ``RecipientPublicKey``.
