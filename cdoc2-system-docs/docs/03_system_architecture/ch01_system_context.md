@@ -3,7 +3,7 @@ title: 2. System Context
 ---
 # System Context
 
-![CDOC2 component diagram](../img/CDOC2 release 1.jpg)
+![CDOC2 component diagram](../img/CDOC2 release 1.png)
 
 ## Overview
 

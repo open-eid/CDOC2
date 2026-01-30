@@ -5,15 +5,16 @@ title: 4. External components and services
 
 This section will describe, how CDOC2 system is using external components and services.
 
-## TARA authentication service
+## LDAP servers
 
-OpenID Connect for E-ID supported methods (Smart-ID/Mobile-ID/id-card/others)
+LDAP servers are used by CDOC2 client applications (for example, reference CLI application and DigiDoc4) to search for Recipient' certificate. Following servers are used:
 
-(<https://e-gov.github.io/TARA-Doku/TechnicalSpecification>)
+* SK public LDAP servers - <https://www.skidsolutions.eu/resources/ldap/>
+* Zetes public LDAP servers - <ldaps://ldap.eidpki.ee>
 
-* Authentication request [/authorize](https://e-gov.github.io/TARA-Doku/TechnicalSpecification#41-authentication-request)
+## OCSP servers
 
-## LDAP and OCSP servers
+OCSP servers are used by CDOC2 client applications and CDOC2 Capsule Server to verify that Recipient's certificate is valid and if the Recipient's key pair is still valid.
 
-* LDAP: [SK public directory service](https://www.skidsolutions.eu/resources/ldap/)
-* OCSP: SK validity confirmation service is described [here](https://github.com/SK-EID/ocsp/wiki) and [here](http://open-eid.github.io/#_comp_central_conf_server_interfaces).
+* SK OCSP servers - SK validity confirmation service is described at <https://github.com/SK-EID/ocsp/wiki> and <http://open-eid.github.io/#_comp_central_conf_server_interfaces>.
+* Zetes OCSP servers - <http://ocsp.eidpki.ee/>

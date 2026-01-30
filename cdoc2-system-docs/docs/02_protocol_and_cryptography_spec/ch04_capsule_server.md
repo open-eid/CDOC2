@@ -62,7 +62,7 @@ The recipient authenticates with the server and transmits a transaction identifi
 
 Interface security is ensured using the TLS 1.3 protocol. The server holds a certificate issued by a publicly available and trusted CA. The clients can validate this certificate on each connection using the OCSP protocol.
 
-To ensure protocol security, it is important to make sure that the Capsule is only received by the Capsule Server. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced1 use of TLS inspection does not compromise the confidentiality of the keying material.
+To ensure protocol security, it is important to make sure that the Capsule is only received by the Capsule Server. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.
 
 ## Recipient authentication
 
@@ -75,7 +75,7 @@ This list may be expanded in future versions of the specification. Various authe
 
 In this scheme, the recipient is identified by their public key used for the decryption of the container. The public key is defined by the field ``RecipientKey`` in the structure ``KeyServerCapsule``.
 
-The server authenticates the recipient using TLS client authentication (*mTLS*). The server is configured to validate the client certificate (e.g. using OSCP). Should the recipient lose control of their decryption key and cancel their certificate, the Capsule Server will not issue the Capsule card to the new holder (attacker) and the attacker will be unable to decrypt the container.
+The server authenticates the recipient using TLS client authentication (*mTLS*). The server is configured to validate the client certificate (e.g. using OCSP). Should the recipient lose control of their decryption key and cancel their certificate, the Capsule Server will not issue the Capsule card to the new holder (attacker) and the attacker will be unable to decrypt the container.
 
 After successful authentication, the server reads the client’s public key from the certificate used by the client and compares this public key to the public key tied to the Capsule referenced by the transaction identifier. If the two keys match, the server will return the Capsule. Otherwise, the server will return an error message.
 
