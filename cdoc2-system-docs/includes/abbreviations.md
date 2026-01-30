@@ -21,7 +21,7 @@
 
 *[SID/MID proxy]: Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
-*[hardware security token]: Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys
+*[hardware security token]: Smart-card with user key pairs, for example Estonian eID ID-card
 
 *[ECDH]: Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.
 

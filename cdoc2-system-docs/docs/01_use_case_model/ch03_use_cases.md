@@ -45,8 +45,8 @@ Use cases specified here are written in generic form, so that they are applicabl
 **Container Capsule**
 : A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
-**LDAP-server**
-: An application used for publishing public keys.
+**LDAP directory**
+: A public directory, where Recipients' public keys are published and can be searched with LDAP protocol. There can be multiple LDAP directories for various generations of ID-cards.
 
 ## Use cases for Recipients with hardware security tokens
 
@@ -95,10 +95,10 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 2. Sender specifies the target name and path.
 3. Use case continues from step 2.
 
-2a. Client chooses to search for Recipient information in LDAP directory:
+2a. Client chooses to search for Recipient information in LDAP directories:
 
 1. Sender inserts Recipient personal code (natural person) or name / business registry code (juridical person).
-2. Client requests corresponding certificates and displays those.
+2. Client requests corresponding certificates from LDAP directories and displays those.
 3. Sender chooses certificate(s).
 4. Use case continues from step 2.
 
@@ -133,7 +133,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 8b. Client uses a organization-specific external configuration service:
 
-1. Client first syncs default capsule expiration time from an orgnaization-specific external service.
+1. Client first syncs default capsule expiration time from an organization-specific external service.
 2. External configuration service provides a default capsule expiration time.
 3. Client sends a server capsule using the appropriate API service to a CCS using the expiration time from external configuration or when a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
 4. Use case continues from step 9.
@@ -507,7 +507,7 @@ CDOC2 Capsule Server (CCS)
 
 1. Client requests a Server Capsule using the appropriate API service, providing a transaction code as input.
 2. CCS validates the transaction code against specification rules.
-3. CCS finds the correct Server Capsule useing the transaction code and validates that the Recipient public key matches with the one in the Capsule.
+3. CCS finds the correct Server Capsule using the transaction code and validates that the Recipient public key matches with the one in the Capsule.
 4. CCS sends the Client the Capsule.
 
 **Extensions**
