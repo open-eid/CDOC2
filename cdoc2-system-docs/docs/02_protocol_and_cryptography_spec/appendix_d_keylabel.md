@@ -12,7 +12,7 @@ In current specification `type` and `v` fields are required, rest of fields are 
 
 Required fields are required only for UI. When `KeyLabel` parsing fails, then CDOC2 decryption should still succeed as required fields for decryption are in `FlatBuffers` structure.
 
-Exception to this (decryption should succeed without `KeyLabel`) is symmetric key, when there is more than 1 symmetric key recipient in CDOC2 header (key label needs to be unique to differentiate between symmetric key recipients).
+Exception to this (decryption should succeed without `KeyLabel`) may be symmetric key, when there is more than 1 symmetric key recipient in CDOC2 header (key label should be unique to differentiate between symmetric key recipients). But even in that case, if the user can somehow choose the correct capsule (e.g. by the capsule index), decryption is possible.
 
 ## eID v1
 
