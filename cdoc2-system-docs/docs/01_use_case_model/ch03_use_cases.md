@@ -278,8 +278,8 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 1. User chooses the files that are to be encrypted.
 2. Client asks User to specify the target name and path.
-3. User specifies a target name and path in local file system.
-4. User enters a password to be used for password-based cryptography and a password hint (short one-line text) to be displayed during decryption.
+3. User specifies a target name and path in local filesystem.
+4. User enters a password and password hint (internally stored as KeyLabel value) to be used for password-based cryptography.
 5. Client verifies that the password satisfies minimal requirements.
 6. Client creates a container into file system in the chosen target path and adds a header.
 7. Client verifies that the header does not exceed the size limit defined by the specification.
@@ -337,7 +337,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 1. User specifies which CDOC2 container they wish to open.
 2. Client opens the container and retrieves the header information. Client verifies that the header does not exceed the limit defined in the specification.
-3. Client asks User for the password to decrypt the container. Client shows a password hint based on the `KeyLabel` value set during encryption.
+3. Client asks User for the password to decrypt the container. Client shows a password hint based on the KeyLabel value, that was set during encryption.
 4. User enters the password.
 5. Client verifies the password and decrypts the CDOC2 container.
 6. Client asks user for the target location where to save the files.
