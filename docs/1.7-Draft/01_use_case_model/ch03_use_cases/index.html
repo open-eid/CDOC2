@@ -727,7 +727,7 @@ CDOC2 Client Application</p>
 <li>User chooses the files that are to be encrypted.</li>
 <li>Client asks User to specify the target name and path.</li>
 <li>User specifies a target name and path in local filesystem.</li>
-<li>User enters a password to be used for password-based cryptography.</li>
+<li>User enters a password and password hint (internally stored as KeyLabel value) to be used for password-based cryptography.</li>
 <li>Client verifies that the password satisfies minimal requirements.</li>
 <li>Client creates a container into filesystem in the chosen target path and adds a header.</li>
 <li>Client verifies that the header does not exceed the size limit defined by the specification.</li>
@@ -781,7 +781,7 @@ CDOC2 Client Application</p>
 <ol>
 <li>User specifies which CDOC2 container they wish to open.</li>
 <li>Client opens the container and retrieves the header information. Client verifies that the header does not exceed the limit defined in the specification.</li>
-<li>Client asks User for the password to decrypt the container. Client shows a password hint based on the KeyLabel value set during encryption.</li>
+<li>Client asks User for the password to decrypt the container. Client shows a password hint based on the KeyLabel value, that was set during encryption.</li>
 <li>User enters the password.</li>
 <li>Client verifies the password and decrypts the CDOC2 container.</li>
 <li>Client asks user for the target location where to save the files.</li>
