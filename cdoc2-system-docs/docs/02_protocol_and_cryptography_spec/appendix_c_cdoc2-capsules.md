@@ -5,7 +5,7 @@
       contact:
         url: http://ria.ee
       title: cdoc2-key-capsules
-      version: 3.0.1
+      version: 3.1.1
       description: API for exchanging CDOC2 ephemeral key material in key capsules
     servers:
       - url: 'https://cdoc2.id.ee:8443'
@@ -120,16 +120,20 @@
             capsule_type:
               type: string
               enum:
-                - ecc_secp384r1
                 - ecc_secp256r1
+                - ecc_secp384r1
+                - ecc_secp521r1
                 - rsa
               description: |
                 Depending on capsule type, Capsule fields have the following contents:
-                 - ecc_secp384r1:
-                      * recipient_id is EC pub key with secp384r1 curve in TLS format (0x04 + X coord 48 bytes + Y coord 48 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
-                      * ephemeral_key_material contains sender public EC key (generated) in TLS format.
                 - ecc_secp256r1:
                       * recipient_id is EC pub key with secp256r1 curve in TLS format (0x04 + X coord 32 bytes + Y coord 32 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
+                      * ephemeral_key_material contains sender public EC key (generated) in TLS format.
+                - ecc_secp384r1:
+                      * recipient_id is EC pub key with secp384r1 curve in TLS format (0x04 + X coord 48 bytes + Y coord 48 bytes) (https://www.rfc-editor.org/rfc/rfc8446#section-4.2.8.2)
+                      * ephemeral_key_material contains sender public EC key (generated) in TLS format.
+                - ecc_secp521r1:
+                      * recipient_id is EC pub key with secp521r1 curve in TLS format (0x04 + X coord 66 bytes + Y coord 66 bytes)
                       * ephemeral_key_material contains sender public EC key (generated) in TLS format.
                  - rsa:
                       * recipient_id is DER encoded RSA recipient public key - RsaPublicKey encoding [RFC8017 RSA Public Key Syntax A.1.1](https://www.rfc-editor.org/rfc/rfc8017#page-54)
