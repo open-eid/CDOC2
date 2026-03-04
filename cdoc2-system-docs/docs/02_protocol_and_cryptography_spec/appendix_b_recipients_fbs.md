@@ -8,16 +8,12 @@
     }
 
     // Elliptic curve type enum for ECCPublicKey recipient
+    //   The clients should not crash with unknown values and try to continue, if possible.
     enum EllipticCurve:byte {
-        UNKNOWN,
-        secp384r1,
-        secp256r1
-    }
-
-    // KDF algorithm identifier enum
-    enum KDFAlgorithmIdentifier:byte {
-        UNKNOWN,
-        PBKDF2WithHmacSHA256
+    UNKNOWN,
+    secp384r1,
+    secp256r1,
+    secp521r1
     }
 
     table RsaKeyDetails {
@@ -30,7 +26,7 @@
         curve:                 EllipticCurve = UNKNOWN;
 
         //EC pub key in TLS 1.3 format https://datatracker.ietf.org/doc/html/rfc8446#section-4.2.8.2
-        //for secp256r1 or secp384r1 curve: 0x04 + X 48 coord bytes + Y coord 48 bytes)
+        //for secp384r1 curve: 0x04 + X 48 coord bytes + Y coord 48 bytes)
         recipient_public_key:  [ubyte] (required);
     }
 

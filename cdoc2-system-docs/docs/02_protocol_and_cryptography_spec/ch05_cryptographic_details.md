@@ -77,17 +77,17 @@ Key Encryption Key (KEK) computation depends on recipient type. Below, KEK compu
 
 ### ECCPublicKeyCapsule
 
-``ECCPublicKeyCapsule`` (see [table 2](#table-2-eccpublickeycapsule-elements)) refers to a recipient identified by their ECC public key. The CDOC2 format supports the use of any public key generated on a *secp256r1* or *secp384r1* elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
-For the *secp256r1* and *secp384r1* curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
+``ECCPublicKeyCapsule`` (see [table 2](#table-2-eccpublickeycapsule-elements)) refers to a recipient identified by their ECC public key. The CDOC2 format supports the use of any public key generated on a *secp256r1*, *secp384r1* or *secp521r1* elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
+For the *secp256r1*, *secp384r1* and *secp521r1* curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
 The `ECCPublicKeyCapsule` structure corresponds to the capsule `Capsule_i` and `ContainerCapsule_i` in the sense of cryptographic protocols presented in sections [Direct key agreement-based ECDH](ch02_encryption_schemes.md#sc01-encryption-scheme-for-recipients-with-ec-key-pair) and [Capsule server-based ECDH](ch02_encryption_schemes.md#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs).
 
 #### Table 2. *ECCPublicKeyCapsule* elements
 
-| Field              | Contents                                                            | Encoding                                                                                                  |
-|--------------------|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| Curve              | Elliptic curve used; currently only *secp256r1* and *secp384r1*.    | Based on the format used; see scheme description.                                                         |
-| RecipientPublicKey | Recipient’s public key, e.g. ID-card key pair 1 public key.         | Public key is encoded following [TLS 1.3 rules, section 4.2.8.2](https://rfc-editor.org/rfc/rfc8446.txt). |
-| SenderPublicKey    | Sender ephemeral (short-lived or even one-time) key pair public key | Public key is encoded following [TLS 1.3 rules, section 4.2.8.2](https://rfc-editor.org/rfc/rfc8446.txt). |
+| Field              | Contents                                                                      | Encoding                                                                                                  |
+|--------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| Curve              | Elliptic curve used; currently only *secp256r1*, *secp384r1* and *secp521r1*. | Based on the format used; see scheme description.                                                         |
+| RecipientPublicKey | Recipient’s public key, e.g. ID-card key pair 1 public key.                   | Public key is encoded following [TLS 1.3 rules, section 4.2.8.2](https://rfc-editor.org/rfc/rfc8446.txt). |
+| SenderPublicKey    | Sender ephemeral (short-lived or even one-time) key pair public key           | Public key is encoded following [TLS 1.3 rules, section 4.2.8.2](https://rfc-editor.org/rfc/rfc8446.txt). |
 
 The sender computes the KEK using the secret key of the ephemeral key pair they have generated, and the recipient’s public key, using the elliptic-curve Diffie-Hellman key agreement protocol (ECDH), and passes the result to the specified key derivation function. The recipient performs a similar computation using the sender’s ephemeral public key and the ID-card authentication key pair. Details of the computations are provided below.
 
