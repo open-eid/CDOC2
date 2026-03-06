@@ -3,6 +3,7 @@ stages:
 
 pages: 
   stage: deploy
+  image: alpine
   artifacts:
     paths:
       - docs
