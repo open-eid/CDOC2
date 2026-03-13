@@ -195,7 +195,7 @@ The details of using *KeyServerCapsule* are described in section [Capsule server
 | Field | Contents | Encoding |
 | ----------- | ----------- | ----------- |
 | RecipientKey | Information on recipient key used by the recipient for authentication with the capsule server. | - |
-| KeyServerID | Capsule server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](ch04_capsule_server.md#server-identification-and-trust). |
+| KeyServerID | Capsule server identifier. | UTF-8 string asssigned by the software trust anchor configuration, see section [Server identification and trust](../03_system_architecture/ch04_capsule_server.md#server-identification-and-trust). |
 | TransactionID | Transaction identifier | UTF-8 string assigned by the capsule server |
 
 ### SymmetricKeyCapsule
