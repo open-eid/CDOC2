@@ -142,6 +142,6 @@ This list may be expanded in future versions of the specification. Various authe
 
 In this scheme, the recipient is identified by their public key used for the decryption of the container. The public key is defined by the field ``RecipientKey`` in the structure ``KeyServerCapsule``.
 
-The server authenticates the recipient using TLS client authentication (*mTLS*). The server is configured to validate the client certificate (e.g. using OSCP). Should the recipient lose control of their decryption key and cancel their certificate, the CCS will not issue the Capsule card to the new holder (potential attacker) and the attacker will be unable to decrypt the container.
+The server authenticates the recipient using TLS client authentication (*mTLS*). The server is configured to validate the client certificate (e.g. using OCSP). Should the recipient lose control of their decryption key and cancel their certificate, the CCS will not issue the Capsule card to the new holder (potential attacker) and the attacker will be unable to decrypt the container.
 
 After successful authentication, the server reads the client’s public key from the certificate used by the client and compares this public key to the public key tied to the Capsule referenced by the transaction identifier. If the two keys match, the server will return the Capsule. Otherwise, the server will return an error message.

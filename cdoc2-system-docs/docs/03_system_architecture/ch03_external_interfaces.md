@@ -22,10 +22,17 @@ Relaying Party API is used to start authentication with Smart-ID accessed throug
 
 * <https://github.com/SK-EID/MID>
 
-## LDAP and OCSP servers
+## LDAP servers
 
-* LDAP: (<https://www.skidsolutions.eu/resources/ldap/>)
-* OCSP: SK validity confirmation service is described [here](https://github.com/SK-EID/ocsp/wiki) and [here](http://open-eid.github.io/#_comp_central_conf_server_interfaces).
+LDAP servers are used by CDOC2 client applications (for example, reference CLI application and DigiDoc4) to search for Recipient' certificate. Following servers are used:
+* SK public LDAP servers - <https://www.skidsolutions.eu/resources/ldap/>
+* Zetes public LDAP servers - <ldaps://ldap.eidpki.ee>
+
+## OCSP servers
+
+OCSP servers are used by CDOC2 client applications and CDOC2 Capsule Server to verify that Recipient's certificate is valid and if the Recipient's key pair is still valid.
+* SK OCSP servers - SK validity confirmation service is described at <https://github.com/SK-EID/ocsp/wiki> and <http://open-eid.github.io/#_comp_central_conf_server_interfaces>.
+* Zetes OCSP servers - <http://ocsp.eidpki.ee/>
 
 ## Smart-ID app
 

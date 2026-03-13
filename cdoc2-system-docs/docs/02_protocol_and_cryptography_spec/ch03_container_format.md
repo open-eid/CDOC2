@@ -19,19 +19,19 @@ The basic principles outlined below will provide the user of this specification 
 - The abstracted format contains a single encrypted payload consisting of one or several encrypted files. File information, as well as the sizes and sequence of the files, in case there is more than one file, is also encrypted.
 - The payload is encrypted using a single symmetric key (Content Encryption Key; CEK), using AEAD (Authenticated Encryption with Additional Data) encryption.
 - The CEK is derived from the CDOC file master key (File Master Key; FMK). See section [Key derivation](ch05_cryptographic_details.md#key-derivation).
-- The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per recipient. On KEK generation see section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation).
-- The header describes the protection of the FMK (i.e. how the recipients can acquire the KEK required for decrypting the FMK).
+- The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per Recipient. On KEK generation see section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation).
+- The header describes the protection of the FMK (i.e. how the Recipients can acquire the KEK required for decrypting the FMK).
 - Header integrity is ensured using a message authentication code computed using the message authentication key derived from the FMK (Header HMAC Key; HHK). See section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code).
-- To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the recipient is described with reference to their public key rather than their certificate.
-- Decryption always follows the same pattern: 1) the recipient acquires a KEK, 2) the recipient decrypts the FMK, 3) the recipient derives the HHK and validates the header, 4) the recipient derives the CEK, 5) the recipient decrypts the payload.
+- To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the Recipient is described with reference to their public key rather than their certificate.
+- Decryption always follows the same pattern: 1) the Recipient acquires a KEK, 2) the Recipient decrypts the FMK, 3) the Recipient derives the HHK and validates the header, 4) the Recipient derives the CEK, 5) the Recipient decrypts the payload.
 
 ### Header structure
 
 Header structure is described with the help of pseudocode that is based on no specific programming or schema language but should be intuitively understood.
 
-The header consists of one or several structures describing a recipient. Each recipient structure contains complete information on how the specific recipient can access the FMK (for identification, access to personal encrypted materials, etc.).
+The header consists of one or several structures describing a Recipient. Each Recipient structure contains complete information on how the specific Recipient can access the FMK (for identification, access to personal encrypted materials, etc.).
 
-A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
+A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
 
 ```c
 Header = {
@@ -78,7 +78,7 @@ Recipient:
 @endyaml
 ```
 
-The recipient is described using the structure ``Recipient``. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of ``Recipient``.
+The Recipient is described using the structure ``Recipient``. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of ``Recipient``.
 
 ```c
     Recipient = {
@@ -90,9 +90,9 @@ The recipient is described using the structure ``Recipient``. The format of the 
     }
 ```
 
-The ``Recipient`` structure consists of a capsule, a recipient key label, an encrypted FMK, and an FMK encryption method identifier.
+The ``Recipient`` structure consists of a capsule, a Recipient key label, an encrypted FMK, and an FMK encryption method identifier.
 
-- ``Capsule`` – encryption method specific data that the recipient can use to decrypt the FMK.
+- ``Capsule`` – encryption method specific data that the Recipient can use to decrypt the FMK.
 - ``EncryptedFMK`` – encrypted FMK.
 - ``FMKEncryptionMethod`` –FMK encryption method type.
 - ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
@@ -100,12 +100,12 @@ The ``Recipient`` structure consists of a capsule, a recipient key label, an enc
 Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
 
-- ``ECCPublicKeyCapsule`` – the recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-direct-encryption-scheme-for-recipient-with-ec-keys).
-- ``RSAPublicKeyCapsule`` – the recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
-- ``KeyServerCapsule`` – the recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
+- ``ECCPublicKeyCapsule`` – the Recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-direct-encryption-scheme-for-recipient-with-ec-keys).
+- ``RSAPublicKeyCapsule`` – the Recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
+- ``KeyServerCapsule`` – the Recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the Recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
 - ``PBKDF2Capsule`` - used for password-based encryption. PBKDF2 stands for Password-Based Key Derivation Function 2, a widely adopted standard defined in RFC 2898. It enhances the security of hashed passwords by using salts and by applying many iterations of the hashing process. The capsule type is used in the [SC.06 encryption method](ch02_encryption_schemes.md#sc06-direct-encryption-scheme-with-pre-shared-passwords).
-- ``KeySharesCapsule`` - Key Shares capsule type is used for secret sharing of the recipient's key. It only stores the URL or the Shares Server and the share identifier. Recipient has to authenticate with the Shares Servers in order to retrieve the Key Shares. Used in the [SC.07 encryption method](ch02_encryption_schemes.md#encryption-schemes-with-secret-sharing).
-- ``SymmetricKeyCapsule`` – the recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
+- ``KeySharesCapsule`` - Key Shares capsule type is used for secret sharing of the Recipient's key. It only stores the URL or the Shares Server and the share identifier. Recipient has to authenticate with the Shares Servers in order to retrieve the Key Shares. Used in the [SC.07 encryption method](ch02_encryption_schemes.md#encryption-schemes-with-secret-sharing).
+- ``SymmetricKeyCapsule`` – the Recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
 
 ```plantuml
 @startyaml
@@ -155,11 +155,11 @@ This list may be expanded in future versions of the specification.
 
 #### KeyLabel recommendations
 
-Although not required by the specification, `KeyLabel` should however follow consistent formating rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.
+Although not required by the specification, `KeyLabel` should however follow consistent formatting rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.
 
-- KeyLabel should not be empty.
-- KeyLabels should be unique inside container.
-- If a KeyLabel starts with "data:" it should follow the [KeyLabel field specification v1](appendix_d_keylabel.md).
+- KeyLabel SHOULD NOT be empty.
+- KeyLabels SHOULD be unique inside container.
+- If a KeyLabel starts with "data:" it SHOULD follow the [KeyLabel field specification v1](appendix_d_keylabel.md).
 
 Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
@@ -204,21 +204,21 @@ Free text `KeyLabel` examples:
 
 ### Capsule types
 
-ECC public key capsule. The recipient is identified by ECC public key ``RecipientPublicKey``.
+ECC public key capsule. The Recipient is identified by ECC public key ``RecipientPublicKey``.
 
 ```c
     ECCPublicKeyCapsule = {
-        Curve              = :enum(secp384r1)
+        Curve              = :enum(secp384r1, secp256r1, secp521r1)
         RecipientPublicKey = :byte[]
         SenderPublicKey    = :byte[]
     }
 ```
 
 - ``Curve`` – identifier of the elliptic curve employed.
-- ``RecipientPublicKey`` – recipient’s ECC public key, used by the recipient to select the correct private key ECDH.
-- ``SenderPublicKey`` – sender’s public key used by the recipient to derive the KEK using ECDH.
+- ``RecipientPublicKey`` – Recipient’s ECC public key, used by the Recipient to select the correct private key ECDH.
+- ``SenderPublicKey`` – sender’s public key used by the Recipient to derive the KEK using ECDH.
 
-RSA public key capsule. The recipient is identified by RSA public key ``RecipientPublicKey``.
+RSA public key capsule. The Recipient is identified by RSA public key ``RecipientPublicKey``.
 
 ```c
     RSAPublicKeyCapsule = {
@@ -227,8 +227,8 @@ RSA public key capsule. The recipient is identified by RSA public key ``Recipien
     }
 ```
 
-- ``RecipientPublicKey`` - recipient’s RSA public key, used by the recipient to select the correct private key to decrypt KEK.
-- ``EncryptedKEK`` -  key encryption key encrypted with the receipient's public key.
+- ``RecipientPublicKey`` - Recipient’s RSA public key, used by the Recipient to select the correct private key to decrypt KEK.
+- ``EncryptedKEK`` -  key encryption key encrypted with the Recipient's public key.
 
 Server capsule. The receipient is identified by ECC or RSA public key ``RecipientPublicKey``.
 
@@ -248,16 +248,16 @@ Server capsule. The receipient is identified by ECC or RSA public key ``Recipien
 
 ```c
     EccKeyDetails = {
-            Curve              = :enum(secp384r1)
+            Curve              = :enum(secp384r1, secp256r1, secp521r1)
             RecipientPublicKey = :byte[]
     }
 ```
 
-- ``RecipientKey`` – The information about the recipient key. Used to select the correct certificate and private key to authenticate on the Capsule Server.
-- ``KeyServerID`` – Capsule Server identifier. The recipient must be able to use this to establish the Capsule Server’s network address and connect to the server. The assignment of Server Id-s is outside the scope of this document and should be managed by implementators.
+- ``RecipientKey`` – The information about the Recipient's key. Used to select the correct certificate and private key to authenticate on the Capsule Server.
+- ``KeyServerID`` – Capsule Server identifier. The Recipient's client software MUST be able to translate this identifier (perhaps with a help of a configuration file) to Capsule Server’s network address. The assignment of `KeyServerID`s is outside the scope of this document and MUST be managed by implementers.
 - ``TransactionID`` – The identifier of the capsule assigned by the key exchange server during key upload.
 
-Symmetric key capsule. The recipient is identified by the label of the symmetric key held by the user, ``KeyLabel``.
+Symmetric key capsule. The Recipient is identified by the label of the symmetric key held by the user, ``KeyLabel``.
 
 ```c
     SymmetricKeyCapsule = {
@@ -269,7 +269,7 @@ Symmetric key capsule. The recipient is identified by the label of the symmetric
 
 ### Format extension
 
-To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.
+To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of Recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.
 
 ## Serialized format
 
@@ -328,7 +328,7 @@ The encryption of the payload is described in section [Payload assembly and encr
 This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
 The following steps are needed to compose a CDOC2 container.
 
-- Compile the list of all recipients.
+- Compile the list of all Recipients.
 - Generate FMK, HHK, and CEK.
 - Compose the header along with all corresponding cryptographic operations.
 - Compute the HMAC.
@@ -341,9 +341,9 @@ Generation of the payload plaintext is described in section [Unencrypted payload
 
 Next, the cryptographic material used for the protection of the header and payload is prepared. Generation and derivation of the corresponding keys (FMK, HHK, CEK) is described in section [Key derivation](ch05_cryptographic_details.md#key-derivation), ``container.Envelope.prepare()`` and ``container.Envelope()``.
 
-The list of all desired recipients is then compiled and serialized, as the cryptographic methods used for ensuring the integrity of the container operate with an integral serialized header.
+The list of all desired Recipients is then compiled and serialized, as the cryptographic methods used for ensuring the integrity of the container operate with an integral serialized header.
 
-The requisite cryptographic procedures described in sections [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation) and [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption) are executed for each recipient.
+The requisite cryptographic procedures described in sections [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation) and [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption) are executed for each Recipient.
 
 The HMAC is then computed as per section [Header authentication code](ch05_cryptographic_details.md#header-authentication-code).
 
@@ -376,7 +376,7 @@ Parsing of the complete header is implemented as the reference implementation fu
 
 One recipient entry (Recipient) corresponding to a key in the possession of the party processing the container must be found in the header, and the KEK, FMK, and HHK must be derived or decrypted.
 
-Recipient identification methods corresponding to each encryption method are described in section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation). In case no recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm should return a “container not meant for opening by the processor” error and terminate.
+Recipient identification methods corresponding to each encryption method are described in section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation). In case no Recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm MUST return a “container not meant for opening by the processor” error and terminate.
 
 KEK computation is described in section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation). Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class ``crypto.KekTools``.
 
@@ -400,7 +400,7 @@ Archive unpacking is described in section [Requirements for payload unpacking](#
 
 This section provides a more detailed description of the format and processing of the unencrypted payload.
 
-Although the data units in the payload are referred as "files", these do not have to correspond to the actual files in a filesystem. Container creator may generate the data on-the-fly, and a consumer can process or present it without saving the data to the filesystem. Thus the names of files (datablocks) can contain symbols that are not representable in the file system, and the client software should take care to handle the names in a safe way. Refer to the section [Requirements for payload unpacking](#requirements-for-payload-unpacking) for the recommendations.
+Although the data units in the payload are referred as "files", these do not have to correspond to the actual files in a filesystem. Container creator may generate the data on-the-fly, and a consumer can process or present it without saving the data to the filesystem. Thus the names of files (data-blocks) can contain symbols that are not representable in the file system, and the client software MUST take care to handle the names in a safe way. Refer to the section [Requirements for payload unpacking](#requirements-for-payload-unpacking) for the recommendations.
 
 Main features of the format:
 
@@ -415,22 +415,23 @@ Implementation note: the DD4 client uses the relevant Qt wrapper functions to ca
 
 Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC2. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.
 
-- [Standardized POSIX tar dialect](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html) is used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.
-- All file names must be valid UTF-8 strings.
-- > At least 100B filenames must be supported by [PAX extended header](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html). The length of file names should not exceed 1000B
-- > Up tp 8 GiB files must be supported by [PAX extended header](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html).
-- Filenames should not refer to absolute paths in a filesystem.
-- Filenames should be unique in container.
-- Filenames should not be empty and not contain any ot the following characters: ([unicode control characters](https://en.wikipedia.org/wiki/Control_character), U+202E, U+FFFE, U+FFFF).
-- Permission bits and other security attributes added to the archive should be ignored (can be written but not used by decrypter).
-- Only normal files (type 0) must be added to the archive.
-- Files should be treated as binary files (no translation of line endings).
+- [Standardized POSIX tar dialect](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html) and "PAX extended header" MUST be used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.
+- All file names MUST be valid UTF-8 strings.
+- At least 100B filenames must be supported.
+- The length of file names MUST not exceed 1000 bytes.
+- File sizes up to 8 GiB MUST be supported.
+- Filenames MUST NOT refer to absolute paths in a filesystem.
+- Filenames MUST be unique in container.
+- Filenames MUST NOT be empty and not contain any of the following characters: ([Unicode control characters](https://en.wikipedia.org/wiki/Control_character), U+202E, U+FFFE, U+FFFF).
+- Permission bits and other security attributes MUST be ignored (such attributes MAY be present in the archive, but they SHALL NOT be used when decrypting).
+- Only normal files (type 0) MUST be added to the archive.
+- Files MUST be treated as binary files (no translation of line endings).
 
 ### Requirements for payload unpacking
 
 The payload format is chosen to enable unpacking in streaming mode. This means the encrypted payload does not have to be loaded to memory in one piece. The payload can be decrypted, unpacked, and files written to the disk in plaintext sequentially.
 
-When data is processed in streaming mode, the decrypted data will be available before the encryption checksum verification. Unpacking must be done with taking into account the possibility that the payload can be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker must always be accounted for, even if the encryption checksums match.
+When data is processed in streaming mode, the decrypted data will be available before the encryption checksum verification. Unpacking MUST be done with taking into account the possibility that the payload can be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker MUST be always accounted for, even if the encryption checksums match.
 
 Thus, when processing data in streaming mode, the errors encountered in processing the plaintext (packing or archival errors) should not be handled before the entire payload has been processed and the cryptogram authenticated. If the cryptogram authentication fails, this failure must be reported as the main error. Errors encountered in plaintext processing should only be reported if cryptogram authentication was successful. In case of an authentication error, all created files should be deleted.
 
@@ -438,15 +439,15 @@ Below, we have described two types of attacks that software based on this specif
 
 The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.
 
-Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.
+Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the Recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.
 
 Attack 2: The attacker may manipulate the attributes of the files in the tar archive – file names, permission bits, security attributes and types. If such tar archive is unpacked without additional checks, the attacker may be able to overwrite existing system files, add new files, create files invisible to normal users but necessary for certain attacks, etc.
 
 Since the CDOC2 container is not meant to serve as a universal archive format but simply provide a means for the simultaneous encryption of multiple files while retaining original file names for the user’s convenience, a number of rules have been set out for the unpacking of tar files which will ensure protection from the forms of manipulation described above if enforced:
 
-- File creation must ignore permission bits, file owner and group identifiers and other security attributes found in the archive – all files must be created non-executable, owned by the user running the application, and readable and writable by this	 user.
-- Only normal files (type 0) are allowed in the tar archive. If the archive contains a file of some other type, client should abort unpacking, delete files written to the disk before this point, and present an error message. A CDOC2 container generation application must not create files containing any other file types.
-- File name safety must be validated before writing a file to the disk. If a file name is, in any way, outside of "normal" expected rules (absolute pathname, contains special shell symbols etc.) a client software should either:
+- File creation MUST ignore permission bits, file owner and group identifiers and other security attributes found in the archive – all files must be created non-executable, owned by the user running the application, and readable and writable by this user.
+- Only normal files (type 0) are allowed in the tar archive. If the archive contains a file of some other type, client MUST abort unpacking, delete files written to the disk before this point, and present an error message. A CDOC2 container generation application MUST not create files containing any other file types.
+- File name safety must be validated before writing a file to the disk. If a file name is, in any way, outside of "normal" expected rules (absolute pathname, contains special shell symbols etc.) a client software MAY either:
   - abort unpacking, delete files written to the disk before this point, and return an error message.
   - replace all offending symbols with safe values and warn user that potentially dangerous name was encountered.
 
