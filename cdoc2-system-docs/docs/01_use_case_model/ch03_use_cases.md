@@ -538,7 +538,7 @@ CDOC2 Capsule Server (CCS)
 : User goal
 
 **Primary Actor**
-: CDOC2 Client Application (Client)
+: CDOC2 Capsule Server (CCS)
 
 **Success guarantees**
 
