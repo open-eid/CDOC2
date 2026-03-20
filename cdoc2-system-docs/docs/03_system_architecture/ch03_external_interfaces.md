@@ -9,12 +9,12 @@ This section will describe, how CDOC2 system is using external components and se
 
 LDAP servers are used by CDOC2 client applications (for example, reference CLI application and DigiDoc4) to search for Recipient' certificate. Following servers are used:
 
-* SK public LDAP servers - <https://www.skidsolutions.eu/resources/ldap/>
-* Zetes public LDAP servers - <ldaps://ldap.eidpki.ee>
+* SK public LDAP servers ([Documentation](https://www.skidsolutions.eu/resources/ldap/)) - [ldaps://esteid.ldap.sk.ee](ldaps://esteid.ldap.sk.ee)
+* Zetes public LDAP servers - [ldaps://ldap.eidpki.ee](ldaps://ldap.eidpki.ee)
 
 ## OCSP servers
 
 OCSP servers are used by CDOC2 client applications and CDOC2 Capsule Server to verify that Recipient's certificate is valid and if the Recipient's key pair is still valid.
 
-* SK OCSP servers - SK validity confirmation service is described at <https://github.com/SK-EID/ocsp/wiki> and <http://open-eid.github.io/#_comp_central_conf_server_interfaces>.
-* Zetes OCSP servers - <http://ocsp.eidpki.ee/>
+* SK OCSP servers (SK validity confirmation service is described at <https://github.com/SK-EID/ocsp/wiki> and <http://open-eid.github.io/#_comp_central_conf_server_interfaces>) - [http://ocsp.sk.ee/](http://ocsp.sk.ee/)
+* Zetes OCSP servers - [http://ocsp.eidpki.ee/](http://ocsp.eidpki.ee/)
