@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#cdoc2-container-format">5. 
+<a class="md-skip" href="#cdoc2-container-format">4. 
           Skip to content
         </a>
 </div>
@@ -810,12 +810,12 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="cdoc2-container-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> CDOC2 container format<a class="headerlink" href="#cdoc2-container-format" title="Permanent link">¶</a></h1>
+<h1 id="cdoc2-container-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> CDOC2 container format<a class="headerlink" href="#cdoc2-container-format" title="Permanent link">¶</a></h1>
 <p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as
 described in <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
-<h2 id="abstracted-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Abstracted format<a class="headerlink" href="#abstracted-format" title="Permanent link">¶</a></h2>
+<h2 id="abstracted-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> Abstracted format<a class="headerlink" href="#abstracted-format" title="Permanent link">¶</a></h2>
 <p>This section describes the CDOC2 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.</p>
-<h3 id="basic-principles"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.1</span> Basic principles<a class="headerlink" href="#basic-principles" title="Permanent link">¶</a></h3>
+<h3 id="basic-principles"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.1</span> Basic principles<a class="headerlink" href="#basic-principles" title="Permanent link">¶</a></h3>
 <p>The basic principles outlined below will provide the user of this specification with points of reference for understanding the details of the specification.</p>
 <ul>
 <li>The abstracted format consists of a header and an encrypted payload.</li>
@@ -828,7 +828,7 @@ described in <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a
 <li>To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the Recipient is described with reference to their public key rather than their certificate.</li>
 <li>Decryption always follows the same pattern: 1) the Recipient acquires a KEK, 2) the Recipient decrypts the FMK, 3) the Recipient derives the HHK and validates the header, 4) the Recipient derives the CEK, 5) the Recipient decrypts the payload.</li>
 </ul>
-<h3 id="header-structure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2</span> Header structure<a class="headerlink" href="#header-structure" title="Permanent link">¶</a></h3>
+<h3 id="header-structure"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.2</span> Header structure<a class="headerlink" href="#header-structure" title="Permanent link">¶</a></h3>
 <p>Header structure is described with the help of pseudocode that is based on no specific programming or schema language but should be intuitively understood.</p>
 <p>The header consists of one or several structures describing a Recipient. Each Recipient structure contains complete information on how the specific Recipient can access the FMK (for identification, access to personal encrypted materials, etc.).</p>
 <p>A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section <a href="#serialized-format">Serialized format</a>).</p>
@@ -867,7 +867,7 @@ The following capsule types have been specified to ensure the support of a varie
 <li><code>SymmetricKeyCapsule</code> – the Recipient is identified by key label <code>KeyLabel</code>. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the <a href="../ch02_encryption_schemes/#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key">SC.05 encryption method</a>.</li>
 </ul>
 <p>This list may be expanded in future versions of the specification.</p>
-<h4 id="keylabel-recommendations"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2.1</span> KeyLabel recommendations<a class="headerlink" href="#keylabel-recommendations" title="Permanent link">¶</a></h4>
+<h4 id="keylabel-recommendations"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.2.1</span> KeyLabel recommendations<a class="headerlink" href="#keylabel-recommendations" title="Permanent link">¶</a></h4>
 <p>Although not required by the specification, <code>KeyLabel</code> should however follow consistent formatting rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.</p>
 <ul>
 <li>KeyLabel SHOULD NOT be empty.</li>
@@ -906,7 +906,7 @@ Example: type=Smart-ID&amp;PNO=ETSI%3APNOEE-48010010101</li>
 <li>"poem"</li>
 <li>"password manager, key: hello.cdoc2"</li>
 </ul>
-<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> Capsule types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
+<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.3</span> Capsule types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
 <p>ECC public key capsule. The Recipient is identified by ECC public key <code>RecipientPublicKey</code>.</p>
 <pre><code>ECCPublicKeyCapsule = {
     Curve              = :enum(secp384r1, secp256r1)
@@ -958,16 +958,16 @@ EccKeyDetails = {
 <ul>
 <li><code>Salt</code> – random number generated by the sender, used by the sender as input for the HKDF-Extract function.</li>
 </ul>
-<h3 id="format-extension"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.4</span> Format extension<a class="headerlink" href="#format-extension" title="Permanent link">¶</a></h3>
+<h3 id="format-extension"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1.4</span> Format extension<a class="headerlink" href="#format-extension" title="Permanent link">¶</a></h3>
 <p>To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of Recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.</p>
-<h2 id="serialized-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Serialized format<a class="headerlink" href="#serialized-format" title="Permanent link">¶</a></h2>
+<h2 id="serialized-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2</span> Serialized format<a class="headerlink" href="#serialized-format" title="Permanent link">¶</a></h2>
 <p>The specification describes the implementation of the abstracted format using the FlatBuffers format.</p>
-<h3 id="general-description-of-the-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.1</span> General description of the format<a class="headerlink" href="#general-description-of-the-format" title="Permanent link">¶</a></h3>
+<h3 id="general-description-of-the-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.1</span> General description of the format<a class="headerlink" href="#general-description-of-the-format" title="Permanent link">¶</a></h3>
 <p>The format consists of an envelope, which is essentially made up of a serialized and concatenated header, a message authentication code, and a payload.
 The message authentication code and payload are serialized using simple serialization.
 For the sake of extensibility and the necessity of transmitting messages identical to the header from the point of view of processing logic via the capsule server, the header is described here with reference to the FlatBuffers format.
 Aside from the header extension mechanism, the envelope used in this format also has the version identifier, set as 2 (byte value). The identifier must be changed whenever incompatible changes to the standard are introduced.</p>
-<h3 id="envelope"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.2</span> Envelope<a class="headerlink" href="#envelope" title="Permanent link">¶</a></h3>
+<h3 id="envelope"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.2</span> Envelope<a class="headerlink" href="#envelope" title="Permanent link">¶</a></h3>
 <p>The envelope consists of the following data elements, presented sequentially as bytes. The designation of the start and end of the envelope is outside the scope of the specification, insofar as the main and natural use case of the format is one where a CDOC file contains a single envelope.</p>
 <ul>
 <li>4 bytes: the string “CDOC” – format designator (prelude), UTF-8 encoded.</li>
@@ -1012,7 +1012,7 @@ Table 1. Envelope structure</p>
 </tr>
 </tbody>
 </table>
-<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.3</span> Header and HMAC<a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
+<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.3</span> Header and HMAC<a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
 <p>The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under <code>cdoc2-schema/</code>.
 The schema is described in two files and reproduced as appendices to the specification.</p>
 <ul>
@@ -1025,12 +1025,12 @@ The schema is described in two files and reproduced as appendices to the specifi
 </ul>
 <p>The header, serialized following the FlatBuffers rule set, is written to the envelope, preceded a 4-byte length field as per the envelope description.
 The Header Message Authentication Code (HMAC) is computed as described in section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a> and written, byte-wise, immediately after the header. The message authentication code algorithm and, consequently, HMAC length are defined in this specification.</p>
-<h3 id="payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.4</span> Payload<a class="headerlink" href="#payload" title="Permanent link">¶</a></h3>
+<h3 id="payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.4</span> Payload<a class="headerlink" href="#payload" title="Permanent link">¶</a></h3>
 <p>Lastly, the payload is written to a container composed following the CDOC format, immediately after the HMAC. The format presumes that the end-of-payload indicator is defined outside the format, e.g. as end-of-file.</p>
 <p>Note that the end-of-payload indicator is purely optional: the true integrity of the payload is determined by whether the payload can be completely decrypted.</p>
 <p>The composition of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>.</p>
 <p>The encryption of the payload is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
-<h3 id="format-composition-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.5</span> Format composition procedure<a class="headerlink" href="#format-composition-procedure" title="Permanent link">¶</a></h3>
+<h3 id="format-composition-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.5</span> Format composition procedure<a class="headerlink" href="#format-composition-procedure" title="Permanent link">¶</a></h3>
 <p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
 The following steps are needed to compose a CDOC2 container.</p>
 <ul>
@@ -1051,7 +1051,7 @@ The following steps are needed to compose a CDOC2 container.</p>
 <p>Payload encryption is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>, <code>crypto.ChaChaCipher.encryptPayload()</code> and <code>crypto.ChaChaCipher.initChaChaOutputStream()</code>.</p>
 <p>The detailed serialized envelope format is presented in section <a href="#envelope">Envelope</a>.</p>
 <p>At the end of the encryption process, the employed cryptographic materials (symmetric keys, ephemeral private keys) SHOULD be securely deleted. Secure deletion significantly depends on the operational environment; in some cases (e.g. in JVM) it might not be possible. The developer MUST evaluate what options for secure deletion are provided by the employed programming language and operational environment.</p>
-<h3 id="format-parsing-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.6</span> Format parsing procedure<a class="headerlink" href="#format-parsing-procedure" title="Permanent link">¶</a></h3>
+<h3 id="format-parsing-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.6</span> Format parsing procedure<a class="headerlink" href="#format-parsing-procedure" title="Permanent link">¶</a></h3>
 <p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.</p>
 <p>The container parsing reference implementation is found in the function <code>container.Envelope.decrypt()</code>. This functions serves as the primary entry point into the decryption logic and its main purpose is to take the encrypted container provided as input and write all the files contained therein to the selected folder.</p>
 <p>The function does the following and all its alternative implementations must do the same while employing all relevant security checks.</p>
@@ -1077,7 +1077,7 @@ The following steps are needed to compose a CDOC2 container.</p>
 <p>Payload decryption is carried out in three stages: decryption, cryptogram authentication, and unpacking the decrypted archive.</p>
 <p>Decryption and cryptogram authentication are described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
 <p>Archive unpacking is described in section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a>.</p>
-<h2 id="unencrypted-payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Unencrypted payload<a class="headerlink" href="#unencrypted-payload" title="Permanent link">¶</a></h2>
+<h2 id="unencrypted-payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Unencrypted payload<a class="headerlink" href="#unencrypted-payload" title="Permanent link">¶</a></h2>
 <p>This section provides a more detailed description of the format and processing of the unencrypted payload.</p>
 <p>Although the data units in the payload are referred as "files", these do not have to correspond to the actual files in a filesystem. Container creator may generate the data on-the-fly, and a consumer can process or present it without saving the data to the filesystem. Thus the names of files (data-blocks) can contain symbols that are not representable in the file system, and the client software MUST take care to handle the names in a safe way. Refer to the section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a> for the recommendations.</p>
 <p>Main features of the format:</p>
@@ -1088,7 +1088,7 @@ The following steps are needed to compose a CDOC2 container.</p>
 <p>The container payload plaintext is formed as follows: the transmitted files (or file) are added to a POSIX tar archive which is then packed into the ZLIB format as a single bloc.</p>
 <pre><code>Implementation note: the DD4 client uses the relevant Qt wrapper functions to call the zlib library. Since these functions cannot be used in streaming mode, the specification recommends replacing the use of Qt wrappers with streaming mode zlib calls. This becomes especially crucial in storage cryptography where data volumes may be very high and encryption of the data in memory buffers in one piece may be unfeasible.
 </code></pre>
-<h3 id="requirements-for-posix-tar-archive-assembly"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.1</span> Requirements for POSIX tar archive assembly<a class="headerlink" href="#requirements-for-posix-tar-archive-assembly" title="Permanent link">¶</a></h3>
+<h3 id="requirements-for-posix-tar-archive-assembly"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3.1</span> Requirements for POSIX tar archive assembly<a class="headerlink" href="#requirements-for-posix-tar-archive-assembly" title="Permanent link">¶</a></h3>
 <p>Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC2. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.</p>
 <ul>
 <li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">Standardized POSIX tar dialect</a> and "PAX extended header" MUST be used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.</li>
@@ -1103,7 +1103,7 @@ The following steps are needed to compose a CDOC2 container.</p>
 <li>Only normal files (type 0) MUST be added to the archive.</li>
 <li>Files MUST be treated as binary files (no translation of line endings).</li>
 </ul>
-<h3 id="requirements-for-payload-unpacking"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2</span> Requirements for payload unpacking<a class="headerlink" href="#requirements-for-payload-unpacking" title="Permanent link">¶</a></h3>
+<h3 id="requirements-for-payload-unpacking"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3.2</span> Requirements for payload unpacking<a class="headerlink" href="#requirements-for-payload-unpacking" title="Permanent link">¶</a></h3>
 <p>The payload format is chosen to enable unpacking in streaming mode. This means the encrypted payload does not have to be loaded to memory in one piece. The payload can be decrypted, unpacked, and files written to the disk in plaintext sequentially.</p>
 <p>When data is processed in streaming mode, the decrypted data will be available before the encryption checksum verification. Unpacking MUST be done with taking into account the possibility that the payload can be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker MUST be always accounted for, even if the encryption checksums match.</p>
 <p>Thus, when processing data in streaming mode, the errors encountered in processing the plaintext (packing or archival errors) should not be handled before the entire payload has been processed and the cryptogram authenticated. If the cryptogram authentication fails, this failure must be reported as the main error. Errors encountered in plaintext processing should only be reported if cryptogram authentication was successful. In case of an authentication error, all created files should be deleted.</p>

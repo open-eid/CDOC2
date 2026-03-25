@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#cdoc2-encryption-schemes">4. 
+<a class="md-skip" href="#cdoc2-encryption-schemes">3. 
           Skip to content
         </a>
 </div>
@@ -1064,12 +1064,12 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="cdoc2-encryption-schemes"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> CDOC2 encryption schemes<a class="headerlink" href="#cdoc2-encryption-schemes" title="Permanent link">¶</a></h1>
-<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<h1 id="cdoc2-encryption-schemes"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.</span> CDOC2 encryption schemes<a class="headerlink" href="#cdoc2-encryption-schemes" title="Permanent link">¶</a></h1>
+<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
 <p>This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in <a href="../ch05_cryptographic_details/">Cryptographic protocol details</a>.</p>
 <p>Encryption schemes are presented in an abstract form, where Sender wants to send a message <code>M</code> (payload of the CDOC2 Container) to total of <code>l</code> Recipients (<code>Recipient_1</code>, <code>Recipient_2</code>, ... <code>Recipient_l</code>) and Recipients are all similar, in a sense that they all have similar RSA key pairs or that they all have established a password with Sender. In the actual CDOC2 system, Sender may mix different kind of Recipients and different encryption schemes may be concurrently used in the same CDOC2 Container. In that sense, encryption schemes defined in this section are not comparable to use-cases, which describe interaction details of user and CDOC2 system software components. Use-cases are discussed in section <a href="../../01_use_case_model/ch03_use_cases/">Client Application use cases</a>.</p>
-<h2 id="notation-and-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2</span> Notation and functions<a class="headerlink" href="#notation-and-functions" title="Permanent link">¶</a></h2>
-<h3 id="notation"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.1</span> Notation<a class="headerlink" href="#notation" title="Permanent link">¶</a></h3>
+<h2 id="notation-and-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Notation and functions<a class="headerlink" href="#notation-and-functions" title="Permanent link">¶</a></h2>
+<h3 id="notation"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.1</span> Notation<a class="headerlink" href="#notation" title="Permanent link">¶</a></h3>
 <p>For convenience, we repeat here some of the acronyms and shorthand notation, which is used to define cryptographic schemes:</p>
 <ul>
 <li><code>M</code> - Message (payload of CDOC2 Container)</li>
@@ -1079,7 +1079,7 @@
 <li><code>KEK</code> - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).</li>
 <li>Index <code>i</code> is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, <code>KEK_i</code>.</li>
 </ul>
-<h2 id="standard-cryptographic-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Standard cryptographic functions<a class="headerlink" href="#standard-cryptographic-functions" title="Permanent link">¶</a></h2>
+<h2 id="standard-cryptographic-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Standard cryptographic functions<a class="headerlink" href="#standard-cryptographic-functions" title="Permanent link">¶</a></h2>
 <p>Schemes use following standard functions:</p>
 <ol>
 <li><code>Enc(CEK, M)</code> means encryption of message <code>M</code> with symmetric key <code>CEK</code>.</li>
@@ -1090,7 +1090,7 @@
 <li><code>PBKDF2(Password, Salt)</code> is key material derivation function as defined in RFC2898 (<a href="https://www.ietf.org/rfc/rfc2898.txt">https://www.ietf.org/rfc/rfc2898.txt</a>).</li>
 <li><code>XOR(Key1, Key2)</code> is bitwise exclusive-or operation on symmetric keys.</li>
 </ol>
-<h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
+<h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
 <p>In general, CDOC2 system implements encryption of payload of CDOC2 Container with the following generic steps:</p>
 <ol>
 <li>Sender generates a random FMK, which is used as a master key material for deriving other specific cryptographic keys.</li>
@@ -1099,12 +1099,12 @@
 <li>Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.</li>
 </ol>
 <p><em>TODO: Possible place for explanatory diagram?</em></p>
-<h2 id="encryption-schemes-with-key-establishment-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5</span> Encryption schemes with key-establishment algorithms<a class="headerlink" href="#encryption-schemes-with-key-establishment-algorithms" title="Permanent link">¶</a></h2>
+<h2 id="encryption-schemes-with-key-establishment-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5</span> Encryption schemes with key-establishment algorithms<a class="headerlink" href="#encryption-schemes-with-key-establishment-algorithms" title="Permanent link">¶</a></h2>
 <p>These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.</p>
-<h3 id="sc01-encryption-scheme-for-recipients-with-ec-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1</span> SC01: Encryption scheme for Recipients with EC key pair<a class="headerlink" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair" title="Permanent link">¶</a></h3>
+<h3 id="sc01-encryption-scheme-for-recipients-with-ec-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1</span> SC01: Encryption scheme for Recipients with EC key pair<a class="headerlink" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair" title="Permanent link">¶</a></h3>
 <p>This scheme can be used for transmitting encrypted messages to Recipients holding a EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.</p>
 <p>The key exchange algorithm is almost the same as NIST key-establishment scheme <code>C(1e, 1s, ECC CDH)</code> (SP 800-56A Rev3, Section 6.2.2.2 - "(Cofactor) One-Pass Diffie-Hellman, C(1e, 1s, ECC CDH) Scheme"), with the only difference that NIST describes a key-establishment scheme with cofactor ECC CDH primitive, but we are using ECC DH primitive without a cofactor.</p>
-<h4 id="encryption-steps-by-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender" title="Permanent link">¶</a></h4>
 <p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1120,7 +1120,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EllipticCurveInfo</span><span class="p">,</span> <span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has ECDSA public key <code>PK_i</code> and corresponding ECDSA secret key <code>SK_i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1134,11 +1134,11 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-with-asymmetric-public-key-encryption-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6</span> Encryption schemes with asymmetric public key encryption system<a class="headerlink" href="#encryption-schemes-with-asymmetric-public-key-encryption-system" title="Permanent link">¶</a></h2>
-<h3 id="sc02-encryption-scheme-for-recipients-with-rsa-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1</span> SC02: Encryption scheme for recipients with RSA key pair<a class="headerlink" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair" title="Permanent link">¶</a></h3>
+<h2 id="encryption-schemes-with-asymmetric-public-key-encryption-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6</span> Encryption schemes with asymmetric public key encryption system<a class="headerlink" href="#encryption-schemes-with-asymmetric-public-key-encryption-system" title="Permanent link">¶</a></h2>
+<h3 id="sc02-encryption-scheme-for-recipients-with-rsa-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1</span> SC02: Encryption scheme for recipients with RSA key pair<a class="headerlink" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair" title="Permanent link">¶</a></h3>
 <p>This scheme can be used for transmitting encrypted messages to Recipients holding a RSA key pair. Scheme uses RSA-OAEP encryption scheme to protect the FMK decryption key (KEK). Wrapped KEK is included in the capsule, which is transmitted to the Recipient within the CDOC2 Container.</p>
 <p>Note that, while it is also possible to use Diffie-Hellman key exchange algorithm with RSA key pair, in order to derive the KEK between Sender and Recipient, a direct RSAES-PKCS1-v1_5 or RSA-OAEP encryption scheme has been traditionally used with CDOC1 applications and therefore, support for this scheme has been carried over to CDOC2 system as well.</p>
-<h4 id="encryption-steps-by-sender_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_1" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_1" title="Permanent link">¶</a></h4>
 <p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1154,7 +1154,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_1" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_1" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1168,11 +1168,11 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-using-capsule-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7</span> Encryption schemes using Capsule Servers<a class="headerlink" href="#encryption-schemes-using-capsule-servers" title="Permanent link">¶</a></h2>
+<h2 id="encryption-schemes-using-capsule-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7</span> Encryption schemes using Capsule Servers<a class="headerlink" href="#encryption-schemes-using-capsule-servers" title="Permanent link">¶</a></h2>
 <p>These schemes are usable, in case the Sender wishes to use Capsule Server as a separate transmission channel for sending key capsules to Recipients. CDOC2 Container itself is still transmitted within the usual transmission channel.</p>
-<h3 id="sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1</span> SC03: Encryption scheme with capsule server for recipients with EC key pairs<a class="headerlink" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs" title="Permanent link">¶</a></h3>
+<h3 id="sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1</span> SC03: Encryption scheme with capsule server for recipients with EC key pairs<a class="headerlink" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs" title="Permanent link">¶</a></h3>
 <p>This scheme uses same kind of key-establishment algorithm, as <a href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">scheme SC01</a>, but Capsule is transmitted via the Capsule Servers.</p>
-<h4 id="encryption-steps-by-sender_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_2" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_2" title="Permanent link">¶</a></h4>
 <p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1190,7 +1190,7 @@
 <span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_2" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_2" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has ECDSA public key <code>PK_i</code> and corresponding ECDSA secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule Server.</p>
 <p>Decryption steps are exactly the same:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1205,9 +1205,9 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2</span> SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs<a class="headerlink" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs" title="Permanent link">¶</a></h3>
+<h3 id="sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2</span> SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs<a class="headerlink" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs" title="Permanent link">¶</a></h3>
 <p>This scheme uses same kind of RSA-OAEP encryption scheme, as <a href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">scheme SC02</a>, but Capsule is transmitted via Capsule Server.</p>
-<h4 id="encryption-steps-by-sender_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_3" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_3" title="Permanent link">¶</a></h4>
 <p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1225,7 +1225,7 @@
 <span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_3" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_3" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule server. Recipient authenticates to Capsule Server with RSA key pair <code>(SK_i, PK_i)</code>.</p>
 <p>Decryption steps are exactly the same:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1240,16 +1240,16 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-with-pre-shared-secrets"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8</span> Encryption schemes with pre-shared secrets<a class="headerlink" href="#encryption-schemes-with-pre-shared-secrets" title="Permanent link">¶</a></h2>
+<h2 id="encryption-schemes-with-pre-shared-secrets"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8</span> Encryption schemes with pre-shared secrets<a class="headerlink" href="#encryption-schemes-with-pre-shared-secrets" title="Permanent link">¶</a></h2>
 <p>Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.</p>
-<h3 id="sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1</span> SC05: Encryption scheme for recipients with pre-shared symmetric secret<a class="headerlink" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret" title="Permanent link">¶</a></h3>
+<h3 id="sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1</span> SC05: Encryption scheme for recipients with pre-shared symmetric secret<a class="headerlink" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret" title="Permanent link">¶</a></h3>
 <p>This scheme is used, when Sender wishes to use an externally generated symmetric encryption key for:</p>
 <ul>
 <li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
 <li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means, but who have previously received the symmetric encryption key.</li>
 </ul>
 <p>Encryption scheme can be used with multiple Recipients, who each may know different encryption key. This encryption scheme is very similar to <a href="./#sc06-direct-encryption-scheme-with-pre-shared-passwords">scheme SC06</a>, which uses pre-shared password or passphrase.</p>
-<h4 id="encryption-steps-by-sender_4"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_4" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_4"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_4" title="Permanent link">¶</a></h4>
 <p>Sender knows symmetric keys <code>S_1</code>, <code>S_2</code>, ..., <code>S_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1267,7 +1267,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">KeyMaterialSalt_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-for-recipients-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.2</span> Decryption steps for Recipients or Sender<a class="headerlink" href="#decryption-steps-for-recipients-or-sender" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-for-recipients-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1.2</span> Decryption steps for Recipients or Sender<a class="headerlink" href="#decryption-steps-for-recipients-or-sender" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and knows symmetric key <code>S_i</code>. Also, Sender may assume the role of any Recipient <code>i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1283,14 +1283,14 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="sc06-direct-encryption-scheme-with-pre-shared-passwords"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2</span> SC06: Direct encryption scheme with pre-shared passwords<a class="headerlink" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords" title="Permanent link">¶</a></h3>
+<h3 id="sc06-direct-encryption-scheme-with-pre-shared-passwords"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.2</span> SC06: Direct encryption scheme with pre-shared passwords<a class="headerlink" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords" title="Permanent link">¶</a></h3>
 <p>This scheme is used, when Sender wishes to use a password-based encryption for:</p>
 <ul>
 <li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
 <li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means.</li>
 </ul>
 <p>Password-based encryption scheme can be used with multiple Recipients, who each may know a different password for decryption. This encryption scheme is very similar to <a href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">scheme SC05</a>, which uses pre-shared encryption key(s).</p>
-<h4 id="encryption-steps-by-sender_5"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_5" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_5"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_5" title="Permanent link">¶</a></h4>
 <p>Sender knows passwords <code>Password_1</code>, <code>Password_2</code>, ..., <code>Password_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code> and follows steps for encryption:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1311,7 +1311,7 @@
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Sender creates a CDOC Container for each Recipient with <code>{C, EncryptedFMK_i, Capsule_i}</code>, including other technical details, and sends the Container to Recipient or places in long-term storage for themself.</p>
-<h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
 <p>After some time, Sender may wish to decrypt the Container themself (assuming the role of any Recipient <code>i</code>) or the Recipient <code>i</code> wishes to decrypt the Container.</p>
 <p>Recipient <code>i</code> receives CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK, Capsule}</code> and has password <code>Password_i</code> and follows steps for decryption:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>

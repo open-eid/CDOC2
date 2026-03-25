@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#cryptographic-details">7. 
+<a class="md-skip" href="#cryptographic-details">6. 
           Skip to content
         </a>
 </div>
@@ -882,9 +882,9 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="cryptographic-details"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.</span> Cryptographic details<a class="headerlink" href="#cryptographic-details" title="Permanent link">¶</a></h1>
+<h1 id="cryptographic-details"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.</span> Cryptographic details<a class="headerlink" href="#cryptographic-details" title="Permanent link">¶</a></h1>
 <p>This section provides a detailed description of the cryptographic computations used with the CDOC2 format. Most of these computations are broader technological infrastructure-neutral, but some are specifically related to means of eID used in Estonia (above all, the ID-card). All such situations will be highlighted.</p>
-<h2 id="security-level-and-used-cryptographic-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.1</span> Security level and used cryptographic algorithms<a class="headerlink" href="#security-level-and-used-cryptographic-algorithms" title="Permanent link">¶</a></h2>
+<h2 id="security-level-and-used-cryptographic-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.1</span> Security level and used cryptographic algorithms<a class="headerlink" href="#security-level-and-used-cryptographic-algorithms" title="Permanent link">¶</a></h2>
 <p>Recent studies <a href="https://www.ecrypt.eu.org/csa/documents/D5.4-FinalAlgKeySizeProt.pdf">(1)</a>, <a href="https://doi.org/10.6028/NIST.SP.800-57pt1r5">(2)</a> give cause to assume that 128-bit security should be sufficiently secure even after 2031. This claim is also supported by a new study published in 2022 <a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf">(3)</a>. Based on these results, we use the following algorithms:</p>
 <ul>
 <li>HKDF-SHA-256</li>
@@ -903,7 +903,7 @@
 <li>CEK – depends on the payload encryption algorithm used, 256 bits for ChaCha20-Poly1305.</li>
 <li>KEK – depends on the FMK encryption algorithm used, 256 bits for XOR.</li>
 </ul>
-<h2 id="key-derivation"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.2</span> Key derivation<a class="headerlink" href="#key-derivation" title="Permanent link">¶</a></h2>
+<h2 id="key-derivation"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.2</span> Key derivation<a class="headerlink" href="#key-derivation" title="Permanent link">¶</a></h2>
 <p>For key derivation, the CDOC2 format utilizes the HKDF key derivation function, codified as <a href="https://rfc-editor.org/rfc/rfc5869.txt">IETF RFC 5869</a>.</p>
 <p>RFC 5869 defines two key derivation functions: <code>HKDF-Extrac</code>t and <code>HKDF-Expand</code>, the use of which will be discussed below. Hereafter, these functions will be referenced using the shorthands <code>Extract</code> and <code>Expand</code>.</p>
 <p>In all cases, key derivation is carried out using the SHA-256 hash function, meaning that the functions return a 256-bit value.
@@ -926,14 +926,14 @@ To be used as input in functions, all textual constants must be UTF-8 encoded (i
 <li>KeyServerCapsule – section <a href="#keyservercapsule">KeyServerCapsule</a>.</li>
 <li>SymmetricKeyCapsule – section <a href="#symmetrickeycapsule">SymmetricKeyCapsule</a>.</li>
 </ul>
-<h2 id="descriptions-of-header-elements-and-kek-computation"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3</span> Descriptions of header elements and KEK computation<a class="headerlink" href="#descriptions-of-header-elements-and-kek-computation" title="Permanent link">¶</a></h2>
+<h2 id="descriptions-of-header-elements-and-kek-computation"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3</span> Descriptions of header elements and KEK computation<a class="headerlink" href="#descriptions-of-header-elements-and-kek-computation" title="Permanent link">¶</a></h2>
 <p>The abstracted structure of the header is described in section <a href="../ch03_container_format/#cdoc2-container-format">CDOC2 container format</a>. Fields are described in the abstracted structure using primitive data types. The following section describes how to compute the fields and translate values to the primitive data type form.</p>
 <p>Key Encryption Key (KEK) computation depends on recipient type. Below, KEK computation is described with reference to each specific recipient type.</p>
-<h3 id="eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1</span> ECCPublicKeyCapsule<a class="headerlink" href="#eccpublickeycapsule" title="Permanent link">¶</a></h3>
+<h3 id="eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.1</span> ECCPublicKeyCapsule<a class="headerlink" href="#eccpublickeycapsule" title="Permanent link">¶</a></h3>
 <p><code>ECCPublicKeyCapsule</code> (see <a href="#table-2-eccpublickeycapsule-elements">table 2</a>) refers to a recipient identified by their ECC public key. The CDOC2 format supports the use of any public key generated on a <em>secp256r1</em>, <em>secp384r1</em> or <em>secp521r1</em> elliptic curve as the recipient. For example, the key can be the public key of the Estonian ID-card authentication key pair.
 For the <em>secp256r1</em>, <em>secp384r1</em> and <em>secp521r1</em> curve, the TLS 1.3 encoding used for elliptic curve points is identical to the encoding used in CDOC 1.0.
 The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule <code>Capsule_i</code> and <code>ContainerCapsule_i</code> in the sense of cryptographic protocols presented in sections <a href="../ch02_encryption_schemes/#sc01-encryption-scheme-for-recipients-with-ec-key-pair">Direct key agreement-based ECDH</a> and <a href="../ch02_encryption_schemes/#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">Capsule server-based ECDH</a>.</p>
-<h4 id="table-2-eccpublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.1</span> Table 2. <em>ECCPublicKeyCapsule</em> elements<a class="headerlink" href="#table-2-eccpublickeycapsule-elements" title="Permanent link">¶</a></h4>
+<h4 id="table-2-eccpublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.1.1</span> Table 2. <em>ECCPublicKeyCapsule</em> elements<a class="headerlink" href="#table-2-eccpublickeycapsule-elements" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -967,7 +967,7 @@ The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule <code>
 <div class="arithmatex">\[(pk_{eph}, sk_{eph})\]</div>
 <p>The recipient holds their ID-card authentication key pair public key <em>pkrec</em> (assuming here that the recipient’s private key is not immediately accessible).</p>
 <p>This key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.</p>
-<h4 id="kek-computation-during-encryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.2</span> KEK computation during encryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-encryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.1.2</span> KEK computation during encryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The shared ECDH secret is computed by the sender as follows:</p>
 <div class="arithmatex">\[ S_{ecdh} ← (sk_{eph} · pk_{rec})_x \]</div>
 <p>i.e. the shared secret is the elliptic curve x-coordinate computed in this manner. The shared secret is encoded as a big-endian byte array, the length of which in full bytes corresponds to the modulus length of the used elliptic curve in full bytes. For example, the modulus length of secp384r1 is 48 bytes.</p>
@@ -976,7 +976,7 @@ The <code>ECCPublicKeyCapsule</code> structure corresponds to the capsule <code>
 <div class="arithmatex">\[ KEK ← Expand(KEK_{pm}, ”CDOC20kek” ∥ algId ∥ pk_{rec} ∥ pk_{eph}, L_{&lt;sub&gt;octets&lt;/sub&gt;}) \]</div>
 <p><em>algId</em> is the identifier of the cryptographic algorithm used for the encryption of the FMK defined as a string corresponding to the field <em>Recipient.FMKEncryptionMethod</em> (section <a href="#fmk-encryption-and-decryption">FMK encryption and decryption</a>).</p>
 <p><em>L<sub><sub>octets</sub></sub></em> defines the output length of the <code>Expand</code> function in bytes and is defined by the symmetric encryption algorithm used for FMK encryption.</p>
-<h4 id="kek-computation-during-decryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.1.3</span> KEK computation during decryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-decryption-eccpublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.1.3</span> KEK computation during decryption (ECCPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-eccpublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The Estonian ID-card supports the use of an authentication key pair as one of the ECDH parties.
 This functionality can advantageously be used through the PKCS#11 <code>C_DERIVEKEY</code> function, employing the <code>CKM_ECDH1_DERIVE</code> mechanism.
 Key derivation can also be performed using the Windows <code>NCryptSecretAgreement</code> and <code>NCryptDeriveKey</code> encryption functions. <code>NCryptSecretAgreement</code> computes the <em>Secdh</em> and <code>NCryptDeriveKey</code> computes the <em>KEKpm</em>. <code>NCryptDeriveKey</code> parameters must be set as follows:</p>
@@ -998,12 +998,12 @@ The <code>C_DERIVEKEY</code> function takes the sender’s ephemeral public key 
 <p>Thanks to the algebraic properties of the elliptic curve,
 <span class="arithmatex">\(S_{ecdh}=S_{ecdh}'\)</span>.</p>
 <p>This shared secret must be used to compute KEK as described above with reference to encryption.</p>
-<h3 id="rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2</span> RSAPublicKeyCapsule<a class="headerlink" href="#rsapublickeycapsule" title="Permanent link">¶</a></h3>
+<h3 id="rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.2</span> RSAPublicKeyCapsule<a class="headerlink" href="#rsapublickeycapsule" title="Permanent link">¶</a></h3>
 <p><em>RSAPublicKeyCapsule</em> (see <a href="#table-3-rsapublickeycapsule-elements">table 3</a>) refers to a recipient identified by their RSA public key.
 The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <code>Capsule_i</code> and <code>KeyServerCapsule_i</code> in the sense of the protocols presented in sections <a href="../ch02_encryption_schemes/#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">SC02: Encryption scheme for recipients with RSA key pair</a> and <a href="../ch02_encryption_schemes/#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs</a>.</p>
 <p>The sender generates a random KEK and encrypts it using the recipient’s RSA public key with OAEP padding. The recipient decrypts the encrypted KEK using their RSA private key. Details of the computations are provided below.</p>
 <p>The recipient’s public key is also accessible to the sender. Mechanisms for the dissemination of the recipient's public key are outside the scope of this specification.</p>
-<h4 id="table-3-rsapublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.1</span> Table 3. RSAPublicKeyCapsule elements<a class="headerlink" href="#table-3-rsapublickeycapsule-elements" title="Permanent link">¶</a></h4>
+<h4 id="table-3-rsapublickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.2.1</span> Table 3. RSAPublicKeyCapsule elements<a class="headerlink" href="#table-3-rsapublickeycapsule-elements" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -1025,26 +1025,26 @@ The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <code>Caps
 </tr>
 </tbody>
 </table>
-<h4 id="kek-computation-during-encryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.2</span> KEK computation during encryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-encryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.2.2</span> KEK computation during encryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The symmetric encryption algorithm used for the encryption of the FKM defines the KEK length <em>L<sub>octets</sub></em>. The sender generates a random number KEK with a length of <em>L<sub>octets</sub></em>.</p>
 <p>For the encryption of the KEK, the sender uses the RSA-OAEP (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section 7.1</a>) encryption function. RSA-OAEP has three input parameters (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section A.2.1</a>):
     • <code>hashAlgorithm</code> – hash function used by the algorithm. We use the SHA-256 hash function (<code>id-sha256</code>).
     • <code>maskGenAlgorithm</code> – mask generation function used by the algorithm. We use the MGF1 function (<code>id-mgf1</code>), parametrized by the SHA-256 hash function.
     • <code>pSourceAlgorithm</code> – label source function. We use an empty label (<code>pSpecified Empty</code>).</p>
-<h4 id="kek-computation-during-decryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.2.3</span> KEK computation during decryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-decryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.2.3</span> KEK computation during decryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The recipient decrypts the encrypted KEK using their private key and the same parameters as were used for encryption.</p>
-<h3 id="keyservercapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.3</span> KeyServerCapsule<a class="headerlink" href="#keyservercapsule" title="Permanent link">¶</a></h3>
+<h3 id="keyservercapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.3</span> KeyServerCapsule<a class="headerlink" href="#keyservercapsule" title="Permanent link">¶</a></h3>
 <p>The Capsule Server described by the <code>KeyServerCapsule</code> structure (see <a href="#table-4-keyservercapsule-elements">table 4</a>) returns the following structures which are handled as described in the referenced sections:</p>
 <ul>
 <li><em>ECCPublicKeyCapsule</em>: section <a href="#eccpublickeycapsule">ECCPublicKeyCapsule</a>.</li>
 <li><em>RSAPublicKeyCapsule</em>: section <a href="#rsapublickeycapsule">RSAPublicKeyCapsule</a>.</li>
 </ul>
 <p>The details of using <em>KeyServerCapsule</em> are described in section <a href="../ch04_capsule_server/#key-server">Capsule server</a>.</p>
-<h3 id="symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4</span> SymmetricKeyCapsule<a class="headerlink" href="#symmetrickeycapsule" title="Permanent link">¶</a></h3>
+<h3 id="symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.4</span> SymmetricKeyCapsule<a class="headerlink" href="#symmetrickeycapsule" title="Permanent link">¶</a></h3>
 <p><em>SymmetricKeyCapsule</em> (see <a href="#table-5-symmetrickeycapsule-elements">table 5</a>) refers to a recipient identified by a key label.
 In this scheme, the sender and recipient are either the same person (use case: storage cryptography) or have previously exchanged a symmetric secret key outside the system (use case: transport cryptography).
 In both cases, both the sender and the recipient holds the same secret key, identified by a key label. The specification does not limit the selection of the label in any way.</p>
-<h4 id="table-4-keyservercapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.1</span> Table 4. KeyServerCapsule elements<a class="headerlink" href="#table-4-keyservercapsule-elements" title="Permanent link">¶</a></h4>
+<h4 id="table-4-keyservercapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.4.1</span> Table 4. KeyServerCapsule elements<a class="headerlink" href="#table-4-keyservercapsule-elements" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -1071,7 +1071,7 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 </tr>
 </tbody>
 </table>
-<h4 id="table-5-symmetrickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.2</span> Table 5. SymmetricKeyCapsule elements<a class="headerlink" href="#table-5-symmetrickeycapsule-elements" title="Permanent link">¶</a></h4>
+<h4 id="table-5-symmetrickeycapsule-elements"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.4.2</span> Table 5. SymmetricKeyCapsule elements<a class="headerlink" href="#table-5-symmetrickeycapsule-elements" title="Permanent link">¶</a></h4>
 <table>
 <thead>
 <tr>
@@ -1088,7 +1088,7 @@ In both cases, both the sender and the recipient holds the same secret key, iden
 </tr>
 </tbody>
 </table>
-<h4 id="kek-computation-during-encryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.3</span> KEK computation during encryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-encryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.4.3</span> KEK computation during encryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
 <p>The sender holds the symmetric key <em>sym</em> labelled <em>label</em>. The sender generates the random number <em>salt</em>. The purpose of this number is to ensure the generation of a new KEK even when reusing the key <em>sym</em>. Since no practical upper limit can be set for the reuse of the key, the length of <em>salt</em> is chosen with a significant margin, i.e. 256 bits.
 KEK is computed from the symmetric key and the generated random number as follows:</p>
 <div class="arithmatex">\[ KEK_{pm} \leftarrow Extract(salt, sym) \]</div>
@@ -1096,22 +1096,22 @@ KEK is computed from the symmetric key and the generated random number as follow
 \]</div>
 <p>Where <em>algId</em> is the identifier of the encryption algorithm used for the encryption of the FMK as a string, set as <code>Recipient.FMKEncryptionMethod</code> (section <a href="#fmk-encryption-and-decryption">FMK encryption and decryption</a>).</p>
 <p><em>L<sub>octets</sub></em> defines the output length of the <code>Expand</code> function in bytes, determined by the symmetric encryption algorithm used for the encryption of the FMK.</p>
-<h4 id="kek-computation-during-decryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3.4.4</span> KEK computation during decryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
+<h4 id="kek-computation-during-decryption-symmetrickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.3.4.4</span> KEK computation during decryption (SymmetricKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-symmetrickeycapsule" title="Permanent link">¶</a></h4>
 <p>The recipient holds the symmetric key <em>sym</em> labelled <em>label</em>. The <em>Salt</em> field of the <em>SymmetricKeyCapsule</em> structure provides the random number <em>salt</em> generated by the sender.</p>
 <p>This information is used for computing the KEK just as described above with reference to encryption.</p>
-<h2 id="fmk-encryption-and-decryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.4</span> FMK encryption and decryption<a class="headerlink" href="#fmk-encryption-and-decryption" title="Permanent link">¶</a></h2>
+<h2 id="fmk-encryption-and-decryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.4</span> FMK encryption and decryption<a class="headerlink" href="#fmk-encryption-and-decryption" title="Permanent link">¶</a></h2>
 <p>The FMK is encrypted using the XOR operation.</p>
 <p>The FMK assumes that the KEK and FMK are of equal length, which can be ensured by using the HKDF key derivation method.</p>
 <p>For FMK encryption, the XOR operation is applied bitwise to the corresponding bits in the FMK and the KEK.</p>
 <p>For decryption, the XOR operation is applied bitwise to the corresponding bits in the cryptogram and the KEK.</p>
-<h2 id="header-authentication-code"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.5</span> Header authentication code<a class="headerlink" href="#header-authentication-code" title="Permanent link">¶</a></h2>
+<h2 id="header-authentication-code"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.5</span> Header authentication code<a class="headerlink" href="#header-authentication-code" title="Permanent link">¶</a></h2>
 <p>The header authentication code is computed with the <a href="https://rfc-editor.org/rfc/rfc2104.txt">HMAC algorithm</a>, using the SHA-256 hash function.</p>
 <p>The HHK (see section <a href="#key-derivation">Key derivation</a>) is used as the key.</p>
 <p>HHK length must be at least equal to the output length of the used hash function, i.e. 256 bits.</p>
 <div class="arithmatex">\[ HMACValue_{header} \leftarrow HMAC_{SHA-256}(HHK, header) , \]</div>
 <p>where <em>header</em> is the serialized header in the form it is added to the envelope.</p>
 <p>Validation of the message authentication code requires computing the HHK from the parsed header, then computing a message authentication code for the serialized header read from the container and comparing the computed code with the message authentication code read from the container – the two values must be identical.</p>
-<h2 id="payload-assembly-and-encryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.6</span> Payload assembly and encryption<a class="headerlink" href="#payload-assembly-and-encryption" title="Permanent link">¶</a></h2>
+<h2 id="payload-assembly-and-encryption"><span class="enumerate-headings-plugin enumerate-heading-plugin">6.6</span> Payload assembly and encryption<a class="headerlink" href="#payload-assembly-and-encryption" title="Permanent link">¶</a></h2>
 <p>NOTE: The section below describes the encryption of the payload as a byte array. The assembly of encrypted files into a single byte array is described in section <a href="../ch03_container_format/#unencrypted-payload">Unencrypted payload</a>.</p>
 <p>For payload encryption, <a href="https://www.rfc-editor.org/info/rfc8439">ChaCha20-Poly1305 AEAD encryption</a> is used with the following parameters:</p>
 <ul>
