@@ -27,9 +27,11 @@ Therefore, introducing additional trusted components to the CDOC2 ecosystem is n
 
 ## Overview of the generic authentication protocol
 
-In the generalized form, the authentication protocol to access Capsule information at CSS servers, can be explained with the following sequence diagram below.
+In the generalized form, the authentication protocol to access Capsule information at CSS servers, can be explained with the following sequence diagrams below.
 
-This is just an abstract overview of the authentication protocol. In following sections, we describe what kind of data is used as the authentication data, how signing function of eID means is used and how only a minimal set of authentication data is revealed to each CSS server, in order to prevent replay.
+In following sections, we describe what kind of data is used as the authentication data, how signing function of eID means is used and how only a minimal set of authentication data is revealed to each CSS server, in order to prevent replay.
+
+### Generating the SD-JWT session token
 
 ```plantuml
 @startuml
@@ -38,41 +40,115 @@ skinparam BoxPadding 30
 hide footbox
 autonumber
 
-box "User"
-Actor Recipient as R
-participant "CDOC2 Client" as C
-participant "eID means \n (Mobile-ID, Smart-ID)" as A
-end box
+title Sequence diagram for issuing SD-JWT session_token
 
-box "cdoc2-shares-servers (CSSs)"
-collections CCS as S
-end box
+actor User
+participant "CDOC2 Client" as CLIENT
+participant "CDOC2-Auth portal" as AUTH
+participant "CDOC2-RP portal" as CRP
+participant "CSS servers" as CSS
+participant "SiD API" as SID
 
-box "Trust infrastructure"
-participant "PKI/OCSP" as PKI
-end box
+User -> CLIENT : Decrypt this CDOC2 container
+CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
 
-R -> C: Decrypt Container
-C -> C: Read information about \n Shares Capsules from Container
-loop for each CSS
-    C -> S: Authentication request for shareId of Key Share
-    S --> C: Nonce for shareId
+User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
+
+CLIENT -> AUTH : initiate SID\n authentication for user U
+
+loop for every CSS server
+    AUTH -> CSS : generate session nonce
+    CSS --> AUTH : nonce
 end
-C -> C: Create \n authentication data
-C -> A: Create signature on \n authentication data
-A -> R: Authorize eID use for signature generation
-R -> A: Authorized
-A --> C: Signature
-loop for each CSS
-    C -> C: Create authentication token \n specific for a CSS server
-    C -> S: Present token with \n authentication signature \n and request Key Share
-    S -> PKI: Recipient's certificate \n not revoked?
-    PKI --> S: Recipient's certificate \n is valid
-    S -> S: AuthN: Verify authentication token \n and authentication signature
-    S -> S: AuthZ: Verify that Recipient is \n allowed to download Key Share
-    S --> C: Key Share
+AUTH -> CRP : generate session nonce
+CRP --> AUTH: nonce
+AUTH -> AUTH : Generate rpChallenge
+AUTH -> AUTH : Calculate VC
+AUTH -> SID : Start SiD authentication
+SID --> AUTH : SID/MID authentication session id
+AUTH -> AUTH : compose session_token SD-JWT
+
+AUTH --> CLIENT : Return authentication process uuid and VC
+CLIENT -> User : authenticating to "DigiDoc4", do you consent?
+
+User -> CLIENT : decide that I agree\nwith authentication to "DigiDoc4"
+User -> CLIENT : decide VC on CDOC2 Client\nmatches VC on phone
+User -> SID : agree, PIN
+
+CLIENT -> AUTH : Get authentication process status
+AUTH -> SID : Get authentication process status
+SID --> AUTH : signature S
+AUTH -> AUTH : Add signature S to session_token SD-JWT
+AUTH -> AUTH : sign session_token SD-JWT with \nauthentication server private key
+AUTH -> AUTH : sign session_token SD-JWT
+AUTH --> CLIENT : issued session_token
+@enduml
+```
+
+### Generating the SD-JWT authentication token and fetching the key shares
+
+```plantuml
+@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 30
+hide footbox
+autonumber
+
+title Sequence diagram for issuing SD-JWT CDOC2 authentication token and fetching key shares
+
+actor User
+participant "CDOC2\nClient" as CLIENT
+participant "CDOC2-RP\n portal" as CRP
+participant "CSS\nservers" as CSS
+participant "MID/SID\nAPI" as SID
+
+loop for every CSS server
+    CLIENT -> CSS : present SD-JWT session_token,\nget nonces for shares
+    CSS -> CSS : Verify that I have issued\npresented session nonce from session_token
+    CSS -> CSS : Verify that session_token sub\nis correct for this share
+    CSS -> CSS : Verify that session_token is signed\nby CDOC2-auth portal
+    CSS --> CLIENT : nonce
 end
-C -> C: Combine Key Shares \n of a Shares Capsule
+
+CLIENT -> CLIENT : compose CDOC2 auth token
+CLIENT -> CLIENT : generate rpChallenge
+CLIENT -> CLIENT : calculate the VC
+
+CLIENT -> CRP : present SD-JWT session_token \nget hash H signed by user U
+CRP -> CRP : Verify that I have issued\npresented challenge from session_token
+CRP -> CRP : Verify that session_token sub\nmatches with user U
+CRP -> CRP : Verify that session_token is signed\nby CDOC2-auth portal
+CRP -> SID : cdoc2_auth -> SID: create authentication signature of\nuser U on hash H
+SID --> CRP : SID/MID authentication session id
+CRP --> CLIENT : SID/MID authentication session id
+CLIENT -> CLIENT : calculate the VC
+
+CLIENT -> User : Do you consent\n "Decrypt container 'something.cdoc'"?
+User -> CLIENT : decide that I agree\nwith decrypting container
+User -> CLIENT : decide that VC on the CDOC2 Client\nmatches with VC on phone
+User -> SID : agree, PIN
+
+loop poll for session status
+  CLIENT -> CRP : Get authentication process status
+  CRP -> SID : Get authentication process status
+  SID --> CRP : signature S
+  CRP --> CLIENT : signature S
+end
+
+CLIENT -> CLIENT : create CDOC2 auth token with the signature S
+
+loop for every CSS server
+    CLIENT -> CSS : present CDOC2 auth token
+    CSS -> CSS : Verify that I have issued\npresented nonce from CDOC2 auth token
+    CSS -> CSS : Verify that iss matches\nwith user U
+    CSS -> CSS : Verify that authentication signature is\ncreated by CDOC2-RP and details match
+    CSS -> CSS : Verify that MID/SID signature\ncreated by user U is valid and matches iss
+    CSS --> CLIENT : return share
+end
+
+CLIENT -> CLIENT : compose capsule
+CLIENT -> CLIENT : decrypt container
+CLIENT --> User : files
 @enduml
 ```
 
