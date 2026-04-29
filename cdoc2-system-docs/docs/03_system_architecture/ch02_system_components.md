@@ -28,10 +28,6 @@ to other components in the CDOC2 infrastructure.
 Used in the SID/MID context to mediate and validate client requests to SID/MID relying party 
 services. Validation includes verifying the session token provided by the client.
 
-## Authentication proxy
-
-A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.
-
 ## CDOC2 CLI user application
 
 Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.
