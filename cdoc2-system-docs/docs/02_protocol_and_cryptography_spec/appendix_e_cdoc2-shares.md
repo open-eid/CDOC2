@@ -1,4 +1,4 @@
-# Appendix E: Key Shares API, version 1.0.1-draft of cdoc2services API
+# Appendix E: Key Shares API, version 1.0.1-draft of cdoc2-key-shares API
 
     openapi: 3.0.3
     info:
