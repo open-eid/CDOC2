@@ -5,10 +5,6 @@ title: 4. External components and services
 
 This section will describe, how CDOC2 system is using external components and services
 
-## MID/SID authentication proxy
-
-Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
-
 ## Smart-ID RP API
 
 Relaying Party API is used to start authentication with Smart-ID accessed through MID/SID authentication proxy
