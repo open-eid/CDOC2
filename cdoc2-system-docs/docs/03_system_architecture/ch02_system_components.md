@@ -19,6 +19,15 @@ Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipi
 Shares Capsules are distributed between multiple CDOC2 Shares Server instances, so that compromising one server doesn't expose key material.
 Instances run on independent premises.
 
+## CDOC2 Authentication server (auth-server)
+Used in the SID/MID context to compose and issues a session token. The session token is an 
+SD-JWT structure that is included, along with its signing certificate, as a header in requests 
+to other components in the CDOC2 infrastructure.
+
+## CDOC2 Relying party server (rp-server)
+Used in the SID/MID context to mediate and validate client requests to SID/MID relying party 
+services. Validation includes verifying the session token provided by the client.
+
 ## Authentication proxy
 
 A server that relays the Mobile-ID and Smart-ID authentication requests to actual Mobile-ID/Smart-ID RP API services and acts as relying party (RP). Generates and stores secrets that cannot be revealed to CDOC2 Client Applications.
