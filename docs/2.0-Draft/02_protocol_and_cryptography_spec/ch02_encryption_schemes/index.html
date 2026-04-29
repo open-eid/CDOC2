@@ -8,9 +8,9 @@
 <link href="../../01_use_case_model/ch03_use_cases/" rel="prev"/>
 <link href="../ch03_container_format/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
-<meta content="mkdocs-1.6.1, mkdocs-material-9.5.50" name="generator"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.1" name="generator"/>
 <title>3. CDOC2 encryption schemes - CDOC2 System Documentation</title>
-<link href="../../assets/stylesheets/main.a40c8224.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
 <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#cdoc2-encryption-schemes">4. 
+<a class="md-skip" href="#cdoc2-encryption-schemes">3. 
           Skip to content
         </a>
 </div>
@@ -104,7 +104,12 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../..">
 <span class="md-ellipsis">
+    
+  
     Introduction
+  
+
+    
   </span>
 </a>
 </li>
@@ -112,20 +117,34 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     Use Case Model
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_2">
 <span class="md-nav__icon md-icon"></span>
-            Use Case Model
+            
+  
+    Use Case Model
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
 <span class="md-ellipsis">
+    
+  
     Use Cases
+  
+
+    
   </span>
 </a>
 </li>
@@ -136,27 +155,46 @@
 <input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
 <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     Protocol and Cryptography Specification
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_3">
 <span class="md-nav__icon md-icon"></span>
-            Protocol and Cryptography Specification
+            
+  
+    Protocol and Cryptography Specification
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item md-nav__item--active">
 <input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
 <label class="md-nav__link md-nav__link--active" for="__toc">
 <span class="md-ellipsis">
+    
+  
     Encryption Schemes
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
+    
+  
     Encryption Schemes
+  
+
+    
   </span>
 </a>
 <nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
@@ -168,14 +206,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#introduction">
 <span class="md-ellipsis">
-      Introduction
+      
+        Introduction
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#notation-and-functions">
 <span class="md-ellipsis">
-      Notation and functions
+      
+        Notation and functions
+      
     </span>
 </a>
 <nav aria-label="Notation and functions" class="md-nav">
@@ -183,14 +225,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#notation">
 <span class="md-ellipsis">
-      Notation
+      
+        Notation
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#standard-cryptographic-functions">
 <span class="md-ellipsis">
-      Standard cryptographic functions
+      
+        Standard cryptographic functions
+      
     </span>
 </a>
 </li>
@@ -200,14 +246,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#generic-cdoc2-encryption-scheme">
 <span class="md-ellipsis">
-      Generic CDOC2 encryption scheme
+      
+        Generic CDOC2 encryption scheme
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-key-establishment-algorithms">
 <span class="md-ellipsis">
-      Encryption schemes with key-establishment algorithms
+      
+        Encryption schemes with key-establishment algorithms
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with key-establishment algorithms" class="md-nav">
@@ -215,7 +265,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">
 <span class="md-ellipsis">
-      SC01: Encryption scheme for Recipients with EC key pair
+      
+        SC01: Encryption scheme for Recipients with EC key pair
+      
     </span>
 </a>
 <nav aria-label="SC01: Encryption scheme for Recipients with EC key pair" class="md-nav">
@@ -223,14 +275,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -243,7 +299,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-asymmetric-public-key-encryption-system">
 <span class="md-ellipsis">
-      Encryption schemes with asymmetric public key encryption system
+      
+        Encryption schemes with asymmetric public key encryption system
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with asymmetric public key encryption system" class="md-nav">
@@ -251,7 +309,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">
 <span class="md-ellipsis">
-      SC02: Encryption scheme for recipients with RSA key pair
+      
+        SC02: Encryption scheme for recipients with RSA key pair
+      
     </span>
 </a>
 <nav aria-label="SC02: Encryption scheme for recipients with RSA key pair" class="md-nav">
@@ -259,14 +319,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_1">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_1">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -279,7 +343,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-using-capsule-servers">
 <span class="md-ellipsis">
-      Encryption schemes using Capsule Servers
+      
+        Encryption schemes using Capsule Servers
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes using Capsule Servers" class="md-nav">
@@ -287,7 +353,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">
 <span class="md-ellipsis">
-      SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
+        SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
     </span>
 </a>
 <nav aria-label="SC03: Encryption scheme with capsule server for recipients with EC key pairs" class="md-nav">
@@ -295,14 +363,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_2">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_2">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -312,7 +384,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">
 <span class="md-ellipsis">
-      SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
+        SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
     </span>
 </a>
 <nav aria-label="SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs" class="md-nav">
@@ -320,14 +394,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_3">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_3">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -340,7 +418,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-pre-shared-secrets">
 <span class="md-ellipsis">
-      Encryption schemes with pre-shared secrets
+      
+        Encryption schemes with pre-shared secrets
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with pre-shared secrets" class="md-nav">
@@ -348,7 +428,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">
 <span class="md-ellipsis">
-      SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
+        SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
     </span>
 </a>
 <nav aria-label="SC05: Encryption scheme for recipients with pre-shared symmetric secret" class="md-nav">
@@ -356,14 +438,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_4">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-for-recipients-or-sender">
 <span class="md-ellipsis">
-      Decryption steps for Recipients or Sender
+      
+        Decryption steps for Recipients or Sender
+      
     </span>
 </a>
 </li>
@@ -373,7 +459,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords">
 <span class="md-ellipsis">
-      SC06: Direct encryption scheme with pre-shared passwords
+      
+        SC06: Direct encryption scheme with pre-shared passwords
+      
     </span>
 </a>
 <nav aria-label="SC06: Direct encryption scheme with pre-shared passwords" class="md-nav">
@@ -381,14 +469,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_5">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-for-recipient-or-sender">
 <span class="md-ellipsis">
-      Decryption steps for Recipient or Sender
+      
+        Decryption steps for Recipient or Sender
+      
     </span>
 </a>
 </li>
@@ -401,7 +493,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-secret-sharing">
 <span class="md-ellipsis">
-      Encryption schemes with secret sharing
+      
+        Encryption schemes with secret sharing
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with secret sharing" class="md-nav">
@@ -409,7 +503,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key">
 <span class="md-ellipsis">
-      SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
+        SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
     </span>
 </a>
 <nav aria-label="SC07: Encryption scheme with (n-of-n) secret shared decryption key" class="md-nav">
@@ -417,14 +513,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_6">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipient">
 <span class="md-ellipsis">
-      Decryption steps by Recipient
+      
+        Decryption steps by Recipient
+      
     </span>
 </a>
 </li>
@@ -440,49 +540,108 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="../ch03_container_format/">
 <span class="md-ellipsis">
+    
+  
     Container Format
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../ch05_cryptographic_details/">
 <span class="md-ellipsis">
+    
+  
     Cryptographic Details
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../appendix_a_header_fbs/">
 <span class="md-ellipsis">
+    
+  
     Appendix A: header.fbs
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../appendix_b_recipients_fbs/">
 <span class="md-ellipsis">
+    
+  
     Appendix B: recipients.fbs
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../appendix_c_cdoc2-capsules/">
 <span class="md-ellipsis">
+    
+  
     Appendix C: Capsules API
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../appendix_d_keylabel/">
 <span class="md-ellipsis">
+    
+  
     Appendix D: KeyLabel field specification
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../appendix_e_cdoc2-shares/">
 <span class="md-ellipsis">
+    
+  
     Appendix E: Key Shares API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_f_cdoc2_auth_server/">
+<span class="md-ellipsis">
+    
+  
+    Appendix F: Authentication server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../appendix_g_cdoc2_rp_server/">
+<span class="md-ellipsis">
+    
+  
+    Appendix G: Relying Party API
+  
+
+    
   </span>
 </a>
 </li>
@@ -493,55 +652,94 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     System Architecture
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
-            System Architecture
+            
+  
+    System Architecture
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
 <span class="md-ellipsis">
+    
+  
     System Context
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch02_system_components/">
 <span class="md-ellipsis">
+    
+  
     System Components
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch03_external_interfaces/">
 <span class="md-ellipsis">
+    
+  
     External Interfaces
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch04_capsule_server/">
 <span class="md-ellipsis">
+    
+  
     Capsule Server
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch05_shares_server/">
 <span class="md-ellipsis">
+    
+  
     Shares Server
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../03_system_architecture/ch06_ID_authentication_protocol/">
 <span class="md-ellipsis">
+    
+  
     Client authentication protocol
+  
+
+    
   </span>
 </a>
 </li>
@@ -552,20 +750,34 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     Test Plan
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
-            Test Plan
+            
+  
+    Test Plan
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../04_test_plan/test_plan/">
 <span class="md-ellipsis">
+    
+  
     Capsule Server Test Plan
+  
+
+    
   </span>
 </a>
 </li>
@@ -576,48 +788,82 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     User Guides
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
 <span class="md-nav__icon md-icon"></span>
-            User Guides
+            
+  
+    User Guides
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../08_User_Guides/password_guide/">
 <span class="md-ellipsis">
+    
+  
     Password Strength User Guide
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../08_User_Guides/parooli_juhend/">
 <span class="md-ellipsis">
+    
+  
     Parooli juhend
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
 <span class="md-ellipsis">
+    
+  
     CDOC2 Container Storage User Guide
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../08_User_Guides/konteineri_s%C3%A4ilitamise_juhend/">
 <span class="md-ellipsis">
+    
+  
     CDOC2 konteineri säilitamise juhend
+  
+
+    
   </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
 <span class="md-ellipsis">
+    
+  
     Overview diagrams
+  
+
+    
   </span>
 </a>
 </li>
@@ -628,20 +874,72 @@
 <input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
 <span class="md-ellipsis">
+    
+  
     Appendixes
+  
+
+    
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
-            Appendixes
+            
+  
+    Appendixes
+  
+
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
 <a class="md-nav__link" href="../../09_Appendixes/A1_Security_level/">
 <span class="md-ellipsis">
+    
+  
     Appendix 1: Security level
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog/">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
   </span>
 </a>
 </li>
@@ -665,14 +963,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#introduction">
 <span class="md-ellipsis">
-      Introduction
+      
+        Introduction
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#notation-and-functions">
 <span class="md-ellipsis">
-      Notation and functions
+      
+        Notation and functions
+      
     </span>
 </a>
 <nav aria-label="Notation and functions" class="md-nav">
@@ -680,14 +982,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#notation">
 <span class="md-ellipsis">
-      Notation
+      
+        Notation
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#standard-cryptographic-functions">
 <span class="md-ellipsis">
-      Standard cryptographic functions
+      
+        Standard cryptographic functions
+      
     </span>
 </a>
 </li>
@@ -697,14 +1003,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#generic-cdoc2-encryption-scheme">
 <span class="md-ellipsis">
-      Generic CDOC2 encryption scheme
+      
+        Generic CDOC2 encryption scheme
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-key-establishment-algorithms">
 <span class="md-ellipsis">
-      Encryption schemes with key-establishment algorithms
+      
+        Encryption schemes with key-establishment algorithms
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with key-establishment algorithms" class="md-nav">
@@ -712,7 +1022,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">
 <span class="md-ellipsis">
-      SC01: Encryption scheme for Recipients with EC key pair
+      
+        SC01: Encryption scheme for Recipients with EC key pair
+      
     </span>
 </a>
 <nav aria-label="SC01: Encryption scheme for Recipients with EC key pair" class="md-nav">
@@ -720,14 +1032,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -740,7 +1056,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-asymmetric-public-key-encryption-system">
 <span class="md-ellipsis">
-      Encryption schemes with asymmetric public key encryption system
+      
+        Encryption schemes with asymmetric public key encryption system
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with asymmetric public key encryption system" class="md-nav">
@@ -748,7 +1066,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">
 <span class="md-ellipsis">
-      SC02: Encryption scheme for recipients with RSA key pair
+      
+        SC02: Encryption scheme for recipients with RSA key pair
+      
     </span>
 </a>
 <nav aria-label="SC02: Encryption scheme for recipients with RSA key pair" class="md-nav">
@@ -756,14 +1076,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_1">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_1">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -776,7 +1100,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-using-capsule-servers">
 <span class="md-ellipsis">
-      Encryption schemes using Capsule Servers
+      
+        Encryption schemes using Capsule Servers
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes using Capsule Servers" class="md-nav">
@@ -784,7 +1110,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">
 <span class="md-ellipsis">
-      SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
+        SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
     </span>
 </a>
 <nav aria-label="SC03: Encryption scheme with capsule server for recipients with EC key pairs" class="md-nav">
@@ -792,14 +1120,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_2">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_2">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -809,7 +1141,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">
 <span class="md-ellipsis">
-      SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
+        SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
     </span>
 </a>
 <nav aria-label="SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs" class="md-nav">
@@ -817,14 +1151,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_3">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipients_3">
 <span class="md-ellipsis">
-      Decryption steps by Recipients
+      
+        Decryption steps by Recipients
+      
     </span>
 </a>
 </li>
@@ -837,7 +1175,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-pre-shared-secrets">
 <span class="md-ellipsis">
-      Encryption schemes with pre-shared secrets
+      
+        Encryption schemes with pre-shared secrets
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with pre-shared secrets" class="md-nav">
@@ -845,7 +1185,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">
 <span class="md-ellipsis">
-      SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
+        SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
     </span>
 </a>
 <nav aria-label="SC05: Encryption scheme for recipients with pre-shared symmetric secret" class="md-nav">
@@ -853,14 +1195,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_4">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-for-recipients-or-sender">
 <span class="md-ellipsis">
-      Decryption steps for Recipients or Sender
+      
+        Decryption steps for Recipients or Sender
+      
     </span>
 </a>
 </li>
@@ -870,7 +1216,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords">
 <span class="md-ellipsis">
-      SC06: Direct encryption scheme with pre-shared passwords
+      
+        SC06: Direct encryption scheme with pre-shared passwords
+      
     </span>
 </a>
 <nav aria-label="SC06: Direct encryption scheme with pre-shared passwords" class="md-nav">
@@ -878,14 +1226,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_5">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-for-recipient-or-sender">
 <span class="md-ellipsis">
-      Decryption steps for Recipient or Sender
+      
+        Decryption steps for Recipient or Sender
+      
     </span>
 </a>
 </li>
@@ -898,7 +1250,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-schemes-with-secret-sharing">
 <span class="md-ellipsis">
-      Encryption schemes with secret sharing
+      
+        Encryption schemes with secret sharing
+      
     </span>
 </a>
 <nav aria-label="Encryption schemes with secret sharing" class="md-nav">
@@ -906,7 +1260,9 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key">
 <span class="md-ellipsis">
-      SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
+        SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
     </span>
 </a>
 <nav aria-label="SC07: Encryption scheme with (n-of-n) secret shared decryption key" class="md-nav">
@@ -914,14 +1270,18 @@
 <li class="md-nav__item">
 <a class="md-nav__link" href="#encryption-steps-by-sender_6">
 <span class="md-ellipsis">
-      Encryption steps by Sender
+      
+        Encryption steps by Sender
+      
     </span>
 </a>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="#decryption-steps-by-recipient">
 <span class="md-ellipsis">
-      Decryption steps by Recipient
+      
+        Decryption steps by Recipient
+      
     </span>
 </a>
 </li>
@@ -938,12 +1298,12 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="cdoc2-encryption-schemes"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> CDOC2 encryption schemes<a class="headerlink" href="#cdoc2-encryption-schemes" title="Permanent link">¶</a></h1>
-<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<h1 id="cdoc2-encryption-schemes"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.</span> CDOC2 encryption schemes<a class="headerlink" href="#cdoc2-encryption-schemes" title="Permanent link">¶</a></h1>
+<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
 <p>This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form, and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in <a href="../ch05_cryptographic_details/">Cryptographic protocol details</a>.</p>
 <p>Encryption schemes are presented in an abstract form, where Sender wants to send a message <code>M</code> (payload of the CDOC2 Container) to total of <code>l</code> Recipients (<code>Recipient_1</code>, <code>Recipient_2</code>, ... <code>Recipient_l</code>) and Recipients are all similar, in a sense that they all have similar RSA key pairs or that they all have established a password with Sender. In the actual CDOC2 system, Sender may mix different kind of Recipients and different encryption schemes may be concurrently used in the same CDOC2 Container. In that sense, encryption schemes defined in this section are not comparable to use-cases, which describe interaction details of user and CDOC2 system software components. Use-cases are discussed in section <a href="../../01_use_case_model/ch03_use_cases/">Client Application use cases</a>.</p>
-<h2 id="notation-and-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2</span> Notation and functions<a class="headerlink" href="#notation-and-functions" title="Permanent link">¶</a></h2>
-<h3 id="notation"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.1</span> Notation<a class="headerlink" href="#notation" title="Permanent link">¶</a></h3>
+<h2 id="notation-and-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2</span> Notation and functions<a class="headerlink" href="#notation-and-functions" title="Permanent link">¶</a></h2>
+<h3 id="notation"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.1</span> Notation<a class="headerlink" href="#notation" title="Permanent link">¶</a></h3>
 <p>For convenience, we repeat here some of the acronyms and shorthand notation, which is used to define cryptographic schemes:</p>
 <ul>
 <li><code>M</code> - Message (payload of CDOC2 Container)</li>
@@ -953,7 +1313,7 @@
 <li><code>KEK</code> - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).</li>
 <li>Index <code>i</code> is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, <code>KEK_i</code>.</li>
 </ul>
-<h3 id="standard-cryptographic-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.2</span> Standard cryptographic functions<a class="headerlink" href="#standard-cryptographic-functions" title="Permanent link">¶</a></h3>
+<h3 id="standard-cryptographic-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.2.2</span> Standard cryptographic functions<a class="headerlink" href="#standard-cryptographic-functions" title="Permanent link">¶</a></h3>
 <p>Schemes use following standard functions:</p>
 <ol>
 <li><code>Enc(CEK, M)</code> means encryption of message <code>M</code> with symmetric key <code>CEK</code>.</li>
@@ -964,7 +1324,7 @@
 <li><code>PBKDF2(Password, Salt)</code> is key material derivation function as defined in RFC2898 (<a href="https://www.ietf.org/rfc/rfc2898.txt">https://www.ietf.org/rfc/rfc2898.txt</a>).</li>
 <li><code>XOR(Key1, Key2)</code> is bitwise exclusive-or operation on symmetric keys.</li>
 </ol>
-<h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
+<h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.3</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
 <p>In general, CDOC2 system implements encryption of payload of CDOC2 Container with the following generic steps:</p>
 <ol>
 <li>Sender generates a random FMK, which is used as a master key material for deriving other specific cryptographic keys.</li>
@@ -973,13 +1333,13 @@
 <li>Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.</li>
 </ol>
 <p>An example activity diagram about creating CDOC2 Container with multiple recipients, is given below:</p>
-<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title="Example diagram about creating CDOC2 Container with multiple recipients"/></p>
-<h2 id="encryption-schemes-with-key-establishment-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4</span> Encryption schemes with key-establishment algorithms<a class="headerlink" href="#encryption-schemes-with-key-establishment-algorithms" title="Permanent link">¶</a></h2>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title="Example diagram about creating CDOC2 Container with multiple recipients"/></p>
+<h2 id="encryption-schemes-with-key-establishment-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4</span> Encryption schemes with key-establishment algorithms<a class="headerlink" href="#encryption-schemes-with-key-establishment-algorithms" title="Permanent link">¶</a></h2>
 <p>These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.</p>
-<h3 id="sc01-encryption-scheme-for-recipients-with-ec-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4.1</span> SC01: Encryption scheme for Recipients with EC key pair<a class="headerlink" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair" title="Permanent link">¶</a></h3>
+<h3 id="sc01-encryption-scheme-for-recipients-with-ec-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4.1</span> SC01: Encryption scheme for Recipients with EC key pair<a class="headerlink" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair" title="Permanent link">¶</a></h3>
 <p>This scheme can be used for transmitting encrypted messages to Recipients holding an EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.</p>
 <p>The key exchange algorithm is almost the same as NIST key-establishment scheme <code>C(1e, 1s, ECC CDH)</code> (SP 800-56A Rev3, Section 6.2.2.2 - "(Cofactor) One-Pass Diffie-Hellman, C(1e, 1s, ECC CDH) Scheme"), with the only difference that NIST describes a key-establishment scheme with cofactor ECC CDH primitive, but we are using ECC DH primitive without a cofactor.</p>
-<h4 id="encryption-steps-by-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender" title="Permanent link">¶</a></h4>
 <p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -995,7 +1355,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EllipticCurveInfo</span><span class="p">,</span> <span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.4.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has ECDSA public key <code>PK_i</code> and corresponding ECDSA secret key <code>SK_i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1009,11 +1369,11 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-with-asymmetric-public-key-encryption-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5</span> Encryption schemes with asymmetric public key encryption system<a class="headerlink" href="#encryption-schemes-with-asymmetric-public-key-encryption-system" title="Permanent link">¶</a></h2>
-<h3 id="sc02-encryption-scheme-for-recipients-with-rsa-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1</span> SC02: Encryption scheme for recipients with RSA key pair<a class="headerlink" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair" title="Permanent link">¶</a></h3>
+<h2 id="encryption-schemes-with-asymmetric-public-key-encryption-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5</span> Encryption schemes with asymmetric public key encryption system<a class="headerlink" href="#encryption-schemes-with-asymmetric-public-key-encryption-system" title="Permanent link">¶</a></h2>
+<h3 id="sc02-encryption-scheme-for-recipients-with-rsa-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1</span> SC02: Encryption scheme for recipients with RSA key pair<a class="headerlink" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair" title="Permanent link">¶</a></h3>
 <p>This scheme can be used for transmitting encrypted messages to Recipients holding a RSA key pair. Scheme uses RSA-OAEP encryption scheme to protect the FMK decryption key (KEK). Wrapped KEK is included in the capsule, which is transmitted to the Recipient within the CDOC2 Container.</p>
 <p>Note that, while it is also possible to use Diffie-Hellman key exchange algorithm with RSA key pair, in order to derive the KEK between Sender and Recipient, a direct RSAES-PKCS1-v1_5 or RSA-OAEP encryption scheme has been traditionally used with CDOC1 applications and therefore, support for this scheme has been carried over to CDOC2 system as well.</p>
-<h4 id="encryption-steps-by-sender_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_1" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_1" title="Permanent link">¶</a></h4>
 <p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1029,7 +1389,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_1" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.5.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_1" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1043,11 +1403,11 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-using-capsule-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6</span> Encryption schemes using Capsule Servers<a class="headerlink" href="#encryption-schemes-using-capsule-servers" title="Permanent link">¶</a></h2>
+<h2 id="encryption-schemes-using-capsule-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6</span> Encryption schemes using Capsule Servers<a class="headerlink" href="#encryption-schemes-using-capsule-servers" title="Permanent link">¶</a></h2>
 <p>These schemes are usable, in case the Sender wishes to use Capsule Server as a separate transmission channel for sending key capsules to Recipients. CDOC2 Container itself is still transmitted within the usual transmission channel.</p>
-<h3 id="sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1</span> SC03: Encryption scheme with capsule server for recipients with EC key pairs<a class="headerlink" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs" title="Permanent link">¶</a></h3>
+<h3 id="sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1</span> SC03: Encryption scheme with capsule server for recipients with EC key pairs<a class="headerlink" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs" title="Permanent link">¶</a></h3>
 <p>This scheme uses same kind of key-establishment algorithm, as <a href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">scheme SC01</a>, but Capsule is transmitted via the Capsule Servers.</p>
-<h4 id="encryption-steps-by-sender_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_2" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_2" title="Permanent link">¶</a></h4>
 <p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1065,7 +1425,7 @@
 <span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_2" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_2" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has ECDSA public key <code>PK_i</code> and corresponding ECDSA secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule Server.</p>
 <p>Decryption steps are exactly the same:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1080,9 +1440,9 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.2</span> SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs<a class="headerlink" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs" title="Permanent link">¶</a></h3>
+<h3 id="sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.2</span> SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs<a class="headerlink" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs" title="Permanent link">¶</a></h3>
 <p>This scheme uses same kind of RSA-OAEP encryption scheme, as <a href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">scheme SC02</a>, but Capsule is transmitted via Capsule Server.</p>
-<h4 id="encryption-steps-by-sender_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_3" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_3" title="Permanent link">¶</a></h4>
 <p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1100,7 +1460,7 @@
 <span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-by-recipients_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.2.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_3" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipients_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.6.2.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_3" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule server. Recipient authenticates to Capsule Server with RSA key pair <code>(SK_i, PK_i)</code>.</p>
 <p>Decryption steps are exactly the same:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1115,16 +1475,16 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-with-pre-shared-secrets"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7</span> Encryption schemes with pre-shared secrets<a class="headerlink" href="#encryption-schemes-with-pre-shared-secrets" title="Permanent link">¶</a></h2>
+<h2 id="encryption-schemes-with-pre-shared-secrets"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7</span> Encryption schemes with pre-shared secrets<a class="headerlink" href="#encryption-schemes-with-pre-shared-secrets" title="Permanent link">¶</a></h2>
 <p>Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols, and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.</p>
-<h3 id="sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1</span> SC05: Encryption scheme for recipients with pre-shared symmetric secret<a class="headerlink" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret" title="Permanent link">¶</a></h3>
+<h3 id="sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1</span> SC05: Encryption scheme for recipients with pre-shared symmetric secret<a class="headerlink" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret" title="Permanent link">¶</a></h3>
 <p>This scheme is used, when Sender wishes to use an externally generated symmetric encryption key for:</p>
 <ul>
 <li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
 <li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means, but who have previously received the symmetric encryption key.</li>
 </ul>
 <p>Encryption scheme can be used with multiple Recipients, who each may know different encryption key. This encryption scheme is very similar to <a href="./#sc06-direct-encryption-scheme-with-pre-shared-passwords">scheme SC06</a>, which uses pre-shared password or passphrase.</p>
-<h4 id="encryption-steps-by-sender_4"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_4" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_4"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_4" title="Permanent link">¶</a></h4>
 <p>Sender knows symmetric keys <code>S_1</code>, <code>S_2</code>, ..., <code>S_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1142,7 +1502,7 @@
 <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">KeyMaterialSalt_i</span><span class="p">}</span>
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h4 id="decryption-steps-for-recipients-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.2</span> Decryption steps for Recipients or Sender<a class="headerlink" href="#decryption-steps-for-recipients-or-sender" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-for-recipients-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.1.2</span> Decryption steps for Recipients or Sender<a class="headerlink" href="#decryption-steps-for-recipients-or-sender" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and knows symmetric key <code>S_i</code>. Also, Sender may assume the role of any Recipient <code>i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1158,14 +1518,14 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h3 id="sc06-direct-encryption-scheme-with-pre-shared-passwords"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2</span> SC06: Direct encryption scheme with pre-shared passwords<a class="headerlink" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords" title="Permanent link">¶</a></h3>
+<h3 id="sc06-direct-encryption-scheme-with-pre-shared-passwords"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2</span> SC06: Direct encryption scheme with pre-shared passwords<a class="headerlink" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords" title="Permanent link">¶</a></h3>
 <p>This scheme is used, when Sender wishes to use a password-based encryption for:</p>
 <ul>
 <li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
 <li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means.</li>
 </ul>
 <p>Password-based encryption scheme can be used with multiple Recipients, who each may know a different password for decryption. This encryption scheme is very similar to <a href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">scheme SC05</a>, which uses pre-shared encryption key(s).</p>
-<h4 id="encryption-steps-by-sender_5"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_5" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_5"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_5" title="Permanent link">¶</a></h4>
 <p>Sender knows passwords <code>Password_1</code>, <code>Password_2</code>, ..., <code>Password_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code> and follows steps for encryption:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
@@ -1186,7 +1546,7 @@
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Sender creates a CDOC2 Container for each Recipient with <code>{C, EncryptedFMK_i, Capsule_i}</code>, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.</p>
-<h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.7.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
 <p>After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient <code>i</code>) or the Recipient <code>i</code> wishes to decrypt the Container.</p>
 <p>Recipient <code>i</code> receives CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK, Capsule}</code> and has password <code>Password_i</code> and follows steps for decryption:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1205,10 +1565,10 @@
 <span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
-<h2 id="encryption-schemes-with-secret-sharing"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8</span> Encryption schemes with secret sharing<a class="headerlink" href="#encryption-schemes-with-secret-sharing" title="Permanent link">¶</a></h2>
-<h3 id="sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1</span> SC07: Encryption scheme with (n-of-n) secret shared decryption key<a class="headerlink" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key" title="Permanent link">¶</a></h3>
+<h2 id="encryption-schemes-with-secret-sharing"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8</span> Encryption schemes with secret sharing<a class="headerlink" href="#encryption-schemes-with-secret-sharing" title="Permanent link">¶</a></h2>
+<h3 id="sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1</span> SC07: Encryption scheme with (n-of-n) secret shared decryption key<a class="headerlink" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key" title="Permanent link">¶</a></h3>
 <p>This scheme is used, when Sender wishes to allow decrypting CDOC2 documents using authentication means like Smart-ID/Mobile-ID. In that case, multiple CDOC2 Shares Servers (CSS) are used to distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all <code>n</code> shares in order to reconstruct the key material.</p>
-<h4 id="encryption-steps-by-sender_6"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_6" title="Permanent link">¶</a></h4>
+<h4 id="encryption-steps-by-sender_6"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_6" title="Permanent link">¶</a></h4>
 <p>Following steps outline how to create CDOC2 Container with a Recipient header structure and a Capsule for Recipient <code>i</code>. Index <code>i</code> is for enumerating over Recipients from <code>(1, 2, 3, ..., l)</code>. Index <code>j</code> is for enumerating over shares from <code>(1, 2, 3, ..., n)</code> of <code>KEK_i</code>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
 <span class="normal"> 2</span>
@@ -1247,7 +1607,7 @@
 <span class="n">Container</span> <span class="o">=</span> <span class="p">{</span><span class="n">C</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="n">l</span><span class="p">],</span> <span class="n">Capsule_i</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="n">l</span><span class="p">]}</span>
 </code></pre></div></td></tr></table></div>
 <p>Sender has created a CDOC2 Container containing <code>{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}</code> for transmitting to Recipients <code>(1..l)</code>.</p>
-<h4 id="decryption-steps-by-recipient"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.2</span> Decryption steps by Recipient<a class="headerlink" href="#decryption-steps-by-recipient" title="Permanent link">¶</a></h4>
+<h4 id="decryption-steps-by-recipient"><span class="enumerate-headings-plugin enumerate-heading-plugin">3.8.1.2</span> Decryption steps by Recipient<a class="headerlink" href="#decryption-steps-by-recipient" title="Permanent link">¶</a></h4>
 <p>Recipient <code>i</code> receives a CDOC2 Container containing <code>{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}</code>, where <code>Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}</code> and <code>DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]</code>.</p>
 <p>Authentication signature data format and authentication token details are specified in section <a href="../../03_system_architecture/ch04_capsule_server/">Capsule Server</a>.</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -1323,8 +1683,8 @@
 <div class="md-dialog" data-md-component="dialog">
 <div class="md-dialog__inner md-typeset"></div>
 </div>
-<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
-<script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
 <script src="../../javascripts/katex.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
