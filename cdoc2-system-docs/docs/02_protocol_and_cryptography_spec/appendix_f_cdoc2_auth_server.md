@@ -5,7 +5,7 @@
       contact:
         url: http://ria.ee
       title: cdoc2-auth-server
-      version: 0.9.0-draft
+      version: 0.9.1-draft
       description: |
         API for the session creation process for MID/SID CDOC
     
@@ -59,7 +59,7 @@
               schema:
                 type: string
                 minLength: 18
-                maxLength: 34
+                maxLength: 36
               required: true
           responses:
             '200':
