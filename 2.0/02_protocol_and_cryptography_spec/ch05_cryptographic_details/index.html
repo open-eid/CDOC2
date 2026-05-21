@@ -1200,13 +1200,11 @@ Key derivation can also be performed using the Windows <code>NCryptSecretAgreeme
 <ul>
 <li><code>hSharedSecret</code> – handle returned by <code>NCryptSecretAgreement</code>.</li>
 <li><code>pwszKDF</code> – the constant BCRYPT_KDF_HMAC.</li>
-<li><code>pParameterList</code> – algorithm parameters:<ul>
+<li><code>pParameterList</code> – algorithm parameters:</li>
 <li><code>KDF_HASH_ALGORITHM</code> – the constant <code>BCRYPT_SHA256_ALGORITHM</code>.</li>
 <li><code>KDF_HMAC_KEY</code> – the constant <code>CDOC20kekpremaster</code>.</li>
 <li><code>KDF_SECRET_PREPEND</code> – parameter omitted.</li>
 <li><code>KDF_SECRET_APPEND</code> – parameter omitted.</li>
-</ul>
-</li>
 </ul>
 <p>All ID-cards used today should be able to validate elliptic curve points used as input in <abbr title="Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.">ECDH</abbr> key derivation, but additional validation may be implemented in software supporting the <abbr title="Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem">CDOC</abbr> format to provide more user-friendly error management.</p>
 <p>In order to validate whether the point <em>Q = (x, y)</em> is located on the curve, it must be verified whether <em>x</em> and <em>y</em> fall in the interval [0…<em>p</em> – 1], whether they satisfy the curve equation, and whether the point falls in the correct subgroup. For example, the formula for the curve P-384 can be presented as</p>
@@ -1247,9 +1245,9 @@ The structure <em>RSAPublicKeyCapsule</em> corresponds to the capsule <code>Caps
 <h4 id="kek-computation-during-encryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2.2</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during encryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-encryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The symmetric encryption algorithm used for the encryption of the FKM defines the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> length <em>L<sub>octets</sub></em>. The sender generates a random number <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> with a length of <em>L<sub>octets</sub></em>.</p>
 <p>For the encryption of the <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr>, the sender uses the RSA-OAEP (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section 7.1</a>) encryption function. RSA-OAEP has three input parameters (see <a href="https://www.rfc-editor.org/rfc/rfc8017">section A.2.1</a>):
-• <code>hashAlgorithm</code> – hash function used by the algorithm. We use the SHA-256 hash function (<code>id-sha256</code>).
-• <code>maskGenAlgorithm</code> – mask generation function used by the algorithm. We use the MGF1 function (<code>id-mgf1</code>), parametrized by the SHA-256 hash function.
-• <code>pSourceAlgorithm</code> – label source function. We use an empty label (<code>pSpecified Empty</code>).</p>
+    • <code>hashAlgorithm</code> – hash function used by the algorithm. We use the SHA-256 hash function (<code>id-sha256</code>).
+    • <code>maskGenAlgorithm</code> – mask generation function used by the algorithm. We use the MGF1 function (<code>id-mgf1</code>), parametrized by the SHA-256 hash function.
+    • <code>pSourceAlgorithm</code> – label source function. We use an empty label (<code>pSpecified Empty</code>).</p>
 <h4 id="kek-computation-during-decryption-rsapublickeycapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2.3</span> <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> computation during decryption (RSAPublicKeyCapsule)<a class="headerlink" href="#kek-computation-during-decryption-rsapublickeycapsule" title="Permanent link">¶</a></h4>
 <p>The recipient decrypts the encrypted <abbr title="Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.">KEK</abbr> using their private key and the same parameters as were used for encryption.</p>
 <h3 id="keyservercapsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.3</span> KeyServerCapsule<a class="headerlink" href="#keyservercapsule" title="Permanent link">¶</a></h3>
