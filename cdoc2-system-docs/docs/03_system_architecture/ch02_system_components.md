@@ -48,6 +48,26 @@ For full CCS OpenAPI specification, see Appendix C in [protocol and cryptography
 * `/key-shares/{shareId}` Get key share for share identifier. Used by recipient to request a key share.
 * `/key-shares` Upload a key share and receive a share identifier. Used by sender to upload key share.
 * `/key-shares/{shareId}/nonce` Create nonce for creating an authentication ticket. Used by recipient to request a nonce.
+* `/session_nonce` Generate a session nonce for embedding in the session token.
 
 
 For full CSS OpenAPI specification, see Appendix E in [protocol and cryptography spec](../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares.md).
+
+## CDOC2 Auth Server interface
+
+* `/auth` Start a SID/MID authentication process. Returns a UUID for polling.
+* `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
+* `/.well-known/jwks.jws` Returns the Auth Server's public signing keys (JWK format).
+
+For full Auth Server OpenAPI specification, see [Appendix F](../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server.md).
+
+## CDOC2 RP Server interface
+
+* `/session-nonce` Generate a session nonce for embedding in the session token.
+* `/sid/authenticate` Initiate a Smart-ID signing session using the registered RP credentials.
+* `/sid/session/{sessionID}` Poll Smart-ID session status and retrieve signature.
+* `/mid/authenticate` Initiate a Mobile-ID signing session using the registered RP credentials.
+* `/mid/session/{sessionID}` Poll Mobile-ID session status. Returns signature and RFC 9421 countersignature headers.
+* `/.well-known/jwks.jws` Returns the RP Server's public signing keys.
+
+For full RP Server OpenAPI specification, see [Appendix G](../02_protocol_and_cryptography_spec/appendix_g_cdoc2_rp_server.md).

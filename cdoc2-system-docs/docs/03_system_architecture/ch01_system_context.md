@@ -25,5 +25,6 @@ DigiDoc4 client application is not in the scope of CDOC2 system, even though, it
 
 There are other components, which are supporting CDOC2 system in some way:
 
-1. MID/SID authentication services proxy, which relays the MID/SID authentication requests to actual Mobile-ID/Smart-ID RP-API services.
-2. OCSP and LDAP services, which provide ID-card/MID/SID certificate validity and certificate search services.
+1. Smart-ID RP API (SK ID Solutions), which the CDOC2 RP Server connects to for Smart-ID authentication sessions using protocol ACSP_V2.
+2. Mobile-ID REST API (SK ID Solutions), which the CDOC2 RP Server connects to for Mobile-ID authentication sessions.
+3. OCSP and LDAP services, which provide ID-card/MID/SID certificate validity and certificate search services.
