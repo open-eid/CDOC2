@@ -617,7 +617,7 @@ info:
   contact:
     url: http://ria.ee
   title: cdoc2-rp-server
-  version: 0.9.0-draft
+  version: 0.9.1-draft
   description: |
     API for RP mediation process and session creation for MID/SID CDOC
 
@@ -661,6 +661,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WellKnownResponse'
+        '400':
+          description: 'Bad request. Client error.'
+        '403':
+          description: 'Authentication failed'
+
+  '/mid/authenticate':
+    post:
+      summary: Sends authentication request to MID
+      description: |
+        Sends authentication request to Mobile-ID
+      tags:
+        - cdoc2-rp
+      operationId: midAuthenticate
+      parameters:
+        - $ref: '#/components/parameters/SessionTokenHeader'
+        - $ref: '#/components/parameters/SessionX5cHeader'
+      requestBody:
+        $ref: '#/components/requestBodies/MidAuthenticationRequestBody'
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionIDResponse'
+        '400':
+          description: 'Bad request. Client error.'
+        '403':
+          description: 'Authentication failed'
+
+  '/mid/session/{sessionID}':
+    get:
+      summary: Polls Mobile-ID session status
+      description: |
+        Polls the status of a Mobile-ID authentication session
+      tags:
+        - cdoc2-rp
+      operationId: midSession
+      parameters:
+        - name: sessionID
+          in: path
+          required: true
+          description: Unique session identifier (UUID) returned when the authentication session was created
+          schema:
+            type: string
+            format: uuid
+        - $ref: '#/components/parameters/SessionTokenHeader'
+        - $ref: '#/components/parameters/SessionX5cHeader'
+      responses:
+        "200":
+          $ref: '#/components/responses/MidSessionStatusResponse'
         '400':
           description: 'Bad request. Client error.'
         '403':
@@ -990,6 +1041,101 @@ components:
         - SHA3-384
         - SHA3-512
       description: Hash algorithm used for `MGF1`. The hash function for `MGF1` is defined to be the same value as the `hashAlgorithm` parameter value.
+    MidHashType:
+      type: string
+      enum:
+        - SHA256
+        - SHA384
+        - SHA512
+      description: Hash algorithm used to compute the hash sent in the MID authentication request.
+
+    MidLanguage:
+      type: string
+      enum:
+        - EST
+        - ENG
+        - RUS
+        - LIT
+      description: |
+        Language for user dialog in the Mobile-ID app. If the language/country combination is not supported, falls back to `ENG`.
+
+    MidDisplayTextFormat:
+      type: string
+      enum:
+        - GSM-7
+        - UCS-2
+      default: GSM-7
+      description: |
+        Encoding of `displayText`.
+
+        * `GSM-7` (default) — up to 100 characters.
+        * `UCS-2` — up to 50 characters.
+
+    MidSignature:
+      type: object
+      required:
+        - value
+        - algorithm
+      properties:
+        value:
+          type: string
+          format: byte
+          contentEncoding: base64
+          pattern: ^[a-zA-Z0-9+\/]+={0,2}$
+          description: Signature value, Base64 encoded.
+        algorithm:
+          type: string
+          description: Signature algorithm name returned by MID (e.g. `SHA256WithECEncryption`, `SHA256WithRSAEncryption`).
+
+    MidSessionStatusResponse:
+      type: object
+      required:
+        - state
+      properties:
+        state:
+          type: string
+          enum:
+            - RUNNING
+            - COMPLETE
+          description: State of the MID session.
+        result:
+          type: string
+          enum:
+            - OK
+            - TIMEOUT
+            - NOT_MID_CLIENT
+            - USER_CANCELLED
+            - SIGNATURE_HASH_MISMATCH
+            - PHONE_ABSENT
+            - DELIVERY_ERROR
+            - SIM_ERROR
+          description: |
+            End result of the session. Present only when `state` is `COMPLETE`.
+
+            * `OK` — authentication completed successfully.
+            * `TIMEOUT` — user did not respond within the allowed time frame (~2 minutes).
+            * `NOT_MID_CLIENT` — user has no active Mobile-ID certificates.
+            * `USER_CANCELLED` — user rejected the operation on the device.
+            * `SIGNATURE_HASH_MISMATCH` — mismatch between SIM and service provider configuration.
+            * `PHONE_ABSENT` — SIM unavailable.
+            * `DELIVERY_ERROR` — SMS delivery failure.
+            * `SIM_ERROR` — invalid response from the SIM card.
+        signature:
+          $ref: '#/components/schemas/MidSignature'
+        cert:
+          type: string
+          format: byte
+          contentEncoding: base64
+          pattern: ^[a-zA-Z0-9+\/]+={0,2}$
+          description: DER+Base64 encoded authentication certificate. Present when `result` is `OK`.
+        time:
+          type: string
+          format: date-time
+          description: Server timestamp of the session completion.
+        traceId:
+          type: string
+          description: Hex string for log correlation.
+
     SemanticsIdentifier:
       type: string
       description: semantics identifier of the authentication subject
@@ -1128,8 +1274,7 @@ components:
       schema:
         type: string
       description: |
-        PEM encoded X509 certificate (without newlines) that was used to 
-        generate the MID/SID signature in x-cdoc2-session-token payload. 
+        Base64Url-encoded DER certificate that was used to generate the MID/SID signature in x-cdoc2-session-token payload. 
         Certificate holder's identity is specified in Subject "serialnumber" field. Example certificate subject: 
         'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
         Certificate full structure is defined in 
@@ -1137,6 +1282,48 @@ components:
 
 
   requestBodies:
+    MidAuthenticationRequestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            required:
+              - phoneNumber
+              - nationalIdentityNumber
+              - hash
+              - hashType
+              - language
+              - displayText
+              - displayTextFormat
+            type: object
+            properties:
+              phoneNumber:
+                type: string
+                description: Phone number of the signer with country code prefix, e.g. `+3726234566`.
+                example: '+3726234566'
+              nationalIdentityNumber:
+                type: string
+                description: National identity number of the signer (without country prefix), e.g. `38412319871`.
+                example: '38412319871'
+              hash:
+                type: string
+                format: byte
+                contentEncoding: base64
+                pattern: ^[a-zA-Z0-9+\/]+={0,2}$
+                description: Base64-encoded hash value that is signed by the user's Mobile-ID SIM card. Must be freshly generated for each request using a cryptographically secure random source.
+              hashType:
+                $ref: '#/components/schemas/MidHashType'
+              language:
+                $ref: '#/components/schemas/MidLanguage'
+              displayText:
+                type: string
+                description: Text displayed to the user on the Mobile-ID app. Max 100 bytes in `GSM-7` encoding or 50 characters in `UCS-2` encoding.
+              displayTextFormat:
+                $ref: '#/components/schemas/MidDisplayTextFormat'
+          examples:
+            Mobile-ID authentication request sample:
+              $ref: '#/components/examples/MidAuthenticationRequestBodyExample'
+
     SidAuthenticationRequestBody:
       required: true
       content:
@@ -1171,6 +1358,37 @@ components:
               $ref: '#/components/examples/SidAuthenticationRequestBodyExample'
 
   responses:
+    MidSessionStatusResponse:
+      description: OK
+      headers:
+        x-rp-signed-hash:
+          schema:
+            type: string
+          description: 'signed hash'
+          example: 'B+C9XVjIAZnCHH9vfBSv...'
+        x-rp-name:
+          schema:
+            type: string
+          description: 'rp name'
+          example: 'cdoc2-RP.example.ee'
+        Signature-Input:
+          schema:
+            type: string
+          description: 'HTTP Signature-Input header (https://datatracker.ietf.org/doc/rfc9421/)'
+          example: 'sig1=("x-rp-signed-hash" "x-rp-name");created=1715269200;keyid="f4e8b6b4-6a8e-4f77-987c-0957d1dc7f73"'
+        Signature:
+          schema:
+            type: string
+          description: 'HTTP Signature header (https://datatracker.ietf.org/doc/rfc9421/)'
+          example: 'sig1=:&lt;Base64-encoded-signature&gt;:'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MidSessionStatusResponse'
+          examples:
+            MID OK Example:
+              $ref: '#/components/examples/MidSessionStatusResponseExample'
+
     SessionStatusResponse:
       description: OK
       content:
@@ -1182,6 +1400,27 @@ components:
               $ref: '#/components/examples/AcspV2ResponseExample'
 
   examples:
+    MidAuthenticationRequestBodyExample:
+      value:
+        phoneNumber: '+3726234566'
+        nationalIdentityNumber: '38412319871'
+        hash: 0nbgC2fVdLVQFZJdBbmG8B+kXnZtX1FSTM59UVDQ4Gc=
+        hashType: SHA256
+        language: ENG
+        displayText: Decrypting container file "test.txt"
+        displayTextFormat: GSM-7
+
+    MidSessionStatusResponseExample:
+      value:
+        state: COMPLETE
+        result: OK
+        signature:
+          value: B+C9XVjIAZnCHH9vfBSvXgFN2oT4RuCvYLkE==
+          algorithm: SHA256WithECEncryption
+        cert: MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8xCzAJ
+        time: '2026-05-12T10:52:20Z'
+        traceId: d8de38e7bb5d8f8a
+
     SidAuthenticationRequestBodyExample:
       value:
         certificateLevel: QUALIFIED

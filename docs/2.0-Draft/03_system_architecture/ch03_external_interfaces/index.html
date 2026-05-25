@@ -747,14 +747,13 @@
 <h1 id="external-components-and-services"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.</span> External components and services<a class="headerlink" href="#external-components-and-services" title="Permanent link">¶</a></h1>
 <p>This section will describe, how CDOC2 system is using external components and services</p>
 <h2 id="smart-id-rp-api"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.1</span> Smart-ID RP API<a class="headerlink" href="#smart-id-rp-api" title="Permanent link">¶</a></h2>
-<p>Relaying Party API is used to start authentication with Smart-ID accessed through MID/SID authentication proxy</p>
+<p>Relying Party API used by the CDOC2 RP Server to start and poll Smart-ID authentication sessions. The CDOC2 system uses Smart-ID RP API v3 with the ACSP_V2 signature protocol.</p>
 <ul>
-<li><a href="https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session">/authentication</a>
-  Starts authentication with Smart-ID</li>
-<li><a href="https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#2311-session-status">/session</a>
-  Poll authentication status</li>
+<li><a href="https://github.com/SK-EID/smart-id-documentation">Smart-ID RP API documentation</a>
+  Starts authentication sessions and polls session status</li>
 </ul>
 <h2 id="mobile-id-rest-api"><span class="enumerate-headings-plugin enumerate-heading-plugin">16.2</span> Mobile-ID REST API<a class="headerlink" href="#mobile-id-rest-api" title="Permanent link">¶</a></h2>
+<p>Relying Party API used by the CDOC2 RP Server to start and poll Mobile-ID authentication sessions.</p>
 <ul>
 <li><a href="https://github.com/SK-EID/MID">https://github.com/SK-EID/MID</a></li>
 </ul>

@@ -617,7 +617,7 @@ info:
   contact:
     url: http://ria.ee
   title: cdoc2-key-shares
-  version: 1.2.1-draft
+  version: 1.2.2-draft
   description: |
     API for exchanging CDOC2 key material shares.
 
@@ -632,7 +632,7 @@ info:
       Java implementation for `x-cdoc2-auth-token` can be found WIP https://github.com/open-eid/cdoc2-auth
       `x-cdoc2-auth-token` is signed by Smart-ID [authentication](https://github.com/SK-EID/smart-id-documentation?tab=readme-ov-file#2310-authentication-session) 
       certificate or [Mobile-ID authentication](https://github.com/SK-EID/MID?tab=readme-ov-file#32-initiating-signing-and-authentication) certificate.
-    * `x-cdoc2-auth-x5c` is PEM encoded X509 certificate (without newlines) that was used to sign x-cdoc2-auth-token. 
+    * `x-cdoc2-auth-x5c` is a Base64Url-encoded DER certificate that was used to sign x-cdoc2-auth-token. 
       Certificate holders identify is specified in Subject "serialnumber" field. Example certificate subject: 
       'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
       Certificate full structure is defined in 
@@ -672,7 +672,7 @@ paths:
             type: string
           required: true
           description: |
-            PEM encoded X509 certificate (without newlines) that was used to sign x-cdoc2-auth-token. 
+            Base64Url-encoded DER certificate that was used to sign x-cdoc2-auth-token. 
             Certificate holders identify is specified in Subject "serialnumber" field. Example certificate subject: 
             'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
             Certificate full structure is defined in 
@@ -680,6 +680,10 @@ paths:
         - $ref: '#/components/parameters/SessionTokenHeader'
         - $ref: '#/components/parameters/SessionX5cHeader'
         - $ref: '#/components/parameters/SidRpV3SignatureParams'
+        - $ref: '#/components/parameters/CounterSignSignedHash'
+        - $ref: '#/components/parameters/CounterSignRpName'
+        - $ref: '#/components/parameters/CounterSignSignatureInput'
+        - $ref: '#/components/parameters/CounterSignSignature'
       responses:
         '200':
           description: OK
@@ -845,8 +849,7 @@ components:
       schema:
         type: string
       description: |
-        PEM encoded X509 certificate (without newlines) that was used to 
-        generate the MID/SID signature in x-cdoc2-session-token payload. 
+        Base64Url-encoded DER certificate that was used to generate the MID/SID signature in x-cdoc2-session-token payload. 
         Certificate holder's identity is specified in Subject "serialnumber" field. Example certificate subject: 
         'serialNumber = PNOEE-30303039914, GN = OK, SN = TESTNUMBER, CN = "TESTNUMBER,OK", C = EE'
         Certificate full structure is defined in 
@@ -862,27 +865,60 @@ components:
         Base64Url-encoded JSON structure containing additional parameters necessary to verify the
         signature of an auth token (x-cdoc2-auth-token). Required when the auth token is signed 
         with SID RPv3, omitted otherwise.
-      example: '{
-  "interactionsDigest": "olJN7OXUvfy1bUPNu712X3A7MOm1BXiWtlAmv+ubIz0=",
-  "interactionTypeUsed": "confirmationMessageAndVerificationCodeChoice",
-  "signature": {
-    "serverRandom": "sV9wlKtZe5tr0gN9ietPSJ/T",
-    "userChallenge": "fykZLrfSkl1on1pHNPkdAYQ-izGt7VFyczyCC3lxrik",
-    "flowType": "Notification",
-    "signatureAlgorithm": "rsassa-pss",
-    "signatureAlgorithmParameters": {
-      "hashAlgorithm": "SHA-256",
-      "maskGenAlgorithm": {
-        "algorithm": "id-mgf1",
-        "parameters": {
-          "hashAlgorithm": "SHA-256"
+      example: |
+        {
+          "interactionsDigest": "olJN7OXUvfy1bUPNu712X3A7MOm1BXiWtlAmv+ubIz0=",
+          "interactionTypeUsed": "confirmationMessageAndVerificationCodeChoice",
+          "signature": {
+            "serverRandom": "sV9wlKtZe5tr0gN9ietPSJ/T",
+            "userChallenge": "fykZLrfSkl1on1pHNPkdAYQ-izGt7VFyczyCC3lxrik",
+            "flowType": "Notification",
+            "signatureAlgorithm": "rsassa-pss",
+            "signatureAlgorithmParameters": {
+              "hashAlgorithm": "SHA-256",
+              "maskGenAlgorithm": {
+                "algorithm": "id-mgf1",
+                "parameters": {
+                  "hashAlgorithm": "SHA-256"
+                }
+              },
+              "saltLength": 32,
+              "trailerField": "0xbc"
+            }
+          }
         }
-      },
-      "saltLength": 32,
-      "trailerField": "0xbc"
-    }
-  }
-}'
+
+    CounterSignSignedHash:
+      name: x-rp-signed-hash
+      in: header
+      required: false
+      schema:
+        type: string
+      description: component of RFC9421 HTTP signature returned by RP server for MID signatures
+
+    CounterSignRpName:
+      name: x-rp-name
+      in: header
+      required: false
+      schema:
+        type: string
+      description: component of RFC9421 HTTP signature returned by RP server for MID signatures
+
+    CounterSignSignatureInput:
+      name: Signature-Input
+      in: header
+      required: false
+      schema:
+        type: string
+      description: RFC9421 HTTP signature Signature-Input
+
+    CounterSignSignature:
+      name: Signature
+      in: header
+      required: false
+      schema:
+        type: string
+      description: RFC9421 HTTP signature value
 
   securitySchemes:
     bearerAuth: # for /key-shares endpoints, long-term token

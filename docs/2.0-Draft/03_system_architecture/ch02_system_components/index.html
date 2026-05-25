@@ -776,8 +776,28 @@ services. Validation includes verifying the session token provided by the client
 <li><code>/key-shares/{shareId}</code> Get key share for share identifier. Used by recipient to request a key share.</li>
 <li><code>/key-shares</code> Upload a key share and receive a share identifier. Used by sender to upload key share.</li>
 <li><code>/key-shares/{shareId}/nonce</code> Create nonce for creating an authentication ticket. Used by recipient to request a nonce.</li>
+<li><code>/session_nonce</code> Generate a session nonce for embedding in the session token. Accessed only by 
+  CDOC2 Auth Server.</li>
 </ul>
 <p>For full CSS OpenAPI specification, see Appendix E in <a href="../../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares/">protocol and cryptography spec</a>.</p>
+<h2 id="cdoc2-auth-server-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.3</span> CDOC2 Auth Server interface<a class="headerlink" href="#cdoc2-auth-server-interface" title="Permanent link">¶</a></h2>
+<ul>
+<li><code>/auth/start</code> Start a SID/MID authentication process. Returns a UUID for polling.</li>
+<li><code>/auth/status/{authProcessUuid}</code> Poll authentication status. Returns session token and signing certificate when complete.</li>
+<li><code>/.well-known/jwks.jws</code> Returns the Auth Server's public signing keys (JWK format).</li>
+</ul>
+<p>For full Auth Server OpenAPI specification, see <a href="../../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server/">Appendix F</a>.</p>
+<h2 id="cdoc2-rp-server-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">15.4</span> CDOC2 RP Server interface<a class="headerlink" href="#cdoc2-rp-server-interface" title="Permanent link">¶</a></h2>
+<ul>
+<li><code>/session-nonce</code> Generate a session nonce for embedding in the session token. Accessed only by
+  CDOC2 Auth Server.</li>
+<li><code>/sid/authenticate</code> Initiate a Smart-ID signing session using the registered RP credentials.</li>
+<li><code>/sid/session/{sessionID}</code> Poll Smart-ID session status and retrieve signature.</li>
+<li><code>/mid/authenticate</code> Initiate a Mobile-ID signing session using the registered RP credentials.</li>
+<li><code>/mid/session/{sessionID}</code> Poll Mobile-ID session status. Returns signature and RFC 9421 countersignature headers.</li>
+<li><code>/.well-known/jwks.jws</code> Returns the RP Server's public signing keys.</li>
+</ul>
+<p>For full RP Server OpenAPI specification, see <a href="../../02_protocol_and_cryptography_spec/appendix_g_cdoc2_rp_server/">Appendix G</a>.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

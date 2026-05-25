@@ -891,7 +891,7 @@
 <li>The sender adds the selected servers' identifiers, share identifiers, and recipient identifier to the container.</li>
 <li>The sender transmits the container to the recipient.</li>
 <li>The recipient finds information concerning the Shares Capsule generated for them in the container.</li>
-<li>The recipient connects to each CSS server chosen by the sender and authenticates with the servers (by signing authentication tokens).</li>
+<li>The recipient connects to each CSS server chosen by the sender and authenticates with the servers (by signing authentication tokens). This requires first obtaining a session token from the CDOC2 Auth Server and then signing the authentication token via the CDOC2 RP Server.</li>
 <li>The recipient transmits the share identifiers found in the container to the servers.</li>
 <li>Each CSS server looks up the Key Share based on the share identifier and the recipient identifier established during authentication.</li>
 <li>Each server returns the Key Share to the recipient.</li>
@@ -947,6 +947,7 @@ This version of the specification defines a single CSS-based Capsule type:</p>
 <h3 id="the-keysharescapsule-authentication-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.6.1</span> The <code>KeySharesCapsule</code> authentication scheme<a class="headerlink" href="#the-keysharescapsule-authentication-scheme" title="Permanent link">¶</a></h3>
 <p>In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field <code>recipient_id</code> in the structure <code>KeySharesCapsule</code>.</p>
 <p>The server authenticates the recipient using a special protocol, as described in section <a href="../ch06_ID_authentication_protocol/">ID authentication protocol</a>.</p>
+<p>The recipient uses the CDOC2 Auth Server to obtain a session token and the CDOC2 RP Server to perform signing operations. See <a href="../ch02_system_components/">system components</a> for details of these servers.</p>
 <p>The two following <code>recipient_id</code> naming patters are supported:</p>
 <h4 id="etsi-semantics-identifier"><span class="enumerate-headings-plugin enumerate-heading-plugin">18.6.1.1</span> ETSI semantics identifier<a class="headerlink" href="#etsi-semantics-identifier" title="Permanent link">¶</a></h4>
 <p>The identifier must adhere to the following pattern:</p>
