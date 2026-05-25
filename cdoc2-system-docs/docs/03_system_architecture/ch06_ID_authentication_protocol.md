@@ -400,7 +400,10 @@ If all checks are positive, then the authentication and access control decision 
 
 Before authenticating to CSS servers (cdoc2-shares-servers), a valid session token is needed. Session token is valid up to 24 hours.
 
-Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens — which are signed directly by the user's eID means — session tokens are signed by the Authentication Server. The user's eID signature is embedded within the session token as a claim, along with the parameters needed to verify it.
+Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens — 
+which are signed directly by the user's eID means — session tokens are signed by the 
+Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the 
+session token as a claim, along with the parameters needed to verify it.
 
 ### Session Token structure
 
@@ -419,9 +422,16 @@ Session token payload includes:
 - `iss`: Authentication Server URL (e.g., `"https://cdoc2-auth-server.ee"`)
 - `sub`: User's ETSI identifier (e.g., `"etsi/PNOEE-48010010101"`)
 - `iat` / `exp`: Issuance and expiry timestamps
-- `rpChallenge`: Relying party challenge value
-- `signature`: Embedded user eID signature with algorithm parameters (specific to SID or MID)
 - `_sd` / `_sd_alg`: Selectively disclosable `aud` claim (same URL format as in auth tokens)
+
+Additionally for SID RPv3 authentication:
+- `signatureProtocol`: RPv3 signature protocol
+- `rpChallenge`: Relying party challenge value
+- `interactionsDigest`: SHA-256 digest of the serialized interactions object
+- `interactionTypeUsed`: Actual interaction that was used to create the signature
+- `rpName`: Auth server relying party name
+- `schemeName`: Name of scheme that was used to create the signature (e.g., `smart-id`)
+- `signature`: Embedded user eID signature with algorithm parameters.
 
 ### Verifying Session Token
 

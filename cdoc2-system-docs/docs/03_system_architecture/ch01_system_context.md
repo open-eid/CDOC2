@@ -11,7 +11,7 @@ title: 2. System Context
 
 1. CDOC2 Capsule Server (CCS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 Capsule Server uses local database component as well.
 2. CDOC2 Shares Server (CSS) to be used by CDOC2 clients, such as reference CLI client and DigiDoc4 client application. Every CDOC2 Shares Server uses local database component as well.
-3. CDOC2 Authentication Server (cdoc2-auth-server)  is used in SID/MID autentication flows only. Composes and issues session tokens that are included as headers in subsequent requests to other CDOC2 infrastructure components. Has a local database component.
+3. CDOC2 Authentication Server (cdoc2-auth-server) is used in SID/MID autentication flows only. Composes and issues session tokens that are included as headers in subsequent requests to other CDOC2 infrastructure components. Has a local database component.
 4. CDOC2 Relying Party Server (cdoc2-rp-server). Mediates and validates client requests to the SID/MID relying party API, including verifying the Session Token issued by the Authentication Server. Has a local database component.
 5. CDOC2 reference library, to be used by CDOC2 servers, CLI client.
 6. CDOC2 CLI client, which is a command-line Java application and which implements all CDOC2 end-user use cases, but without graphical user interface.

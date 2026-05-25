@@ -4,7 +4,7 @@ title: 2. CDOC2 container format
 
 # CDOC2 container format
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
 described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).
 
 ## Abstracted format
@@ -379,7 +379,7 @@ Recipient identification methods corresponding to each encryption method are des
 
 KEK computation is described in section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation). Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class ``crypto.KekTools``.
 
-FMK decryption is described in section [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption),  ``crypto.Crypto.xor()``.
+FMK decryption is described in section [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption), ``crypto.Crypto.xor()``.
 
 HHK derivation procedure is described in section [Key derivation](ch05_cryptographic_details.md#key-derivation), ``crypto.Crypto.deriveHeaderHmacKey()``.
 
