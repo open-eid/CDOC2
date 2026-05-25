@@ -47,14 +47,18 @@ participant "CDOC2 Client" as CLIENT
 participant "CDOC2-Auth portal" as AUTH
 participant "CDOC2-RP portal" as CRP
 participant "CSS servers" as CSS
-participant "SiD API" as SID
+participant "MiD/SiD API" as SID
 
 User -> CLIENT : Decrypt this CDOC2 container
 CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
 
-User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
+alt SID
+  User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
+else MID
+  User -> CLIENT : Agree, start authentication with MiD \nprovide identification code and phone number
+end
 
-CLIENT -> AUTH : initiate SID\n authentication for user U
+CLIENT -> AUTH : initiate SiD/MiD\n authentication for user U
 
 loop for every CSS server
     AUTH -> CSS : generate session nonce
@@ -64,7 +68,7 @@ AUTH -> CRP : generate session nonce
 CRP --> AUTH: nonce
 AUTH -> AUTH : Generate rpChallenge
 AUTH -> AUTH : Calculate VC
-AUTH -> SID : Start SiD authentication
+AUTH -> SID : Start SiD/MiD authentication
 SID --> AUTH : SID/MID authentication session id
 AUTH -> AUTH : compose session_token SD-JWT
 
@@ -78,9 +82,12 @@ User -> SID : agree, PIN
 CLIENT -> AUTH : Get authentication process status
 AUTH -> SID : Get authentication process status
 SID --> AUTH : signature S
-AUTH -> AUTH : Add signature S to session_token SD-JWT
+alt SID
+    AUTH -> AUTH : Add signature S to session_token SD-JWT
+else MID
+    AUTH -> AUTH: Validate MID signature S
+end 
 AUTH -> AUTH : sign session_token SD-JWT with \nauthentication server private key
-AUTH -> AUTH : sign session_token SD-JWT
 AUTH --> CLIENT : issued session_token
 @enduml
 ```
@@ -100,7 +107,7 @@ actor User
 participant "CDOC2\nClient" as CLIENT
 participant "CDOC2-RP\n portal" as CRP
 participant "CSS\nservers" as CSS
-participant "MID/SID\nAPI" as SID
+participant "MiD/SiD\nAPI" as SID
 
 loop for every CSS server
     CLIENT -> CSS : present SD-JWT session_token,\nget nonces for shares
@@ -118,9 +125,9 @@ CLIENT -> CRP : present SD-JWT session_token \nget hash H signed by user U
 CRP -> CRP : Verify that I have issued\npresented challenge from session_token
 CRP -> CRP : Verify that session_token sub\nmatches with user U
 CRP -> CRP : Verify that session_token is signed\nby CDOC2-auth portal
-CRP -> SID : cdoc2_auth -> SID: create authentication signature of\nuser U on hash H
-SID --> CRP : SID/MID authentication session id
-CRP --> CLIENT : SID/MID authentication session id
+CRP -> SID : create authentication signature of\nuser U on hash H
+SID --> CRP : SiD/MiD authentication session id
+CRP --> CLIENT : SiD/MiD authentication session id
 CLIENT -> CLIENT : calculate the VC
 
 CLIENT -> User : Do you consent\n "Decrypt container 'something.cdoc'"?
@@ -132,17 +139,27 @@ loop poll for session status
   CLIENT -> CRP : Get authentication process status
   CRP -> SID : Get authentication process status
   SID --> CRP : signature S
+  alt MID
+    CRP -> CRP: Countersign the MiD signature with rp key
+  end
   CRP --> CLIENT : signature S
+  alt MID
+    CRP --> CLIENT : RFC9421 HTTP signature headers
+  end
 end
 
 CLIENT -> CLIENT : create CDOC2 auth token with the signature S
 
 loop for every CSS server
-    CLIENT -> CSS : present CDOC2 auth token
+    alt SID
+        CLIENT -> CSS : present CDOC2 auth token and RPv3 signature parameters
+    else MID
+        CLIENT -> CSS : present CDOC2 auth token and HTTP signature headers
+    end
     CSS -> CSS : Verify that I have issued\npresented nonce from CDOC2 auth token
     CSS -> CSS : Verify that iss matches\nwith user U
     CSS -> CSS : Verify that authentication signature is\ncreated by CDOC2-RP and details match
-    CSS -> CSS : Verify that MID/SID signature\ncreated by user U is valid and matches iss
+    CSS -> CSS : Verify that MiD/SiD signature\ncreated by user U is valid and matches iss
     CSS --> CLIENT : return share
 end
 
