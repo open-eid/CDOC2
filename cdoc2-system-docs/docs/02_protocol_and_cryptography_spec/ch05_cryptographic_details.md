@@ -188,7 +188,7 @@ The Capsule Server described by the ``KeyServerCapsule`` structure (see [table 4
 - *ECCPublicKeyCapsule*: section [ECCPublicKeyCapsule](#eccpublickeycapsule).
 - *RSAPublicKeyCapsule*: section [RSAPublicKeyCapsule](#rsapublickeycapsule).
 
-The details of using *KeyServerCapsule* are described in section [Capsule server](../03_system_architecture/ch04_capsule_server.md#key-server).
+The details of using *KeyServerCapsule* are described in section [Capsule server](../03_system_architecture/ch04_capsule_server.md#the-keyservercapsule-authentication-scheme).
 
 #### Table 4. KeyServerCapsule elements
 
