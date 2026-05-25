@@ -7,14 +7,14 @@ This section will describe, how CDOC2 system is using external components and se
 
 ## Smart-ID RP API
 
-Relaying Party API is used to start authentication with Smart-ID accessed through MID/SID authentication proxy
+Relying Party API used by the CDOC2 RP Server to start and poll Smart-ID authentication sessions. The CDOC2 system uses Smart-ID RP API v3 with the ACSP_V2 signature protocol.
 
-* [/authentication](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#239-authentication-session)
-  Starts authentication with Smart-ID
-* [/session](https://github.com/SK-EID/smart-id-documentation/blob/v2/README.md#2311-session-status)
-  Poll authentication status
+* [Smart-ID RP API documentation](https://github.com/SK-EID/smart-id-documentation)
+  Starts authentication sessions and polls session status
 
 ## Mobile-ID REST API
+
+Relying Party API used by the CDOC2 RP Server to start and poll Mobile-ID authentication sessions.
 
 * <https://github.com/SK-EID/MID>
 
