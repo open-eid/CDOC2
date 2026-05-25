@@ -10,7 +10,9 @@ CDOC2 Client Application is an abstract component in the CDOC2 System. CDOC2 Cli
 * CDOC2 Client CLI Application
 
 Use cases specified here are written in a generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
-Use cases specified here are written in a generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
+
+> **Note:** Sections marked with SiD/MiD only apply exclusively to Smart-ID and Mobile-ID use cases.
+
 
 ### Actors
 
@@ -94,7 +96,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 9. Client creates a container into file system in the chosen target path and adds a header.
 10. Client verifies that the header does not exceed the size limit defined by the specification.
 11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
-12. Client saves the CDOC2 container and displays Sender a notification.
+12. Client saves the CDOC2 container and displays a notification to the Sender.
 
 **Extensions**
 
@@ -284,7 +286,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 6. Client creates a container into file system in the chosen target path and adds a header.
 7. Client verifies that the header does not exceed the size limit defined by the specification.
 8. Client verifies technical file correctness, creates an archive, compresses it and encrypts the compressed archive.
-9. Client saves the CDOC2 container and displays Sender a notification.
+9. Client saves the CDOC2 container and displays a notification to the User.
 
 **Extensions**
 
@@ -414,6 +416,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. System notifies the Recipient.
 2. Use case ends.
 
+## SiD/MiD
 ### Use cases supporting Recipients authenticating to multiple CDOC2 Shares Servers
 
 These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CDOC2 Shares Servers (CSS). Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
@@ -493,12 +496,12 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 1. Client displays Sender a notification.
 2. Use case ends.
 
-8a. Header size is larger than allowed by the specification:
+9a. Header size is larger than allowed by the specification:
 
 1. Client displays Sender a notification.
 2. Use case ends.
 
-9a. Files are not correct:
+10a. Files are not correct:
 
 1. Client displays Sender a notification.
 2. Use case ends.
@@ -525,22 +528,66 @@ CDOC2 Client Application
 
 * Files from the CDOC2 container are decrypted.
 
-**Main Success Scenario**
+**Main Success Scenario (Smart-ID, Client doesn’t have a session)**
 
-1. Recipient chooses the CDOC2 Container to be decrypted and specifies the target filename and path for the files.
-2. Client verifies that the header does not exceed the size limit defined by the specification.
-3. Recipient enters their personal identification number and chooses an eID authentication method.
-4. Client finds Capsule Share matching to recipient identification number. Client reads share identifiers and their matching Shares Server URLs from Capsule Share and requests a nonce for each share identifier.
-5. Client uses share identifier, Share Server URL and the nonce of each Key Share to generate an AuthenticationToken.
-6. Client shows Recipient an authentication form with input options specific to the authentication service (e.g., phone number input field, QR code scanning option). The Recipient initiates authentication using one of the options.
-7. Client initiates AuthenticationToken signing with authentication service.
-8. Recipient completes the authentication using their eID means which also creates a signature on the authentication hash with authentication key pair.
-9. Client reads Recipient certificate from the authentication response.
-10. Client verifies that the container has a Recipient record with the same Recipient ID.
-11. Client constructs a Share specific authentication ticket and uses it to authenticate itself to download the data of a Key Share.
-12. Client receives data for all Key Shares.
-13. Client combines the shares into a full secret and derives the KEK. Client uses the key material to decrypt the encrypted archive in the CDOC2 container and calculate HMAC to validate the integrity of the container.
-14. Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage.
+1. Recipient starts the Client and chooses the CDOC2 Container to be decrypted.
+
+2. Client displays the container information, the list of Recipients who can decrypt this container, along with buttons to select the eID means for decryption.
+
+3. Recipient chooses to decrypt the container with a specific eID means.
+
+    3.1. Client verifies that this container uses encryption scheme SC07 and that, in order to send queries to CDOC2 backend infrastructures, a Session Token is required.
+
+    3.2. Client verifies that it doesn't have a valid Session Token for any of the users, who could decrypt this container.
+
+4. Recipient establishes a session between the Client and the CDOC2 backend infrastructure by authenticating with eID means:
+
+    4.1. Client displays a login window to enter Recipient's identifier (and mobile phone number, if Mobile-ID is selected) and to choose the eID means.
+
+    4.2. Recipient enters their identifier (and phone number, if applicable) and chooses eID mean.
+
+    4.3. Client sends decryption authorization request to cdoc2-auth portal and receives a VC to be displayed to Recipient.
+
+    4.4. Client informs the user that authentication is in progress and shows the VC to Recipient, with instructions to continue on mobile app.
+
+    4.5. Recipient performs Smart-ID authentication:
+
+    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+
+    *  Recipient selects the correct VC.
+
+    *  Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
+
+    *  Recipient verifies the rpName and displayText and enters PIN1.
+
+    4.6. Client has been periodically polling cdoc2-auth portal and has received information, that authentication has been successful.
+
+    4.7. Client informs Recipient that authentication is completed.
+
+    4.8. Client creates a session in memory. The Session Token is only stored in RAM and up to 24 hours.
+
+5. Recipient authorises the decryption of the container with MID/SID authentication:
+    5.1. Client queries nonces from CSS servers and creates CDOC2 Authentication Token and computes the hash to be signed.
+
+    5.2. Client sends decryption authorization request to cdoc2-RP component and receives a VC to be displayed to Recipient.
+
+    5.3. Client informs Recipient that container decryption is started and shows the VC to Recipient, with instructions to continue on mobile app.
+
+    5.4. Recipient performs Smart-ID authentication:
+
+    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+
+    *  Recipient selects the correct VC.
+
+    *  Smart-ID app displays "**DigiDoc4**: 2345. Decrypting container "som……ing.cdoc2"" and asks for PIN1.
+
+    *  Recipient verifies the rpName and displayText and enters PIN1.
+
+    5.5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
+
+6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the container and informs the Recipient that decryption is complete.
+7. Continues with UC.Client.P.04 - Re-encrypt existing CDOC2 container for long-term storage.
+
 
 **Extensions**
 2a. Header size is larger than allowed by the specification:
@@ -548,35 +595,70 @@ CDOC2 Client Application
 1. Client displays Recipient a notification.
 2. Use case ends.
 
-8a. Authentication is not successful:
+4.5a. Authentication with cdoc2-auth portal is not successful:
 
 1. Client notifies the user and offers to try again.
-2. Use case continues from step 6.
+2. Use case continues from step 4.
 
-10a. A Recipient record does not exist with the same personal identification number:
+5.4a. Authentication with cdoc2-RP component is not successful:
+
+1. Client notifies the user and offers to try again.
+2. Use case continues from step 5.
+
+5.4b. A Recipient record does not exist with the same personal identification number:
 
 1. Client displays Recipient a notification.
 2. Use case ends.
 
-11a. Authentication validation fails:
+6a. Authentication validation by CSS server fails:
 
 1. Client displays Recipient a notification.
 2. Use case ends.
 
-12a. Client does not receive shares from each CSS because a request timed out:
+6b. Client does not receive shares from each CSS because a request timed out:
 
 1. Client displays user a notification and instructs trying again.
 2. Use case continues from step 3.
 
-12a. Client does not receive shares from each CSS because a share is missing or expired:
+6c. Client does not receive shares from each CSS because a share is missing or expired:
 
 1. Client displays user a notification that the container cannot be decrypted anymore.
 2. Use case ends.
 
-13a. Decryption or HMAC validation fails:
+6d. Decryption or HMAC validation fails:
 
 1. Client displays user a notification that the container is corrupted.
 2. Use case ends.
+
+**Alternative Scenario (Smart-ID, Client already has authenticated session)**
+
+This scenario can be used in case following assumptions are true:
+
+1. the Client is already running in memory and
+2. has already done Recipient authentication and
+3. has already established a session with CDOC2 backend infrastructure and
+4. has valid Session Token, which is not older than 24 hours.
+
+**Steps**
+
+1. Recipient switches to running Client app and chooses to open another CDOC2 Container to be decrypted.
+2. Client verifies that this container is using encryption scheme SC07 and in order to send queries to CDOC2 backend infrastructures, it needs a Session Token.
+3. Client verifies that it has a valid Session Token in memory and the Session Token is issued to Recipient, which is among list of Recipients, who can decrypt this container.
+4. Client displays the container information and list of Recipients who can decrypt this container and buttons to select the eID means for decryption.
+5. Recipient chooses to decrypt the container with specific eID means.
+6. Client queries nonces from CSS servers and creates CDOC2 Authentication Token and computes the hash to be signed.
+7. Client sends decryption authorization request to cdoc2-RP component and receives a VC to be displayed to Recipient.
+8. Client informs the user container decryption is in progress and shows VC to Recipient, with instructions to continue on mobile app.
+
+**(Smart-ID)**
+
+9. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+10. Recipient selects the correct VC.
+11. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting container "som……ing.cdoc2"" and asks for PIN1.
+12. Recipient verifies the rpName and displayText and enters PIN1.
+13. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
+14. Client downloads shares from CSS servers, re-creates key capsule, decrypts the container and informs the Recipient that decryption is complete.
+
 
 ## CDOC2 Server Use Case Model
 
@@ -744,6 +826,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS replies to the Client with an error message.
 2. Use case ends.
 
+## SiD / MiD
 ### Use cases with multiple CDOC2 Shares Servers holding shares of capsules
 
 These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSSs . Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
@@ -805,7 +888,7 @@ CDOC2 Shares Server (CSS)
 1. Client requests a nonce from each CSS API service, providing the share identifier as input.
 2. Client calculates an authentication hash.
 3. Client asks the Recipient to authenticate.
-4. Recipient signs the authentication token and Client receives Recipient public key that matches the Recipient identification used in the accessed Shares Capsule.
+4. Recipient signs the authentication token. Client receives the Recipient's public key, which matches the Recipient identification used in the accessed Shares Capsule.
 5. Client constructs server-specific authentication tickets and sends one to each CSS.
 6. Each CSS validates the received authentication ticket, which includes validating the ticket type, nonce, signature, key pair and public keys.
 7. CSS returns the Key Share.

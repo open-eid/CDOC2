@@ -1,5 +1,7 @@
 # Appendix F: Authentication server API, version 0.9.0-draft of cdoc2-auth-server API
 
+> **Note:** This section applies to SiD/MiD only.
+
     openapi: 3.1.0
     info:
       contact:

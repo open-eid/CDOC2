@@ -1,5 +1,7 @@
 # Appendix E: Key Shares API, version 1.0.1-draft of cdoc2-key-shares API
 
+> **Note:** This section applies to SiD/MiD only.
+
     openapi: 3.0.3
     info:
       contact:

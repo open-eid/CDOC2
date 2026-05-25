@@ -321,6 +321,8 @@ M = Dec(CEK, C)
 
 ## Encryption schemes with secret sharing
 
+> **Note:** This scheme applies to SiD/MiD recipients only.
+
 ### SC07: Encryption scheme with (n-of-n) secret shared decryption key
 
 This scheme is used, when Sender wishes to allow decrypting CDOC2 documents using authentication means like Smart-ID/Mobile-ID. In that case, multiple CDOC2 Shares Servers (CSS) are used to distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all `n` shares in order to reconstruct the key material.

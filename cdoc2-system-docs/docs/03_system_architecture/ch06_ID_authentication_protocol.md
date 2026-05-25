@@ -6,6 +6,8 @@ title: Client authentication protocol
 
 This section describes a protocol and data formats for authenticating to multiple CSS servers (cdoc2-shares-servers) in order to download every `KeySharesCapsule` from them.
 
+> **Note:** This section applies to SiD/MiD only.
+
 ## Authentication protocol requirements
 
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.

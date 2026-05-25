@@ -20,6 +20,8 @@ The specification describes:
 * Use of a CDOC2 capsule server and CDOC2 shares servers.
 * Implementation guidelines.
 
+
+
 ## Terms and acronyms
 
 * `CDOC` - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem
@@ -30,21 +32,26 @@ The specification describes:
 
 * `CDOC2 Container` - File format for transmitting the encrypted payload and metadata information, <br/>including the capsule from Sender to Recipient
 
+* `CDOC2 Authentication Token` - Credential constructed by the Client containing CSS server nonces, signed by the Recipient via MID/SID. Presented to CSS servers to authorize Key Share downloads for a specific container. Encoded as an SD-JWT. **[SiD/MiD only]**
+
+* `Session Token`- Short-lived credential issued by cdoc2-auth to the Client upon successful MID/SID authentication. Presented to CDOC2 infrastructure 
+servers to prove Recipient identity. Valid for 24 hours. Encoded as an SD-JWT. **[SiD/MiD only]**
+
 * `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.
 
 * `Server Capsule` - A Capsule that is mediated by a CDOC2 Capsule Server.
 
 * `Container Capsule` - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
 
-* `Shares Capsule` - Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers.
+* `Shares Capsule` - Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers. **[SiD/MiD only]**
 
-* `Key Share` - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.
+* `Key Share` - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value. **[SiD/MiD only]**
 
 * `CCS` - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient.
 
-* `CSS` - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient.
+* `CSS` - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient. **[SiD/MiD only]**
 
-* `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
+* `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API. **[SiD/MiD only]**
 
 * `hardware security token` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys
 
@@ -60,6 +67,9 @@ The specification describes:
 
 * `HMAC` - Hash-Based Message Authentication Code. Protects integrity of CDOC2 Container.
 
+* `SD-JWT` - Selective Disclosure JSON Web Token. Token format that supports selective disclosure of claims. Used as the encoding format for Session Token and CDOC2 Authentication Token.
+
+
 <!--- acronyms about various keys -->
 
 * `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
@@ -74,6 +84,11 @@ The specification describes:
 
 ## Short overview
 
-The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.
+The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides. 
+
+ > **Note:** This document combines Capsule Server and SiD/MiD documentation. Sections marked with **SiD/MiD**  apply exclusively to Smart-ID and Mobile-ID use cases.
+
+
 
 ![Funding](img/cofunding_logo.jpg)
+ 

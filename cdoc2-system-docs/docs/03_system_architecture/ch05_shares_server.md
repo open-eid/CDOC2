@@ -2,9 +2,12 @@
 title: CDOC2 CSS
 ---
 
+
 # CDOC2 CSS
 
 This section defines the CDOC2 Shares Server (CSS), what interfaces it provides to other system components, and rules of use.
+
+> **Note:** This section applies to SiD/MiD only.
 
 ## Introduction
 
