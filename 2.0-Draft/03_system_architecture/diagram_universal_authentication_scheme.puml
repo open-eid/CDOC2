@@ -1,0 +1,39 @@
+```plantuml
+@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 30
+hide footbox
+autonumber
+
+box "User"
+Actor Recipient as R
+participant Authenticator as A
+end box
+
+box "Capsule Servers"
+collections Server as S
+end box
+
+box "Trust infrastructure"
+participant "PKI/OCSP" as PKI
+end box
+
+R -> R: Read list of TXs from Container
+loop for each Capsule Server
+    R -> S: Authentication request for TX_ID
+    S --> R: Nonce for TX_ID
+end
+R -> R: Create authentication signature data
+R -> A: Create authentication signature
+A --> R: Authentication signature
+loop for each Capsule Server
+    R -> R: Create authentication token specific for server
+    R -> S: Present token with authentication signature \n and request Capsule
+    S -> PKI: Recipient certificate not revoked?
+    PKI --> S: Recipient certificate is good
+    S -> S: AuthN: Verify authentication token \n and authentication signature
+    S -> S: AuthZ: Verify that Recipient is \n allowed to download Capsule
+    S --> R: Capsule
+end
+@enduml
+```
