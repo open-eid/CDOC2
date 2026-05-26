@@ -1,4 +1,4 @@
-# Appendix F: Authentication server API, version 0.9.0-draft of cdoc2-auth-server API
+# Authentication Server API Reference
 
 > **Note:** This section applies to SiD/MiD only.
 

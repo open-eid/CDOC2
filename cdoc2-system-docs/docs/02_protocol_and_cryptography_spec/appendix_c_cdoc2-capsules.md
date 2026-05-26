@@ -1,4 +1,4 @@
-# Appendix C: Key Capsules API, version 2.1.0 of cdoc2services API
+# Capsule Server API Reference
 
     openapi: 3.0.3
     info:

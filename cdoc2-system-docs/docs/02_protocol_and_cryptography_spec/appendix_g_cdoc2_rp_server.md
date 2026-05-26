@@ -1,4 +1,4 @@
-# Appendix G: Relying party server API, version 0.9.0-draft of cdoc2-rp-server API
+# Relying Party Server API Reference
 
 > **Note:** This section applies to SiD/MiD only.
 
