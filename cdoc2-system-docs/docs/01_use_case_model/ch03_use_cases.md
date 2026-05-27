@@ -6,7 +6,7 @@ title: 3. Use Case Model
 CDOC2 Client Application is an abstract component in the CDOC2 System. CDOC2 Client Applications help users to encrypt files to CDOC2 Container, decrypt received CDOC2 Containers. Specific examples of CDOC2 Client Applications include:
 
 * DigiDoc4 desktop application for Windows, MacOS and Linux operating systems (<https://open-eid.github.io/#desktop-applications>, <https://www.id.ee/en/rubriik/digidoc4-client/>, <https://github.com/open-eid/DigiDoc4-Client>)
-* DigiDoc4 mobile application for Android and IOS operating systems (<https://open-eid.github.io/#mobile-applications>)
+* DigiDoc4 mobile application for Android and iOS operating systems (<https://open-eid.github.io/#mobile-applications>)
 * CDOC2 Client CLI Application
 
 Use cases specified here are written in a generic form, so that they are applicable to all client applications. Client applications will implement specified use cases and their documentation may include additional information (use case models, UX wireframes, ...) about the implemented functions.
@@ -48,7 +48,7 @@ Use cases specified here are written in a generic form, so that they are applica
 : A Capsule that is mediated by a CDOC2 Capsule Server.
 
 **Container Capsule**
-: A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
+: A Capsule that is created inside a CDOC2 Container and is therefore not sent to a CDOC2 Capsule Server.
 
 **Shares Capsule**
 : A capsule that stores all Key Shares of a Recipient record.
@@ -66,7 +66,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 #### UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token
 
 **Use Case Context**
-: CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK, which is generated with key-agreement protocol between Sender and Recipient.
+: CDOC2 Client Application adds Sender's chosen files into the CDOC2 Container and encrypts the Container with CEK. The CEK is encrypted with a KEK, which is generated with key-agreement protocol between Sender and Recipient.
 
 **Scope**
 : CDOC2 Client Application (Client)
@@ -79,13 +79,13 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 **Success Guarantees**
 
-* CDOC2 container is saved into file system.
+* CDOC2 Container is saved into file system.
 * A server capsule is sent for each Recipient to the CDOC2 capsule server.
 * Client has received a transaction code for each server capsule.
 
 **Main Success Scenario**
 
-1. Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.
+1. Sender chooses files to be included in CDOC2 Container and specifies the target filename and path for CDOC2 Container.
 2. Sender enters identifiers for each Recipient.
 3. Client creates a capsule for each Recipient.
 4. Client displays a list of Capsule Servers to Sender.
@@ -93,16 +93,16 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 6. Client creates a TLS-connection with the chosen CDOC2 Capsule Server and receives the server's certificate.
 7. Client verifies the server's certificate against the configuration.
 8. Client forwards each Recipient's server capsule to the chosen CDOC2 Capsule Server. Client provides a server capsule expiration time from internal application configuration for each capsule. If a Recipient's certificate expiration time is earlier, it uses the certificate expiration time for that Recipient's capsule. Client receives a transaction code for each server capsule.
-9. Client creates a container into file system in the chosen target path and adds a header.
+9. Client creates a Container into file system in the chosen target path and adds a header.
 10. Client verifies that the header does not exceed the size limit defined by the specification.
-11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
-12. Client saves the CDOC2 container and displays a notification to the Sender.
+11. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the Container as payload.
+12. Client saves the CDOC2 Container and displays a notification to the Sender.
 
 **Extensions**
 
 1a. Sender chose to encrypt from the Windows Explorer / MacOS Finder / Linux folder explorer context dialog: "Encrypt with eID" and "Encrypt with password":
 
-1. Client asks Sender for the container target name and path.
+1. Client asks Sender for the Container target name and path.
 2. Sender specifies the target name and path.
 3. Use case continues from step 2.
 
@@ -120,7 +120,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 5a. Configuration has no CDOC2 capsule servers:
 
-1. Client creates a container in the target path and adds a header with container capsules for each recipient.
+1. Client creates a Container in the target path and adds a header with Container capsules for each recipient.
 2. Use case continues from step 11.
 
 5b. Configuration has a default CDOC2 capsule server:
@@ -129,7 +129,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 6a. Sender chooses to not use the CDOC2 capsule server:
 
-1. Client creates a container in the target path and adds a header with container capsules for each recipient.
+1. Client creates a Container in the target path and adds a header with Container capsules for each recipient.
 2. Use case continues from step 11.
 
 7a. TLS connection cannot be established:
@@ -178,7 +178,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 #### UC.Client.02 — Decrypt CDOC2 Container with a security token
 
 **Use Case Context**
-: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using a server capsule from either CDOC2 Capsule Server or a container capsule from inside the container.
+: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 Container provided by Recipient, using a server capsule from either CDOC2 Capsule Server or a Container capsule from inside the Container.
 
 **Scope**
 CDOC2 Client Application
@@ -195,20 +195,20 @@ CDOC2 Client Application
 
 **Success Guarantees**
 
-* Files from the CDOC2 container are decrypted.
+* Files from the CDOC2 Container are decrypted.
 
 **Main Success Scenario**
 
 1. Recipient chooses the CDOC2 Container to be decrypted and specifies the target filename and path for the files.
 2. Client verifies that the header does not exceed the size limit defined by the specification.
 3. Client reads Recipient certificate from the security token.
-4. Client verifies that the container has a record of the Recipient.
+4. Client verifies that the Container has a record of the Recipient.
 5. Client verifies that the Recipient record has a CDOC2 Capsule Server reference.
 6. Client uses Recipient's eID means to authenticate to CCS.
-7. Client sends the CDOC2 Capsule Server the transaction code from the container.
+7. Client sends the CDOC2 Capsule Server the transaction code from the Container.
 8. Client receives a capsule from the CDOC2 Capsule Server.
-9. Client decrypts the encrypted archive in the CDOC2 container using the connected security token.
-10. Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage.
+9. Client decrypts the encrypted archive in the CDOC2 Container using the connected security token.
+10. Continues with UC.Client.P.04 — Re-encrypt existing CDOC2 Container for long-term storage.
 
 **Extensions**
 2a. Header size is larger than allowed by the specification:
@@ -221,14 +221,14 @@ CDOC2 Client Application
 1. Client displays Recipient a notification.
 2. Use case ends.
 
-4a. Recipient record not found in the container.
+4a. Recipient record not found in the Container.
 
 1. Client displays Recipient a notification.
 2. Use case ends.
 
 5a. Recipient record does not contain a reference to a CDOC2 Capsule Server.
 
-1. Client finds a container capsule from the Recipient record.
+1. Client finds a Container capsule from the Recipient record.
 2. Use case continues from step 9.
 
 6a. PIN 1 code is required:
@@ -274,7 +274,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 **Success Guarantees**
 
-* A new CDOC2 container is created and it can be decrypted with the user's password.
+* A new CDOC2 Container is created and it can be decrypted with the user's password.
 
 **Main Success Scenario**
 
@@ -283,16 +283,16 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 3. User specifies a target name and path in local filesystem.
 4. User enters a password and password hint (internally stored as KeyLabel value) to be used for password-based cryptography.
 5. Client verifies that the password satisfies minimal requirements.
-6. Client creates a container into file system in the chosen target path and adds a header.
+6. Client creates a Container into file system in the chosen target path and adds a header.
 7. Client verifies that the header does not exceed the size limit defined by the specification.
 8. Client verifies technical file correctness, creates an archive, compresses it and encrypts the compressed archive.
-9. Client saves the CDOC2 container and displays a notification to the User.
+9. Client saves the CDOC2 Container and displays a notification to the User.
 
 **Extensions**
 
 1a. Sender chose to encrypt from the Windows Explorer / MacOS Finder / Linux folder explorer context dialog: "Encrypt with eID" and "Encrypt with password":
 
-1. Client asks Sender for the container target name and path.
+1. Client asks Sender for the Container target name and path.
 2. Sender specifies the target name and path.
 3. Use case continues from step 2.
 
@@ -337,18 +337,18 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 **Main Success Scenario**
 
-1. User specifies which CDOC2 container they wish to open.
-2. Client opens the container and retrieves the header information. Client verifies that the header does not exceed the limit defined in the specification.
-3. Client asks User for the password to decrypt the container. Client shows a password hint based on the KeyLabel value, that was set during encryption.
+1. User specifies which CDOC2 Container they wish to open.
+2. Client opens the Container and retrieves the header information. Client verifies that the header does not exceed the limit defined in the specification.
+3. Client asks User for the password to decrypt the Container. Client shows a password hint based on the KeyLabel value, that was set during encryption.
 4. User enters the password.
-5. Client verifies the password and decrypts the CDOC2 container.
+5. Client verifies the password and decrypts the CDOC2 Container.
 6. Client asks user for the target location where to save the files.
 7. User defines the target location.
 8. Client unpacks the archive contents and saves it to the target location.
 
 **Extensions**
 
-2a. Header exceed the length limit according to the specification:
+2a. Header exceeds the length limit according to the specification:
 
 1. Client notifies the user.
 2. Use case ends.
@@ -363,10 +363,10 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the user.
 2. Use case ends.
 
-#### UC.Client.P.04 — Re-encrypt existing CDOC2 container for long-term storage
+#### UC.Client.P.04 — Re-encrypt existing CDOC2 Container for long-term storage
 
 **Use Case Context**
-: CDOC2 Client Application offers Recipient to re-encrypt all files after CDOC2 container decryption and before extracting and saving files locally.
+: CDOC2 Client Application offers Recipient to re-encrypt all files after CDOC2 Container decryption and before extracting and saving files locally.
 
 **Scope**
 : CDOC2 Client Application (Client)
@@ -379,22 +379,22 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 
 **Preconditions**
 
-* CDOC2 container was just decrypted.
+* CDOC2 Container was just decrypted.
 
 **Success Guarantees**
 
 * Files are re-encrypted.
-* The re-encrypted container is saved locally.
+* The re-encrypted Container is saved locally.
 
 **Main Success Scenario**
 
-1. Client suggests Recipient to re-encrypt the decrypted container contents and displays multiple options for encryption.
+1. Client suggests Recipient to re-encrypt the decrypted Container contents and displays multiple options for encryption.
 2. Recipient chooses to re-encrypt and chooses to encrypt with a password.
 3. Client asks Recipient to specify the target name and path.
 4. Recipient specifies a target name and path in local file system.
 5. Recipient enters a password to be used for password-based cryptography.
 6. Client verifies that the password satisfies minimal requirements.
-7. Client adds the files to an archive and creates a new CDOC2 container, which it saves to the target location.
+7. Client adds the files to an archive and creates a new CDOC2 Container, which it saves to the target location.
 8. Client notifies the Recipient.
 
 **Extensions**
@@ -424,7 +424,7 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 #### UC.Client.03 — Encrypt CDOC2 container using key shares
 
 **Use Case Context**
-: CDOC2 Client Application adds Sender's chosen files into the CDOC2 container and encrypts the container with CEK. CEK is encrypted with KEK. KEK is generated by Sender's Client and then divided into Key Shares. Each share is uploaded to different CDOC2 Shares Server.
+: CDOC2 Client Application adds Sender's chosen files into the CDOC2 Container and encrypts the Container with CEK. The CEK is encrypted with a KEK. The KEK is generated by a Sender's Client and then divided into Key Shares. Each share is uploaded to different CDOC2 Shares Server.
 
 **Scope**
 : CDOC2 Client Application (Client)
@@ -437,29 +437,29 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 
 **Success Guarantees**
 
-* CDOC2 container is saved into file system.
+* CDOC2 Container is saved into file system.
 * For each server capsule a share is sent to each CDOC2 Shares Server.
 * Client has received a share identifier for each Key Share.
 
 **Main Success Scenario**
 
-1. Sender chooses files to be included in CDOC2 container and specifies the target filename and path for CDOC2 container.
+1. Sender chooses files to be included in CDOC2 Container and specifies the target filename and path for CDOC2 Container.
 2. Sender enters identifiers for each Recipient.
 3. Client creates a capsule for each Recipient.
 4. Client splits the capsules by creating a share for each CSS.
 5. Client creates a TLS-connection with each CSS and receives the server certificates.
 6. Client verifies the server certificates against the configuration.
 7. Client forwards a share per Recipient together with their natural person identifier to each of the CDOC2 Shares Servers. Client receives a share identifier for each Key Share.
-8. Client creates a container into file system in the chosen target path and adds a header.
+8. Client creates a Container into the file system in the chosen target path and adds a header.
 9. Client verifies that the header does not exceed the size limit defined by the specification.
-10. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the container as payload.
-11. Client saves the CDOC2 container and displays Sender a notification.
+10. Client verifies technical file correctness and file name safety rules according to the specification. Client creates an archive, compresses it, encrypts the compressed archive with CEK and adds it to the Container as payload.
+11. Client saves the CDOC2 Container and displays a notification to the Sender.
 
 **Extensions**
 
 1a. Sender chose to encrypt from the Windows Explorer / MacOS Finder / Linux folder explorer context dialog: "Encrypt with eID":
 
-1. Client asks Sender for the container target name and path.
+1. Client asks Sender for the Container target name and path.
 2. Sender specifies the target name and path.
 3. Use case continues from step 2.
 
@@ -506,10 +506,10 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 1. Client displays Sender a notification.
 2. Use case ends.
 
-#### UC.Client.04 — Decrypt CDOC2 container using multiserver authentication
+#### UC.Client.04 — Decrypt CDOC2 Container using multiserver authentication
 
 **Use Case Context**
-: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 container provided by Recipient, using the key material constructed from Key Shares obtained from multiple CDOC2 Shares Servers.
+: CDOC2 Client Application (Client) decrypts the archive in the CDOC2 Container provided by Recipient, using the key material constructed from Key Shares obtained from multiple CDOC2 Shares Servers.
 
 **Scope**
 CDOC2 Client Application
@@ -522,23 +522,23 @@ CDOC2 Client Application
 
 **Preconditions**
 
-* The CDOC2 container has been encrypted using Key Shares and supports authentication-based decryption.
+* The CDOC2 Container has been encrypted using Key Shares and supports authentication-based decryption.
 
 **Success Guarantees**
 
-* Files from the CDOC2 container are decrypted.
+* Files from the CDOC2 Container are decrypted.
 
 **Main Success Scenario (Smart-ID, Client doesn’t have a session)**
 
 1. Recipient starts the Client and chooses the CDOC2 Container to be decrypted.
 
-2. Client displays the container information, the list of Recipients who can decrypt this container, along with buttons to select the eID means for decryption.
+2. Client displays the Container information, the list of Recipients who can decrypt this Container, along with buttons to select the eID means for decryption.
 
-3. Recipient chooses to decrypt the container with a specific eID means.
+3. Recipient chooses to decrypt the Container with a specific eID means.
 
     3.1. Client verifies that this container uses encryption scheme SC07 and that, in order to send queries to CDOC2 backend infrastructures, a Session Token is required.
 
-    3.2. Client verifies that it doesn't have a valid Session Token for any of the users, who could decrypt this container.
+    3.2. Client verifies that it doesn't have a valid Session Token for any of the users, who could decrypt this Container.
 
 4. Recipient establishes a session between the Client and the CDOC2 backend infrastructure by authenticating with eID means:
 
@@ -566,12 +566,12 @@ CDOC2 Client Application
 
     4.8. Client creates a session in memory. The Session Token is only stored in RAM and up to 24 hours.
 
-5. Recipient authorises the decryption of the container with MID/SID authentication:
+5. Recipient authorises the decryption of the Container with MID/SID authentication:
     5.1. Client queries nonces from CSS servers and creates CDOC2 Authentication Token and computes the hash to be signed.
 
     5.2. Client sends decryption authorization request to cdoc2-RP component and receives a VC to be displayed to Recipient.
 
-    5.3. Client informs Recipient that container decryption is started and shows the VC to Recipient, with instructions to continue on mobile app.
+    5.3. Client informs Recipient that Container decryption is started and shows the VC to Recipient, with instructions to continue on mobile app.
 
     5.4. Recipient performs Smart-ID authentication:
 
@@ -579,14 +579,14 @@ CDOC2 Client Application
 
     *  Recipient selects the correct VC.
 
-    *  Smart-ID app displays "**DigiDoc4**: 2345. Decrypting container "som……ing.cdoc2"" and asks for PIN1.
+    *  Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
 
     *  Recipient verifies the rpName and displayText and enters PIN1.
 
     5.5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
 
-6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the container and informs the Recipient that decryption is complete.
-7. Continues with UC.Client.P.04 - Re-encrypt existing CDOC2 container for long-term storage.
+6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
+7. Continues with UC.Client.P.04 - Re-encrypt existing CDOC2 Container for long-term storage.
 
 
 **Extensions**
@@ -622,12 +622,12 @@ CDOC2 Client Application
 
 6c. Client does not receive shares from each CSS because a share is missing or expired:
 
-1. Client displays user a notification that the container cannot be decrypted anymore.
+1. Client displays user a notification that the Container cannot be decrypted anymore.
 2. Use case ends.
 
 6d. Decryption or HMAC validation fails:
 
-1. Client displays user a notification that the container is corrupted.
+1. Client displays user a notification that the Container is corrupted.
 2. Use case ends.
 
 **Alternative Scenario (Smart-ID, Client already has authenticated session)**
@@ -642,22 +642,22 @@ This scenario can be used in case following assumptions are true:
 **Steps**
 
 1. Recipient switches to running Client app and chooses to open another CDOC2 Container to be decrypted.
-2. Client verifies that this container is using encryption scheme SC07 and in order to send queries to CDOC2 backend infrastructures, it needs a Session Token.
-3. Client verifies that it has a valid Session Token in memory and the Session Token is issued to Recipient, which is among list of Recipients, who can decrypt this container.
-4. Client displays the container information and list of Recipients who can decrypt this container and buttons to select the eID means for decryption.
-5. Recipient chooses to decrypt the container with specific eID means.
+2. Client verifies that this Container is using encryption scheme SC07 and in order to send queries to CDOC2 backend infrastructures, it needs a Session Token.
+3. Client verifies that it has a valid Session Token in memory and the Session Token is issued to Recipient, which is among list of Recipients, who can decrypt this Container.
+4. Client displays the Container information and list of Recipients who can decrypt this Container and buttons to select the eID means for decryption.
+5. Recipient chooses to decrypt the Container with specific eID means.
 6. Client queries nonces from CSS servers and creates CDOC2 Authentication Token and computes the hash to be signed.
 7. Client sends decryption authorization request to cdoc2-RP component and receives a VC to be displayed to Recipient.
-8. Client informs the user container decryption is in progress and shows VC to Recipient, with instructions to continue on mobile app.
+8. Client informs the user Container decryption is in progress and shows VC to Recipient, with instructions to continue on mobile app.
 
 **(Smart-ID)**
 
 9. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
 10. Recipient selects the correct VC.
-11. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting container "som……ing.cdoc2"" and asks for PIN1.
+11. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
 12. Recipient verifies the rpName and displayText and enters PIN1.
 13. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
-14. Client downloads shares from CSS servers, re-creates key capsule, decrypts the container and informs the Recipient that decryption is complete.
+14. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
 
 
 ## CDOC2 Server Use Case Model
@@ -669,7 +669,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 #### UC.KTS.01 Forward Capsules
 
 **Context of Use**
-: CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS). Server Capsules contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in a CDOC2 container. Server Capsule is saved with an expiration time and a unique transaction ID is created and returned to the CDOC2 Client Application.
+: CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS). Server Capsules contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in a CDOC2 Container. Server Capsule is saved with an expiration time and a unique transaction ID is created and returned to the CDOC2 Client Application.
 
 **Scope**
 CDOC2 Capsule Server (CCS)
@@ -719,7 +719,7 @@ CDOC2 Capsule Server (CCS)
 #### UC.KTS.02 Request Capsule
 
 **Context of Use**
-: CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server. Server Capsule contains an encrypted content encryption key, used for decrypting the archive in a CDOC2 container. The Server Capsule is identified by public key in Recipient certificate and the transaction identifier provided by CDOC2 Client Application.
+: CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server. Server Capsule contains an encrypted content encryption key, used for decrypting the archive in a CDOC2 Container. The Server Capsule is identified by public key in Recipient certificate and the transaction identifier provided by CDOC2 Client Application.
 
 **Scope**
 CDOC2 Capsule Server (CCS)
@@ -746,7 +746,7 @@ CDOC2 Capsule Server (CCS)
 4. CCS sends the Client the Capsule.
 
 **Extensions**
-2a. transaction identifier is too long:
+2a. Transaction identifier is too long:
 
 1. CCS returns Client an error message.
 2. Use case ends.
