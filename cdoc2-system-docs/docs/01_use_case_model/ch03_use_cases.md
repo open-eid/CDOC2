@@ -826,15 +826,15 @@ CDOC2 Capsule Server (CCS)
 1. CCS replies to the Client with an error message.
 2. Use case ends.
 
-## SiD / MiD
+## SiD/MiD
 ### Use cases with multiple CDOC2 Shares Servers holding shares of capsules
 
-These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSSs . Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
+These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSSs. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
 
 #### UC.KTS.06 Forward Capsule Shares
 
 **Context of Use**
-: CDOC2 Client Application forwards Key Shares of all Shares Capsules to CDOC2 Shares Servers (CSS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CSS servers. All the shares have to be combined in order to construct a capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Key Shares are saved, and a unique share identifier is created and returned to the CDOC2 Client Application from each CSS.
+: CDOC2 Client Application forwards Key Shares of all Shares Capsules to CDOC2 Shares Servers (CSS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CSS servers. All the shares have to be combined in order to construct a Capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Key Shares are saved, and a unique share identifier is created and returned to the CDOC2 Client Application from each CSS.
 
 **Scope**
 CDOC2 Shares Server (CSS)

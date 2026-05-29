@@ -29,8 +29,8 @@ The documentation is divided into five parts:
 * Use Cases: describes the functionality of the CDOC2 Client Application and the CDOC2 Capsule Server as use case models;
 * Protocol and Data Formats: defines the CDOC2 protocol, container format, capsule structures, and cryptographic operations;
 * System Architecture: defines system components, interfaces, and deployment structure;
-* Test Plan: describes the testing approach and test cases;
-* User Guides: practical guides for end users and integrators.
+* Testing Specification: describes the testing approach, test scenarios, and load testing methodology;
+* User Guides: practical guides for end users and integrators, including password strength guidelines and container storage recommendations.
 
  > **Note:** This document combines documentation for the Capsule Server and the Smart-ID/Mobile-ID (SiD/MiD) use cases, including the Shares Server and client authentication protocol. Sections marked with [SiD/MiD] apply exclusively to Smart-ID and Mobile-ID use cases.
 

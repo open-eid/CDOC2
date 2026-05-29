@@ -4,6 +4,9 @@ title: 3. CDOC2 system components
 
 # CDOC2 system components
 
+The CDOC2 system consists of the following components. Some components are only relevant
+in the SID/MID authentication context.
+
 ## CDOC2 reference Java library
 
 Implements client side functionality for CDOC2 system.
@@ -20,12 +23,13 @@ Shares Capsules are distributed between multiple CDOC2 Shares Server instances, 
 Instances run on independent premises.
 
 ## CDOC2 Authentication server (auth-server)
-Used in the SID/MID context to compose and issues a session token. The session token is an 
+
+Used in the **SID/MID** context to compose and issues a session token. The session token is an 
 SD-JWT structure that is included, along with its signing certificate, as a header in requests 
 to other components in the CDOC2 infrastructure.
 
 ## CDOC2 Relying party server (rp-server)
-Used in the SID/MID context to mediate and validate client requests to SID/MID relying party 
+Used in the **SID/MID** context to mediate and validate client requests to SID/MID relying party 
 services. Validation includes verifying the session token provided by the client.
 
 ## CDOC2 CLI user application
@@ -56,6 +60,8 @@ For full CSS OpenAPI specification, see Appendix E in [protocol and cryptography
 
 ## CDOC2 Auth Server interface
 
+This interface is only used in the **SID/MID** context.
+
 * `/auth/start` Start a SID/MID authentication process. Returns a UUID for polling.
 * `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
 * `/.well-known/jwks.jws` Returns the Auth Server's public signing keys (JWK format).
@@ -63,6 +69,8 @@ For full CSS OpenAPI specification, see Appendix E in [protocol and cryptography
 For full Auth Server OpenAPI specification, see [Appendix F](../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server.md).
 
 ## CDOC2 RP Server interface
+
+This interface is only used in the **SID/MID** context.
 
 * `/session-nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
