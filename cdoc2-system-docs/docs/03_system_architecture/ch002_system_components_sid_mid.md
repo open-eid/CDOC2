@@ -6,41 +6,41 @@ title: 3. CDOC2 system components - SID/MID
 
 This page describes the system components relevant to the Smart-ID/Mobile-ID context. For the Hardware Token/Capsule Server context, see [Hardware Token/Capsule Server](ch02_system_components.md).
 
-# Shared Components
+## Shared Components
 
-## CDOC2 reference Java library
+### CDOC2 reference Java library
 
 Implements client side functionality for CDOC2 system. Used by both the Hardware Token/Capsule Server and SID/MID contexts.
 
-# SID/MID Components
+## SID/MID Components
 
-## CDOC2 Capsule Server (CCS)
+### CDOC2 Capsule Server (CCS)
 
 Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
 key material upload/download. 
 
-## CDOC2 Shares Server (CSS) 
+### CDOC2 Shares Server (CSS) 
 
 Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipient has to authenticate with the CSSs in order to download the shares contained in a Shares Capsule.
 Shares Capsules are distributed between multiple CDOC2 Shares Server instances, so that compromising one server doesn't expose key material.
 Instances run on independent premises.
 
-## CDOC2 Authentication server (auth-server)
+### CDOC2 Authentication server (auth-server)
 
 The Session Token is an SD-JWT structure that is included, along with its signing certificate, as a header in requests 
 to other components in the CDOC2 infrastructure.
 
-## CDOC2 Relying party server (rp-server)
+### CDOC2 Relying party server (rp-server)
 Used to mediate and validate client requests to SID/MID relying party 
 services. Validation includes verifying the session token provided by the client.
 
-## CDOC2 CLI user application
+### CDOC2 CLI user application
 
 Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.
 
-# Interfaces between system components
+## Interfaces between system components
 
-## CDOC2 Capsule Server (CCS) interface
+### CDOC2 Capsule Server (CCS) interface
 
 CSS interface provides the following endpoints:
 
@@ -49,7 +49,7 @@ CSS interface provides the following endpoints:
 
 For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules.md).
 
-## CDOC2 Shares Server (CSS) interface
+### CDOC2 Shares Server (CSS) interface
 
 * `/key-shares/{shareId}` Get key share for share identifier. Used by recipient to request a key share.
 * `/key-shares` Upload a key share and receive a share identifier. Used by sender to upload key share.
@@ -60,7 +60,7 @@ For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_pro
 
 For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares.md).
 
-## CDOC2 Auth Server interface
+### CDOC2 Auth Server interface
 
 * `/auth/start` Start a SID/MID authentication process. Returns a UUID for polling.
 * `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
@@ -68,7 +68,7 @@ For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_
 
 For full Auth Server OpenAPI specification, see [Authentication Server API Reference](../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server.md).
 
-## CDOC2 RP Server interface
+### CDOC2 RP Server interface
 
 * `/session-nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
