@@ -1,7 +1,9 @@
 title: "System Architecture"
 nav:
-    - 'System Context': ch01_system_context.md
-    - 'System Components': ch02_system_components.md
+    - 'System Context - Hardware Token/Capsule Server': ch01_system_context.md
+    - 'System Context - SID/MID': ch001_system_context_sid_mid.md
+    - 'System Components - Hardware Token/Capsule Server': ch02_system_components.md
+    - 'System Components - SID/MID': ch002_system_components_sid_mid.md
     - 'External Interfaces': ch03_external_interfaces.md
     - 'Capsule Server': ch04_capsule_server.md
     - SiD/MiD only:
