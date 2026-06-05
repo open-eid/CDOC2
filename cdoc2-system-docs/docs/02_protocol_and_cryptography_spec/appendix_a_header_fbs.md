@@ -1,4 +1,4 @@
-# Appendix A: header.fbs
+# Header FlatBuffers Schema
 
     include "recipients.fbs";
 

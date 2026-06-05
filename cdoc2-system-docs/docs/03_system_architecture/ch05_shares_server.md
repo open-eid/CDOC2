@@ -2,9 +2,12 @@
 title: CDOC2 CSS
 ---
 
+
 # CDOC2 CSS
 
 This section defines the CDOC2 Shares Server (CSS), what interfaces it provides to other system components, and rules of use.
+
+> **Note:** This section applies to SiD/MiD only.
 
 ## Introduction
 
@@ -24,7 +27,7 @@ In the simplest case, the CSS operates as follows.
 4. The sender adds the selected servers' identifiers, share identifiers, and recipient identifier to the container.
 5. The sender transmits the container to the recipient.
 6. The recipient finds information concerning the Shares Capsule generated for them in the container.
-7. The recipient connects to each CSS server chosen by the sender and authenticates with the servers (by signing authentication tokens).
+7. The recipient connects to each CSS server chosen by the sender and authenticates with the servers (by signing authentication tokens). This requires first obtaining a session token from the CDOC2 Auth Server and then signing the authentication token via the CDOC2 RP Server.
 8. The recipient transmits the share identifiers found in the container to the servers.
 9. Each CSS server looks up the Key Share based on the share identifier and the recipient identifier established during authentication.
 10. Each server returns the Key Share to the recipient.
@@ -148,6 +151,8 @@ This list may be expanded in future versions of the specification. Various authe
 In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``.
 
 The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch06_ID_authentication_protocol.md).
+
+The recipient uses the CDOC2 Auth Server to obtain a session token and the CDOC2 RP Server to perform signing operations. See [system components](ch02_system_components.md) for details of these servers.
 
 The two following `recipient_id` naming patters are supported:
 

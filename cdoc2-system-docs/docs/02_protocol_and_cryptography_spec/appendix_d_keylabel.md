@@ -1,4 +1,4 @@
-# Appendix D: KeyLabel field specification
+# KeyLabel field specification
 
 `KeyLabel` field specification lists the following fields.
 

@@ -1,3 +1,4 @@
-title: "Test Plan"
+title: "Testing Specification"
 nav:
-    - 'Capsule Server Test Plan': test_plan.md
+
+    - 'Capsule Server Test Specification': test_plan.md

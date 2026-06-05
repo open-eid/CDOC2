@@ -1,11 +1,13 @@
-# Appendix F: Authentication server API, version 0.9.0-draft of cdoc2-auth-server API
+# Authentication Server API Reference
+
+> **Note:** This section applies to SiD/MiD only.
 
     openapi: 3.1.0
     info:
       contact:
         url: http://ria.ee
       title: cdoc2-auth-server
-      version: 0.9.0-draft
+      version: 0.9.1-draft
       description: |
         API for the session creation process for MID/SID CDOC
     
@@ -59,7 +61,7 @@
               schema:
                 type: string
                 minLength: 18
-                maxLength: 34
+                maxLength: 36
               required: true
           responses:
             '200':

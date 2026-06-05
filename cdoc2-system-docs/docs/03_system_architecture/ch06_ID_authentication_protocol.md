@@ -6,6 +6,8 @@ title: Client authentication protocol
 
 This section describes a protocol and data formats for authenticating to multiple CSS servers (cdoc2-shares-servers) in order to download every `KeySharesCapsule` from them.
 
+> **Note:** This section applies to SiD/MiD only.
+
 ## Authentication protocol requirements
 
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
@@ -29,9 +31,7 @@ Therefore, introducing additional trusted components to the CDOC2 ecosystem is n
 
 In the generalized form, the authentication protocol to access Capsule information at CSS servers, can be explained with the following sequence diagrams below.
 
-In following sections, we describe what kind of data is used as the authentication data, how signing function of eID means is used and how only a minimal set of authentication data is revealed to each CSS server, in order to prevent replay.
-
-### Generating the SD-JWT session token
+This is just an abstract overview of the authentication protocol. In following sections, we describe what kind of data is used as the authentication data, how signing function of eID means is used and how only a minimal set of authentication data is revealed to each CSS server, in order to prevent replay.
 
 ```plantuml
 @startuml
@@ -47,14 +47,18 @@ participant "CDOC2 Client" as CLIENT
 participant "CDOC2-Auth portal" as AUTH
 participant "CDOC2-RP portal" as CRP
 participant "CSS servers" as CSS
-participant "SiD API" as SID
+participant "MiD/SiD API" as SID
 
 User -> CLIENT : Decrypt this CDOC2 container
 CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
 
-User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
+alt SID
+  User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
+else MID
+  User -> CLIENT : Agree, start authentication with MiD \nprovide identification code and phone number
+end
 
-CLIENT -> AUTH : initiate SID\n authentication for user U
+CLIENT -> AUTH : initiate SiD/MiD\n authentication for user U
 
 loop for every CSS server
     AUTH -> CSS : generate session nonce
@@ -64,7 +68,7 @@ AUTH -> CRP : generate session nonce
 CRP --> AUTH: nonce
 AUTH -> AUTH : Generate rpChallenge
 AUTH -> AUTH : Calculate VC
-AUTH -> SID : Start SiD authentication
+AUTH -> SID : Start SiD/MiD authentication
 SID --> AUTH : SID/MID authentication session id
 AUTH -> AUTH : compose session_token SD-JWT
 
@@ -78,9 +82,12 @@ User -> SID : agree, PIN
 CLIENT -> AUTH : Get authentication process status
 AUTH -> SID : Get authentication process status
 SID --> AUTH : signature S
-AUTH -> AUTH : Add signature S to session_token SD-JWT
+alt SID
+    AUTH -> AUTH : Add signature S to session_token SD-JWT
+else MID
+    AUTH -> AUTH: Validate MID signature S
+end 
 AUTH -> AUTH : sign session_token SD-JWT with \nauthentication server private key
-AUTH -> AUTH : sign session_token SD-JWT
 AUTH --> CLIENT : issued session_token
 @enduml
 ```
@@ -100,7 +107,7 @@ actor User
 participant "CDOC2\nClient" as CLIENT
 participant "CDOC2-RP\n portal" as CRP
 participant "CSS\nservers" as CSS
-participant "MID/SID\nAPI" as SID
+participant "MiD/SiD\nAPI" as SID
 
 loop for every CSS server
     CLIENT -> CSS : present SD-JWT session_token,\nget nonces for shares
@@ -118,9 +125,9 @@ CLIENT -> CRP : present SD-JWT session_token \nget hash H signed by user U
 CRP -> CRP : Verify that I have issued\npresented challenge from session_token
 CRP -> CRP : Verify that session_token sub\nmatches with user U
 CRP -> CRP : Verify that session_token is signed\nby CDOC2-auth portal
-CRP -> SID : cdoc2_auth -> SID: create authentication signature of\nuser U on hash H
-SID --> CRP : SID/MID authentication session id
-CRP --> CLIENT : SID/MID authentication session id
+CRP -> SID : create authentication signature of\nuser U on hash H
+SID --> CRP : SiD/MiD authentication session id
+CRP --> CLIENT : SiD/MiD authentication session id
 CLIENT -> CLIENT : calculate the VC
 
 CLIENT -> User : Do you consent\n "Decrypt container 'something.cdoc'"?
@@ -132,17 +139,27 @@ loop poll for session status
   CLIENT -> CRP : Get authentication process status
   CRP -> SID : Get authentication process status
   SID --> CRP : signature S
+  alt MID
+    CRP -> CRP: Countersign the MiD signature with rp key
+  end
   CRP --> CLIENT : signature S
+  alt MID
+    CRP --> CLIENT : RFC9421 HTTP signature headers
+  end
 end
 
 CLIENT -> CLIENT : create CDOC2 auth token with the signature S
 
 loop for every CSS server
-    CLIENT -> CSS : present CDOC2 auth token
+    alt SID
+        CLIENT -> CSS : present CDOC2 auth token and RPv3 signature parameters
+    else MID
+        CLIENT -> CSS : present CDOC2 auth token and HTTP signature headers
+    end
     CSS -> CSS : Verify that I have issued\npresented nonce from CDOC2 auth token
     CSS -> CSS : Verify that iss matches\nwith user U
     CSS -> CSS : Verify that authentication signature is\ncreated by CDOC2-RP and details match
-    CSS -> CSS : Verify that MID/SID signature\ncreated by user U is valid and matches iss
+    CSS -> CSS : Verify that MiD/SiD signature\ncreated by user U is valid and matches iss
     CSS --> CLIENT : return share
 end
 
@@ -284,18 +301,19 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
    }
    ```
 
-   The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using. For example, Smart-ID produces signatures with RS256 algorithm.
+   The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using:
+   - Mobile-ID uses `ES256` (ECDSA with SHA-256).
+   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`.
 
-2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. Example is provided here. Note that the `aud` claim contains only empty array at the moment.
+2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. The `iss` claim is added directly to the payload. The `aud` claim is added as a selectively disclosable claim via the `_sd` mechanism and is therefore not present as a plain claim in the base payload.
 
    ```json
    {
-     "aud": [],
      "iss": "etsi/PNOEE-48010010101"
    }
    ```
 
-3. Client adds disclosable JSON strings to the array `aud` for each CSS server. For example, the `aud` claim may contain following StringOrURI values:
+3. Client creates disclosable entries for the `aud` claim for each CSS server. Each entry is a URL string identifying the specific key share and nonce. These entries are stored as selectively disclosable array elements — only their digest hashes are placed in the `_sd` structure of the JWT payload. For example, the `aud` claim values are:
 
    ```json
    [
@@ -322,7 +340,7 @@ where `<Issuer-signed JWT>` contains following elements (separated by "."):
 <SD-JWT header>.<SD-JWT payload>.<Issuer signature>
 ```
 
-Actual SD-JWT in compact representation looks something like that:
+Actual SD-JWT in compact representation looks something like that (the example below is for illustrative purposes; actual Base64url values will differ):
 
 ```text
 eyJhbGciOiAiRVMyNTYiLCAidHlwIjogImV4YW1wbGUrc2Qtand0IiwgIng1YyI6ICJNSUlDOFRDQ0FkbWdBLi4uVnQ1NDMyR0E9PSJ9.eyJfc2QiOiBbIjFTVGpGbEJINmptRjI3MElmeTJTdFhuTXpaMlREcklLSlg1Qnk2NWd2LTQiXSwgImlhdCI6ICIxNzE1Njk0MjUzIiwgImV4cCI6ICIxNzE1Njk0MjYzIiwgIl9zZF9hbGciOiAic2hhLTI1NiJ9.0EXb6QCwNL19ZWieDHDWZsm2W_bO2tCH8QBr1ftcTFh2t2P77qEimYjrattAHMah5FPAD3otdDARzh4DfWcuVg~WyJrLTRFYVpwQWctMTdRbk1mT3dNYk93IiwgInNoYXJlQWNjZXNzRGF0YSIsIFt7Ii4uLiI6ICJFRXNfNWVmWUN5WVNjaDB6ZTJKZ1VsV0VpSVhzcTZic1o4UXFBdnlqZXVNIn0sIHsiLi4uIjogIkZfLTZuc0RDT0NvSmNOS2ZhODdWZ0FNVFRzODdLRjN6WXlzbUpnQzF3ckUifV1d~WyJMUTN0eUxONHZVbDRFakR0ekdmRVFnIiwgeyJzZXJ2ZXJCYXNlVVJMIjogImh0dHBzOi8vY2RvYy1jY3MucmlhLmVlOjQ0My9rZXktc2hhcmVzLyIsICJzaGFyZUlkIjogIjlFRTkwRjJELUQ5NDYtNEQ1NC05QzNELUY0QzY4RjdGRkFFMyIsICJzZXJ2ZXJOb25jZSI6ICI0MiJ9XQ~
@@ -335,7 +353,7 @@ if we decode the individual parts, we get following data items:
    ```json
    {
        "alg": "ES256",
-       "typ": "vnd.cdoc2.auth-token.v1+sd-jwt",
+       "typ": "vnd.cdoc2.auth-token.v1+sd-jwt"
    }
    ```
 
@@ -343,6 +361,7 @@ if we decode the individual parts, we get following data items:
 
    ```json
    {
+       "iss": "etsi/PNOEE-48010010101",
        "_sd": [
            "1STjFlBH6jmF270Ify2StXnMzZ2TDrIKJX5By65gv-4"
        ],
@@ -356,37 +375,38 @@ if we decode the individual parts, we get following data items:
    0EXb6QCwNL19ZWieDHDWZsm2W_bO2tCH8QBr1ftcTFh2t2P77qEimYjrattAHMah5FPAD3otdDARzh4DfWcuVg
    ```
 
-4. Salt/Value Container with salts and hashes:
+4. Disclosure for the selectively disclosable `aud` claim (outer disclosure), containing digests of the individual array element disclosures:
 
    ```json
    [
        "k-4EaZpAg-17QnMfOwMbOw",
        "aud",
        [
-           ...
+           {"...": "EEs_5efYCyYSch0ze2JgUlWEiIXsq6bsZ8QqAvyjeuM"},
+           {"...": "F_-6nsDCOCoJcNKfa87VgAMTTs87KF3zYysmJgC1wrE"}
        ]
    ]
    ```
 
-5. Disclosures:
+5. Disclosure for a single `aud` array element (one per CSS server, only the relevant one is included in each presentation):
 
-    ```json
-    [
-        "LQ3tyLN4vUl4EjDtzGfEQg",
-        {
-            ...
-        }
-    ]
-    ```
+   ```json
+   [
+       "LQ3tyLN4vUl4EjDtzGfEQg",
+       "https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6"
+   ]
+   ```
 
 ### Verifying SD-JWT (verifying authentication ticket)
 
-CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~`) and performs following authentication and authorization checks:
+CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~`) and performs following authentication and authorization checks:
 
-1. Verify that SD-JWT is signed by the key pair, whose public key is included in the X.509 certificate, which is transmitted in the API method "GET /key-shares/{shareId}" parameter "x-cdoc2-auth-x5c".
+1. Verify that SD-JWT is signed by the key pair, whose public key is included in the X.509 certificate, which is transmitted in the API method "GET /key-shares/{shareId}" parameter "x-cdoc2-auth-x5c". The verification method depends on the signing means used:
+   - For **Mobile-ID** (ES256 algorithm): verify the JWT signature using the EC public key from the certificate, and additionally verify the RP counter-signature transmitted in the HTTP request headers.
+   - For **Smart-ID RP API v3** (RSASSA-PSS+ACSP_V2 algorithm): verify the JWT signature and additionally verify the Smart-ID RP API v3 signature parameters transmitted alongside the auth token.
 2. Verify that certificate is issued by trustworthy CA.
 3. Verify that certificate is valid at current point of time and is not revoked.
-4. Verify that SD-JWT contains claim `aud`, which is an array, which contains exactly one JSON string.
+4. Verify that the disclosed `aud` claim is an array containing exactly one URL string.
 5. Parse `aud` value (it should be something like "<https://CSS.example-org1.ee:443/key-shares/9EE90F2D-D946-4D54-9C3D-F4C68F7FFAE3?nonce=59b314d4815f21f73a0b9168cecbd5773cc694b6>") into components `serverBaseURL`, `shareId` and `nonce`.
 6. Verify that `serverBaseURL` is correct for this CSS server.
 7. Verify that this CSS server has a Capsule with identifier `shareId`, and it is not deleted.
@@ -394,6 +414,56 @@ CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosur
 9. Verify that `recipient_id` from the `KeySharesCapsule` matches with the `subjectDN` from the X.509 certificate from API parameter "x-cdoc2-auth-x5c".
 
 If all checks are positive, then the authentication and access control decision is positive, and CSS server can return the capsule.
+
+## Session Token based CDOC2 authentication protocol
+
+Before authenticating to CSS servers (cdoc2-shares-servers), a valid session token is needed. Session token is valid up to 24 hours.
+
+Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens — 
+which are signed directly by the user's eID means — session tokens are signed by the 
+Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the 
+session token as a claim, along with the parameters needed to verify it.
+
+### Session Token structure
+
+Session token header:
+
+```json
+{
+    "kid": "<auth-server-key-id>",
+    "typ": "vnd.cdoc2.session-token.v2+sd-jwt",
+    "alg": "ES256"
+}
+```
+
+Session token payload includes:
+
+- `iss`: Authentication Server URL (e.g., `"https://cdoc2-auth-server.ee"`)
+- `sub`: User's ETSI identifier (e.g., `"etsi/PNOEE-48010010101"`)
+- `iat` / `exp`: Issuance and expiry timestamps
+- `_sd` / `_sd_alg`: Selectively disclosable `aud` claim (same URL format as in auth tokens)
+
+Additionally for SID RPv3 authentication:
+- `signatureProtocol`: RPv3 signature protocol
+- `rpChallenge`: Relying party challenge value
+- `interactionsDigest`: SHA-256 digest of the serialized interactions object
+- `interactionTypeUsed`: Actual interaction that was used to create the signature
+- `rpName`: Auth server relying party name
+- `schemeName`: Name of scheme that was used to create the signature (e.g., `smart-id`)
+- `signature`: Embedded user eID signature with algorithm parameters.
+
+### Verifying Session Token
+
+CSS server receives the session token presentation and performs the following checks:
+
+1. Verify that the session token is signed by the Authentication Server, using the key identified by the `kid` header parameter.
+2. Verify that the token type header is `vnd.cdoc2.session-token.v2+sd-jwt`.
+3. Verify that `iat` is not in the future and `exp` is not in the past.
+4. Verify that `sub` matches the identity from the signing certificate.
+5. Verify the embedded user eID signature in the `signature` claim using the appropriate method:
+   - For **Smart-ID RP API v3**: verify using RSASSA-PSS+ACSP_V2 algorithm and the provided SID signature parameters.
+   - For **Mobile-ID**: verify using the EC public key from the user's certificate and the provided MID signature parameters.
+6. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
 
 ## Security of the protocol
 
@@ -472,10 +542,10 @@ Following authentication means have this potential weakness:
 2. Mobile-ID REST API
 3. Smart-ID RP-API v2
 
-Following authentication means or APIs (some of them are in development) do not have this weakness:
+Following authentication means or APIs do not have this weakness:
 
 1. ID-card when used via web-eID JS interface
-2. Smart-ID RP-API v3
+2. Smart-ID RP-API v3 (supported in CDOC2 via the RSASSA-PSS+ACSP_V2 signature verification)
 
 In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
 

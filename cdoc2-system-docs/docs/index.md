@@ -4,76 +4,37 @@ title: Introduction
 
 # Introduction
 
-This is documentation for the CDOC2 System and includes analysis, protocol and format specification, architecture documentation.
+This is the technical documentation for the CDOC2 System - a secure file encryption and transmission system built on top of the Estonian eID ecosystem. The document covers analysis, protocol and format specification, and architecture documentation.
 
-## Goal
+CDOC2 is the successor to CDOC 1.0 (XML-ENC based formats).  It addresses limitations of CDOC 1.0 by introducing a modern cryptographic architecture, a clear distinction between transport and storage encryption, and support for mobile eID authentication methods (Smart-ID and Mobile-ID) in addition to hardware security tokens.
 
-This documentation aims to describe the CDOC2 System.
 
 ## Document scope
 
-The specification describes:
+This documentation describes:
 
-* Supported encryption schemes.
-* Abstract and serialized data format.
-* Details of cryptographic operations.
-* Use of a CDOC2 capsule server and CDOC2 shares servers.
+* Supported encryption schemes (hardware security tokens, Smart-ID, Mobile-ID);
+* Abstract and serialized CDOC2 Container and Capsule data formats;
+* Details of cryptographic operations (key derivation, ECDH, key wrapping, AEAD encryption);
+* Use of a CDOC2 capsule server (CCS) for server-side key management;
+* Use of the CDOC2 Shares Server (CSS) for threshold-based key share distribution.
+* Client authentication protocol and session management;
 * Implementation guidelines.
 
-## Terms and acronyms
 
-* `CDOC` - Crypto Digidoc, encrypted file transmission format used in the Estonian eID ecosystem
+## Document structure
 
-* `CDOC 1.0` - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
+The documentation is divided into five parts:
 
-* `CDOC2 System` - IT system, which allows users to send encrypted files to each other with the help of CDOC2 Client Applications and CDOC2 Capsule Servers
+* Use Cases: describes the functionality of the CDOC2 Client Application and the CDOC2 Capsule Server as use case models;
+* Protocol and Data Formats: defines the CDOC2 protocol, container format, capsule structures, and cryptographic operations;
+* System Architecture: defines system components, interfaces, and deployment structure;
+* Testing Specification: describes the testing approach, test scenarios, and load testing methodology;
+* User Guides: practical guides for end users and integrators, including password strength guidelines and container storage recommendations.
 
-* `CDOC2 Container` - File format for transmitting the encrypted payload and metadata information, <br/>including the capsule from Sender to Recipient
+ > **Note:** This document combines documentation for the Capsule Server and the Smart-ID/Mobile-ID (SiD/MiD) use cases, including the Shares Server and client authentication protocol. Sections marked with [SiD/MiD] apply exclusively to Smart-ID and Mobile-ID use cases.
 
-* `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule or a Container Capsule.
 
-* `Server Capsule` - A Capsule that is mediated by a CDOC2 Capsule Server.
-
-* `Container Capsule` - A Capsule that is created inside a CDOC2 container and is therefore not sent to a CDOC2 Capsule Server.
-
-* `Shares Capsule` - Encryption/decryption key material which is split into Key Shares in order to distribute it to multiple CSS servers.
-
-* `Key Share` - Key Shares are created by splitting cryptographic material required for encrypting/decrypting CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.
-
-* `CCS` - CDOC2 Capsule Server, which mediates CDOC2 Server Capsules between Sender and Recipient.
-
-* `CSS` - CDOC2 Shares Server, which mediates Key Shares between Sender and Recipient.
-
-* `SID/MID proxy` - Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
-
-* `hardware security token` - Smart-card (for example Estonian eID ID-card) or FIDO authenticator with asymmetric cryptographic keys
-
-* `ECDH` - Elliptic-curve Diffie–Hellman. Key-agreement protocol that allows two parties, each having an EC public–private key pair, to establish a shared secret over an insecure channel.
-
-* `AEAD` - Authenticated Encryption with Additional Data
-
-* `ECC` - Elliptic-Curve Cryptography
-
-* `ECC DH` - Elliptic-Curve Cryptography Diffie Hellman key-establishment algorithm
-
-* `ECC CDH` - Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm
-
-* `HMAC` - Hash-Based Message Authentication Code. Protects integrity of CDOC2 Container.
-
-<!--- acronyms about various keys -->
-
-* `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
-
-* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Container to Recipient.
-
-* `FMK` - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
-
-* `CC` - CDOC2 Capsule. Data structure inside CDOC2 Container. CC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
-
-* `HHK` - Header HMAC Key
-
-## Short overview
-
-The document is divided into five parts – the first part describes the functionality of the CDOC 2.0 Client Application and the CDOC2 Capsule Server as use case models. The second part defines the CDOC2 protocol and data formats. The third, respectively, defines the system architecture in terms of system components and interfaces. Following those parts is a test plan. The final part of the document is various user guides.
 
 ![Funding](img/cofunding_logo.jpg)
+ 

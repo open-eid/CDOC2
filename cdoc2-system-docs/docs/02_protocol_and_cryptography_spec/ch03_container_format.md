@@ -4,7 +4,7 @@ title: 2. CDOC2 container format
 
 # CDOC2 container format
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
 described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).
 
 ## Abstracted format
@@ -31,7 +31,7 @@ Header structure is described with the help of pseudocode that is based on no sp
 
 The header consists of one or several structures describing a Recipient. Each Recipient structure contains complete information on how the specific Recipient can access the FMK (for identification, access to personal encrypted materials, etc.).
 
-A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
+A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the Sender, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
 
 ```c
 Header = {
@@ -94,18 +94,18 @@ The ``Recipient`` structure consists of a capsule, a Recipient key label, an enc
 
 - ``Capsule`` – encryption method specific data that the Recipient can use to decrypt the FMK.
 - ``EncryptedFMK`` – encrypted FMK.
-- ``FMKEncryptionMethod`` –FMK encryption method type.
+- ``FMKEncryptionMethod`` – FMK encryption method type.
 - ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 
-Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
+Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See  [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption) on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
 
-- ``ECCPublicKeyCapsule`` – the Recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-direct-encryption-scheme-for-recipient-with-ec-keys).
-- ``RSAPublicKeyCapsule`` – the Recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.03 encryption method](ch02_encryption_schemes.md#sc03-capsule-server-scheme-for-recipients-with-ec-keys).
-- ``KeyServerCapsule`` – the Recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the Recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.02](ch02_encryption_schemes.md#sc02-direct-encryption-scheme-for-recipient-with-rsa-keys) and [SC.04](ch02_encryption_schemes.md#sc04-capsule-server-scheme-for-recipients-with-rsa-keys) encryption methods.
+- ``ECCPublicKeyCapsule`` – the Recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-encryption-scheme-for-recipients-with-ec-key-pair).
+- ``RSAPublicKeyCapsule`` – the Recipient is identified by RSA public key ``RecipientPublicKey``. The KEK is derived by decrypting the capsule using the RSA private key. Used in the [SC.02 encryption method](ch02_encryption_schemes.md#sc02-encryption-scheme-for-recipients-with-rsa-key-pair).
+- ``KeyServerCapsule`` – the Recipient is identified by ECC or RSA public key ``RecipientPublicKey``, used by the Recipient for authentication on a Capsule Server. The Capsule Server returns an ``ECCPublicKeyCapsule`` or a ``RSAPublicKeyCapsule`` used as described above. Used in the  [SC.03](ch02_encryption_schemes.md#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs) and [SC.04](ch02_encryption_schemes.md#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs) encryption methods.
 - ``PBKDF2Capsule`` - used for password-based encryption. PBKDF2 stands for Password-Based Key Derivation Function 2, a widely adopted standard defined in RFC 2898. It enhances the security of hashed passwords by using salts and by applying many iterations of the hashing process. The capsule type is used in the [SC.06 encryption method](ch02_encryption_schemes.md#sc06-direct-encryption-scheme-with-pre-shared-passwords).
 - ``KeySharesCapsule`` - Key Shares capsule type is used for secret sharing of the Recipient's key. It only stores the URL or the Shares Server and the share identifier. Recipient has to authenticate with the Shares Servers in order to retrieve the Key Shares. Used in the [SC.07 encryption method](ch02_encryption_schemes.md#encryption-schemes-with-secret-sharing).
-- ``SymmetricKeyCapsule`` – the Recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-direct-encryption-scheme-for-recipient-with-pre-shared-symmetric-key).
+- ``SymmetricKeyCapsule`` – the Recipient is identified by key label ``KeyLabel``. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the [SC.05 encryption method](ch02_encryption_schemes.md#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret).
 
 ```plantuml
 @startyaml
@@ -175,8 +175,7 @@ The `mediatype` can be omitted and is application/x-www-form-urlencoded if not s
 
 Examples:
 
-- Smart-ID/Mobile-ID - ETSI semantics identifier formatted as PNO=etsi/{identifier} e.g. "etsi/PNOEE-48010010101", where PNO means personal number issued by a national authority and {identifier} is replaced by the Recipient's identifier.
-Example: type=auth&sn=ETSI%3APNOEE-48010010101
+- Smart-ID/Mobile-ID - ETSI semantics identifier formatted as PNO=etsi/{identifier} e.g. "etsi/PNOEE-48010010101", where PNO means personal number issued by a national authority and {identifier} is replaced by the Recipient's identifier. Example: type=auth&sn=ETSI%3APNOEE-48010010101
 - Password, with an integrated password manager - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.
 - Symmetric key - KM=bitwarden&VAULT=CDOC2&KEY_ID=HELLO.CDOC2&FILE=~/folder/secret.pem&USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.
 - Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
@@ -380,7 +379,7 @@ Recipient identification methods corresponding to each encryption method are des
 
 KEK computation is described in section [Descriptions of header elements and KEK computation](ch05_cryptographic_details.md#descriptions-of-header-elements-and-kek-computation). Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class ``crypto.KekTools``.
 
-FMK decryption is described in section [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption),  ``crypto.Crypto.xor()``.
+FMK decryption is described in section [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption), ``crypto.Crypto.xor()``.
 
 HHK derivation procedure is described in section [Key derivation](ch05_cryptographic_details.md#key-derivation), ``crypto.Crypto.deriveHeaderHmacKey()``.
 
