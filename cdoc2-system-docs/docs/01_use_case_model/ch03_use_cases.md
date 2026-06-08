@@ -13,7 +13,6 @@ Use cases specified here are written in a generic form, so that they are applica
 
 > **Note:** Sections marked with SiD/MiD only apply exclusively to Smart-ID and Mobile-ID use cases.
 
-
 ## Actors
 
 ### Human actors
@@ -551,13 +550,13 @@ CDOC2 Client Application
 
     4.5. Recipient performs Smart-ID authentication:
 
-    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
 
-    *  Recipient selects the correct VC.
+    * Recipient selects the correct VC.
 
-    *  Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
+    * Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
 
-    *  Recipient verifies the rpName and displayText and enters PIN1.
+    * Recipient verifies the rpName and displayText and enters PIN1.
 
     4.6. Client has been periodically polling cdoc2-auth portal and has received information, that authentication has been successful.
 
@@ -574,19 +573,18 @@ CDOC2 Client Application
 
     5.4. Recipient performs Smart-ID authentication:
 
-    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
 
-    *  Recipient selects the correct VC.
+    * Recipient selects the correct VC.
 
-    *  Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
+    * Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
 
-    *  Recipient verifies the rpName and displayText and enters PIN1.
+    * Recipient verifies the rpName and displayText and enters PIN1.
 
     5.5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
 
 6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
 7. Continues with UC.Client.P.04 - Re-encrypt existing CDOC2 Container for long-term storage.
-
 
 **Extensions**
 2a. Header size is larger than allowed by the specification:
@@ -651,13 +649,12 @@ This scenario can be used in case following assumptions are true:
 
 **(Smart-ID)**
 
-9. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
-10. Recipient selects the correct VC.
-11. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
-12. Recipient verifies the rpName and displayText and enters PIN1.
-13. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
-14. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
-
+1. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+2. Recipient selects the correct VC.
+3. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
+4. Recipient verifies the rpName and displayText and enters PIN1.
+5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
+6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
 
 ## Use cases where CDOC2 Capsule Servers hold the whole Server Capsule
 

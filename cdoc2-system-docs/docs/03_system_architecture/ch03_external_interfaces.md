@@ -38,7 +38,6 @@ Relying Party API used by the CDOC2 RP Server to start and poll Mobile-ID authen
 
 * <https://github.com/SK-EID/MID>
 
-
 ### Smart-ID app
 
 Enables to authenticate and sign using Smart-ID. Installed on user smartphone.

@@ -58,10 +58,10 @@ Recipient -> Recipient: decrypt Container
 8. The Recipient queries nonce from CCS.
 9. CCS returns nonce.
 10. Recipient uses eID means to authenticate to CCS.
-12. Recipient authenticates to CCS and queries capsule.
-13. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
-14. CCS returns Capsule to Recipient.
-15. Recipient uses the information found in Capsule for decrypting Container.
+11. Recipient authenticates to CCS and queries capsule.
+12. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
+13. CCS returns Capsule to Recipient.
+14. Recipient uses the information found in Capsule for decrypting Container.
 
 ## Server state
 
@@ -134,6 +134,7 @@ This version of the specification defines a single CCS-based Capsule type:
 - ``KeyServerCapsule`` -- public key based authentication and access control
 
 The specification also defines a CCS-based Capsule type:
+
 - ``KeySharesCapsule`` -- authentication and access control based on ETSI semantics identifier (national identity code) or private company issuer identifier.
 
 This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.

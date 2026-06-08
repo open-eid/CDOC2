@@ -26,7 +26,7 @@ Primary components:
 
 ## External Systems
 
-The CDOC2 system depends on the following external components and services. 
+The CDOC2 system depends on the following external components and services.
 
 1. OCSP servers (SK ID Solutions, Zetes), which provide certificate validity checking for ID-card certificates.
 2. LDAP servers (SK ID Solutions, Zetes), which are used by CDOC2 client applications to search for Recipient certificates.

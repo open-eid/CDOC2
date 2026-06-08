@@ -28,8 +28,8 @@ Primary components:
 
 ## External Systems
 
-The CDOC2 system depends on the following external components and services. 
-See [External Interfaces](ch03_external_interfaces.md) for API details and endpoints. 
+The CDOC2 system depends on the following external components and services.
+See [External Interfaces](ch03_external_interfaces.md) for API details and endpoints.
 
 1. Smart-ID RP API (SK ID Solutions), which the CDOC2 RP Server connects to for Smart-ID authentication sessions using protocol ACSP_V2.
 2. Mobile-ID REST API (SK ID Solutions), which the CDOC2 RP Server connects to for Mobile-ID authentication sessions.

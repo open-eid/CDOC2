@@ -17,9 +17,9 @@ Implements client side functionality for CDOC2 system. Used by both the Hardware
 ### CDOC2 Capsule Server (CCS)
 
 Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download. 
+key material upload/download.
 
-### CDOC2 Shares Server (CSS) 
+### CDOC2 Shares Server (CSS)
 
 Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipient has to authenticate with the CSSs in order to download the shares contained in a Shares Capsule.
 Shares Capsules are distributed between multiple CDOC2 Shares Server instances, so that compromising one server doesn't expose key material.
@@ -27,11 +27,12 @@ Instances run on independent premises.
 
 ### CDOC2 Authentication server (auth-server)
 
-The Session Token is an SD-JWT structure that is included, along with its signing certificate, as a header in requests 
+The Session Token is an SD-JWT structure that is included, along with its signing certificate, as a header in requests
 to other components in the CDOC2 infrastructure.
 
 ### CDOC2 Relying party server (rp-server)
-Used to mediate and validate client requests to SID/MID relying party 
+
+Used to mediate and validate client requests to SID/MID relying party
 services. Validation includes verifying the session token provided by the client.
 
 ### CDOC2 CLI user application
@@ -54,9 +55,8 @@ For full CCS OpenAPI specification, see [API References](../02_protocol_and_cryp
 * `/key-shares/{shareId}` Get key share for share identifier. Used by recipient to request a key share.
 * `/key-shares` Upload a key share and receive a share identifier. Used by sender to upload key share.
 * `/key-shares/{shareId}/nonce` Create nonce for creating an authentication ticket. Used by recipient to request a nonce.
-* `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by 
+* `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
-
 
 For full CSS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
