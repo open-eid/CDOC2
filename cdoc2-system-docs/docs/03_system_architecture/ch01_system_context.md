@@ -22,8 +22,8 @@ In the Hardware Token context, encryption and decryption flows rely on the Recip
 
 ## Shared Libraries
 
-2. CDOC2 Reference Library: used by CDOC2 servers and the CLI client.
-3. CDOC2 CLI Client: a command-line Java application that implements all CDOC2 end-user use cases, but without a graphical user interface.
+1. CDOC2 Reference Library: used by CDOC2 servers and the CLI client.
+2. CDOC2 CLI Client: a command-line Java application that implements all CDOC2 end-user use cases, but without a graphical user interface.
 
 ## External Systems
 

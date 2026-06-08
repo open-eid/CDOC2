@@ -24,7 +24,7 @@ The system is designed to support multiple independent service provider deployme
 
 Each service provider deployment contains the following server components, each backed by a local database:
 
-1. CDOC2 Shares Server (CSS): Stores and mediates Key Shares between Sender and Recipient, used by CDOC2 clients such as the CLI Client and DigiDoc4. Multiple instances are deployed across service providers so that key material is distributed and no single server holds a complete key. Exposes endpoints for Key Share retrieval and submission. Every CDOC2 Shares Server uses a local database component as well. 
+1. CDOC2 Shares Server (CSS): Stores and mediates Key Shares between Sender and Recipient, used by CDOC2 clients such as the CLI Client and DigiDoc4. Multiple instances are deployed across service providers so that key material is distributed and no single server holds a complete key. Exposes endpoints for Key Share retrieval and submission. Every CDOC2 Shares Server uses a local database component as well.
 2. CDOC2 Authentication Server (cdoc2-auth-server): Handles the SID/MID authentication session on behalf of CDOC2 clients.  Upon successful authentication, composes and issues a signed Session Token that are included as headers in subsequent requests. Also performs OCSP certificate validity checking independently of the RP Server. Has a local database component.
 3. CDOC2 Relying Party Server (cdoc2-rp-server):  The entry point for SID/MID authentication requests from the CDOC2 Client. Mediates requests to the SK ID Solutions SID/MID APIs, verifies Session Tokens issued by the Auth Server, and performs OCSP certificate validity checking. Has a local database component.
 
@@ -38,7 +38,7 @@ Each service provider deployment contains the following server components, each 
 The CDOC2 system depends on the following external components and services.
 See [External Interfaces](ch03_external_interfaces.md) for API details and endpoints.
 
-1. Smart-ID RP API (SK ID Solutions): Used by the CDOC2 RP Server to initiate and verify Smart-ID authentication sessions using the ACSP_V2 protocol. 
+1. Smart-ID RP API (SK ID Solutions): Used by the CDOC2 RP Server to initiate and verify Smart-ID authentication sessions using the ACSP_V2 protocol.
 2. Mobile-ID REST API (SK ID Solutions): Used by the CDOC2 RP Server to initiate and verify Mobile-ID authentication sessions.
 3. OCSP servers (SK ID Solutions, Zetes): Both the RP Server and the Auth Server perform OCSP certificate validity checks for SID/MID certificates.
 4. LDAP servers (SK ID Solutions, Zetes): Used by CDOC2 client applications to look up Recipient certificates by identifier (e.g., personal code) prior to encryption. (Not shown in the SID/MID context diagram but applicable to client-side certificate lookup.)
