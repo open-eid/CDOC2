@@ -14,11 +14,6 @@ Implements client side functionality for CDOC2 system. Used by both the Hardware
 
 ## SID/MID Components
 
-### CDOC2 Capsule Server (CCS)
-
-Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download.
-
 ### CDOC2 Shares Server (CSS)
 
 Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipient has to authenticate with the CSSs in order to download the shares contained in a Shares Capsule.
@@ -40,15 +35,6 @@ services. Validation includes verifying the session token provided by the client
 Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.
 
 ## Interfaces between system components
-
-### CDOC2 Capsule Server (CCS) interface
-
-CSS interface provides the following endpoints:
-
-* `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
-* `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
-
-For full CCS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 Shares Server (CSS) interface
 

@@ -19,12 +19,11 @@ Key Shares distributed across multiple CDOC2 Shares Servers.
 
 Primary components:
 
-1. CDOC2 Capsule Server (CCS): stores Server Capsules and mediates them between Sender and Recipient, used by CDOC2 clients such as the reference CLI client and DigiDoc4. Every CDOC2 Capsule Server uses a local database component as well.
-2. CDOC2 Shares Server (CSS): stores Key Shares and mediates them between Sender and Recipient, used by CDOC2 clients such as the reference CLI client and DigiDoc4. Every CDOC2 Shares Server uses a local database component as well.
-3. CDOC2 Authentication Server (cdoc2-auth-server): used in SID/MID authentication flows only. Composes and issues Session Tokens that are included as headers in subsequent requests to other CDOC2 infrastructure components. Has a local database component.
-4. CDOC2 Relying Party Server (cdoc2-rp-server): mediates and validates client requests to the SID/MID relying party API, including verifying the Session Token issued by the Authentication Server. Has a local database component.
-5. CDOC2 Reference Library: used by CDOC2 servers and the CLI client.
-6. CDOC2 CLI Client: a command-line Java application that implements all CDOC2 end-user use cases, but without graphical user interface.
+1. CDOC2 Shares Server (CSS): stores Key Shares and mediates them between Sender and Recipient, used by CDOC2 clients such as the reference CLI client and DigiDoc4. Every CDOC2 Shares Server uses a local database component as well.
+2. CDOC2 Authentication Server (cdoc2-auth-server): used in SID/MID authentication flows only. Composes and issues Session Tokens that are included as headers in subsequent requests to other CDOC2 infrastructure components. Has a local database component.
+3. CDOC2 Relying Party Server (cdoc2-rp-server): mediates and validates client requests to the SID/MID relying party API, including verifying the Session Token issued by the Authentication Server. Has a local database component.
+4. CDOC2 Reference Library: used by CDOC2 servers and the CLI client.
+5. CDOC2 CLI Client: a command-line Java application that implements all CDOC2 end-user use cases, but without graphical user interface.
 
 ## External Systems
 
