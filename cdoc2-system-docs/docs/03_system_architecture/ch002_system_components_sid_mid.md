@@ -14,12 +14,7 @@ Implements client side functionality for CDOC2 system. Used by both the Hardware
 
 ## SID/MID Components
 
-### CDOC2 Capsule Server (CCS)
-
-Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download. 
-
-### CDOC2 Shares Server (CSS) 
+### CDOC2 Shares Server (CSS)
 
 Returns share identifiers to CDOC2 Client Application. Stores Key Shares. Recipient has to authenticate with the CSSs in order to download the shares contained in a Shares Capsule.
 Shares Capsules are distributed between multiple CDOC2 Shares Server instances, so that compromising one server doesn't expose key material.
@@ -27,11 +22,12 @@ Instances run on independent premises.
 
 ### CDOC2 Authentication server (auth-server)
 
-The Session Token is an SD-JWT structure that is included, along with its signing certificate, as a header in requests 
+The Session Token is an SD-JWT structure that is included, along with its signing certificate, as a header in requests
 to other components in the CDOC2 infrastructure.
 
 ### CDOC2 Relying party server (rp-server)
-Used to mediate and validate client requests to SID/MID relying party 
+
+Used to mediate and validate client requests to SID/MID relying party
 services. Validation includes verifying the session token provided by the client.
 
 ### CDOC2 CLI user application
@@ -40,25 +36,15 @@ Command line utility to create/process CDOC2 files. Provides CLI interface to CD
 
 ## Interfaces between system components
 
-### CDOC2 Capsule Server (CCS) interface
-
-CSS interface provides the following endpoints:
-
-* `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
-* `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
-
-For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules.md).
-
 ### CDOC2 Shares Server (CSS) interface
 
 * `/key-shares/{shareId}` Get key share for share identifier. Used by recipient to request a key share.
 * `/key-shares` Upload a key share and receive a share identifier. Used by sender to upload key share.
 * `/key-shares/{shareId}/nonce` Create nonce for creating an authentication ticket. Used by recipient to request a nonce.
-* `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by 
+* `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
 
-
-For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares.md).
+For full CSS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 Auth Server interface
 
@@ -66,7 +52,7 @@ For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_
 * `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
 * `/.well-known/jwks.jws` Returns the Auth Server's public signing keys (JWK format).
 
-For full Auth Server OpenAPI specification, see [Authentication Server API Reference](../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server.md).
+For full Auth Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 RP Server interface
 
@@ -78,4 +64,4 @@ For full Auth Server OpenAPI specification, see [Authentication Server API Refer
 * `/mid/session/{sessionID}` Poll Mobile-ID session status. Returns signature and RFC 9421 countersignature headers.
 * `/.well-known/jwks.jws` Returns the RP Server's public signing keys.
 
-For full RP Server OpenAPI specification, see [Relying Party Server API Reference](../02_protocol_and_cryptography_spec/appendix_g_cdoc2_rp_server.md).
+For full RP Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).

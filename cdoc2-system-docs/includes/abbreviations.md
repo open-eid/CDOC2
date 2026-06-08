@@ -19,7 +19,7 @@
 
 *[CSS]: CDOC2 Shares Server
 
-*[CDOC2 authentication server]: Web service to generate access tokens for CKCTS and RIA SID/MID proxy
+*[CDOC2 authentication server]: Web service to generate session tokens for CSS and Relying Party Servers
 
 *[SID/MID proxy]: Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 

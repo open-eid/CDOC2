@@ -13,10 +13,9 @@ Use cases specified here are written in a generic form, so that they are applica
 
 > **Note:** Sections marked with SiD/MiD only apply exclusively to Smart-ID and Mobile-ID use cases.
 
+## Actors
 
-### Actors
-
-#### Human actors
+### Human actors
 
 **User**
 : Person, who is using CDOC2 Client Applications for sending encrypted files to somebody else (then as a Sender), or decrypting received CDOC2 Containers (then as a Recipient). In some use cases, the User may encrypt files with symmetric encryption key or password, store the CDOC2 Container for themselves and later decrypt the CDOC2 Container by themselves.
@@ -30,7 +29,7 @@ Use cases specified here are written in a generic form, so that they are applica
 **Administrator**
 : Person, who is managing CDOC2 Client Application for Users and is creating the configuration data for them
 
-#### System components as actors
+### System components as actors
 
 **CDOC2 Client Application (Client)**
 : Desktop or mobile application, which encrypts or decrypts CDOC2 Containers and is used by Users
@@ -59,11 +58,11 @@ Use cases specified here are written in a generic form, so that they are applica
 **LDAP-server**
 : An application used for publishing public keys.
 
-### Use cases for Recipients with hardware security tokens
+## Use cases for Recipients with hardware security tokens
 
 These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. CC, which can be decrypted only with Recipient's security token, may be transmitted alongside with the CDOC2 Container itself with the encrypted payload, or with the help of CCS server.
 
-#### UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token
+### UC.Client.01 — Encrypt CDOC2 container for sending to Recipient with a security token
 
 **Use Case Context**
 : CDOC2 Client Application adds Sender's chosen files into the CDOC2 Container and encrypts the Container with CEK. The CEK is encrypted with a KEK, which is generated with key-agreement protocol between Sender and Recipient.
@@ -175,7 +174,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 1. Client displays Sender a notification.
 2. Use case ends.
 
-#### UC.Client.02 — Decrypt CDOC2 Container with a security token
+### UC.Client.02 — Decrypt CDOC2 Container with a security token
 
 **Use Case Context**
 : CDOC2 Client Application (Client) decrypts the archive in the CDOC2 Container provided by Recipient, using a server capsule from either CDOC2 Capsule Server or a Container capsule from inside the Container.
@@ -252,13 +251,13 @@ CDOC2 Client Application
 1. Client displays user a notification.
 2. Use case ends.
 
-### Use cases for password-based encryption
+## Use cases for password-based encryption
 
 These use cases are useful when User wishes to protect confidential files by encrypting them with CEK generated from regular password. User may then store CDOC2 Container for longer period, without worrying that security token may not be usable, or public key certificate might be revoked or expired. CDOC2 Container may be later decrypted by Sender itself or Recipient, who knows the shared password.
 
 This group of UCs also include a special use case, when Recipient re-encrypts the content from received Container with a password.
 
-#### UC.Client.P.01 — Encrypt CDOC2 container with password for long-term storage
+### UC.Client.P.01 — Encrypt CDOC2 container with password for long-term storage
 
 **Use Case Context**
 : Encrypt local files for long-term storage using CDOC2 Client Application and password-based cryptography by creating a new CDOC2 Container. This use case is useful for occasions where decryption does not depend on availability of security tokens.
@@ -321,7 +320,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the User.
 2. Use case ends.
 
-#### UC.Client.P.02 — Decrypt CDOC2 container with password
+### UC.Client.P.02 — Decrypt CDOC2 container with password
 
 **Use Case Context**
 : CDOC2 Client Application decrypts CDOC2 Container with password-based cryptography.
@@ -363,7 +362,7 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. Client notifies the user.
 2. Use case ends.
 
-#### UC.Client.P.04 — Re-encrypt existing CDOC2 Container for long-term storage
+### UC.Client.P.04 — Re-encrypt existing CDOC2 Container for long-term storage
 
 **Use Case Context**
 : CDOC2 Client Application offers Recipient to re-encrypt all files after CDOC2 Container decryption and before extracting and saving files locally.
@@ -416,12 +415,11 @@ This group of UCs also include a special use case, when Recipient re-encrypts th
 1. System notifies the Recipient.
 2. Use case ends.
 
-## SiD/MiD
-### Use cases supporting Recipients authenticating to multiple CDOC2 Shares Servers
+## [SiD/MiD] Use cases supporting Recipients authenticating to multiple CDOC2 Shares Servers
 
 These use cases are useful, when Sender knows that Recipient can use eID means that support authentication. These allow Sender to divide the key material into shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CDOC2 Shares Servers (CSS). Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
 
-#### UC.Client.03 — Encrypt CDOC2 container using key shares
+### UC.Client.03 — Encrypt CDOC2 container using key shares
 
 **Use Case Context**
 : CDOC2 Client Application adds Sender's chosen files into the CDOC2 Container and encrypts the Container with CEK. The CEK is encrypted with a KEK. The KEK is generated by a Sender's Client and then divided into Key Shares. Each share is uploaded to different CDOC2 Shares Server.
@@ -506,7 +504,7 @@ These use cases are useful, when Sender knows that Recipient can use eID means t
 1. Client displays Sender a notification.
 2. Use case ends.
 
-#### UC.Client.04 — Decrypt CDOC2 Container using multiserver authentication
+### UC.Client.04 — Decrypt CDOC2 Container using multiserver authentication
 
 **Use Case Context**
 : CDOC2 Client Application (Client) decrypts the archive in the CDOC2 Container provided by Recipient, using the key material constructed from Key Shares obtained from multiple CDOC2 Shares Servers.
@@ -552,13 +550,13 @@ CDOC2 Client Application
 
     4.5. Recipient performs Smart-ID authentication:
 
-    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
 
-    *  Recipient selects the correct VC.
+    * Recipient selects the correct VC.
 
-    *  Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
+    * Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
 
-    *  Recipient verifies the rpName and displayText and enters PIN1.
+    * Recipient verifies the rpName and displayText and enters PIN1.
 
     4.6. Client has been periodically polling cdoc2-auth portal and has received information, that authentication has been successful.
 
@@ -575,19 +573,18 @@ CDOC2 Client Application
 
     5.4. Recipient performs Smart-ID authentication:
 
-    *  Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
 
-    *  Recipient selects the correct VC.
+    * Recipient selects the correct VC.
 
-    *  Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
+    * Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
 
-    *  Recipient verifies the rpName and displayText and enters PIN1.
+    * Recipient verifies the rpName and displayText and enters PIN1.
 
     5.5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
 
 6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
 7. Continues with UC.Client.P.04 - Re-encrypt existing CDOC2 Container for long-term storage.
-
 
 **Extensions**
 2a. Header size is larger than allowed by the specification:
@@ -652,21 +649,18 @@ This scenario can be used in case following assumptions are true:
 
 **(Smart-ID)**
 
-9. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
-10. Recipient selects the correct VC.
-11. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
-12. Recipient verifies the rpName and displayText and enters PIN1.
-13. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
-14. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
+1. Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+2. Recipient selects the correct VC.
+3. Smart-ID app displays "**DigiDoc4**: 2345. Decrypting Container "som……ing.cdoc2"" and asks for PIN1.
+4. Recipient verifies the rpName and displayText and enters PIN1.
+5. Client has been periodically polling cdoc2-RP component and has received information, that authentication has been successful.
+6. Client downloads shares from CSS servers, re-creates key capsule, decrypts the Container and informs the Recipient that decryption is complete.
 
-
-## CDOC2 Server Use Case Model
-
-### Use cases where CDOC2 Capsule Servers hold the whole Server Capsule
+## Use cases where CDOC2 Capsule Servers hold the whole Server Capsule
 
 These use cases are useful, when Sender knows that Recipient has specific hardware security token, and knows the public key certificate which correspond to the asymmetric cryptographic key pair on that security token. Server Capsule, which can be decrypted only with Recipient's security token, is stored on a single CCS server and must be accessed from there. CCS server enables expiration of access to these capsules.
 
-#### UC.KTS.01 Forward Capsules
+### UC.KTS.01 Forward Capsules
 
 **Context of Use**
 : CDOC2 Client Application forwards Server Capsules to CDOC2 Capsule Server (CCS). Server Capsules contain a content encryption key encrypted for a particular Recipient, which is used for decrypting the archive in a CDOC2 Container. Server Capsule is saved with an expiration time and a unique transaction ID is created and returned to the CDOC2 Client Application.
@@ -716,7 +710,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-#### UC.KTS.02 Request Capsule
+### UC.KTS.02 Request Capsule
 
 **Context of Use**
 : CDOC2 Client Application requests a Server Capsule from CDOC2 Capsule Server. Server Capsule contains an encrypted content encryption key, used for decrypting the archive in a CDOC2 Container. The Server Capsule is identified by public key in Recipient certificate and the transaction identifier provided by CDOC2 Client Application.
@@ -761,7 +755,7 @@ CDOC2 Capsule Server (CCS)
 1. CCS returns Client an error message.
 2. Use case ends.
 
-#### UC.KTS.03 Delete Server Capsules
+### UC.KTS.03 Delete Server Capsules
 
 **Context of Use**
 : System timer deletes expired Server Capsules.
@@ -794,7 +788,7 @@ CDOC2 Capsule Server (CCS)
 
 1. Use case ends.
 
-#### UC.KTS.04 Authenticate Recipient
+### UC.KTS.04 Authenticate Recipient
 
 **Context of Use**
 : CDOC2 Client Application (Client) establishes a TLS-connection to CDOC2 Capsule Server and forwards Recipient certificate.
@@ -826,12 +820,11 @@ CDOC2 Capsule Server (CCS)
 1. CCS replies to the Client with an error message.
 2. Use case ends.
 
-## SiD/MiD
-### Use cases with multiple CDOC2 Shares Servers holding shares of capsules
+## [SiD/MiD] Use cases with multiple CDOC2 Shares Servers holding shares of capsules
 
 These use cases are useful, when Sender knows that Recipient can use some eID means for authenticating themselves, but cannot use eID means that support encryption/decryption. These allow Sender to divide the key material into Key Shares according to a [secret-sharing scheme](<https://en.wikipedia.org/wiki/Secret_sharing>) and distribute those among multiple independent CSSs. Recipient would need to authenticate to CSS servers and download all the shares in order to reconstruct the KEK from those.
 
-#### UC.KTS.06 Forward Capsule Shares
+### UC.KTS.06 Forward Capsule Shares
 
 **Context of Use**
 : CDOC2 Client Application forwards Key Shares of all Shares Capsules to CDOC2 Shares Servers (CSS). This use case assumes the n-of-n encryption scheme where the number of shares per capsule is equal to the number of receiving CSS servers. All the shares have to be combined in order to construct a Capsule that contains a content encryption key (CEK) encrypted for a particular Recipient. Key Shares are saved, and a unique share identifier is created and returned to the CDOC2 Client Application from each CSS.
@@ -864,7 +857,7 @@ CDOC2 Shares Server (CSS)
 1. CSS returns Client an error message.
 2. Use case ends.
 
-#### UC.KTS.07 Request Capsule Shares
+### UC.KTS.07 Request Capsule Shares
 
 **Context of Use**
 : CDOC2 Client Application requests Key Shares from all CDOC2 Shares Servers. The Key Share is identified by the share identifier provided by CDOC2 Client Application, the CSS server ID and the Recipient identification (ETSI semantics identifier) that can be matched to Recipient public key.

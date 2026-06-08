@@ -17,7 +17,7 @@ Implements client side functionality for CDOC2 system. Used by both the Hardware
 ### CDOC2 Capsule Server (CCS)
 
 Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download. 
+key material upload/download.
 
 ### CDOC2 CLI user application
 
@@ -32,4 +32,4 @@ CSS interface provides the following endpoints:
 * `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
 * `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
 
-For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules.md).
+For full CCS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).

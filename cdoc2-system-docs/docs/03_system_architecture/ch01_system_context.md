@@ -27,7 +27,7 @@ In the Hardware Token context, encryption and decryption flows rely on the Recip
 
 ## External Systems
 
-The CDOC2 system depends on the following external components and services. 
+The CDOC2 system depends on the following external components and services.
 
 1. OCSP servers (SK ID Solutions, Zetes): Provide certificate validity checking for ID-card certificates.
 2. LDAP servers (SK ID Solutions, Zetes): Used by CDOC2 client applications to search for Recipient certificates prior to encryption.

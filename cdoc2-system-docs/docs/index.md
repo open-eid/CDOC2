@@ -8,7 +8,6 @@ This is the technical documentation for the CDOC2 System - a secure file encrypt
 
 CDOC2 is the successor to CDOC 1.0 (XML-ENC based formats).  It addresses limitations of CDOC 1.0 by introducing a modern cryptographic architecture, a clear distinction between transport and storage encryption, and support for mobile eID authentication methods (Smart-ID and Mobile-ID) in addition to hardware security tokens.
 
-
 ## Document scope
 
 This documentation describes:
@@ -20,7 +19,6 @@ This documentation describes:
 * Use of the CDOC2 Shares Server (CSS) for threshold-based key share distribution.
 * Client authentication protocol and session management;
 * Implementation guidelines.
-
 
 ## Document structure
 
@@ -34,7 +32,4 @@ The documentation is divided into five parts:
 
  > **Note:** This document combines documentation for the Capsule Server and the Smart-ID/Mobile-ID (SiD/MiD) use cases, including the Shares Server and client authentication protocol. Sections marked with [SiD/MiD] apply exclusively to Smart-ID and Mobile-ID use cases.
 
-
-
 ![Funding](img/cofunding_logo.jpg)
- 

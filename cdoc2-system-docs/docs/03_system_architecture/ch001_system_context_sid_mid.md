@@ -35,8 +35,8 @@ Each service provider deployment contains the following server components, each 
 
 ## External Systems
 
-The CDOC2 system depends on the following external components and services. 
-See [External Interfaces](ch03_external_interfaces.md) for API details and endpoints. 
+The CDOC2 system depends on the following external components and services.
+See [External Interfaces](ch03_external_interfaces.md) for API details and endpoints.
 
 1. Smart-ID RP API (SK ID Solutions): Used by the CDOC2 RP Server to initiate and verify Smart-ID authentication sessions using the ACSP_V2 protocol. 
 2. Mobile-ID REST API (SK ID Solutions): Used by the CDOC2 RP Server to initiate and verify Mobile-ID authentication sessions.

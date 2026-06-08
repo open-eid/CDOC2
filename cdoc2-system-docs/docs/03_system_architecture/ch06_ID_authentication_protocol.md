@@ -419,9 +419,9 @@ If all checks are positive, then the authentication and access control decision 
 
 Before authenticating to CSS servers (cdoc2-shares-servers), a valid session token is needed. Session token is valid up to 24 hours.
 
-Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens — 
-which are signed directly by the user's eID means — session tokens are signed by the 
-Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the 
+Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens —
+which are signed directly by the user's eID means — session tokens are signed by the
+Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the
 session token as a claim, along with the parameters needed to verify it.
 
 ### Session Token structure
@@ -444,6 +444,7 @@ Session token payload includes:
 - `_sd` / `_sd_alg`: Selectively disclosable `aud` claim (same URL format as in auth tokens)
 
 Additionally for SID RPv3 authentication:
+
 - `signatureProtocol`: RPv3 signature protocol
 - `rpChallenge`: Relying party challenge value
 - `interactionsDigest`: SHA-256 digest of the serialized interactions object

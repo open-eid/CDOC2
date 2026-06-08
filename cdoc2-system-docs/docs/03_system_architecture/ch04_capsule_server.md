@@ -58,10 +58,10 @@ Recipient -> Recipient: decrypt Container
 8. The Recipient queries nonce from CCS.
 9. CCS returns nonce.
 10. Recipient uses eID means to authenticate to CCS.
-12. Recipient authenticates to CCS and queries capsule.
-13. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
-14. CCS returns Capsule to Recipient.
-15. Recipient uses the information found in Capsule for decrypting Container.
+11. Recipient authenticates to CCS and queries capsule.
+12. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
+13. CCS returns Capsule to Recipient.
+14. Recipient uses the information found in Capsule for decrypting Container.
 
 ## Server state
 
@@ -76,7 +76,7 @@ Server state consists of the Capsules received by the server for transmission, a
 
 The server provides two interfaces: one for delivery of the Capsule from the sender to the CCS and the other for delivery of the Capsule from the server to the recipient.
 
-The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [appendix C](../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules.md)).
+The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [API References](../02_protocol_and_cryptography_spec/api_references.md)).
 
 ### Sender interface
 
@@ -134,6 +134,7 @@ This version of the specification defines a single CCS-based Capsule type:
 - ``KeyServerCapsule`` -- public key based authentication and access control
 
 The specification also defines a CCS-based Capsule type:
+
 - ``KeySharesCapsule`` -- authentication and access control based on ETSI semantics identifier (national identity code) or private company issuer identifier.
 
 This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.
