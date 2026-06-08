@@ -159,7 +159,7 @@ Although not required by the specification, `KeyLabel` should however follow con
 
 - KeyLabel SHOULD NOT be empty.
 - KeyLabels SHOULD be unique inside container.
-- If a KeyLabel starts with "data:" it SHOULD follow the [KeyLabel field specification v1](appendix_d_keylabel.md).
+- If a KeyLabel starts with "data:" it SHOULD follow the [KeyLabel field specification v1](keylabel_field.md).
 
 Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
@@ -181,7 +181,7 @@ Examples:
 - Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
 - ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined
 
-Known fields are defined in Appendix: [KeyLabel field specification v1](appendix_d_keylabel.md).
+Known fields are defined in: [KeyLabel field specification v1](keylabel_field.md).
 
 Machine-readable `KeyLabel` examples:
 

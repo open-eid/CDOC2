@@ -5,7 +5,7 @@ nav:
     - 'Cryptographic Details': ch05_cryptographic_details.md
     - 'Password-Based Encryption Security' : A1_Security_level.md
     - Schemas:
-        - 'Header FlatBuffers Schema': appendix_a_header_fbs.md
-        - 'Recipients FlatBuffers Schema': appendix_b_recipients_fbs.md
+        - 'Header FlatBuffers Schema': header_flatbuffers_schema.md
+        - 'Recipients FlatBuffers Schema': recipients_flatbuffers_schema.md
     - 'API References': api_references.md
-    - 'KeyLabel field specification': appendix_d_keylabel.md
+    - 'KeyLabel field specification': keylabel_field.md
