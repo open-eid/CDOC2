@@ -47,7 +47,7 @@ CSS interface provides the following endpoints:
 * `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
 * `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
 
-For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_protocol_and_cryptography_spec/appendix_c_cdoc2-capsules.md).
+For full CCS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 Shares Server (CSS) interface
 
@@ -58,7 +58,7 @@ For full CCS OpenAPI specification, see [Capsule Server API Reference](../02_pro
   CDOC2 Auth Server.
 
 
-For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_protocol_and_cryptography_spec/appendix_e_cdoc2-shares.md).
+For full CSS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 Auth Server interface
 
@@ -66,7 +66,7 @@ For full CSS OpenAPI specification, see [Key Shares Server API Reference](../02_
 * `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
 * `/.well-known/jwks.jws` Returns the Auth Server's public signing keys (JWK format).
 
-For full Auth Server OpenAPI specification, see [Authentication Server API Reference](../02_protocol_and_cryptography_spec/appendix_f_cdoc2_auth_server.md).
+For full Auth Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
 
 ### CDOC2 RP Server interface
 
@@ -78,4 +78,4 @@ For full Auth Server OpenAPI specification, see [Authentication Server API Refer
 * `/mid/session/{sessionID}` Poll Mobile-ID session status. Returns signature and RFC 9421 countersignature headers.
 * `/.well-known/jwks.jws` Returns the RP Server's public signing keys.
 
-For full RP Server OpenAPI specification, see [Relying Party Server API Reference](../02_protocol_and_cryptography_spec/appendix_g_cdoc2_rp_server.md).
+For full RP Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).

@@ -7,10 +7,5 @@ nav:
     - Schemas:
         - 'Header FlatBuffers Schema': appendix_a_header_fbs.md
         - 'Recipients FlatBuffers Schema': appendix_b_recipients_fbs.md
-    - API References:
-        - 'Capsule Server API Reference': appendix_c_cdoc2-capsules.md
-        - 'KeyLabel field specification': appendix_d_keylabel.md
-    - SiD/MiD API References:
-            - 'Key Shares Server API Reference': appendix_e_cdoc2-shares.md
-            - 'Authentication Server API Reference': appendix_f_cdoc2_auth_server.md
-            - 'Relying Party Server API Reference': appendix_g_cdoc2_rp_server.md
+    - 'API References': api_references.md
+    - 'KeyLabel field specification': appendix_d_keylabel.md
