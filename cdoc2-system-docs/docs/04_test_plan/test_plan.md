@@ -55,28 +55,19 @@ Server functionality is tested by emulating the end-user client application util
 Positive scenarios:
 
 * Sender successfully transmits a capsule to the server (``[ECC|RSA]-POST_CAPSULE-POS-01-ONCE``)
-* Sender has already transmitted a capsule and is retransmitting the capsule to the server
-(``[ECC|RSA]-POST_CAPSULE-POS-02-REPEATEDLY``)
-* Sender transmits a random byte array not exceeding the defined length to the server as RSA key material
-(``RSA-POST_CAPSULE-POS-03-RANDOM_CONTENT``)
-* Recipient successfully requests a capsule
-(``[ECC|RSA]-GET_CAPSULE-POS-01-CORRECT_REQUEST``)
+* Sender has already transmitted a capsule and is retransmitting the capsule to the server (``[ECC|RSA]-POST_CAPSULE-POS-02-REPEATEDLY``)
+* Sender transmits a random byte array not exceeding the defined length to the server as RSA key material (``RSA-POST_CAPSULE-POS-03-RANDOM_CONTENT``)
+* Recipient successfully requests a capsule (``[ECC|RSA]-GET_CAPSULE-POS-01-CORRECT_REQUEST``)
 * Successful transmission of a capsule in a multi-arm system: the capsule is received by one arm and issued by another arm of the system.
 
 Negative scenarios:
 
-* Sender transmits an RSA capsule containing overlength key material
-(``RSA-POST_CAPSULE-NEG-01-CAPSULE_TOO_BIG``)
-* Recipient requests a capsule with a random transaction ID
-(``GET_CAPSULE-NEG-02-RANDOM_UUID_TRANSACTION_ID``)
-* Recipient requests a capsule with an underlength transaction ID
-(``GET_CAPSULE-NEG-03-TOO_SHORT_TRANSACTION_ID``)
-* Recipient requests a capsule with an empty transaction ID
-(``GET_CAPSULE-NEG-04-EMPTY_STRING_TRANSACTION_ID``)
-* Recipient requests a capsule with an overlength transaction ID
-(``GET_CAPSULE-NEG-05-TOO_LONG_RANDOM_STRING_TRANSACTION_ID``)
-* Recipient requests a capsule with a valid transaction ID but the recipient’s public key does not match the ID
-(``[ECC|RSA]-GET_CAPSULE-NEG-06-PUBLIC_KEY_NOT_MATCHING``)
+* Sender transmits an RSA capsule containing overlength key material (``RSA-POST_CAPSULE-NEG-01-CAPSULE_TOO_BIG``)
+* Recipient requests a capsule with a random transaction ID (``GET_CAPSULE-NEG-02-RANDOM_UUID_TRANSACTION_ID``)
+* Recipient requests a capsule with an underlength transaction ID (``GET_CAPSULE-NEG-03-TOO_SHORT_TRANSACTION_ID``)
+* Recipient requests a capsule with an empty transaction ID (``GET_CAPSULE-NEG-04-EMPTY_STRING_TRANSACTION_ID``)
+* Recipient requests a capsule with an overlength transaction ID (``GET_CAPSULE-NEG-05-TOO_LONG_RANDOM_STRING_TRANSACTION_ID``)
+* Recipient requests a capsule with a valid transaction ID but the recipient’s public key does not match the ID (``[ECC|RSA]-GET_CAPSULE-NEG-06-PUBLIC_KEY_NOT_MATCHING``)
 
 ## Server load tests
 
