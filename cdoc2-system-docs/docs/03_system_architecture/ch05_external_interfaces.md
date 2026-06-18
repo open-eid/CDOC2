@@ -1,5 +1,5 @@
 ---
-title: 4. External components and services
+title: 5. External components and services
 ---
 # External components and services
 
@@ -7,7 +7,7 @@ This section describes how the CDOC2 system is using external components and ser
 
 ## Shared Components
 
-The following external components are used by both the [Hardware Token/Capsule Server](ch01_system_context.md) and [SID/MID](ch001_system_context_sid_mid.md) contexts.
+The following external components are used by both the [Hardware Token/Capsule Server](ch01_system_context.md) and [SID/MID](ch02_system_context_sid_mid.md) contexts.
 
 ### LDAP servers
 

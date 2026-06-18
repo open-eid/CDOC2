@@ -1,12 +1,12 @@
 # CDOC2 Capsule Server changelog
 
-**[1.7] Added support for secp521**
+**[1.7] Added support for secp521r1**
 
-* Added support for the elliptic curve secp521
+* Added support for the elliptic curve secp521r1
 
-**[1.6] Added support for secp265**
+**[1.6] Added support for secp256r1**
 
-* Added support for the elliptic curve secp265
+* Added support for the elliptic curve secp256r1
 * Add `x-expiry-time-adjusted` header to `GET /key-capsules/{transactionId}` result as specified in [cdoc2-key-capsules 2.2.0 OAS](https://github.com/open-eid/cdoc2-openapi)
 * Changed the behavior of the `x-expiry-time` header in the `POST /key-capsules/{transactionId}`.
   Now if the `x-expiry-time` is larger than the maximum allowed expiry time, then the expiry

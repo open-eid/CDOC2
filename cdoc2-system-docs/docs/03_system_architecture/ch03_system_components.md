@@ -1,10 +1,10 @@
 ---
-title: 3.1. CDOC2 system components -  Hardware Token/Capsule Server
+title: 3. CDOC2 system components -  Hardware Token/Capsule Server
 ---
 
 # System Components - Hardware Token/Capsule Server
 
-This page describes the system components relevant to the Hardware Token/Capsule Server context. For the Smart-ID/Mobile-ID context, see [SID/MID](ch002_system_components_sid_mid.md).
+This page describes the system components relevant to the Hardware Token/Capsule Server context. For the Smart-ID/Mobile-ID context, see [SID/MID](ch04_system_components_sid_mid.md).
 
 ## Shared Components
 

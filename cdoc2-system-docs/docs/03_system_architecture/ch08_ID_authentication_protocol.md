@@ -1,5 +1,5 @@
 ---
-title: Client authentication protocol
+title: 8. Client authentication protocol
 ---
 
 # Client authentication protocol

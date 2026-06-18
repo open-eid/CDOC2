@@ -1,9 +1,9 @@
 ---
-title: 2.1. System Context -  Hardware Token/Capsule Server
+title: 1. System Context -  Hardware Token/Capsule Server
 ---
 # System Context -  Hardware Token/Capsule Server
 
-The CDOC2 system operates in two distinct deployment contexts. This page describes the Hardware Token/Capsule Server context; for the Smart-ID/Mobile-ID context, see [SID/MID](ch001_system_context_sid_mid.md). Both contexts share the CDOC2 reference library and CDOC2 CLI client as common components.
+The CDOC2 system operates in two distinct deployment contexts. This page describes the Hardware Token/Capsule Server context; for the Smart-ID/Mobile-ID context, see [SID/MID](ch02_system_context_sid_mid.md). Both contexts share the CDOC2 reference library and CDOC2 CLI client as common components.
 
 > **Note:** DigiDoc4 is the primary end-user client application through which
 > most users interact with CDOC2. However, DigiDoc4 is not part of the CDOC2
