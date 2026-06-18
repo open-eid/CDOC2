@@ -1,6 +1,9 @@
 # Purpose and scope of testing
 
-The test plan presented herein describes tasks related to testing the CDOC2 shares server (hereinafter also simply ‘server’). The test plan does not cover the client-side components of CDOC2; it is solely focused on the server side of the system.
+The test plan presented herein describes tasks related to testing the CDOC2 SmartID/MobileID 
+server components: Key Shares Server, Authentication Server and 
+Relying Party Server. In this document the server components are collectively referred to as ‘server’. 
+The test plan does not cover the client-side components of CDOC2; it is solely focused on the server side of the system.
 
 Within the scope of the test plan presented here, server testing serves two main purposes:
 
@@ -47,9 +50,11 @@ The result of load testing is a test report containing information on the questi
 
 # Designed test scenarios
 
-Test ideas and scenarios are normally not explicitly covered in a test plan. However, as the shares server is an application with limited functionality, there would be little need for a separate document for test scenario management. The present section also describes the scenarios designed to be used in load testing.
+Test ideas and scenarios are normally not explicitly covered in a test plan. However, as the 
+CDOC2 servers are applications with limited functionality, there would be little need for a 
+separate document for test scenario management. The present section also describes the scenarios designed to be used in load testing.
 
-## Shares server API functionality tests
+## Key Shares Server API functionality tests
 
 Server functionality is tested by emulating the end-user client application utilizing the server API interfaces.
 
@@ -81,7 +86,61 @@ Negative scenarios:
 * Recipient requests a key share without authentication headers
 (``GET_KEYSHARE-NEG-07-MISSING_AUTH_HEADERS``)
 
-## Server load tests
+## Authentication Server API functionality tests
+
+Server functionality is tested by emulating the end-user client application utilizing the server API interfaces.
+
+Positive scenarios:
+
+* Recipient successfully starts CDOC2 authentication process with SID 
+  (``POST_START_AUTH-POS-01-SID``)
+* Recipient successfully starts CDOC2 authentication process with MID 
+  (``POST_START_AUTH-POS-02-MID``)
+* Recipient successfully requests completed CDOC2 authentication process status 
+  (``GET_AUTH_STATUS-POS-01-COMPLETED-ONCE``)
+* Recipient successfully requests completed CDOC2 authentication process status repeatedly 
+  (``GET_AUTH_STATUS-POS-02-COMPLETED-REPEATEDLY``)
+* Recipient successfully requests running CDOC2 authentication process status
+  (``GET_AUTH_STATUS-POS-03-RUNNING``)
+* Recipient successfully requests failed CDOC2 authentication process status
+  (``GET_AUTH_STATUS-POS-04-FAILED``)
+* Recipient successfully requests failed server info
+  (``GET_INFO-POS-01``)
+
+Negative scenarios:
+
+* Recipient starts auth process with identifier missing
+  (``POST_START_AUTH-NEG-01-IDENTIFIER_MISSING``)
+* Recipient starts auth process with too short identifier
+  (``POST_START_AUTH-NEG-02-IDENTIFIER_TOO_SHORT``)
+* Recipient starts auth process with too long identifier
+  (``POST_START_AUTH-NEG-03-IDENTIFIER_TOO_LONG``)
+* Recipient starts auth process with incorrect identifier format
+  (``POST_START_AUTH-NEG-04-IDENTIFIER_FORMAT_INCORRECT``)
+* Recipient starts auth process with too short mobile nr
+  (``POST_START_AUTH-NEG-05-MOBILE_NR_TOO_SHORT``)
+* Recipient starts auth process with too long mobile nr
+  (``POST_START_AUTH-NEG-05-MOBILE_NR_TOO_LONG``)
+* Recipient starts auth process with unknown requested language
+  (``POST_START_AUTH-NEG-06-LANGUAGE_UNKNOWN``)
+* Recipient requests auth process status for too short UUID
+  (``POST_AUTH_STATUS-NEG-01-UUID_TOO_SHORT``)
+* Recipient requests auth process status for too long UUID
+  (``POST_AUTH_STATUS-NEG-02-UUID_TOO_LONG``)
+* Recipient requests auth process status for malformed UUID
+  (``POST_AUTH_STATUS-NEG-03-UUID_MALFORMED``)
+* Recipient requests auth process status for process UUID not present in database
+  (``POST_AUTH_STATUS-NEG-04-AUTH_PROCESS_NOT_FOUND``)
+
+## Relying Party Server API functionality tests
+
+Server functionality is tested by emulating the end-user client application utilizing the server API interfaces.
+
+Positive scenarios:
+
+Negative scenarios:
+
+# Server load tests
 
 To receive information about the server’s behaviour under stress, the server must be overloaded with queries designed to be as close as possible to the behavioural patterns of real-life users.
 
@@ -94,7 +153,7 @@ Putting a load on the server requires the use of queries for transmitting key sh
 
 The contents of the query are irrelevant for load testing, as the same internal queries and comparisons are required for both positive and negative results.
 
-### Load generation
+## Load generation
 
 Both the functional tests and the load tests utilize the Gatling test framework where the desired load on the tested software can be adjusted using the following parameters:
 
