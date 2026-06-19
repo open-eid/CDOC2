@@ -6,7 +6,7 @@ title: 2. System Context — Smart-ID / Mobile-ID
 The CDOC2 system operates in two distinct deployment contexts. This page describes the SID/MID context; for the Hardware Token/Capsule Server context, see [Hardware Token/Capsule Server](ch01_system_context.md). Both contexts share the CDOC2 reference library and CDOC2 CLI client as common components.
 
 > **Note:** DigiDoc4 is the primary end-user client application through which
-> most users interact with CDOC2. However, DigiDoc4 is not part of the CDOC2
+> most users interact with CDOC2. However, the DigiDoc4 client is not part of the CDOC2
 > system scope defined here, as its architecture and documentation are
 > maintained separately.
 

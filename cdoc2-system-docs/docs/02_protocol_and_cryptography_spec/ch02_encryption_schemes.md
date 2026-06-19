@@ -376,6 +376,13 @@ FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF_Expand(FMK)
 M = Dec(CEK, C)
 ```
+
+### SC08: (WIP) Encryption scheme with (t-of-n) secret shared decryption key
+
+This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
+
+This scheme is not fully specified.
+
 <!---
 Commented out until we start working on this 
 

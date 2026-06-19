@@ -110,7 +110,8 @@ To ensure protocol security, it is important to make sure that the Key Share is 
 
 ## Server identification and trust
 
-Enhanced security features provided by CDOC2 are only valid if the Capsules are transmitted via servers meeting the requirements of the specific encryption scenario (see [Server identification and trust](#server-identification-and-trust)).
+Enhanced security features provided by CDOC2 are only valid if the Shares are transmitted via
+servers meeting the requirements of the specific encryption scenario (see [Encryption Schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md) ).
 
 To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CSSs either as a part of the DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
 

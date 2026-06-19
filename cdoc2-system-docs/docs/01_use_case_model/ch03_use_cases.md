@@ -538,7 +538,9 @@ CDOC2 Client Application
 
     3.2. Client verifies that it doesn't have a valid Session Token for any of the users, who could decrypt this Container.
 
-4. Recipient establishes a session between the Client and the CDOC2 backend infrastructure by authenticating with eID means:
+4. Recipient establishes a session between the Client and the CDOC2 backend infrastructure by
+   authenticating with eID means. This session is valid for 24 hours and can be reused for
+   multiple invocations of the current usecase:
 
     4.1. Client displays a login window to enter Recipient's identifier (and mobile phone number, if Mobile-ID is selected) and to choose the eID means.
 
@@ -550,11 +552,13 @@ CDOC2 Client Application
 
     4.5. Recipient performs Smart-ID authentication:
 
-    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct VC. **DigiDoc4**: VC1, VC2, VC3"
+    * Smart-ID app wakes up and asks: "Choose correct VC. To continue, please choose the correct
+      VC. **CDOC2**: VC1, VC2, VC3"
 
     * Recipient selects the correct VC.
 
-    * Smart-ID app displays "**DigiDoc4**: 1234. Logging user into the DigiDoc4 application" and asks for PIN1.
+    * Smart-ID app displays "**CDOC2**: 1234. Logging user into CDOC2" and asks
+      for PIN1.
 
     * Recipient verifies the rpName and displayText and enters PIN1.
 

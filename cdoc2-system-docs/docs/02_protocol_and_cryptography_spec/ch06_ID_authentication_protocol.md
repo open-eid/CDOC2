@@ -50,7 +50,7 @@ participant "CSS servers" as CSS
 participant "MiD/SiD API" as SID
 
 User -> CLIENT : Decrypt this CDOC2 container
-CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
+CLIENT -> User : We need to access CDOC2 infrastructure\nPlease authenticate as user "U"
 
 alt SID
   User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
@@ -307,7 +307,9 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
    The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using:
    - Mobile-ID uses `ES256` (ECDSA with SHA-256).
-   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`.
+   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`. This is a non-standard algorithm which
+     describes the combination of algorithms in use by SID RPv3 and is interpreted as such by
+     the CDOC2 infrastructure token authentication logic.
 
 2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. The `iss` claim is added directly to the payload. The `aud` claim is added as a selectively disclosable claim via the `_sd` mechanism and is therefore not present as a plain claim in the base payload.
 
@@ -549,6 +551,8 @@ Following authentication means or APIs do not have this weakness:
 
 1. ID-card when used via web-eID JS interface
 2. Smart-ID RP-API v3 (supported in CDOC2 via the RSASSA-PSS+ACSP_V2 signature verification)
+3. Mobile-ID REST API with an RP counter signature. This is implemented in CDOC2 as an HTTP
+   signature scheme ( [RFC 9421](https://datatracker.ietf.org/doc/html/rfc9421) )
 
 In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
 
