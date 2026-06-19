@@ -1,8 +1,8 @@
 # Purpose and scope of testing
 
-The test plan presented herein describes tasks related to testing the CDOC2 SmartID/MobileID 
-server components: Key Shares Server, Authentication Server and 
-Relying Party Server. In this document the server components are collectively referred to as ‘server’. 
+The test plan presented herein describes tasks related to testing the CDOC2 SmartID/MobileID
+server components: Key Shares Server, Authentication Server and
+Relying Party Server. In this document the server components are collectively referred to as ‘server’.
 The test plan does not cover the client-side components of CDOC2; it is solely focused on the server side of the system.
 
 Within the scope of the test plan presented here, server testing serves two main purposes:
@@ -50,8 +50,8 @@ The result of load testing is a test report containing information on the questi
 
 # Designed test scenarios
 
-Test ideas and scenarios are normally not explicitly covered in a test plan. However, as the 
-CDOC2 servers are applications with limited functionality, there would be little need for a 
+Test ideas and scenarios are normally not explicitly covered in a test plan. However, as the
+CDOC2 servers are applications with limited functionality, there would be little need for a
 separate document for test scenario management. The present section also describes the scenarios designed to be used in load testing.
 
 ## Key Shares Server API functionality tests
@@ -92,13 +92,13 @@ Server functionality is tested by emulating the end-user client application util
 
 Positive scenarios:
 
-* Recipient successfully starts CDOC2 authentication process with SID 
+* Recipient successfully starts CDOC2 authentication process with SID
   (``POST_START_AUTH-POS-01-SID``)
-* Recipient successfully starts CDOC2 authentication process with MID 
+* Recipient successfully starts CDOC2 authentication process with MID
   (``POST_START_AUTH-POS-02-MID``)
-* Recipient successfully requests completed CDOC2 authentication process status 
+* Recipient successfully requests completed CDOC2 authentication process status
   (``GET_AUTH_STATUS-POS-01-COMPLETED-ONCE``)
-* Recipient successfully requests completed CDOC2 authentication process status repeatedly 
+* Recipient successfully requests completed CDOC2 authentication process status repeatedly
   (``GET_AUTH_STATUS-POS-02-COMPLETED-REPEATEDLY``)
 * Recipient successfully requests running CDOC2 authentication process status
   (``GET_AUTH_STATUS-POS-03-RUNNING``)
@@ -138,7 +138,94 @@ Server functionality is tested by emulating the end-user client application util
 
 Positive scenarios:
 
+* Recipient successfully starts SID authentication
+  (``POST_SID_AUTHENTICATE-POS-01``)
+* Recipient successfully requests SID authentication session
+  (``GET_SID_SESSION-POS-01``)
+* Recipient successfully starts MID authentication
+  (``POST_MID_AUTHENTICATE-POS-01``)
+* Recipient successfully requests MID authentication session
+  (``GET_MID_SESSION-POS-01``)
+
 Negative scenarios:
+
+* Recipient starts SID authentication without session token
+  (``POST_SID_AUTHENTICATE-NEG-01-SESSION_TOKEN_MISSING``)
+* Recipient starts SID authentication with malformed session token
+  (``POST_SID_AUTHENTICATE-NEG-02-SESSION_TOKEN_MALFORMED``)
+* Recipient starts SID authentication without session token certificate
+  (``POST_SID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MISSING``)
+* Recipient starts SID authentication with malformed session token certificate
+  (``POST_SID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MALFORMED``)
+* Recipient starts SID authentication with session token sub and certificate serial number mismatch
+  (``POST_SID_AUTHENTICATE-NEG-04-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+* Recipient starts SID authentication withouth request body
+  (``POST_SID_AUTHENTICATE-NEG-05-REQUEST_BODY_MISSING``)
+* Recipient starts SID authentication withouth semantics identifier
+  (``POST_SID_AUTHENTICATE-NEG-06-SEMANTICS_IDENTIFIER_MISSING``)
+* Recipient starts SID authentication withouth signature protocol
+  (``POST_SID_AUTHENTICATE-NEG-07-SIGNATURE_PROTOCOL_MISSING``)
+* Recipient starts SID authentication withouth signature protocol parameters
+  (``POST_SID_AUTHENTICATE-NEG-08-SIGNATURE_PROTOCOL_PARAMS_MISSING``)
+* Recipient starts SID authentication withouth interactions
+  (``POST_SID_AUTHENTICATE-NEG-09-INTERACTIONS_MISSING``)
+* Recipient starts SID authentication withouth verification code type
+  (``POST_SID_AUTHENTICATE-NEG-10-VC_TYPE_MISSING``)
+* Recipient requests SID session without session token
+  (``GET_SID_SESSION-NEG-01-SESSION_TOKEN_MISSING``)
+* Recipient requests SID session with malformed session token
+  (``GET_SID_SESSION-NEG-02-SESSION_TOKEN_MALFORMED``)
+* Recipient requests SID session without session token certificate
+  (``GET_SID_SESSION-NEG-03-SESSION_TOKEN_CERT_MISSING``)
+* Recipient requests SID session with malformed session token certificate
+  (``GET_SID_SESSION-NEG-04-SESSION_TOKEN_CERT_MALFORMED``)
+* Recipient requests SID session with session token sub and certificate serial number mismatch
+  (``GET_SID_SESSION-NEG-05-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+* Recipient requests SID session without session id
+  (``GET_SID_SESSION-NEG-06-SESSION_ID_MISSING``)
+* Recipient requests SID session with malformed session id
+  (``GET_SID_SESSION-NEG-07-SESSION_ID_MALFORMED``)
+
+* Recipient starts MID authentication without session token
+  (``POST_MID_AUTHENTICATE-NEG-01-SESSION_TOKEN_MISSING``)
+* Recipient starts MID authentication with malformed session token
+  (``POST_MID_AUTHENTICATE-NEG-02-SESSION_TOKEN_MALFORMED``)
+* Recipient starts MID authentication without session token certificate
+  (``POST_MID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MISSING``)
+* Recipient starts MID authentication with malformed session token certificate
+  (``POST_MID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MALFORMED``)
+* Recipient starts MID authentication with session token sub and certificate serial number mismatch
+  (``POST_MID_AUTHENTICATE-NEG-04-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+* Recipient starts MID authentication without request body
+  (``POST_MID_AUTHENTICATE-NEG-05-REQUEST_BODY_MISSING``)
+* Recipient starts MID authentication without phone number
+  (``POST_MID_AUTHENTICATE-NEG-06-PHONE_NUMBER_MISSING``)
+* Recipient starts MID authentication without national identity number
+  (``POST_MID_AUTHENTICATE-NEG-07-NATIONAL_IDENTIDY_NUMBER_MISSING``)
+* Recipient starts MID authentication without hash
+  (``POST_MID_AUTHENTICATE-NEG-08-HASH_MISSING``)
+* Recipient starts MID authentication without hash type
+  (``POST_MID_AUTHENTICATE-NEG-08-HASH_TYPE_MISSING``)
+* Recipient starts MID authentication without language
+  (``POST_MID_AUTHENTICATE-NEG-09-LANGUAGE_MISSING``)
+* Recipient starts MID authentication without display text
+  (``POST_MID_AUTHENTICATE-NEG-10-DISPLAY_TEXT_MISSING``)
+* Recipient starts MID authentication without display text format
+  (``POST_MID_AUTHENTICATE-NEG-11-DISPLAY_TEXT_FORMAT_MISSING``)
+* Recipient requests MID session without session token
+  (``GET_MID_SESSION-NEG-01-SESSION_TOKEN_MISSING``)
+* Recipient requests MID session with malformed session token
+  (``GET_MID_SESSION-NEG-02-SESSION_TOKEN_MALFORMED``)
+* Recipient requests MID session without session token certificate
+  (``GET_MID_SESSION-NEG-03-SESSION_TOKEN_CERT_MISSING``)
+* Recipient requests MID session with malformed session token certificate
+  (``GET_MID_SESSION-NEG-04-SESSION_TOKEN_CERT_MALFORMED``)
+* Recipient requests MID session with session token sub and certificate serial number mismatch
+  (``GET_MID_SESSION-NEG-05-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+* Recipient requests MID session without session id
+  (``GET_MID_SESSION-NEG-06-SESSION_ID_MISSING``)
+* Recipient requests MID session with malformed session id
+  (``GET_MID_SESSION-NEG-07-SESSION_ID_MALFORMED``)
 
 # Server load tests
 
