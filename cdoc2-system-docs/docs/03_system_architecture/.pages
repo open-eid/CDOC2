@@ -8,6 +8,4 @@ nav:
         - 'SID/MID': ch04_system_components_sid_mid.md
     - 'External Interfaces': ch05_external_interfaces.md
     - 'Capsule Server': ch06_capsule_server.md
-    - SiD/MiD only:
-        - 'Shares Server': ch07_shares_server.md
-        - 'Client authentication protocol': ch08_ID_authentication_protocol.md
+    - 'Shares Server': ch07_shares_server.md

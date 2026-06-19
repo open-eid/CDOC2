@@ -226,21 +226,24 @@ How does this "selective disclosure" feature actually work behind the scenes? Th
 
 ```text
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
+    HASH(SALT | CLAIM-NAME | CLAIM-VALUE)
 )*
 ```
 
-where `SALT` is a random salt. This kind of operation effectively "hides" the content of the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if they are provided with the values of `SALT` and clear-text `CLAIM_VALUE`. Such kind of `SD-CLAIMS` are included in the JWT structure, inside a special JOSE object with name `_sd`.
+where `SALT` is a random salt. This kind of operation effectively "hides" `CLAIM-NAME` and
+`CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct data,
+if they are provided with the values of `SALT`, clear-text `CLAIM-NAME` and `CLAIM_VALUE`.
+Such `SD-CLAIMS` are included in the JWT structure, inside a special JOSE array with name `_sd`.
 
-In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES` data items, which are:
+In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-DISCLOSURE` data items, which are:
 
 ```text
-SD-RELEASES = (
-    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
-)
+SD-DISCLOSURE = (
+    SALT, CLAIM-NAME, CLAIM-VALUE
+)*
 ```
 
-and add such data items in the JWT, in a special JOSE object with name `sd_release`.
+The resulting disclosure items are appended to the JWT using the tilde character `~` as a separator
 
 So, for example, let's take the original set of claims:
 
@@ -248,7 +251,7 @@ So, for example, let's take the original set of claims:
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "given_name": "John",
-  "family_name": "Doe",
+  "family_name": "Doe"
 }
 ```
 
@@ -258,9 +261,9 @@ Let's say that the Issuer wishes to make claim `given_name` disclosable. They ge
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "family_name": "Doe",
-  "_sd_": {
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
-  }
+  "_sd": [
+    "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
+  ]
 }
 ```
 
@@ -270,23 +273,24 @@ JWT header and JWT payload is then signed and following JWT is created:
 <JWT_header>.<JWT_payload>.<JWT_signature>
 ```
 
-However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container, which is simply a JSON array of `SD-RELEASES` data items, is also added:
+However, this "compact"-encoded JWT doesn't yet disclosure information. So, an SD-DISCLOSURE
+object is also added:
 
 ```json
-{ 
   [
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "eluV5Og3gSNII8EYnsxA_A", "given_name", "John"
   ]
-}
 ```
 
-It is encoded in Base64 and added to the original encoded JWT, after yet another period ("."):
+It is encoded in Base64 and appended to the original encoded JWT, separated and terminated by a
+tilde  ("~"):
 
 ```text
-<JWT_header>.<JWT_payload>.<JWT_signature>.<SD-JWT Salt/Value Container>
+<JWT_header>.<JWT_payload>.<JWT_signature>~<SDJWT_disclosure>~
 ```
 
-Now, Holder can decide which disclosable claim information from the `<SD-JWT Salt/Value Container>` they will include, when creating a presentation to Verifier, and which disclosable claims they don't include. The signature of the original JWT is still valid, because original JWT will be unchanged.
+Now, Holder can decide which claims to disclose by selectively appending `<SDJWT_disclosure>`
+objects when creating a presentation to Verifier. The signature of the original JWT is still valid, because original JWT will be unchanged.
 
 ### Creating SD-JWT structure (authentication data and authentication signature)
 
@@ -461,10 +465,8 @@ CSS server receives the session token presentation and performs the following ch
 2. Verify that the token type header is `vnd.cdoc2.session-token.v2+sd-jwt`.
 3. Verify that `iat` is not in the future and `exp` is not in the past.
 4. Verify that `sub` matches the identity from the signing certificate.
-5. Verify the embedded user eID signature in the `signature` claim using the appropriate method:
-   - For **Smart-ID RP API v3**: verify using RSASSA-PSS+ACSP_V2 algorithm and the provided SID signature parameters.
-   - For **Mobile-ID**: verify using the EC public key from the user's certificate and the provided MID signature parameters.
-6. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+5. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+6. Only for **Smart-ID RP API v3** : Verify the embedded user eID signature in the `signature` claim
 
 ## Security of the protocol
 

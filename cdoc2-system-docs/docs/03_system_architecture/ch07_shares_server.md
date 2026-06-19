@@ -150,7 +150,7 @@ This list may be expanded in future versions of the specification. Various authe
 
 In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``.
 
-The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch08_ID_authentication_protocol.md).
+The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](../02_protocol_and_cryptography_spec/ch06_ID_authentication_protocol.md).
 
 The recipient uses the CDOC2 Auth Server to obtain a session token and the CDOC2 RP Server to perform signing operations. See [system components](ch04_system_components_sid_mid.md) for details of these servers.
 
