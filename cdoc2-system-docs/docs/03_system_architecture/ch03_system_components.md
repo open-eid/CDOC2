@@ -16,8 +16,7 @@ Implements client side functionality for CDOC2 system. Used by both the Hardware
 
 ### CDOC2 Capsule Server (CCS)
 
-Stores encryption/decryption key material. Provides endpoints for auth-ticket creation and
-key material upload/download.
+Stores encryption/decryption key material.
 
 ### CDOC2 CLI user application
 

@@ -102,7 +102,9 @@ To ensure protocol security, it is important to make sure that the Capsule is on
 Enhanced security features provided by CDOC2 are only valid if the Capsule is transmitted via
 servers meeting the requirements of the specific encryption scenario (see [Encryption Schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md) ).
 
-To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CCCS either as a part of the DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
+To ensure the recipient and sender’s confidence in the servers they are using, each client using 
+the CDOC2 format must be provided with a list of trusted capsule servers either as a part of the 
+DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
 
 The server list consists of the following elements.
 
@@ -121,7 +123,11 @@ This would result in the recipient contacting the wrong CCS, authenticating with
 
 The CCS used by the recipient will receive a transaction identifier but since it will be unable to authenticate with the correct CCS on the behalf of the recipient, it will also be unable to download the Capsule from the correct server.
 
-The Capsule type supported by the server allows the sender to choose the correct Capsule type and enables the recipient to authenticate with the server using the correct protocol. As the servers are lightweight, an organization seeking to support multiple different recipient types will be able to run multiple separate CCCS. This ensures that the CCCS can be simplified and thus made more secure. This is especially important in the case of the recipient interface, as the authentication protocols used may widely differ in their features, making secure implementation difficult.
+The Capsule type supported by the server allows the sender to choose the correct Capsule type 
+and enables the recipient to authenticate with the server using the correct protocol. As the 
+servers are lightweight, an organization seeking to support multiple different recipient types 
+will be able to run multiple separate capsule servers. This ensures that the CCS can be simplified 
+and thus made more secure. This is especially important in the case of the recipient interface, as the authentication protocols used may widely differ in their features, making secure implementation difficult.
 
 The identifier of the organization maintaining the server does not necessarily have to be explicitly tied to the organization’s name, but it must enable the identification of servers controlled by the same organization. This information is required to support future secret sharing-based encryption methods.
 
@@ -133,10 +139,6 @@ Each CCS-based Capsule type describes a specific recipient identification and au
 This version of the specification defines a single CCS-based Capsule type:
 
 - ``KeyServerCapsule`` -- public key based authentication and access control
-
-The specification also defines a CCS-based Capsule type:
-
-- ``KeySharesCapsule`` -- authentication and access control based on ETSI semantics identifier (national identity code) or private company issuer identifier.
 
 This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.
 

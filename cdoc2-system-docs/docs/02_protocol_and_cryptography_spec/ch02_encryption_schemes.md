@@ -213,7 +213,7 @@ CEK = HKDF-Expand(FMK)
 C = Enc(CEK, M)
 KEK_i = CSRNG()
 EncryptedKEK_i = RSAES-OAEP-ENCRYPT(PK_i, KEK_i)
-KeyServerCapsule_i = {{EncryptedKEK_i, PK_i}
+KeyServerCapsule_i = {EncryptedKEK_i, PK_i}
 ContainerCapsule_i = {KeyServerCapsuleID_i, PK_i}
 EncryptedFMK_i = XOR(FMK, KEK_i)
 ```
