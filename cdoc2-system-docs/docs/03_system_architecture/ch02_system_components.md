@@ -27,7 +27,7 @@ Command line utility to create/process CDOC2 files. Provides CLI interface to CD
 
 ### CDOC2 Capsule Server (CCS) interface
 
-CSS interface provides the following endpoints:
+CCS interface provides the following endpoints:
 
 * `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
 * `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
