@@ -55,13 +55,11 @@ Recipient -> Recipient: decrypt Container
 5. Sender adds selected CCS identifier, transaction identifier, and Recipient identifier inside Container.
 6. The Sender transmits Container to Recipient.
 7. The Recipient finds information concerning the Capsule generated for them in Container.
-8. The Recipient queries nonce from CCS.
-9. CCS returns nonce.
-10. Recipient uses eID means to authenticate to CCS.
-11. Recipient authenticates to CCS and queries capsule.
-12. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
-13. CCS returns Capsule to Recipient.
-14. Recipient uses the information found in Capsule for decrypting Container.
+8. Recipient uses eID means to authenticate to CCS.
+9. Recipient authenticates to CCS and queries capsule.
+10. CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.
+11. CCS returns Capsule to Recipient.
+12. Recipient uses the information found in Capsule for decrypting Container.
 
 ## Server state
 
