@@ -358,7 +358,9 @@ Sender has created a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Caps
 
 Recipient `i` receives a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Authentication signature data format and authentication token details are specified in section [Client Authentication Protocol](ch06_ID_authentication_protocol.md).
+See section [Client Authentication Protocol](ch06_ID_authentication_protocol.md) for a more
+detailed description of the authentication process, including session token and authentication
+token overview.
 
 ```py linenums="1"
 # Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers
@@ -422,7 +424,9 @@ Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 
 Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Authentication signature data format and authentication token details are specified in section [Client Authentication Protocol](ch06_ID_authentication_protocol.md).
+See section [Client Authentication Protocol](ch06_ID_authentication_protocol.md) for a more
+detailed description of the authentication process, including session token and authentication
+token overview.
 
 ```py linenums="1"
 # Recipient i sends `Capsule_i_Share_j_ID` to corresponding CSS servers
