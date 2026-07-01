@@ -886,8 +886,8 @@ CDOC2 Shares Server (CSS)
 2. Client calculates an authentication hash.
 3. Client asks the Recipient to authenticate.
 4. Recipient signs the authentication token. Client receives the Recipient's public key, which matches the Recipient identification used in the accessed Shares Capsule.
-5. Client constructs server-specific authentication tickets and sends one to each CSS.
-6. Each CSS validates the received authentication ticket, which includes validating the ticket type, nonce, signature, key pair and public keys.
+5. Client constructs server-specific authentication tokens and sends one to each CSS.
+6. Each CSS validates the received authentication token, which includes validating the token type, nonce, signature, key pair and public keys.
 7. CSS returns the Key Share.
 
 **Extensions**

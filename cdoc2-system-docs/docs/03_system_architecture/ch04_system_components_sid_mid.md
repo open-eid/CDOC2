@@ -40,7 +40,8 @@ Command line utility to create/process CDOC2 files. Provides CLI interface to CD
 
 * `/key-shares/{shareId}` Get key share for share identifier. Used by recipient to request a key share.
 * `/key-shares` Upload a key share and receive a share identifier. Used by sender to upload key share.
-* `/key-shares/{shareId}/nonce` Create nonce for creating an authentication ticket. Used by recipient to request a nonce.
+* `/key-shares/{shareId}/nonce` Create nonce for creating an authentication token. Used by
+  recipient to request a nonce.
 * `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
 

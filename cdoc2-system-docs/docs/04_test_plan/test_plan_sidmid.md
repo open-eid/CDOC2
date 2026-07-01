@@ -231,7 +231,11 @@ Negative scenarios:
 
 To receive information about the server’s behaviour under stress, the server must be overloaded with queries designed to be as close as possible to the behavioural patterns of real-life users.
 
-Depending on the design and functionality of the shares server, queries made to the server can be divided into two main groups: transmission of key shares to the server, and key share requests via user authentication. While the transmission of key shares does not require user authentication, requesting a key share requires the request to include an authentication ticket signed with the recipient's Smart-ID or Mobile-ID certificate; both query groups are served over the same interface, sharing a common database for storing key shares.
+Depending on the design and functionality of the shares server, queries made to the server can
+be divided into two main groups: transmission of key shares to the server, and key share
+requests via user authentication. While the transmission of key shares does not require user
+authentication, requesting a key share requires the request to include an authentication token
+signed with the recipient's Smart-ID or Mobile-ID certificate; both query groups are served over the same interface, sharing a common database for storing key shares.
 
 Putting a load on the server requires the use of queries for transmitting key shares to the server and requesting key shares from the server.
 

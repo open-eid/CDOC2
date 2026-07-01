@@ -13,7 +13,7 @@ This section describes a protocol and data formats for authenticating to multipl
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
 2. Client needs to authenticate to multiple CSSs, in order to download all Capsules.
 3. Client should only need to create one signature with its authentication means (Mobile-ID, Smart-ID) for authentication.
-4. CSS must not be able to replay the authentication ticket to another CSS.
+4. CSS must not be able to replay the authentication token to another CSS.
 
 ## Non-suitable alternatives
 
@@ -216,7 +216,8 @@ SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc
 We are mapping those SD-JWT-specific entities to CDOC2 data model in following way:
 
 1. Same SD-JWT data structure is used for CDOC2 authentication data and CDOC2 authentication signature. CDOC2 authentication data is expressed as SD-JWT claims. CDOC2 authentication signature corresponds to the Issuer signature.
-2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific CDOC2 authentication ticket.
+2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific
+   CDOC2 authentication token.
 3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates SD-JWT structure, specifies that some claims are disclosable and creates specific presentations for each CSS server. SD-JWT standard optionally supports a scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify the possession of Holder's key pair during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
 4. Role of SD-JWT Verifier is performed by CSS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
@@ -330,7 +331,7 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
 4. Client signs the SD-JWT structure (with the header, payload and disclosable claims information in `_sd` structure), as SD-JWT Issuer with user's authentication means.
 
-### Presenting SD-JWT (creating authentication ticket)
+### Presenting SD-JWT (creating authentication token)
 
 For each server, Client creates SD-JWT presentation and discloses only that `aud` array element, which contains `key-share` and `nonce`, which are specific to that server.
 
@@ -403,7 +404,7 @@ if we decode the individual parts, we get following data items:
    ]
    ```
 
-### Verifying SD-JWT (verifying authentication ticket)
+### Verifying SD-JWT (verifying authentication token)
 
 CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~`) and performs following authentication and authorization checks:
 
