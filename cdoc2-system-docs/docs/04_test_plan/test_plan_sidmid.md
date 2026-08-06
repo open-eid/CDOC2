@@ -64,27 +64,21 @@ Positive scenarios:
 * Sender has already transmitted a key share and is retransmitting the key share to the server (``POST_KEYSHARE-POS-02-REPEATEDLY``)
 * Sender transmits a random byte array not exceeding the defined length to the server as key share material (``POST_KEYSHARE-POS-03-RANDOM_CONTENT``)
 * Recipient successfully requests a nonce for an existing key share (``POST_NONCE-POS-01-CORRECT_SHARE_ID``)
+* Recipient successfully requests a session nonce used for session token authentication (``POST_SESSION_NONCE-POS-01``)
 * Recipient successfully requests a key share (``GET_KEYSHARE-POS-01-CORRECT_REQUEST``)
-* Successful transmission of a key share in a multi-arm system: the key share is received by one arm and issued by another arm of the system.
 
 Negative scenarios:
 
-* Sender transmits a key share containing overlength key share material
-(``POST_KEYSHARE-NEG-01-SHARE_TOO_BIG``)
-* Recipient requests a nonce for a non-existing key share
-(``POST_NONCE-NEG-01-RANDOM_SHARE_ID``)
-* Recipient requests a key share with a random share ID
-(``GET_KEYSHARE-NEG-02-RANDOM_SHARE_ID``)
-* Recipient requests a key share with an underlength share ID
-(``GET_KEYSHARE-NEG-03-TOO_SHORT_SHARE_ID``)
-* Recipient requests a key share with an empty share ID
-(``GET_KEYSHARE-NEG-04-EMPTY_STRING_SHARE_ID``)
-* Recipient requests a key share with an overlength share ID
-(``GET_KEYSHARE-NEG-05-TOO_LONG_RANDOM_STRING_SHARE_ID``)
-* Recipient requests a key share with a valid share ID but the recipient’s identity does not match the key share
-(``GET_KEYSHARE-NEG-06-RECIPIENT_NOT_MATCHING``)
-* Recipient requests a key share without authentication headers
-(``GET_KEYSHARE-NEG-07-MISSING_AUTH_HEADERS``)
+* Sender transmits a key share containing overlength key share material (``POST_KEYSHARE-NEG-01-SHARE_TOO_BIG``)
+* Recipient requests a key share with an underlength share ID (``GET_KEYSHARE-NEG-01-TOO_SHORT_SHARE_ID``)
+* Recipient requests a key share with an empty share ID (``GET_KEYSHARE-NEG-02-EMPTY_STRING_SHARE_ID``)
+* Recipient requests a key share with an overlength share ID (``GET_KEYSHARE-NEG-03-TOO_LONG_RANDOM_STRING_SHARE_ID``)
+* Recipient requests a key share at the key-shares endpoint with both the share ID and the trailing path separator omitted (``GET_KEYSHARE-NEG-04-MISSING_SHARE_ID_AND_URI_SLASH``)
+* Recipient requests a key share using a random, unsigned authentication ticket (``GET_KEYSHARE-NEG-05-RANDOM_AUTH_TICKET``)
+* Recipient requests a key share with a random share ID (``GET_KEYSHARE-NEG-06-RANDOM_SHARE_ID``)
+* Recipient requests a key share with a valid share ID but the recipient’s identity does not match the key share (``GET_KEYSHARE-NEG-07-RECIPIENT_NOT_MATCHING``)
+* Recipient requests a key share without authentication headers (``GET_KEYSHARE-NEG-08-MISSING_AUTH_HEADERS``)
+* Recipient requests a nonce for a non-existing key share (``POST_NONCE-NEG-01-RANDOM_SHARE_ID``)
 
 ## Authentication Server API functionality tests
 
