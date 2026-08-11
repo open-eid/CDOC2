@@ -150,21 +150,21 @@ Negative scenarios:
 * Recipient starts SID authentication without session token certificate
   (``POST_SID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MISSING``)
 * Recipient starts SID authentication with malformed session token certificate
-  (``POST_SID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MALFORMED``)
+  (``POST_SID_AUTHENTICATE-NEG-04-SESSION_TOKEN_CERT_MALFORMED``)
 * Recipient starts SID authentication with session token sub and certificate serial number mismatch
-  (``POST_SID_AUTHENTICATE-NEG-04-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+  (``POST_SID_AUTHENTICATE-NEG-05-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
 * Recipient starts SID authentication withouth request body
-  (``POST_SID_AUTHENTICATE-NEG-05-REQUEST_BODY_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-06-REQUEST_BODY_MISSING``)
 * Recipient starts SID authentication withouth semantics identifier
-  (``POST_SID_AUTHENTICATE-NEG-06-SEMANTICS_IDENTIFIER_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-07-SEMANTICS_IDENTIFIER_MISSING``)
 * Recipient starts SID authentication withouth signature protocol
-  (``POST_SID_AUTHENTICATE-NEG-07-SIGNATURE_PROTOCOL_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-08-SIGNATURE_PROTOCOL_MISSING``)
 * Recipient starts SID authentication withouth signature protocol parameters
-  (``POST_SID_AUTHENTICATE-NEG-08-SIGNATURE_PROTOCOL_PARAMS_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-09-SIGNATURE_PROTOCOL_PARAMS_MISSING``)
 * Recipient starts SID authentication withouth interactions
-  (``POST_SID_AUTHENTICATE-NEG-09-INTERACTIONS_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-10-INTERACTIONS_MISSING``)
 * Recipient starts SID authentication withouth verification code type
-  (``POST_SID_AUTHENTICATE-NEG-10-VC_TYPE_MISSING``)
+  (``POST_SID_AUTHENTICATE-NEG-11-VC_TYPE_MISSING``)
 * Recipient requests SID session without session token
   (``GET_SID_SESSION-NEG-01-SESSION_TOKEN_MISSING``)
 * Recipient requests SID session with malformed session token
@@ -187,25 +187,25 @@ Negative scenarios:
 * Recipient starts MID authentication without session token certificate
   (``POST_MID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MISSING``)
 * Recipient starts MID authentication with malformed session token certificate
-  (``POST_MID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MALFORMED``)
+  (``POST_MID_AUTHENTICATE-NEG-04-SESSION_TOKEN_CERT_MALFORMED``)
 * Recipient starts MID authentication with session token sub and certificate serial number mismatch
-  (``POST_MID_AUTHENTICATE-NEG-04-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
+  (``POST_MID_AUTHENTICATE-NEG-05-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
 * Recipient starts MID authentication without request body
-  (``POST_MID_AUTHENTICATE-NEG-05-REQUEST_BODY_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-06-REQUEST_BODY_MISSING``)
 * Recipient starts MID authentication without phone number
-  (``POST_MID_AUTHENTICATE-NEG-06-PHONE_NUMBER_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-07-PHONE_NUMBER_MISSING``)
 * Recipient starts MID authentication without national identity number
-  (``POST_MID_AUTHENTICATE-NEG-07-NATIONAL_IDENTIDY_NUMBER_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-08-NATIONAL_IDENTIDY_NUMBER_MISSING``)
 * Recipient starts MID authentication without hash
-  (``POST_MID_AUTHENTICATE-NEG-08-HASH_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-09-HASH_MISSING``)
 * Recipient starts MID authentication without hash type
-  (``POST_MID_AUTHENTICATE-NEG-08-HASH_TYPE_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-10-HASH_TYPE_MISSING``)
 * Recipient starts MID authentication without language
-  (``POST_MID_AUTHENTICATE-NEG-09-LANGUAGE_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-11-LANGUAGE_MISSING``)
 * Recipient starts MID authentication without display text
-  (``POST_MID_AUTHENTICATE-NEG-10-DISPLAY_TEXT_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-12-DISPLAY_TEXT_MISSING``)
 * Recipient starts MID authentication without display text format
-  (``POST_MID_AUTHENTICATE-NEG-11-DISPLAY_TEXT_FORMAT_MISSING``)
+  (``POST_MID_AUTHENTICATE-NEG-13-DISPLAY_TEXT_FORMAT_MISSING``)
 * Recipient requests MID session without session token
   (``GET_MID_SESSION-NEG-01-SESSION_TOKEN_MISSING``)
 * Recipient requests MID session with malformed session token
