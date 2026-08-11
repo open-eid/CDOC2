@@ -40,9 +40,9 @@
 
 # CDOC2 schema changes
 
-**[2.1] Added new elliptic cure `secp521r1` to EllipticCurve enum in recipients.fbs**
+**[2.1] Added new elliptic curve `secp521r1` to EllipticCurve enum in recipients.fbs**
 
-**[2.0] Added new elliptic cure `secp256r1` to EllipticCurve enum in recipients.fbs**
+**[2.0] Added new elliptic curve `secp256r1` to EllipticCurve enum in recipients.fbs**
 
 **[1.4] SID/MID changes to the schema**
 

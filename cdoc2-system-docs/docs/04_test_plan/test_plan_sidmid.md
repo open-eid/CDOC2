@@ -159,17 +159,17 @@ Negative scenarios:
   (``POST_SID_AUTHENTICATE-NEG-03-SESSION_TOKEN_CERT_MALFORMED``)
 * Recipient starts SID authentication with session token sub and certificate serial number mismatch
   (``POST_SID_AUTHENTICATE-NEG-04-SESSION_TOKEN_SUB_CERT_SN_MISMATCH``)
-* Recipient starts SID authentication withouth request body
+* Recipient starts SID authentication without request body
   (``POST_SID_AUTHENTICATE-NEG-05-REQUEST_BODY_MISSING``)
-* Recipient starts SID authentication withouth semantics identifier
+* Recipient starts SID authentication without semantics identifier
   (``POST_SID_AUTHENTICATE-NEG-06-SEMANTICS_IDENTIFIER_MISSING``)
-* Recipient starts SID authentication withouth signature protocol
+* Recipient starts SID authentication without signature protocol
   (``POST_SID_AUTHENTICATE-NEG-07-SIGNATURE_PROTOCOL_MISSING``)
-* Recipient starts SID authentication withouth signature protocol parameters
+* Recipient starts SID authentication without signature protocol parameters
   (``POST_SID_AUTHENTICATE-NEG-08-SIGNATURE_PROTOCOL_PARAMS_MISSING``)
-* Recipient starts SID authentication withouth interactions
+* Recipient starts SID authentication without interactions
   (``POST_SID_AUTHENTICATE-NEG-09-INTERACTIONS_MISSING``)
-* Recipient starts SID authentication withouth verification code type
+* Recipient starts SID authentication without verification code type
   (``POST_SID_AUTHENTICATE-NEG-10-VC_TYPE_MISSING``)
 * Recipient requests SID session without session token
   (``GET_SID_SESSION-NEG-01-SESSION_TOKEN_MISSING``)

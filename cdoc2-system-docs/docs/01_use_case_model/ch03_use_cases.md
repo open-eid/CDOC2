@@ -126,7 +126,7 @@ These use cases are useful, when Sender knows that Recipient has specific hardwa
 
 1. Use case continues from step 7.
 
-6a. Sender chooses to not use the CDOC2 capsule server:
+6a. Sender chooses not to use the CDOC2 capsule server:
 
 1. Client creates a Container in the target path and adds a header with Container capsules for each recipient.
 2. Use case continues from step 11.

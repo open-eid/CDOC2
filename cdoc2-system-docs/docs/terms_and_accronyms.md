@@ -2,7 +2,7 @@
 
 * `AEAD` - Authenticated Encryption with Additional Data
 
-* `Authenication Server`, `cdoc2-auth` - SID/MID. Generates session tokens to presented to other CDOC2 SID/MID infrastructure servers.
+* `Authentication Server`, `cdoc2-auth` - SID/MID. Generates session tokens to presented to other CDOC2 SID/MID infrastructure servers.
 
 * `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule, a Container Capsule or a Shares Capsule.
 

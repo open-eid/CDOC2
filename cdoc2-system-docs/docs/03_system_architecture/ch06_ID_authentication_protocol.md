@@ -21,11 +21,11 @@ Before designing a custom authentication protocol, we should make sure that we c
 
 For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CSSs), the situation becomes cumbersome.
 
-First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications, and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
+First, the requirement that Client needs to "login" to multiple servers with a single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications, and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such a  central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
 
-Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens. This would mean that CSS server can re-use the token and replay it to another CSS server. It might be possible to overcome the threat of token replay with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create yet another central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download every `KeySharesCapsule` on behalf of any user.
+Additionally, if we were using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens. This would mean that CSS server can re-use the token and replay it to another CSS server. It might be possible to overcome the threat of token replay with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create yet another central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such a component would be breached, the attacker would be able to download every `KeySharesCapsule` on behalf of any user.
 
-Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment and traditional authentication protocols are not suitable. More tailored approach would be needed to come up with an authentication protocol, that would satisfy all requirements and would depend only on the eID authentication means or eID trust service providers.
+Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment and traditional authentication protocols are not suitable. A more tailored approach would be needed to come up with an authentication protocol, that would satisfy all requirements and would depend only on the eID authentication means or eID trust service providers.
 
 ## Overview of the generic authentication protocol
 
@@ -175,7 +175,7 @@ In this section the details of the authentication protocol are explained.
 
 ### Authentication data
 
-In generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (Mobile-ID, Smart-ID), using the authentication key pair.
+In the generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
@@ -207,7 +207,7 @@ Because of the signature, it is not possible to modify JWT claims anymore. If we
 
 ### Intro to SD-JWT standard
 
-SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with following entities:
+SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with the following entities:
 
 1. SD-JWT is created by an entity called _Issuer_. Issuer decides, which claims are included in SD-JWT and which claims will be individually disclosable. Issuer signs the SD-JWT with its key pair and secures the SD-JWT against modifications.
 2. SD-JWT is received from Issuer by an entity called _Holder_. Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which claims it wishes to keep secret from Verifier.
@@ -478,7 +478,7 @@ In case the network between the CDOC2 Client and CSS servers is compromised and 
 
 In case the attacker is able to hijack the network connections between the CDOC2 Client and CSS servers and redirect the connection attempts from the real CSS servers to attacker itself, attacker is also able to masquerade to Client as real CSS server and is also observe the values of the transmitted capsule shares. Attacker might be able to present a self-signed X.509 HTTPS certificate, or it might be able to present a valid X.509 HTTPS certificate from the real CA as well. In case the CDOC2 Client doesn't verify the identity of the CSS server, it is not able to tell a difference between the attacker and real CSS server.
 
-It is essential that CDOC2 Clients authenticate, which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.
+It is essential that CDOC2 Clients authenticate which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.
 
 ### Protection against compromised CSS servers
 
@@ -537,13 +537,13 @@ Therefore, the described protocol should be secure against such properties. Howe
 
 In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system.
 
-Following authentication means have this potential weakness:
+The following authentication means have this potential weakness:
 
 1. ID-card when used via PKCS#11 interface
 2. Mobile-ID REST API
 3. Smart-ID RP-API v2
 
-Following authentication means or APIs do not have this weakness:
+The following authentication means or APIs do not have this weakness:
 
 1. ID-card when used via web-eID JS interface
 2. Smart-ID RP-API v3 (supported in CDOC2 via the RSASSA-PSS+ACSP_V2 signature verification)
