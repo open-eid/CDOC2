@@ -4,6 +4,8 @@
 
 * `Authentication Server`, `cdoc2-auth` - SID/MID. Generates session tokens to presented to other CDOC2 SID/MID infrastructure servers.
 
+* `Authentication ticket` - SID/MID. A server-specific presentation of the CDOC2 Authentication Token, created by selectively disclosing only the nonce relevant to one CSS server. One Authentication Token is signed once by the Recipient; a separate Authentication Ticket is derived and sent to each CSS.
+
 * `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule, a Container Capsule or a Shares Capsule.
 
 * `CC` - CDOC2 Capsule. Data structure inside CDOC2 Container. CC contains information for decrypting the payload of CDOC2 Container. <br/> That information could be a symmetric cryptographic key, a share of symmetric cryptographic key, <br/> or necessary data for establishing such key with key derivation algorithm or key-agreement protocol, for example, with ECDH.
@@ -55,6 +57,10 @@
 * `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that the FMK could be transmitted inside the CDOC2 Container to Recipient.
 
 * `Key Share` - SID/MID. Key Shares are created by splitting cryptographic material required for encrypting/decrypting a CDOC2 document. These are stored inside Shares Capsules. Key Shares are always distributed among different Shares Servers and depending on the encryption scheme, all or a certain number of shares are needed to construct the original key value.
+
+* `KTS` - Key Transfer Server. Umbrella term used in use case IDs (UC.KTS.xx) covering both the CDOC2 Capsule Server (CCS) and the CDOC2 Shares Server (CSS), as both mediate transfer of key material between Sender and Recipient.
+
+* `nonce` - A randomly generated, single-use value issued by a CSS server, used to prevent replay of authentication tokens.
 
 * `PBKDF2` - Password-Based Key Derivation Function 2 (RFC 2898). Used to derive key material from a pre-shared password in symmetric key encryption schemes.
 
