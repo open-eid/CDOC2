@@ -19,7 +19,11 @@
 
 *[CSS]: CDOC2 Shares Server
 
+*[KTS]: Key Transfer Server. Umbrella term used in use case IDs (UC.KTS.xx) covering both CCS and CSS, as both mediate transfer of key material between Sender and Recipient.
+
 *[CDOC2 authentication server]: Web service to generate session tokens for CSS and Relying Party Servers
+
+*[authentication ticket]: A server-specific presentation of the CDOC2 Authentication Token, created by selectively disclosing only the nonce relevant to one CSS server. One Authentication Token is signed once by the Recipient; a separate Authentication Ticket is derived and sent to each CSS.
 
 *[SID/MID proxy]: Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
@@ -34,6 +38,8 @@
 *[ECC DH]: Elliptic-Curve Cryptography Diffie Hellman key-establishment algorithm
 
 *[ECC CDH]: Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm
+
+*[nonce]: A randomly generated, single-use value issued by a CSS server, used to prevent replay of authentication tickets.
 
 *[HMAC]: Hash-Based Message Authentication Code. Protects integrity of CDOC Container.
 
