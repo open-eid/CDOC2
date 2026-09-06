@@ -12,7 +12,9 @@
 
 * `CDOC 1.0` - Unofficial term for all (XML-ENC based) CDOC formats preceding this specification.
 
-* `CDOC2 Authentication Token` - SID/MID. Credential constructed by the Client containing CSS server nonces, signed by the Recipient via SID/MID. Presented to CSS servers to authorize Key Share downloads for a specific CDOC2 Container. Encoded as an SD-JWT.
+* `CDOC2 Authentication Token` - SID/MID. Credential constructed by the Client containing CSS
+  server nonces, signed by the Recipient via SID/MID. Presented to CSS servers to authorize Key
+  Share downloads for a specific CDOC2 Container. Encoded as an SD-JWT. Valid for 300 seconds.
 
 * `CDOC2 Client Application` - Software used by Sender and Recipient to create and decrypt CDOC2 Containers, interact with CCS and CSS servers, and handle eID authentication.
 

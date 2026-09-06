@@ -1,5 +1,5 @@
 ---
-title: CDOC2 CSS
+title: 7. CDOC2 CSS
 ---
 
 
@@ -44,7 +44,7 @@ Actor Sender as Sender
 
 box "Recipient"
 Actor Recipient as Recipient
-participant "eID means\n(Smart-ID, Mobile-ID" as eID
+participant "eID means\n(Smart-ID, Mobile-ID)" as eID
 end box
 
 box "CDOC2 servers"
@@ -106,11 +106,13 @@ The recipient authenticates with the servers and transmits a share identifier to
 
 Interface security is ensured using the TLS 1.3 protocol. The server holds a certificate issued by a publicly available and trusted CA. The clients can validate this certificate on each connection using the OCSP protocol.
 
-To ensure protocol security, it is important to make sure that the Key Share is only received by the CSS. This can be achieved via the pinning of server TSL keys. Key pinning ensures that commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.
+To ensure protocol security, it is important to make sure that the Key Share is only received by
+the CSS. This can be achieved via the pinning of server TLS. Key pinning ensures that commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.
 
 ## Server identification and trust
 
-Enhanced security features provided by CDOC2 are only valid if the Capsules are transmitted via servers meeting the requirements of the specific encryption scenario (see [Server identification and trust](#server-identification-and-trust)).
+Enhanced security features provided by CDOC2 are only valid if the Shares are transmitted via
+servers meeting the requirements of the specific encryption scenario (see [Encryption Schemes](../02_protocol_and_cryptography_spec/ch02_encryption_schemes.md) ).
 
 To ensure the recipient and sender’s confidence in the servers they are using, each client using the CDOC2 format must be provided with a list of trusted CSSs either as a part of the DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.
 
@@ -150,9 +152,9 @@ This list may be expanded in future versions of the specification. Various authe
 
 In this scheme, the recipient is identified by ETSI semantics identifier (national identity code) or private company issuer identifier. The identity code of the recipient is defined by the field ``recipient_id`` in the structure ``KeySharesCapsule``.
 
-The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](ch06_ID_authentication_protocol.md).
+The server authenticates the recipient using a special protocol, as described in section [ID authentication protocol](../02_protocol_and_cryptography_spec/ch06_ID_authentication_protocol.md).
 
-The recipient uses the CDOC2 Auth Server to obtain a session token and the CDOC2 RP Server to perform signing operations. See [system components](ch02_system_components.md) for details of these servers.
+The recipient uses the CDOC2 Auth Server to obtain a session token and the CDOC2 RP Server to perform signing operations. See [system components](ch04_system_components_sid_mid.md) for details of these servers.
 
 The two following `recipient_id` naming patters are supported:
 

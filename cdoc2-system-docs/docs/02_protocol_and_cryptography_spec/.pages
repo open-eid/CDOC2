@@ -4,6 +4,7 @@ nav:
     - 'Container Format': ch03_container_format.md
     - 'Cryptographic Details': ch05_cryptographic_details.md
     - 'Password-Based Encryption Security' : A1_Security_level.md
+    - 'Client authentication protocol': ch06_ID_authentication_protocol.md
     - Schemas:
         - 'Header FlatBuffers Schema': header_flatbuffers_schema.md
         - 'Recipients FlatBuffers Schema': recipients_flatbuffers_schema.md

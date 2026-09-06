@@ -1,5 +1,5 @@
 ---
-title: Client authentication protocol
+title: 8. Client authentication protocol
 ---
 
 # Client authentication protocol
@@ -13,7 +13,7 @@ This section describes a protocol and data formats for authenticating to multipl
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
 2. Client needs to authenticate to multiple CSSs, in order to download all Capsules.
 3. Client should only need to create one signature with its authentication means (Mobile-ID, Smart-ID) for authentication.
-4. CSS must not be able to replay the authentication ticket to another CSS.
+4. CSS must not be able to replay the authentication token to another CSS.
 
 ## Non-suitable alternatives
 
@@ -50,7 +50,7 @@ participant "CSS servers" as CSS
 participant "MiD/SiD API" as SID
 
 User -> CLIENT : Decrypt this CDOC2 container
-CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
+CLIENT -> User : We need to access CDOC2 infrastructure\nPlease authenticate as user "U"
 
 alt SID
   User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
@@ -216,7 +216,8 @@ SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc
 We are mapping those SD-JWT-specific entities to CDOC2 data model in following way:
 
 1. Same SD-JWT data structure is used for CDOC2 authentication data and CDOC2 authentication signature. CDOC2 authentication data is expressed as SD-JWT claims. CDOC2 authentication signature corresponds to the Issuer signature.
-2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific CDOC2 authentication ticket.
+2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific
+   CDOC2 authentication token.
 3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates SD-JWT structure, specifies that some claims are disclosable and creates specific presentations for each CSS server. SD-JWT standard optionally supports a scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify the possession of Holder's key pair during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
 4. Role of SD-JWT Verifier is performed by CSS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
@@ -226,21 +227,24 @@ How does this "selective disclosure" feature actually work behind the scenes? Th
 
 ```text
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
+    HASH(SALT | CLAIM-NAME | CLAIM-VALUE)
 )*
 ```
 
-where `SALT` is a random salt. This kind of operation effectively "hides" the content of the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if they are provided with the values of `SALT` and clear-text `CLAIM_VALUE`. Such kind of `SD-CLAIMS` are included in the JWT structure, inside a special JOSE object with name `_sd`.
+where `SALT` is a random salt. This kind of operation effectively "hides" `CLAIM-NAME` and
+`CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct data,
+if they are provided with the values of `SALT`, clear-text `CLAIM-NAME` and `CLAIM_VALUE`.
+Such `SD-CLAIMS` are included in the JWT structure, inside a special JOSE array with name `_sd`.
 
-In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES` data items, which are:
+In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-DISCLOSURE` data items, which are:
 
 ```text
-SD-RELEASES = (
-    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
-)
+SD-DISCLOSURE = (
+    SALT, CLAIM-NAME, CLAIM-VALUE
+)*
 ```
 
-and add such data items in the JWT, in a special JOSE object with name `sd_release`.
+The resulting disclosure items are appended to the JWT using the tilde character `~` as a separator
 
 So, for example, let's take the original set of claims:
 
@@ -248,7 +252,7 @@ So, for example, let's take the original set of claims:
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "given_name": "John",
-  "family_name": "Doe",
+  "family_name": "Doe"
 }
 ```
 
@@ -258,9 +262,9 @@ Let's say that the Issuer wishes to make claim `given_name` disclosable. They ge
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "family_name": "Doe",
-  "_sd_": {
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
-  }
+  "_sd": [
+    "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
+  ]
 }
 ```
 
@@ -270,23 +274,24 @@ JWT header and JWT payload is then signed and following JWT is created:
 <JWT_header>.<JWT_payload>.<JWT_signature>
 ```
 
-However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container, which is simply a JSON array of `SD-RELEASES` data items, is also added:
+However, this "compact"-encoded JWT doesn't yet disclosure information. So, an SD-DISCLOSURE
+object is also added:
 
 ```json
-{ 
   [
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "eluV5Og3gSNII8EYnsxA_A", "given_name", "John"
   ]
-}
 ```
 
-It is encoded in Base64 and added to the original encoded JWT, after yet another period ("."):
+It is encoded in Base64 and appended to the original encoded JWT, separated and terminated by a
+tilde  ("~"):
 
 ```text
-<JWT_header>.<JWT_payload>.<JWT_signature>.<SD-JWT Salt/Value Container>
+<JWT_header>.<JWT_payload>.<JWT_signature>~<SDJWT_disclosure>~
 ```
 
-Now, Holder can decide which disclosable claim information from the `<SD-JWT Salt/Value Container>` they will include, when creating a presentation to Verifier, and which disclosable claims they don't include. The signature of the original JWT is still valid, because original JWT will be unchanged.
+Now, Holder can decide which claims to disclose by selectively appending `<SDJWT_disclosure>`
+objects when creating a presentation to Verifier. The signature of the original JWT is still valid, because original JWT will be unchanged.
 
 ### Creating SD-JWT structure (authentication data and authentication signature)
 
@@ -303,7 +308,9 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
    The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using:
    - Mobile-ID uses `ES256` (ECDSA with SHA-256).
-   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`.
+   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`. This is a non-standard algorithm which
+     describes the combination of algorithms in use by SID RPv3 and is interpreted as such by
+     the CDOC2 infrastructure token authentication logic.
 
 2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. The `iss` claim is added directly to the payload. The `aud` claim is added as a selectively disclosable claim via the `_sd` mechanism and is therefore not present as a plain claim in the base payload.
 
@@ -324,7 +331,7 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
 4. Client signs the SD-JWT structure (with the header, payload and disclosable claims information in `_sd` structure), as SD-JWT Issuer with user's authentication means.
 
-### Presenting SD-JWT (creating authentication ticket)
+### Presenting SD-JWT (creating authentication token)
 
 For each server, Client creates SD-JWT presentation and discloses only that `aud` array element, which contains `key-share` and `nonce`, which are specific to that server.
 
@@ -397,7 +404,7 @@ if we decode the individual parts, we get following data items:
    ]
    ```
 
-### Verifying SD-JWT (verifying authentication ticket)
+### Verifying SD-JWT (verifying authentication token)
 
 CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~`) and performs following authentication and authorization checks:
 
@@ -461,10 +468,8 @@ CSS server receives the session token presentation and performs the following ch
 2. Verify that the token type header is `vnd.cdoc2.session-token.v2+sd-jwt`.
 3. Verify that `iat` is not in the future and `exp` is not in the past.
 4. Verify that `sub` matches the identity from the signing certificate.
-5. Verify the embedded user eID signature in the `signature` claim using the appropriate method:
-   - For **Smart-ID RP API v3**: verify using RSASSA-PSS+ACSP_V2 algorithm and the provided SID signature parameters.
-   - For **Mobile-ID**: verify using the EC public key from the user's certificate and the provided MID signature parameters.
-6. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+5. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+6. Only for **Smart-ID RP API v3** : Verify the embedded user eID signature in the `signature` claim
 
 ## Security of the protocol
 
@@ -547,6 +552,8 @@ Following authentication means or APIs do not have this weakness:
 
 1. ID-card when used via web-eID JS interface
 2. Smart-ID RP-API v3 (supported in CDOC2 via the RSASSA-PSS+ACSP_V2 signature verification)
+3. Mobile-ID REST API with an RP counter signature. This is implemented in CDOC2 as an HTTP
+   signature scheme ( [RFC 9421](https://datatracker.ietf.org/doc/html/rfc9421) )
 
 In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
 
