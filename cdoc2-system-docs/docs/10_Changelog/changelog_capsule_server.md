@@ -1,8 +1,23 @@
 # CDOC2 Capsule Server changelog
 
-**[1.7] Added support for secp521r1**
+**[1.7.2] Security and bug fixes**
+
+* Return correct error code when client certificate is missing in `/key-capsules/{transactionId}`.
+* Return `x-expiry-time-adjusted` in `PUT /key-capsules`.
+* Updated all components to Spring Boot 4.1.0
+
+**[1.7.1] Added support for secp521r1**
 
 * Added support for the elliptic curve secp521r1
+
+**[1.7] Improved logging**
+
+* Log the `Content-Type`, `Origin` and `Sec-Fetch-*`, `X-Forwarded-For` header values for each request.
+* Added request completion time logging.
+* For `POST` requests, log the size of the request body.
+* Remove the certificate subject common name (CN) from the log's.
+* Add support for tracing.
+* Add `logstash-logback-encoder` dependency to support OpenTelemetry JSON logging.
 
 **[1.6] Added support for secp256r1**
 
