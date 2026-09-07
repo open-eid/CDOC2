@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../container_storage_guide/" rel="prev"/>
-<link href="../../09_test_plan/test_plan/" rel="next"/>
+<link href="../auth_server_api/" rel="prev"/>
+<link href="../../08_User_Guides/integrator_guide/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Overview diagrams - CDOC2 System Documentation</title>
+<title>RP Server API - CDOC2 System Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#overview-diagrams">26. 
+<a class="md-skip" href="#api-reference-for-rp-server">22. 
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview diagrams
+              RP Server API
             
           </span>
 </div>
@@ -473,8 +473,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
 <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -486,7 +486,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_6">
 <span class="md-nav__icon md-icon"></span>
             
@@ -497,7 +497,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../05_api_references/capsule_server_api/">
+<a class="md-nav__link" href="../capsule_server_api/">
 <span class="md-ellipsis">
     
   
@@ -509,7 +509,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../05_api_references/shares_server_api/">
+<a class="md-nav__link" href="../shares_server_api/">
 <span class="md-ellipsis">
     
   
@@ -521,85 +521,11 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../05_api_references/auth_server_api/">
+<a class="md-nav__link" href="../auth_server_api/">
 <span class="md-ellipsis">
     
   
     Auth Server API
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../05_api_references/rp_server_api/">
-<span class="md-ellipsis">
-    
-  
-    RP Server API
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
-<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    User Guides
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_7">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    User Guides
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../integrator_guide/">
-<span class="md-ellipsis">
-    
-  
-    Integrator Guide
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../password_guide/">
-<span class="md-ellipsis">
-    
-  
-    Password Strength User Guide
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../container_storage_guide/">
-<span class="md-ellipsis">
-    
-  
-    CDOC2 Container Storage User Guide
   
 
     
@@ -612,7 +538,7 @@
 <span class="md-ellipsis">
     
   
-    Overview diagrams
+    RP Server API
   
 
     
@@ -623,7 +549,7 @@
 <span class="md-ellipsis">
     
   
-    Overview diagrams
+    RP Server API
   
 
     
@@ -636,88 +562,139 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
+<a class="md-nav__link" href="#api-usage-samples">
 <span class="md-ellipsis">
       
-        CDOC1 VS CDOC2 format
+        API usage samples
+      
+    </span>
+</a>
+<nav aria-label="API usage samples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-smart-id-authentication">
+<span class="md-ellipsis">
+      
+        Start Smart-ID Authentication
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
+<a class="md-nav__link" href="#poll-smart-id-session-status">
 <span class="md-ellipsis">
       
-        CDOC1 simple overview
+        Poll Smart-ID Session Status
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
+<a class="md-nav__link" href="#start-mobile-id-authentication">
 <span class="md-ellipsis">
       
-        CDOC2 simple overview
+        Start Mobile-ID Authentication
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
+<a class="md-nav__link" href="#poll-mobile-id-session-status">
 <span class="md-ellipsis">
       
-        CDOC2 capsule options
+        Poll Mobile-ID Session Status
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
+<a class="md-nav__link" href="#server-info">
 <span class="md-ellipsis">
       
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
+        Server Info
       
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    
+  
+    Password Strength User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    
+  
+    CDOC2 Container Storage User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    
+  
+    Overview diagrams
+  
+
+    
+  </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -861,85 +838,62 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
+<a class="md-nav__link" href="#api-usage-samples">
 <span class="md-ellipsis">
       
-        CDOC1 VS CDOC2 format
+        API usage samples
+      
+    </span>
+</a>
+<nav aria-label="API usage samples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#start-smart-id-authentication">
+<span class="md-ellipsis">
+      
+        Start Smart-ID Authentication
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
+<a class="md-nav__link" href="#poll-smart-id-session-status">
 <span class="md-ellipsis">
       
-        CDOC1 simple overview
+        Poll Smart-ID Session Status
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
+<a class="md-nav__link" href="#start-mobile-id-authentication">
 <span class="md-ellipsis">
       
-        CDOC2 simple overview
+        Start Mobile-ID Authentication
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
+<a class="md-nav__link" href="#poll-mobile-id-session-status">
 <span class="md-ellipsis">
       
-        CDOC2 capsule options
+        Poll Mobile-ID Session Status
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
+<a class="md-nav__link" href="#server-info">
 <span class="md-ellipsis">
       
-        CDOC2 server capsule
+        Server Info
       
     </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -948,28 +902,162 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="overview-diagrams"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Overview Diagrams<a class="headerlink" href="#overview-diagrams" title="Permanent link">¶</a></h1>
-<p>This page provides a visual summary of the CDOC2 system, covering format differences,
-architecture, capsule options, and encryption flows. The diagrams are intended as a
-quick reference alongside the more detailed sections of this documentation.</p>
-<h2 id="cdoc1-vs-cdoc2-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> CDOC1 VS CDOC2 format<a class="headerlink" href="#cdoc1-vs-cdoc2-format" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 VS CDOC2 format" src="../../img/server%20capsule-CDOC%201%20VS%202.drawio.png"/></p>
-<h2 id="cdoc1-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> CDOC1 simple overview<a class="headerlink" href="#cdoc1-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 simple overview" src="../../img/CDOC1%20simple.png"/></p>
-<h2 id="cdoc2-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.3</span> CDOC2 simple overview<a class="headerlink" href="#cdoc2-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 simple overview" src="../../img/CDOC2%20simple.png"/></p>
-<h2 id="cdoc2-capsule-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.4</span> CDOC2 capsule options<a class="headerlink" href="#cdoc2-capsule-options" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 capsule options" src="../../img/server%20capsule-Capsule%20options.drawio.png"/></p>
-<h2 id="cdoc2-server-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.5</span> CDOC2 server capsule<a class="headerlink" href="#cdoc2-server-capsule" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 server capsule" src="../../img/server%20capsule-Server%20capsule.drawio.png"/></p>
-<h2 id="cdoc2-concept-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.6</span> CDOC2 concept model<a class="headerlink" href="#cdoc2-concept-model" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 concept model" src="../../img/CDOC2%20model.jpg"/></p>
-<h2 id="cdoc1-main-flow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.7</span> CDOC1 main flow<a class="headerlink" href="#cdoc1-main-flow" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 main flow" src="../../img/CDOC1%20main%20flow.jpg"/></p>
-<h2 id="cdoc2-main-flow-id-card-password"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.8</span> CDOC2 main flow (ID-Card, password)<a class="headerlink" href="#cdoc2-main-flow-id-card-password" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 main flow (ID-Card, password)" src="../../img/CDOC2%20main%20flow%20%28ID-card%2C%20password%29.jpg"/></p>
-<h2 id="cdoc2-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.9</span> CDOC2 Key Shares<a class="headerlink" href="#cdoc2-key-shares" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 Key Shares" src="../../img/CDOC2_key_shares.png"/></p>
+<h1 id="api-reference-for-rp-server"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.</span> API Reference for RP server<a class="headerlink" href="#api-reference-for-rp-server" title="Permanent link">¶</a></h1>
+<p>CDOC2 API References are available at the Open Electronic Identity GitHub <a href="https://github.com/open-eid/cdoc2-openapi">CDOC2 Openapi repo</a></p>
+<p><a href="https://github.com/open-eid/cdoc2-openapi/blob/develop/cdoc2-rp-server-openapi.yaml">Relying Party Server Openapi spec</a></p>
+<h2 id="api-usage-samples"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1</span> API usage samples<a class="headerlink" href="#api-usage-samples" title="Permanent link">¶</a></h2>
+<h3 id="start-smart-id-authentication"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.1</span> Start Smart-ID Authentication<a class="headerlink" href="#start-smart-id-authentication" title="Permanent link">¶</a></h3>
+<p>Request:</p>
+<div class="highlight"><pre><span></span><code>POST /sid/authenticate
+x-cdoc2-session-token: eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK3NkLWp3dCJ9...
+x-cdoc2-session-x5c: MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...
+Content-Type: application/json
+
+{
+  "semanticsIdentifier": "PNOEE-30001010004",
+  "certificateLevel": "QUALIFIED",
+  "signatureProtocol": "ACSP_V2",
+  "signatureProtocolParameters": {
+    "rpChallenge": "S480uRoCX4pAb1tWqAy8WGl/AWE1RnqaP2y5iamCDhlCyQrMTVa5d8Dh34sZ+UePHXRNKTwz7QTvsIL1ls05AQ==",
+    "signatureAlgorithm": "rsassa-pss",
+    "signatureAlgorithmParameters": {
+      "hashAlgorithm": "SHA-512"
+    }
+  },
+  "interactions": "W3sidHlwZSI6ImNvbmZpcm1hdGlvbk1lc3NhZ2UiLCJkaXNwbGF5VGV4dDIwMCI6IkRlY3J5cHRpbmcgY29udGFpbmVyIGZpbGUgXCJ0ZXN0LnR4dFwiIn1d",
+  "vcType": "numeric4"
+}
+</code></pre></div>
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "sessionID": "7f2e9c1a-3b4d-4e5f-9a8b-1c2d3e4f5a6b"
+}
+</code></pre></div>
+<h3 id="poll-smart-id-session-status"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.2</span> Poll Smart-ID Session Status<a class="headerlink" href="#poll-smart-id-session-status" title="Permanent link">¶</a></h3>
+<p>Request:</p>
+<div class="highlight"><pre><span></span><code>GET /sid/session/7f2e9c1a-3b4d-4e5f-9a8b-1c2d3e4f5a6b
+x-cdoc2-session-token: eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK3NkLWp3dCJ9...
+x-cdoc2-session-x5c: MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...
+</code></pre></div>
+<p>Response — Still Running:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "state": "RUNNING" }
+</code></pre></div>
+<p>Response — Complete/OK::</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "state": "COMPLETE",
+  "result": {
+    "endResult": "OK",
+    "documentNumber": "PNOEE-30001010004-BVFM-Q"
+  },
+  "signatureProtocol": "ACSP_V2",
+  "signature": {
+    "value": "Vak2Q0NiFnh6+lW+YaJuB8yMYM7k3I5QfsUxS3Y1Ddm3qy6HvebLl0/t17dq289/...",
+    "serverRandom": "+wVP2U/SMKVkVrggDjNTXFV/",
+    "userChallenge": "TLSjYRH2oYw8tW2bq0it0IUb7WIFkCLgF8NTc7-4Zq4",
+    "flowType": "Notification",
+    "signatureAlgorithm": "rsassa-pss",
+    "signatureAlgorithmParameters": {
+      "hashAlgorithm": "SHA-512",
+      "maskGenAlgorithm": {
+        "algorithm": "id-mgf1",
+        "parameters": { "hashAlgorithm": "SHA-512" }
+      },
+      "saltLength": 64,
+      "trailerField": "0xbc"
+    }
+  },
+  "cert": {
+    "value": "MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...",
+    "certificateLevel": "QUALIFIED"
+  },
+  "interactionTypeUsed": "displayTextAndPIN"
+}
+</code></pre></div>
+<h3 id="start-mobile-id-authentication"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.3</span> Start Mobile-ID Authentication<a class="headerlink" href="#start-mobile-id-authentication" title="Permanent link">¶</a></h3>
+<p>Request:</p>
+<div class="highlight"><pre><span></span><code>POST /mid/authenticate
+x-cdoc2-session-token: eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK3NkLWp3dCJ9...
+x-cdoc2-session-x5c: MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...
+Content-Type: application/json
+
+{
+  "phoneNumber": "+3726234566",
+  "nationalIdentityNumber": "38412319871",
+  "hash": "0nbgC2fVdLVQFZJdBbmG8B+kXnZtX1FSTM59UVDQ4Gc=",
+  "hashType": "SHA256",
+  "language": "ENG",
+  "displayText": "Decrypting container file \"test.txt\"",
+  "displayTextFormat": "GSM-7"
+}
+</code></pre></div>
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "sessionID": "4c1e2a3b-9d7e-4f8a-b2c1-6e5d4f3a2b1c"
+}
+</code></pre></div>
+<h3 id="poll-mobile-id-session-status"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.4</span> Poll Mobile-ID Session Status<a class="headerlink" href="#poll-mobile-id-session-status" title="Permanent link">¶</a></h3>
+<p>Request:</p>
+<div class="highlight"><pre><span></span><code>GET /mid/session/4c1e2a3b-9d7e-4f8a-b2c1-6e5d4f3a2b1c
+x-cdoc2-session-token: eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK3NkLWp3dCJ9...
+x-cdoc2-session-x5c: MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...
+</code></pre></div>
+<p>Response — Still Running:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{ "state": "RUNNING" }
+</code></pre></div>
+<p>Response — Complete/OK:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+x-rp-signed-hash: B+C9XVjIAZnCHH9vfBSv...
+x-rp-name: cdoc2-RP.example.ee
+Signature-Input: sig1=("x-rp-signed-hash" "x-rp-name");created=1715269200;keyid="f4e8b6b4-6a8e-4f77-987c-0957d1dc7f73"
+Signature: sig1=:&lt;Base64-encoded-signature&gt;:
+Content-Type: application/json
+
+{
+  "state": "COMPLETE",
+  "result": "OK",
+  "signature": {
+    "value": "B+C9XVjIAZnCHH9vfBSvXgFN2oT4RuCvYLkE==",
+    "algorithm": "SHA256WithECEncryption"
+  },
+  "cert": "MIIFijCCBHKgAwIBAgIJAL3NmQGsd536MA0GCSqGSIb3DQEBCwUAMC8...",
+  "time": "2026-09-07T10:52:20Z",
+  "traceId": "d8de38e7bb5d8f8a"
+}
+</code></pre></div>
+<h3 id="server-info"><span class="enumerate-headings-plugin enumerate-heading-plugin">22.1.5</span> Server Info<a class="headerlink" href="#server-info" title="Permanent link">¶</a></h3>
+<p>Request:</p>
+<div class="highlight"><pre><span></span><code>GET /info
+</code></pre></div>
+<p>Response:</p>
+<div class="highlight"><pre><span></span><code>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "build": {
+    "artifact": "cdoc2-rp-server-webapp",
+    "name": "cdoc2-rp-server-webapp",
+    "time": "2026-05-29T07:21:23.869Z",
+    "version": "0.6.0",
+    "group": "ee.cyber.cdoc2"
+  },
+  "system.time": "2026-05-29T07:22:50Z"
+}
+</code></pre></div>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -977,7 +1065,7 @@ quick reference alongside the more detailed sections of this documentation.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CDOC2 Container Storage User Guide" class="md-footer__link md-footer__link--prev" href="../container_storage_guide/">
+<a aria-label="Previous: Auth Server API" class="md-footer__link md-footer__link--prev" href="../auth_server_api/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -986,17 +1074,17 @@ quick reference alongside the more detailed sections of this documentation.</p>
                 Previous
               </span>
 <div class="md-ellipsis">
-                CDOC2 Container Storage User Guide
+                Auth Server API
               </div>
 </div>
 </a>
-<a aria-label="Next: Capsule Server" class="md-footer__link md-footer__link--next" href="../../09_test_plan/test_plan/">
+<a aria-label="Next: Integrator Guide" class="md-footer__link md-footer__link--next" href="../../08_User_Guides/integrator_guide/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Capsule Server
+                Integrator Guide
               </div>
 </div>
 <div class="md-footer__button md-icon">

@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../container_storage_guide/" rel="prev"/>
-<link href="../../09_test_plan/test_plan/" rel="next"/>
+<link href="../ch05_cryptographic_details/" rel="prev"/>
+<link href="../ch06_ID_authentication_protocol/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Overview diagrams - CDOC2 System Documentation</title>
+<title>Password-Based Encryption Security - CDOC2 System Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#overview-diagrams">26. 
+<a class="md-skip" href="#security-level-of-password-based-encryptiondecryption-in-cdoc2">7. 
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview diagrams
+              Password-Based Encryption Security
             
           </span>
 </div>
@@ -163,8 +163,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
 <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -176,7 +176,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_4">
 <span class="md-nav__icon md-icon"></span>
             
@@ -187,7 +187,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch02_encryption_schemes/">
+<a class="md-nav__link" href="../ch02_encryption_schemes/">
 <span class="md-ellipsis">
     
   
@@ -199,7 +199,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch03_container_format/">
+<a class="md-nav__link" href="../ch03_container_format/">
 <span class="md-ellipsis">
     
   
@@ -211,7 +211,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch05_cryptographic_details/">
+<a class="md-nav__link" href="../ch05_cryptographic_details/">
 <span class="md-ellipsis">
     
   
@@ -222,8 +222,20 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/A1_Security_level/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Password-Based Encryption Security
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     
   
@@ -233,9 +245,53 @@
     
   </span>
 </a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#general-regulatory-requirements">
+<span class="md-ellipsis">
+      
+        General regulatory requirements
+      
+    </span>
+</a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch06_ID_authentication_protocol/">
+<a class="md-nav__link" href="#pbkdf2-regulatory-requirements">
+<span class="md-ellipsis">
+      
+        PBKDF2 regulatory requirements
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#modeling-attacker-capabilities">
+<span class="md-ellipsis">
+      
+        Modeling attacker capabilities
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-password-length-requirements">
+<span class="md-ellipsis">
+      
+        CDOC2 password length requirements
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch06_ID_authentication_protocol/">
 <span class="md-ellipsis">
     
   
@@ -270,7 +326,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/header_flatbuffers_schema/">
+<a class="md-nav__link" href="../header_flatbuffers_schema/">
 <span class="md-ellipsis">
     
   
@@ -282,7 +338,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/recipients_flatbuffers_schema/">
+<a class="md-nav__link" href="../recipients_flatbuffers_schema/">
 <span class="md-ellipsis">
     
   
@@ -297,7 +353,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/keylabel_field/">
+<a class="md-nav__link" href="../keylabel_field/">
 <span class="md-ellipsis">
     
   
@@ -547,8 +603,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -560,7 +616,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             
@@ -571,7 +627,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../integrator_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
 <span class="md-ellipsis">
     
   
@@ -583,7 +639,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../password_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
 <span class="md-ellipsis">
     
   
@@ -595,7 +651,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../container_storage_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
 <span class="md-ellipsis">
     
   
@@ -606,20 +662,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    
-  
-    Overview diagrams
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
 <span class="md-ellipsis">
     
   
@@ -629,95 +673,6 @@
     
   </span>
 </a>
-<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      In this chapter:
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
-<span class="md-ellipsis">
-      
-        CDOC1 VS CDOC2 format
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC1 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC2 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -861,82 +816,37 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
+<a class="md-nav__link" href="#general-regulatory-requirements">
 <span class="md-ellipsis">
       
-        CDOC1 VS CDOC2 format
+        General regulatory requirements
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
+<a class="md-nav__link" href="#pbkdf2-regulatory-requirements">
 <span class="md-ellipsis">
       
-        CDOC1 simple overview
+        PBKDF2 regulatory requirements
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
+<a class="md-nav__link" href="#modeling-attacker-capabilities">
 <span class="md-ellipsis">
       
-        CDOC2 simple overview
+        Modeling attacker capabilities
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
+<a class="md-nav__link" href="#cdoc2-password-length-requirements">
 <span class="md-ellipsis">
       
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
+        CDOC2 password length requirements
       
     </span>
 </a>
@@ -948,28 +858,42 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="overview-diagrams"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Overview Diagrams<a class="headerlink" href="#overview-diagrams" title="Permanent link">¶</a></h1>
-<p>This page provides a visual summary of the CDOC2 system, covering format differences,
-architecture, capsule options, and encryption flows. The diagrams are intended as a
-quick reference alongside the more detailed sections of this documentation.</p>
-<h2 id="cdoc1-vs-cdoc2-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> CDOC1 VS CDOC2 format<a class="headerlink" href="#cdoc1-vs-cdoc2-format" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 VS CDOC2 format" src="../../img/server%20capsule-CDOC%201%20VS%202.drawio.png"/></p>
-<h2 id="cdoc1-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> CDOC1 simple overview<a class="headerlink" href="#cdoc1-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 simple overview" src="../../img/CDOC1%20simple.png"/></p>
-<h2 id="cdoc2-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.3</span> CDOC2 simple overview<a class="headerlink" href="#cdoc2-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 simple overview" src="../../img/CDOC2%20simple.png"/></p>
-<h2 id="cdoc2-capsule-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.4</span> CDOC2 capsule options<a class="headerlink" href="#cdoc2-capsule-options" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 capsule options" src="../../img/server%20capsule-Capsule%20options.drawio.png"/></p>
-<h2 id="cdoc2-server-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.5</span> CDOC2 server capsule<a class="headerlink" href="#cdoc2-server-capsule" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 server capsule" src="../../img/server%20capsule-Server%20capsule.drawio.png"/></p>
-<h2 id="cdoc2-concept-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.6</span> CDOC2 concept model<a class="headerlink" href="#cdoc2-concept-model" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 concept model" src="../../img/CDOC2%20model.jpg"/></p>
-<h2 id="cdoc1-main-flow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.7</span> CDOC1 main flow<a class="headerlink" href="#cdoc1-main-flow" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 main flow" src="../../img/CDOC1%20main%20flow.jpg"/></p>
-<h2 id="cdoc2-main-flow-id-card-password"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.8</span> CDOC2 main flow (ID-Card, password)<a class="headerlink" href="#cdoc2-main-flow-id-card-password" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 main flow (ID-Card, password)" src="../../img/CDOC2%20main%20flow%20%28ID-card%2C%20password%29.jpg"/></p>
-<h2 id="cdoc2-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.9</span> CDOC2 Key Shares<a class="headerlink" href="#cdoc2-key-shares" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 Key Shares" src="../../img/CDOC2_key_shares.png"/></p>
+<h1 id="security-level-of-password-based-encryptiondecryption-in-cdoc2"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.</span> Security level of password-based encryption/decryption in CDOC2<a class="headerlink" href="#security-level-of-password-based-encryptiondecryption-in-cdoc2" title="Permanent link">¶</a></h1>
+<h2 id="general-regulatory-requirements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.1</span> General regulatory requirements<a class="headerlink" href="#general-regulatory-requirements" title="Permanent link">¶</a></h2>
+<p>Government-issued documents contain some guidance about the required security level. For example, NIST SP 800-57 Part 1, Revision 5 recommends that systems should use at least 128-bit security level and this is adequate for 2031 and beyond (NIST SP 800-57 Part 1, page 59, Table 4). This is applicable, when choosing encryption/decryption algorithms and protocols and in CDOC2 system, AES-128 and similar algorithms are in use.</p>
+<p>However, when it comes to password-based encryption/decryption, guidelines are not very good. For example, Section 8.1.5.3.8 of NIST SP 800-57 suggests that passwords should provide 128 bits of protection as well. If we would apply this, this would mean that users should use at least 21-character random passwords providing 128 bits of entropy. Also, NIST SP 800-57 doesn't take into account that trying out one password and trying out one AES key takes different amount of time.</p>
+<p>German BSI document TR-02102-1 (<a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile">https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-1.pdf?__blob=publicationFile</a>) also gives similar guidance:</p>
+<ol>
+<li>Section 6.3.1, Remark 6.4 (iii) - "In other situations where these conditions are not met (for example, when a cryptographic secret is directly derived from the password that provides access to sensitive information), it is recommended to choose passwords via a method that offers at least 120 bits of entropy"</li>
+</ol>
+<p>There's another document SP 800-131 Part 1 - "Recommendation for Password-Based Key Derivation Part 1: Storage Applications", which applies specifically to our situation, but the recommendations are not very conclusive:</p>
+<ol>
+<li>Annex A.1 - "For the security of electronically stored data, passwords should be strong enough so that it is infeasible for attackers to gain access by guessing the password"</li>
+<li>Annex A.1 - "Passwords shorter than 10 characters are usually considered to be weak"</li>
+<li>Annex A.1 - "Passphrases shorter than 20 characters are usually considered weak"</li>
+</ol>
+<h2 id="pbkdf2-regulatory-requirements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.2</span> PBKDF2 regulatory requirements<a class="headerlink" href="#pbkdf2-regulatory-requirements" title="Permanent link">¶</a></h2>
+<p>NIST SP 800-131 Part 1 gives following recommendation:</p>
+<ol>
+<li>Annex A.2.2 - "The number of iterations should be set as high as can be tolerated for the environment, while maintaining acceptable performance."</li>
+</ol>
+<p>German TR-02102-1 gives following recommendation (while suggesting to use Argon2id in place of PBKDF2)</p>
+<ol>
+<li>Section B.1.3 - "The security parameters of Argon2id and the requirements for the passwords depend on the application scenario and should be discussed with an expert"</li>
+</ol>
+<p>Taking into account the NIST recommendation and based on tests on general purpose CPU (Apple M2 3.49 GHz), it takes around 1-2 seconds to run PBKDF2 algorithm with 10,000,000 (<span class="arithmatex">\(1 \cdot 10^7\)</span>) iterations. This seems to be a reasonable performance tradeoff.</p>
+<h2 id="modeling-attacker-capabilities"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.3</span> Modeling attacker capabilities<a class="headerlink" href="#modeling-attacker-capabilities" title="Permanent link">¶</a></h2>
+<p>When we consider a brute-force exhaustive password search attack against CDOC2 Container, we have to somehow model the capabilities of the attacker. It is especially difficult, because we have to consider a long crypto-period. Attacker may store the captured CDOC2 Container and launch the attack after powerful computers have emerged, or execute the attack for a very long period of time, perhaps over multiple years.</p>
+<p>"Bovine RC5 effort" (<a href="https://www.distributed.net/RC5">https://www.distributed.net/RC5</a>) is one of examples of highly parallel exhaustive key searches performed in 2002. They were able to find 64-bit encryption key for RC5 ciphertext within 1,757 days, by using computers of 331,252 individuals. Massive parallel exhaustive search is therefore certainly within capabilities of attackers as well.</p>
+<p>There are no guidelines for estimating, how many CPU cores an attacker might be able to use. We could use an estimate for an upper bound, by considering the number of CPU cores in the world. ARM company has estimated that all their partners combined, have shipped more than 25 billion (<span class="arithmatex">\(\approx 2.5 \cdot 10^{10}\)</span>) chips in year 2020 (<a href="https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results">https://newsroom.arm.com/news/arm-partners-are-shipping-more-than-900-arm-based-chips-per-second-based-on-latest-results</a>). We could assume that all of those chips are controlled by a single attacker and all of those chips are capable of doing a PBKDF2 operation with <span class="arithmatex">\(1 \cdot 10^7\)</span> iterations in one second. Then we could have our upper bound for a very powerful attacker, which is <span class="arithmatex">\(\approx 7.8 \cdot 10^{17}\)</span> password tries per year.</p>
+<p>Another option is to use an estimation of the Bitcoin Hash Rate. As of September 2024, it is estimated that performance of the whole Bitcoin mining network is about 700 exahash per second (<span class="arithmatex">\(\approx 7 \cdot 10^{18}\)</span>) (<a href="https://www.bitcoinmagazinepro.com/blog/what-is-bitcoin-hash-rate-a-complete-guide-to-mining-power/">https://www.bitcoinmagazinepro.com/blog/what-is-bitcoin-hash-rate-a-complete-guide-to-mining-power/</a>). Assuming that whole network is controlled by a single very powerful attacker, then this attacker may be able to do <span class="arithmatex">\(\approx 2.2 \cdot 10^{19}\)</span> PBKDF2 password tries per year.</p>
+<h2 id="cdoc2-password-length-requirements"><span class="enumerate-headings-plugin enumerate-heading-plugin">7.4</span> CDOC2 password length requirements<a class="headerlink" href="#cdoc2-password-length-requirements" title="Permanent link">¶</a></h2>
+<p>One example of practical passwords, which are considered secure, are Apple's "Automatic strong passwords" (<a href="https://support.apple.com/en-gb/guide/security/secc84c811c4/web">https://support.apple.com/en-gb/guide/security/secc84c811c4/web</a>). They are 20 characters long, contain one digit, one uppercase, two hyphens and 16 lowercase characters. Such generated passwords contain 71 bits of entropy.</p>
+<p>If CDOC2 system would enforce using similar passwords and would use PBKDF2 with <span class="arithmatex">\(1 \cdot 10^7\)</span> iterations, it would mean that a hypothetical attacker possessing every ARM processor manufactured, could try out all password combinations ( <span class="arithmatex">\(2^{71} \approx 2.3 \cdot 10^{21}\)</span> ) within</p>
+<p>$$ \frac{2.3 \cdot 10^{21}}{7.8 \cdot 10^{17}} \approx 3000 $$ years.</p>
+<p>Another hypothetical attacker controlling the whole Bitcoin mining network, could try out all password combinations within</p>
+<p>$$ \frac{2.3 \cdot 10^{21}}{2.2 \cdot 10^{19}} \approx 104 $$ years.</p>
+<p>Taking into account that we modeled our upper bound for our attacker, these kinds of 71-bit entropy passwords should provide us multiple orders of magnitude for a security margin.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -977,7 +901,7 @@ quick reference alongside the more detailed sections of this documentation.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CDOC2 Container Storage User Guide" class="md-footer__link md-footer__link--prev" href="../container_storage_guide/">
+<a aria-label="Previous: Cryptographic Details" class="md-footer__link md-footer__link--prev" href="../ch05_cryptographic_details/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -986,17 +910,17 @@ quick reference alongside the more detailed sections of this documentation.</p>
                 Previous
               </span>
 <div class="md-ellipsis">
-                CDOC2 Container Storage User Guide
+                Cryptographic Details
               </div>
 </div>
 </a>
-<a aria-label="Next: Capsule Server" class="md-footer__link md-footer__link--next" href="../../09_test_plan/test_plan/">
+<a aria-label="Next: Client authentication protocol" class="md-footer__link md-footer__link--next" href="../ch06_ID_authentication_protocol/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Capsule Server
+                Client authentication protocol
               </div>
 </div>
 <div class="md-footer__button md-icon">

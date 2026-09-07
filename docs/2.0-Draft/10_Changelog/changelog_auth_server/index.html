@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../container_storage_guide/" rel="prev"/>
-<link href="../../09_test_plan/test_plan/" rel="next"/>
+<link href="../changelog_shares_server/" rel="prev"/>
+<link href="../changelog_rp_server/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Overview diagrams - CDOC2 System Documentation</title>
+<title>Auth Server - CDOC2 System Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#overview-diagrams">26. 
+<a class="md-skip" href="#cdoc2-auth-server-changelog">38. 
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview diagrams
+              Auth Server
             
           </span>
 </div>
@@ -547,8 +547,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -560,7 +560,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             
@@ -571,7 +571,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../integrator_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
 <span class="md-ellipsis">
     
   
@@ -583,7 +583,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../password_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
 <span class="md-ellipsis">
     
   
@@ -595,7 +595,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../container_storage_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
 <span class="md-ellipsis">
     
   
@@ -606,20 +606,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    
-  
-    Overview diagrams
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
 <span class="md-ellipsis">
     
   
@@ -629,95 +617,6 @@
     
   </span>
 </a>
-<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      In this chapter:
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
-<span class="md-ellipsis">
-      
-        CDOC1 VS CDOC2 format
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC1 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC2 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -772,8 +671,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
 <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -785,7 +684,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_9">
 <span class="md-nav__icon md-icon"></span>
             
@@ -796,7 +695,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../10_Changelog/changelog_capsule_server/">
+<a class="md-nav__link" href="../changelog_capsule_server/">
 <span class="md-ellipsis">
     
   
@@ -808,7 +707,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../10_Changelog/changelog_shares_server/">
+<a class="md-nav__link" href="../changelog_shares_server/">
 <span class="md-ellipsis">
     
   
@@ -819,8 +718,9 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../10_Changelog/changelog_auth_server/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     
   
@@ -832,7 +732,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../10_Changelog/changelog_rp_server/">
+<a class="md-nav__link" href="../changelog_rp_server/">
 <span class="md-ellipsis">
     
   
@@ -855,121 +755,58 @@
 <div class="md-sidebar__scrollwrap">
 <div class="md-sidebar__inner">
 <nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      In this chapter:
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
-<span class="md-ellipsis">
-      
-        CDOC1 VS CDOC2 format
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC1 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC2 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
-</li>
-</ul>
 </nav>
 </div>
 </div>
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="overview-diagrams"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Overview Diagrams<a class="headerlink" href="#overview-diagrams" title="Permanent link">¶</a></h1>
-<p>This page provides a visual summary of the CDOC2 system, covering format differences,
-architecture, capsule options, and encryption flows. The diagrams are intended as a
-quick reference alongside the more detailed sections of this documentation.</p>
-<h2 id="cdoc1-vs-cdoc2-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> CDOC1 VS CDOC2 format<a class="headerlink" href="#cdoc1-vs-cdoc2-format" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 VS CDOC2 format" src="../../img/server%20capsule-CDOC%201%20VS%202.drawio.png"/></p>
-<h2 id="cdoc1-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> CDOC1 simple overview<a class="headerlink" href="#cdoc1-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 simple overview" src="../../img/CDOC1%20simple.png"/></p>
-<h2 id="cdoc2-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.3</span> CDOC2 simple overview<a class="headerlink" href="#cdoc2-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 simple overview" src="../../img/CDOC2%20simple.png"/></p>
-<h2 id="cdoc2-capsule-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.4</span> CDOC2 capsule options<a class="headerlink" href="#cdoc2-capsule-options" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 capsule options" src="../../img/server%20capsule-Capsule%20options.drawio.png"/></p>
-<h2 id="cdoc2-server-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.5</span> CDOC2 server capsule<a class="headerlink" href="#cdoc2-server-capsule" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 server capsule" src="../../img/server%20capsule-Server%20capsule.drawio.png"/></p>
-<h2 id="cdoc2-concept-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.6</span> CDOC2 concept model<a class="headerlink" href="#cdoc2-concept-model" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 concept model" src="../../img/CDOC2%20model.jpg"/></p>
-<h2 id="cdoc1-main-flow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.7</span> CDOC1 main flow<a class="headerlink" href="#cdoc1-main-flow" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 main flow" src="../../img/CDOC1%20main%20flow.jpg"/></p>
-<h2 id="cdoc2-main-flow-id-card-password"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.8</span> CDOC2 main flow (ID-Card, password)<a class="headerlink" href="#cdoc2-main-flow-id-card-password" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 main flow (ID-Card, password)" src="../../img/CDOC2%20main%20flow%20%28ID-card%2C%20password%29.jpg"/></p>
-<h2 id="cdoc2-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.9</span> CDOC2 Key Shares<a class="headerlink" href="#cdoc2-key-shares" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 Key Shares" src="../../img/CDOC2_key_shares.png"/></p>
+<h1 id="cdoc2-auth-server-changelog"><span class="enumerate-headings-plugin enumerate-heading-plugin">38.</span> CDOC2 Auth Server changelog<a class="headerlink" href="#cdoc2-auth-server-changelog" title="Permanent link">¶</a></h1>
+<p><strong>[0.8.0] Improved input language handling, client configurability</strong></p>
+<ul>
+<li>Language parameter for <code>auth/start</code> is constrained by openapi spec to be a nullable two character
+  string. Actual validation of the input value is moved to app api implementation. Unrecognized
+  language will result in HTTP 400 BAD REQUEST. Configured default language is applied only when
+  language is not specified in request.</li>
+<li>Added client config parameters to allow modifying session status polling behavior</li>
+</ul>
+<p><strong>[0.7.3] Improved error handling, dependency updates</strong></p>
+<ul>
+<li><code>/auth/status</code> returns <code>HTTP 404 NOT FOUND</code> for non-existent auth process instead of <code>HTTP 400</code></li>
+<li>Dependency updates</li>
+</ul>
+<p><strong>[0.7.2] Test coverage</strong></p>
+<ul>
+<li>Improve the tests coverage</li>
+<li>Small refactor to <code>startauth</code> usecase code to allow verification code creation testing.</li>
+</ul>
+<p><strong>[0.7.1] Improved error handling, SBOM creation</strong></p>
+<ul>
+<li>Give more informative Internal Server Error results when auth/start/ encounters a problem
+  collecting session nonces from CDOC2 servers</li>
+<li>Use CycloneDX Maven plugin for SBOM creation</li>
+</ul>
+<p><strong>[0.7.0] Configurable display text, general improvements</strong></p>
+<ul>
+<li>Made the authentication display text configurable.</li>
+<li>JWK for /.well-known/jwks.jws configurable from list of PEM-encoded resources. Removed key
+  defaults from main classpath, enforcing requirement for externally provided keys.</li>
+<li>Added <code>/info</code> endpoint.</li>
+<li>Improved handling of client exceptions from MID/SID REST calls</li>
+<li>Made the issuer value for the session token configurable with the configuration parameter <code>app.session-token.issuer</code>.</li>
+</ul>
+<p><strong>[0.6.0] Mobile-ID support, general improvements</strong></p>
+<ul>
+<li>Mobile-ID support for session token creation</li>
+<li>Expired authorization processes are cleaned by a scheduled job.</li>
+<li>HTTP 404 Not Found returned by <code>/auth/status/{authProcessUuid}</code> when no auth process matching
+  authProcessUuid found in database</li>
+<li>Switched to latest Spring Boot 3 from Spring Boot 4 to resolve constant Jackson version conflicts
+  between Spring Boot and SK clients (smart-id-java-client, mid-rest-java-client)</li>
+<li>REST endpoint input validation errors are returned as HTTP 400 Bad Request with problem details.</li>
+<li>SID and MID processes can be configured to use different RP name and UUID values</li>
+</ul>
+<p><strong>[0.5.0] First public release</strong></p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -977,7 +814,7 @@ quick reference alongside the more detailed sections of this documentation.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CDOC2 Container Storage User Guide" class="md-footer__link md-footer__link--prev" href="../container_storage_guide/">
+<a aria-label="Previous: Shares Server" class="md-footer__link md-footer__link--prev" href="../changelog_shares_server/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -986,17 +823,17 @@ quick reference alongside the more detailed sections of this documentation.</p>
                 Previous
               </span>
 <div class="md-ellipsis">
-                CDOC2 Container Storage User Guide
+                Shares Server
               </div>
 </div>
 </a>
-<a aria-label="Next: Capsule Server" class="md-footer__link md-footer__link--next" href="../../09_test_plan/test_plan/">
+<a aria-label="Next: RP Server" class="md-footer__link md-footer__link--next" href="../changelog_rp_server/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Capsule Server
+                RP Server
               </div>
 </div>
 <div class="md-footer__button md-icon">

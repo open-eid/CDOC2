@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../container_storage_guide/" rel="prev"/>
-<link href="../../09_test_plan/test_plan/" rel="next"/>
+<link href="../ch02_system_context_sid_mid/" rel="prev"/>
+<link href="../ch04_system_components_sid_mid/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Overview diagrams - CDOC2 System Documentation</title>
+<title>3. CDOC2 system components -  Hardware Token/Capsule Server - CDOC2 System Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#overview-diagrams">26. 
+<a class="md-skip" href="#system-components-hardware-tokencapsule-server">14. 
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview diagrams
+              3. CDOC2 system components -  Hardware Token/Capsule Server
             
           </span>
 </div>
@@ -311,8 +311,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
 <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -324,7 +324,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="true" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_5">
 <span class="md-nav__icon md-icon"></span>
             
@@ -358,7 +358,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
+<a class="md-nav__link" href="../ch01_system_context/">
 <span class="md-ellipsis">
     
   
@@ -370,7 +370,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch02_system_context_sid_mid/">
+<a class="md-nav__link" href="../ch02_system_context_sid_mid/">
 <span class="md-ellipsis">
     
   
@@ -384,8 +384,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5_2" type="checkbox"/>
 <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -397,7 +397,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<nav aria-expanded="true" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_5_2">
 <span class="md-nav__icon md-icon"></span>
             
@@ -407,8 +407,20 @@
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch03_system_components/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     
   
@@ -418,9 +430,92 @@
     
   </span>
 </a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#shared-components">
+<span class="md-ellipsis">
+      
+        Shared Components
+      
+    </span>
+</a>
+<nav aria-label="Shared Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-reference-java-library">
+<span class="md-ellipsis">
+      
+        CDOC2 reference Java library
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch04_system_components_sid_mid/">
+<a class="md-nav__link" href="#hardware-tokencapsule-server-components">
+<span class="md-ellipsis">
+      
+        Hardware Token/Capsule Server Components
+      
+    </span>
+</a>
+<nav aria-label="Hardware Token/Capsule Server Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-capsule-server-ccs">
+<span class="md-ellipsis">
+      
+        CDOC2 Capsule Server (CCS)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-cli-user-application">
+<span class="md-ellipsis">
+      
+        CDOC2 CLI user application
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interfaces-between-system-components">
+<span class="md-ellipsis">
+      
+        Interfaces between system components
+      
+    </span>
+</a>
+<nav aria-label="Interfaces between system components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-capsule-server-ccs-interface">
+<span class="md-ellipsis">
+      
+        CDOC2 Capsule Server (CCS) interface
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch04_system_components_sid_mid/">
 <span class="md-ellipsis">
     
   
@@ -435,7 +530,7 @@
 </nav>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch05_external_interfaces/">
+<a class="md-nav__link" href="../ch05_external_interfaces/">
 <span class="md-ellipsis">
     
   
@@ -447,7 +542,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch06_capsule_server/">
+<a class="md-nav__link" href="../ch06_capsule_server/">
 <span class="md-ellipsis">
     
   
@@ -459,7 +554,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../../03_system_architecture/ch07_shares_server/">
+<a class="md-nav__link" href="../ch07_shares_server/">
 <span class="md-ellipsis">
     
   
@@ -547,8 +642,8 @@
 </ul>
 </nav>
 </li>
-<li class="md-nav__item md-nav__item--active md-nav__item--nested">
-<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
 <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
 <span class="md-ellipsis">
     
@@ -560,7 +655,7 @@
   </span>
 <span class="md-nav__icon md-icon"></span>
 </label>
-<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_7">
 <span class="md-nav__icon md-icon"></span>
             
@@ -571,7 +666,7 @@
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="../integrator_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
 <span class="md-ellipsis">
     
   
@@ -583,7 +678,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../password_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
 <span class="md-ellipsis">
     
   
@@ -595,7 +690,7 @@
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="../container_storage_guide/">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
 <span class="md-ellipsis">
     
   
@@ -606,20 +701,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    
-  
-    Overview diagrams
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
 <span class="md-ellipsis">
     
   
@@ -629,95 +712,6 @@
     
   </span>
 </a>
-<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      In this chapter:
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
-<span class="md-ellipsis">
-      
-        CDOC1 VS CDOC2 format
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC1 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC2 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -861,85 +855,79 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
+<a class="md-nav__link" href="#shared-components">
 <span class="md-ellipsis">
       
-        CDOC1 VS CDOC2 format
+        Shared Components
+      
+    </span>
+</a>
+<nav aria-label="Shared Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-reference-java-library">
+<span class="md-ellipsis">
+      
+        CDOC2 reference Java library
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#hardware-tokencapsule-server-components">
+<span class="md-ellipsis">
+      
+        Hardware Token/Capsule Server Components
+      
+    </span>
+</a>
+<nav aria-label="Hardware Token/Capsule Server Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-capsule-server-ccs">
+<span class="md-ellipsis">
+      
+        CDOC2 Capsule Server (CCS)
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
+<a class="md-nav__link" href="#cdoc2-cli-user-application">
 <span class="md-ellipsis">
       
-        CDOC1 simple overview
+        CDOC2 CLI user application
       
     </span>
 </a>
 </li>
+</ul>
+</nav>
+</li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
+<a class="md-nav__link" href="#interfaces-between-system-components">
 <span class="md-ellipsis">
       
-        CDOC2 simple overview
+        Interfaces between system components
+      
+    </span>
+</a>
+<nav aria-label="Interfaces between system components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cdoc2-capsule-server-ccs-interface">
+<span class="md-ellipsis">
+      
+        CDOC2 Capsule Server (CCS) interface
       
     </span>
 </a>
 </li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
+</ul>
+</nav>
 </li>
 </ul>
 </nav>
@@ -948,28 +936,24 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="overview-diagrams"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Overview Diagrams<a class="headerlink" href="#overview-diagrams" title="Permanent link">¶</a></h1>
-<p>This page provides a visual summary of the CDOC2 system, covering format differences,
-architecture, capsule options, and encryption flows. The diagrams are intended as a
-quick reference alongside the more detailed sections of this documentation.</p>
-<h2 id="cdoc1-vs-cdoc2-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> CDOC1 VS CDOC2 format<a class="headerlink" href="#cdoc1-vs-cdoc2-format" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 VS CDOC2 format" src="../../img/server%20capsule-CDOC%201%20VS%202.drawio.png"/></p>
-<h2 id="cdoc1-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> CDOC1 simple overview<a class="headerlink" href="#cdoc1-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 simple overview" src="../../img/CDOC1%20simple.png"/></p>
-<h2 id="cdoc2-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.3</span> CDOC2 simple overview<a class="headerlink" href="#cdoc2-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 simple overview" src="../../img/CDOC2%20simple.png"/></p>
-<h2 id="cdoc2-capsule-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.4</span> CDOC2 capsule options<a class="headerlink" href="#cdoc2-capsule-options" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 capsule options" src="../../img/server%20capsule-Capsule%20options.drawio.png"/></p>
-<h2 id="cdoc2-server-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.5</span> CDOC2 server capsule<a class="headerlink" href="#cdoc2-server-capsule" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 server capsule" src="../../img/server%20capsule-Server%20capsule.drawio.png"/></p>
-<h2 id="cdoc2-concept-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.6</span> CDOC2 concept model<a class="headerlink" href="#cdoc2-concept-model" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 concept model" src="../../img/CDOC2%20model.jpg"/></p>
-<h2 id="cdoc1-main-flow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.7</span> CDOC1 main flow<a class="headerlink" href="#cdoc1-main-flow" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 main flow" src="../../img/CDOC1%20main%20flow.jpg"/></p>
-<h2 id="cdoc2-main-flow-id-card-password"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.8</span> CDOC2 main flow (ID-Card, password)<a class="headerlink" href="#cdoc2-main-flow-id-card-password" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 main flow (ID-Card, password)" src="../../img/CDOC2%20main%20flow%20%28ID-card%2C%20password%29.jpg"/></p>
-<h2 id="cdoc2-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.9</span> CDOC2 Key Shares<a class="headerlink" href="#cdoc2-key-shares" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 Key Shares" src="../../img/CDOC2_key_shares.png"/></p>
+<h1 id="system-components-hardware-tokencapsule-server"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.</span> System Components - Hardware Token/Capsule Server<a class="headerlink" href="#system-components-hardware-tokencapsule-server" title="Permanent link">¶</a></h1>
+<p>This page describes the system components relevant to the Hardware Token/Capsule Server context. For the Smart-ID/Mobile-ID context, see <a href="../ch04_system_components_sid_mid/">SID/MID</a>.</p>
+<h2 id="shared-components"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.1</span> Shared Components<a class="headerlink" href="#shared-components" title="Permanent link">¶</a></h2>
+<h3 id="cdoc2-reference-java-library"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.1.1</span> CDOC2 reference Java library<a class="headerlink" href="#cdoc2-reference-java-library" title="Permanent link">¶</a></h3>
+<p>Implements client side functionality for CDOC2 system. Used by both the Hardware Token/Capsule Server and SID/MID contexts.</p>
+<h2 id="hardware-tokencapsule-server-components"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.2</span> Hardware Token/Capsule Server Components<a class="headerlink" href="#hardware-tokencapsule-server-components" title="Permanent link">¶</a></h2>
+<h3 id="cdoc2-capsule-server-ccs"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.2.1</span> CDOC2 Capsule Server (CCS)<a class="headerlink" href="#cdoc2-capsule-server-ccs" title="Permanent link">¶</a></h3>
+<p>Stores encryption/decryption key material.</p>
+<h3 id="cdoc2-cli-user-application"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.2.2</span> CDOC2 CLI user application<a class="headerlink" href="#cdoc2-cli-user-application" title="Permanent link">¶</a></h3>
+<p>Command line utility to create/process CDOC2 files. Provides CLI interface to CDOC2 reference Java library.</p>
+<h2 id="interfaces-between-system-components"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.3</span> Interfaces between system components<a class="headerlink" href="#interfaces-between-system-components" title="Permanent link">¶</a></h2>
+<h3 id="cdoc2-capsule-server-ccs-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">14.3.1</span> CDOC2 Capsule Server (CCS) interface<a class="headerlink" href="#cdoc2-capsule-server-ccs-interface" title="Permanent link">¶</a></h3>
+<p>CCS interface provides the following endpoints:</p>
+<ul>
+<li><code>/key-capsules/{transactionId}</code> Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.</li>
+<li><code>/key-capsules</code> Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.</li>
+</ul>
+<p>For full CCS OpenAPI specification, see <a href="../../05_api_references/capsule_server_api/">API References</a>.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -977,7 +961,7 @@ quick reference alongside the more detailed sections of this documentation.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CDOC2 Container Storage User Guide" class="md-footer__link md-footer__link--prev" href="../container_storage_guide/">
+<a aria-label="Previous: SID/MID" class="md-footer__link md-footer__link--prev" href="../ch02_system_context_sid_mid/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -986,17 +970,17 @@ quick reference alongside the more detailed sections of this documentation.</p>
                 Previous
               </span>
 <div class="md-ellipsis">
-                CDOC2 Container Storage User Guide
+                SID/MID
               </div>
 </div>
 </a>
-<a aria-label="Next: Capsule Server" class="md-footer__link md-footer__link--next" href="../../09_test_plan/test_plan/">
+<a aria-label="Next: SID/MID" class="md-footer__link md-footer__link--next" href="../ch04_system_components_sid_mid/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Capsule Server
+                SID/MID
               </div>
 </div>
 <div class="md-footer__button md-icon">

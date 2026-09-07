@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<link href="../container_storage_guide/" rel="prev"/>
-<link href="../../09_test_plan/test_plan/" rel="next"/>
+<link href="../../05_api_references/rp_server_api/" rel="prev"/>
+<link href="../password_guide/" rel="next"/>
 <link href="../../assets/images/favicon.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
-<title>Overview diagrams - CDOC2 System Documentation</title>
+<title>Integrator Guide - CDOC2 System Documentation</title>
 <link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
@@ -22,7 +22,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#overview-diagrams">26. 
+<a class="md-skip" href="#cdoc2-integrator-guide">23. 
           Skip to content
         </a>
 </div>
@@ -48,7 +48,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              Overview diagrams
+              Integrator Guide
             
           </span>
 </div>
@@ -570,8 +570,20 @@
 
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../integrator_guide/">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
 <span class="md-ellipsis">
     
   
@@ -581,6 +593,86 @@
     
   </span>
 </a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-youre-building">
+<span class="md-ellipsis">
+      
+        What you're building
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-vocabulary">
+<span class="md-ellipsis">
+      
+        Core vocabulary
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-backend-components-your-client-may-need-to-call">
+<span class="md-ellipsis">
+      
+        The backend components your client may need to call
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-encryption-schemes-you-need-to-support">
+<span class="md-ellipsis">
+      
+        The encryption schemes you need to support
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#talking-to-a-capsule-server">
+<span class="md-ellipsis">
+      
+        Talking to a Capsule Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id">
+<span class="md-ellipsis">
+      
+        Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reference-building-blocks-build-vs-reuse">
+<span class="md-ellipsis">
+      
+        Reference building blocks — build vs. reuse
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-responsibilities-checklist-for-integrators">
+<span class="md-ellipsis">
+      
+        Security responsibilities checklist for Integrators
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
 </li>
 <li class="md-nav__item">
 <a class="md-nav__link" href="../password_guide/">
@@ -606,20 +698,8 @@
   </span>
 </a>
 </li>
-<li class="md-nav__item md-nav__item--active">
-<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
-<label class="md-nav__link md-nav__link--active" for="__toc">
-<span class="md-ellipsis">
-    
-  
-    Overview diagrams
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<a class="md-nav__link md-nav__link--active" href="./">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../overview_diagrams/">
 <span class="md-ellipsis">
     
   
@@ -629,95 +709,6 @@
     
   </span>
 </a>
-<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
-<label class="md-nav__title" for="__toc">
-<span class="md-nav__icon md-icon"></span>
-      In this chapter:
-    </label>
-<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
-<span class="md-ellipsis">
-      
-        CDOC1 VS CDOC2 format
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC1 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
-<span class="md-ellipsis">
-      
-        CDOC2 simple overview
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
-<span class="md-ellipsis">
-      
-        CDOC2 capsule options
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
-<span class="md-ellipsis">
-      
-        CDOC2 server capsule
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
-<span class="md-ellipsis">
-      
-        CDOC2 concept model
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
-<span class="md-ellipsis">
-      
-        CDOC1 main flow
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
-<span class="md-ellipsis">
-      
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
-      
-    </span>
-</a>
-</li>
-</ul>
-</nav>
 </li>
 </ul>
 </nav>
@@ -861,82 +852,73 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-vs-cdoc2-format">
+<a class="md-nav__link" href="#what-youre-building">
 <span class="md-ellipsis">
       
-        CDOC1 VS CDOC2 format
+        What you're building
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-simple-overview">
+<a class="md-nav__link" href="#core-vocabulary">
 <span class="md-ellipsis">
       
-        CDOC1 simple overview
+        Core vocabulary
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-simple-overview">
+<a class="md-nav__link" href="#the-backend-components-your-client-may-need-to-call">
 <span class="md-ellipsis">
       
-        CDOC2 simple overview
+        The backend components your client may need to call
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-capsule-options">
+<a class="md-nav__link" href="#the-encryption-schemes-you-need-to-support">
 <span class="md-ellipsis">
       
-        CDOC2 capsule options
+        The encryption schemes you need to support
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-server-capsule">
+<a class="md-nav__link" href="#talking-to-a-capsule-server">
 <span class="md-ellipsis">
       
-        CDOC2 server capsule
+        Talking to a Capsule Server
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-concept-model">
+<a class="md-nav__link" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id">
 <span class="md-ellipsis">
       
-        CDOC2 concept model
+        Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc1-main-flow">
+<a class="md-nav__link" href="#reference-building-blocks-build-vs-reuse">
 <span class="md-ellipsis">
       
-        CDOC1 main flow
+        Reference building blocks — build vs. reuse
       
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-main-flow-id-card-password">
+<a class="md-nav__link" href="#security-responsibilities-checklist-for-integrators">
 <span class="md-ellipsis">
       
-        CDOC2 main flow (ID-Card, password)
-      
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#cdoc2-key-shares">
-<span class="md-ellipsis">
-      
-        CDOC2 Key Shares
+        Security responsibilities checklist for Integrators
       
     </span>
 </a>
@@ -948,28 +930,222 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<h1 id="overview-diagrams"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.</span> Overview Diagrams<a class="headerlink" href="#overview-diagrams" title="Permanent link">¶</a></h1>
-<p>This page provides a visual summary of the CDOC2 system, covering format differences,
-architecture, capsule options, and encryption flows. The diagrams are intended as a
-quick reference alongside the more detailed sections of this documentation.</p>
-<h2 id="cdoc1-vs-cdoc2-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.1</span> CDOC1 VS CDOC2 format<a class="headerlink" href="#cdoc1-vs-cdoc2-format" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 VS CDOC2 format" src="../../img/server%20capsule-CDOC%201%20VS%202.drawio.png"/></p>
-<h2 id="cdoc1-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.2</span> CDOC1 simple overview<a class="headerlink" href="#cdoc1-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 simple overview" src="../../img/CDOC1%20simple.png"/></p>
-<h2 id="cdoc2-simple-overview"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.3</span> CDOC2 simple overview<a class="headerlink" href="#cdoc2-simple-overview" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 simple overview" src="../../img/CDOC2%20simple.png"/></p>
-<h2 id="cdoc2-capsule-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.4</span> CDOC2 capsule options<a class="headerlink" href="#cdoc2-capsule-options" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 capsule options" src="../../img/server%20capsule-Capsule%20options.drawio.png"/></p>
-<h2 id="cdoc2-server-capsule"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.5</span> CDOC2 server capsule<a class="headerlink" href="#cdoc2-server-capsule" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 server capsule" src="../../img/server%20capsule-Server%20capsule.drawio.png"/></p>
-<h2 id="cdoc2-concept-model"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.6</span> CDOC2 concept model<a class="headerlink" href="#cdoc2-concept-model" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 concept model" src="../../img/CDOC2%20model.jpg"/></p>
-<h2 id="cdoc1-main-flow"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.7</span> CDOC1 main flow<a class="headerlink" href="#cdoc1-main-flow" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC1 main flow" src="../../img/CDOC1%20main%20flow.jpg"/></p>
-<h2 id="cdoc2-main-flow-id-card-password"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.8</span> CDOC2 main flow (ID-Card, password)<a class="headerlink" href="#cdoc2-main-flow-id-card-password" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 main flow (ID-Card, password)" src="../../img/CDOC2%20main%20flow%20%28ID-card%2C%20password%29.jpg"/></p>
-<h2 id="cdoc2-key-shares"><span class="enumerate-headings-plugin enumerate-heading-plugin">26.9</span> CDOC2 Key Shares<a class="headerlink" href="#cdoc2-key-shares" title="Permanent link">¶</a></h2>
-<p><img alt="CDOC2 Key Shares" src="../../img/CDOC2_key_shares.png"/></p>
+<h1 id="cdoc2-integrator-guide"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.</span> CDOC2 Integrator Guide<a class="headerlink" href="#cdoc2-integrator-guide" title="Permanent link">¶</a></h1>
+<p><em>For developers building client software (desktop, mobile, or CLI) that creates or opens CDOC2
+encrypted containers</em></p>
+<p>This chapter is a practical companion to the full CDOC2 System Documentation, aimed specifically at
+<strong>Integrators</strong> — teams who are not modifying the CDOC2 protocol itself, but need to embed CDOC2
+encrypt/decrypt capability into their own end-user software. It summarizes what you need to know to
+plan an implementation and points back to the authoritative chapters for the details you'll need
+while coding.</p>
+<h2 id="what-youre-building"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.1</span> What you're building<a class="headerlink" href="#what-youre-building" title="Permanent link">¶</a></h2>
+<p>A <strong>CDOC2 Client Application</strong> is the umbrella term the specification uses for any software that
+lets a user encrypt files into a CDOC2 Container or decrypt one — it is described as an abstract
+component in the CDOC2 System that helps users encrypt files into a CDOC2 Container and decrypt
+received CDOC2 Containers, with DigiDoc4 desktop and mobile applications and a CDOC2 CLI application
+given as concrete examples. The use cases in the specification are deliberately written generically
+so that any client — yours included — can implement them, and the specification notes that a
+specific client's own documentation may add implementation-specific detail such as UX wireframes on
+top of these generic use cases.</p>
+<p>Before writing code, it helps to internalize the four roles a user can play: a <strong>User</strong> who runs
+your client, acting as <strong>Sender</strong> when packaging files for someone else, as <strong>Recipient</strong> when
+opening a container addressed to them, and occasionally as their own Recipient when they encrypt
+something for their own long-term storage. An <strong>Administrator</strong> role also exists in the model, for
+whoever manages configuration (trusted server lists, capsule servers, key material) for a fleet of
+clients.</p>
+<h2 id="core-vocabulary"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.2</span> Core vocabulary<a class="headerlink" href="#core-vocabulary" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>CDOC2 Container</strong> — the file format used to transmit the encrypted payload and metadata,
+  including the capsule, from Sender to Recipient.</li>
+<li><strong>Capsule</strong> — the data structure containing encryption-scheme-specific information (encrypted
+  symmetric keys, public keys, salt, server references, etc.) that the Recipient uses to derive,
+  establish, or retrieve the decryption key. A capsule is either a <strong>Container Capsule</strong> (travels
+  inside the file itself) or a <strong>Server Capsule</strong> (mediated by a Capsule Server).</li>
+<li><strong>FMK / CEK / KEK / HHK</strong> — the File Master Key is the root key material from which the Content
+  Encryption Key (used to encrypt the payload) and the Header HMAC Key (used to protect container
+  integrity) are derived, while the Key Encryption Key is the symmetric key used to wrap the FMK so
+  it can travel safely to each recipient inside the container.</li>
+</ul>
+<h2 id="the-backend-components-your-client-may-need-to-call"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.3</span> The backend components your client may need to call<a class="headerlink" href="#the-backend-components-your-client-may-need-to-call" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+<th>Relevant to Integrators</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CDOC2 Capsule Server (CCS)</td>
+<td>Stores encryption/decryption key material and provides endpoints for auth-ticket creation and key material upload/download</td>
+<td>Used for the "server-mediated" EC/RSA schemes</td>
+</tr>
+<tr>
+<td>CDOC2 Shares Server (CSS)</td>
+<td>Returns share identifiers to the client application, stores key shares, and requires the recipient to authenticate before downloading shares; shares are spread across multiple independent CSS instances so that compromising one server doesn't expose key material</td>
+<td>Used for Smart-ID/Mobile-ID-based decryption</td>
+</tr>
+<tr>
+<td>CDOC2 Authentication server (auth-server)</td>
+<td>Used in the Smart-ID/Mobile-ID context to compose and issue a session token, an SD-JWT structure sent with its signing certificate as a header on subsequent requests</td>
+<td>Needed only if you support SID/MID recipients</td>
+</tr>
+<tr>
+<td>CDOC2 Relying party server (rp-server)</td>
+<td>Mediates and validates client requests to Smart-ID/Mobile-ID relying-party services, including verifying the session token</td>
+<td>Needed only if you support SID/MID recipients</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-encryption-schemes-you-need-to-support"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.4</span> The encryption schemes you need to support<a class="headerlink" href="#the-encryption-schemes-you-need-to-support" title="Permanent link">¶</a></h2>
+<p>CDOC2 isn't one algorithm — it's a family of six schemes (SC01–SC06), chosen per recipient, so a
+single container can mix recipient types. As an integrator, your encryption flow needs to pick the
+right scheme based on what the recipient has available:</p>
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>Recipient has…</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SC01</td>
+<td>An EC key pair on a hardware token (e.g. ID-card)</td>
+<td>Diffie-Hellman key exchange generates a shared secret between sender and recipient, used to protect the FMK; the capsule travels inside the container itself</td>
+</tr>
+<tr>
+<td>SC02</td>
+<td>An RSA key pair</td>
+<td>RSA-OAEP is used to wrap a randomly generated KEK, carried over from CDOC1 for compatibility with existing RSA-based eID tokens</td>
+</tr>
+<tr>
+<td>SC03</td>
+<td>An EC key pair, capsule via CCS</td>
+<td>Same DH mechanism as SC01, but the capsule is transmitted via a Capsule Server rather than embedded in the container</td>
+</tr>
+<tr>
+<td>SC04</td>
+<td>An RSA key pair, capsule via CCS</td>
+<td>Same as SC02, but capsule delivered via CCS</td>
+</tr>
+<tr>
+<td>SC05</td>
+<td>A pre-shared symmetric key, no eID token</td>
+<td>Useful for long-term storage independent of hardware tokens or PKI validity, or for sending to recipients who have no eID means but have previously received a shared key</td>
+</tr>
+<tr>
+<td>SC06</td>
+<td>A pre-shared password</td>
+<td>Similar to SC05 but derives the KEK from a password via PBKDF2 instead of a raw shared key</td>
+</tr>
+<tr>
+<td>SC07</td>
+<td>No local private key material at all</td>
+<td>Smart-ID / Mobile-ID (n-of-n shared secret)</td>
+</tr>
+</tbody>
+</table>
+<p>Practical guidance: default to <strong>SC01</strong>/ <strong>SC02</strong> (with a CCS, i.e. <strong>SC03</strong>/ <strong>SC04</strong>) whenever the
+recipient has a known certificate on a hardware or smart-card-backed token — this gives forward
+secrecy against future compromise of the recipient's private key, because an attacker who is only
+monitoring the public channel cannot recover the symmetric key from a broken public-key algorithm or
+a later-compromised private key, since the key is transmitted separately through the Capsule Server.
+Fall back to password-based (<strong>SC06</strong>) or shared-key (<strong>SC05</strong>) schemes only when no eID means
+exists for a recipient, or for archival use where you don't want decryption to depend on a
+certificate remaining valid.</p>
+<p><strong>SC07</strong> is the only path for recipients who authenticate purely via Smart-ID/Mobile-ID with no
+local key pair. Implementing it requires your client to talk to Auth Server, RP Server, and multiple
+independent Shares Server instances.</p>
+<h2 id="talking-to-a-capsule-server"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.5</span> Talking to a Capsule Server<a class="headerlink" href="#talking-to-a-capsule-server" title="Permanent link">¶</a></h2>
+<p>If your client is going to use CCS-mediated schemes (SC03/SC04) or support recipients without local
+tokens, you need to implement two client-side roles against the CCS API:</p>
+<p><strong>As Sender</strong> — the sender's interface is unauthenticated and open to any sender: your client
+transmits the capsule and a recipient identifier and receives a transaction identifier back, which
+you embed in the container header alongside the CCS's identifier and the recipient identifier.</p>
+<p><strong>As Recipient</strong> — the client authenticates to the server and presents the transaction identifier
+found in the container; the server looks up the capsule and compares the recipient identity
+established during authentication against the recipient identifier attached to that capsule before
+releasing it. For the currently specified capsule type, authentication is done via mutual TLS: the
+server validates the client's certificate (e.g. via OCSP) and compares the public key presented in
+that certificate against the public key tied to the stored capsule — meaning if a recipient's
+certificate is later revoked, the CCS will refuse to hand over the capsule to whoever now holds that
+revoked key.</p>
+<p>Two integration details are easy to overlook and matter for security:</p>
+<ul>
+<li><strong>Trust configuration, not discovery.</strong> Clients must ship (or be able to fetch from a trusted
+  source) a list of trusted Capsule Servers — including each server's identifier, supported capsule
+  type, sender/recipient interface URLs, operating organization, and public keys/certificates — and
+  this same list is used for TLS key pinning. Do not let a sender's client dynamically trust a
+  server URL supplied only by data inside an incoming container; only the server's identifier
+  travels with the container, precisely so a malicious party cannot redirect the recipient to an
+  untrusted endpoint.</li>
+<li><strong>Expiration is negotiated, not assumed.</strong> When forwarding a capsule, your client supplies a
+  requested expiration time, but if the recipient's certificate expires sooner than the requested
+  capsule lifetime, the certificate's expiration takes precedence, and the CCS will reject a request
+  whose expiration exceeds what its own configuration allows. Handle that rejection path explicitly
+  rather than assuming your requested TTL will always be honored.</li>
+</ul>
+<p>For the exact request/response shapes, generate client stubs from the published OpenAPI
+specification rather than hand-rolling the API — the specification maintains machine-readable
+schemas for exactly this purpose, and versioned artifacts are published as Maven packages under the
+<code>open-eid</code> organization for JVM-based integrators.</p>
+<h2 id="supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.6</span> Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID<a class="headerlink" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id" title="Permanent link">¶</a></h2>
+<p>Not every recipient owns a smart card. The CDOC2 ecosystem addresses this with a <strong>key-shares</strong>
+architecture that lets a recipient decrypt after proving their identity remotely via Smart-ID or
+Mobile-ID rather than presenting a certificate over mTLS. If your client needs to support this path,
+be aware of the additional components involved:</p>
+<ul>
+<li>A <strong>CDOC2 authentication server</strong> and an <strong>SID/MID proxy</strong> (RP server) sit between your client and
+  the identity providers — the authentication server issues access tokens, while the proxy gives
+  your client access to RIA's Smart-ID RP API and Mobile-ID REST API without your client integrating
+  those APIs directly.</li>
+<li>Instead of a single Capsule Server, decryption key material can be split across multiple
+  <strong>key-share servers</strong>; a recipient authenticates once and presents a signed authentication ticket
+  to each share server in turn to reassemble their key. The auth ticket format is an SD-JWT
+  (selectively disclosable JWT), and support for ES256 and RS256 signature algorithms is required to
+  accommodate both Mobile-ID and Smart-ID signing.</li>
+<li>The typical flow your client will need to drive is: request a nonce per key-share from that share
+  server's <code>/key-shares/{shareId}/nonce</code> endpoint, use that nonce (with the SID/MID proxy) to
+  produce a signed auth ticket, then present that ticket in an <code>x-cdoc2-auth-ticket</code> header when
+  calling <code>GET /key-shares/{shareId}</code> to retrieve each share.</li>
+</ul>
+<h2 id="reference-building-blocks-build-vs-reuse"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.7</span> Reference building blocks — build vs. reuse<a class="headerlink" href="#reference-building-blocks-build-vs-reuse" title="Permanent link">¶</a></h2>
+<p>You are not expected to reimplement the cryptography from the specification text.</p>
+<ul>
+<li><strong><code>cdoc2-java-ref-impl</code></strong> — a Java library implementing client-side CDOC2 functionality
+  (encrypt/decrypt, capsule handling), plus a <strong><code>cdoc2-cli</code></strong> command-line tool built on it. If your
+  client targets the JVM, or you want a reference to test your own implementation against, start
+  here.</li>
+<li><strong><code>libcdoc</code></strong> — a C/C++ library covering the same functionality for native clients, used by the
+  DigiDoc4 desktop application itself.</li>
+<li><strong><code>cdoc2-openapi</code></strong> — versioned OpenAPI definitions for the Capsule Server and key-shares APIs,
+  published as Maven artifacts, for generating client stubs in any language with tooling support.</li>
+<li><strong><code>cdoc2-auth</code></strong> — the SD-JWT based authentication library/protocol implementation for the
+  key-shares flow described above.</li>
+</ul>
+<p>Unless you have a specific reason to write your own cryptographic implementation (e.g. targeting a
+platform with no JVM/C++ interop), integrating one of the reference libraries is the lower-risk
+path — it keeps you aligned with corrections to the specification as the format matures, and CDOC1
+and CDOC2 are explicitly <strong>not</strong> wire-compatible, so any home-grown parser needs to be
+format-version aware from day one.</p>
+<h2 id="security-responsibilities-checklist-for-integrators"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.8</span> Security responsibilities checklist for Integrators<a class="headerlink" href="#security-responsibilities-checklist-for-integrators" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>Never</strong> invent your own trust list mechanism for Capsule Servers — ship or securely fetch the
+  canonical list and pin against its certificates.</li>
+<li>Validate header size limits and file-name/content safety rules before writing or unpacking a
+  container; the use cases treat both as explicit failure paths your UI must handle, not edge cases
+  to ignore.</li>
+<li>Enforce minimum password strength client-side for SC06/<code>UC.Client.P.01</code>-style flows; the spec
+  expects this check before a password is accepted.</li>
+<li>Prefer OCSP-checked, short-lived trust decisions for capsule server TLS certificates over
+  long-cached trust.</li>
+<li>If you support the key-shares/Smart-ID/Mobile-ID path, do not persist SD-JWT auth tickets beyond
+  their intended single use, and treat the auth-server and rp-server as no more
+  trusted than any other network dependency — mTLS/OCSP habits apply there too.</li>
+</ul>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
@@ -977,7 +1153,7 @@ quick reference alongside the more detailed sections of this documentation.</p>
 </main>
 <footer class="md-footer">
 <nav aria-label="Footer" class="md-footer__inner md-grid">
-<a aria-label="Previous: CDOC2 Container Storage User Guide" class="md-footer__link md-footer__link--prev" href="../container_storage_guide/">
+<a aria-label="Previous: RP Server API" class="md-footer__link md-footer__link--prev" href="../../05_api_references/rp_server_api/">
 <div class="md-footer__button md-icon">
 <svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
 </div>
@@ -986,17 +1162,17 @@ quick reference alongside the more detailed sections of this documentation.</p>
                 Previous
               </span>
 <div class="md-ellipsis">
-                CDOC2 Container Storage User Guide
+                RP Server API
               </div>
 </div>
 </a>
-<a aria-label="Next: Capsule Server" class="md-footer__link md-footer__link--next" href="../../09_test_plan/test_plan/">
+<a aria-label="Next: Password Strength User Guide" class="md-footer__link md-footer__link--next" href="../password_guide/">
 <div class="md-footer__title">
 <span class="md-footer__direction">
                 Next
               </span>
 <div class="md-ellipsis">
-                Capsule Server
+                Password Strength User Guide
               </div>
 </div>
 <div class="md-footer__button md-icon">
