@@ -89,6 +89,10 @@ or such Capsule, which contains information, where to retrieve information to re
 
 --->
 
+## Key Hierarchy illustration
+
+![Key Hiearachy](`../img/CDOC2_key_hierarchy.png`)
+
 ## Encryption schemes with key-establishment algorithms
 
 These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.

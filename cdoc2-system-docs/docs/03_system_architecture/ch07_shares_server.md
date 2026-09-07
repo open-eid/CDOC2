@@ -87,7 +87,7 @@ Server state consists of the Key Share received by the server for transmission, 
 
 The server provides two interfaces: one for delivery of the Key Share from the sender to the CSS and the other for delivery of the Key Share from the server to the recipient.
 
-The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [API References](../02_protocol_and_cryptography_spec/api_references.md)).
+The interfaces are formally described in the [OpenAPI format](https://spec.openapis.org/oas/latest.html) (see [API References](../05_api_references/shares_server_api.md)).
 
 ### Sender interface
 

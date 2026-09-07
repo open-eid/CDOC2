@@ -1,0 +1,6 @@
+title: "API References"
+nav:
+    - 'Capsule Server API': capsule_server_api.md
+    - 'Shares Server API': shares_server_api.md
+    - 'Auth Server API': auth_server_api.md
+    - 'RP Server API': rp_server_api.md

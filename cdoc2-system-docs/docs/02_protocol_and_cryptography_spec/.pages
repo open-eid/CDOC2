@@ -8,5 +8,4 @@ nav:
     - Schemas:
         - 'Header FlatBuffers Schema': header_flatbuffers_schema.md
         - 'Recipients FlatBuffers Schema': recipients_flatbuffers_schema.md
-    - 'API References': api_references.md
     - 'KeyLabel field specification': keylabel_field.md

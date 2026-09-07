@@ -1,6 +1,6 @@
 title: "Changelog"
 nav:
     - 'Capsule Server': changelog_capsule_server.md
-    - 'Shares server': changelog_shares_server.md
-    - 'Auth server': changelog_auth_server.md
-    - 'RP server': changelog_rp_server.md
+    - 'Shares Server': changelog_shares_server.md
+    - 'Auth Server': changelog_auth_server.md
+    - 'RP Server': changelog_rp_server.md
