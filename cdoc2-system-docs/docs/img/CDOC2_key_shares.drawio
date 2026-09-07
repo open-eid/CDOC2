@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="2 – SC07 võtmeosakud" id="page-sc07">
+    <mxGraphModel dx="1547" dy="1187" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="720" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d2_title" parent="1" style="text;html=1;align=center;fillColor=none;strokeColor=none;fontSize=20;fontStyle=1;whiteSpace=wrap;" value="SC07: Splitting and recombining KEK_i Key Shares" vertex="1">
+          <mxGeometry height="30" width="800" x="250" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s1" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#6c8ebf;verticalAlign=top;align=left;fontStyle=2;fontColor=#3f5f8f;whiteSpace=wrap;spacingLeft=6;" value="1. KEK_i derivation (Recipient)" vertex="1">
+          <mxGeometry height="195" width="560" x="39" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s1a" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="KeyMaterialSalt_i = CSRNG(256)&#xa;KeyMaterial_i = CSRNG(256)" vertex="1">
+          <mxGeometry height="50" width="500" x="70" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s1b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="KEK_i_pm = HKDF_Extract(salt_i, material_i)" vertex="1">
+          <mxGeometry height="35" width="500" x="70" y="188" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s1c" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" value="KEK_i = HKDF_Expand(KEK_i_pm,&#xa;&quot;CDOC2kek&quot;+FMKEncryptionMethod+RecipientInfo_i, 32)" vertex="1">
+          <mxGeometry height="48" width="500" x="70" y="233" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s2" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#6c8ebf;verticalAlign=top;align=left;fontStyle=2;fontColor=#3f5f8f;whiteSpace=wrap;spacingLeft=6;" value="2. Splitting into n shares (n-of-n, XOR)" vertex="1">
+          <mxGeometry height="185" width="560" x="640" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s2a" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="j = 2..n:  KEK_i_share_j = CSRNG(256)" vertex="1">
+          <mxGeometry height="35" width="500" x="670" y="128" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s2b" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="KEK_i_share_1 = XOR(KEK_i, share_2, ..., share_n)" vertex="1">
+          <mxGeometry height="35" width="500" x="670" y="173" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s2note" parent="1" style="text;html=1;align=left;fillColor=none;strokeColor=none;fontSize=11;fontStyle=2;whiteSpace=wrap;" value="NB! Decryption requires all n shares;" vertex="1">
+          <mxGeometry height="30" width="500" x="670" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s3lbl" parent="1" style="text;html=1;align=left;fillColor=none;strokeColor=none;fontSize=14;fontStyle=1;whiteSpace=wrap;" value="3. Key Shares distribution to independent Shares Servers (CSS)" vertex="1">
+          <mxGeometry height="25" width="700" x="40" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_p1" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#b85450;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#b85450;whiteSpace=wrap;spacingLeft=6;" value="Independence boundary. Executor A" vertex="1">
+          <mxGeometry height="130" width="360" x="40" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_css1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="CSS_1&#xa;KEK_i_share_1" vertex="1">
+          <mxGeometry height="60" width="260" x="90" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_p2" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#b85450;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#b85450;whiteSpace=wrap;spacingLeft=6;" value="Independence boundary. Executor B" vertex="1">
+          <mxGeometry height="130" width="360" x="460" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_css2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="CSS_2&#xa;KEK_i_share_2" vertex="1">
+          <mxGeometry height="60" width="260" x="510" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_dots" parent="1" style="text;html=1;align=center;fillColor=none;strokeColor=none;fontSize=28;fontStyle=1;" value="..." vertex="1">
+          <mxGeometry height="55" width="60" x="830" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_p3" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#b85450;dashed=1;verticalAlign=top;align=left;fontStyle=2;fontColor=#b85450;whiteSpace=wrap;spacingLeft=6;" value="Independence boundary. Executor N" vertex="1">
+          <mxGeometry height="130" width="360" x="900" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_css3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="CSS_n&#xa;KEK_i_share_n" vertex="1">
+          <mxGeometry height="60" width="260" x="950" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s3note" parent="1" style="text;html=1;align=left;fillColor=none;strokeColor=none;fontSize=11;fontStyle=2;fontColor=#b85450;whiteSpace=wrap;" value="Security of the scheme relies on true boundaries between instances: shared components (e.g. a proxy layer shared by all CSS instances or shared infrastructure) must not have access to multiple key shares simultaneously" vertex="1">
+          <mxGeometry height="40" width="1000" x="40" y="478" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s4" parent="1" style="rounded=0;html=1;fillColor=#eaf5e6;strokeColor=#82b366;verticalAlign=top;align=center;fontStyle=2;fontColor=#5f8f4f;whiteSpace=wrap;" value="4. Recombination (Recipient, after authentication with each CSS)" vertex="1">
+          <mxGeometry height="95" width="800" x="250" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_s4box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="KEK_i = XOR(KEK_i_share_1, KEK_i_share_2, ..., KEK_i_share_n)" vertex="1">
+          <mxGeometry height="45" width="660" x="320" y="572" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e1" edge="1" parent="1" source="d2_s1c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_s2b" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_css1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="178" />
+              <mxPoint x="620" y="320" />
+              <mxPoint x="220" y="320" />
+            </Array>
+            <mxPoint x="640" y="178" as="sourcePoint" />
+            <mxPoint x="190" y="365.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2_e3" edge="1" parent="1" source="d2_s2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_css2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="920" y="320" />
+              <mxPoint x="640" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2_e4" edge="1" parent="1" source="d2_s2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_css3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="920" y="320" />
+              <mxPoint x="1080" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2_e5" edge="1" parent="1" source="d2_css1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_s4box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e6" edge="1" parent="1" source="d2_css2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_s4box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e7" edge="1" parent="1" source="d2_css3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d2_s4box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
