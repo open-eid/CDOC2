@@ -1,4 +1,4 @@
-# Appendix B: recipients.fbs
+# Recipients FlatBuffers Schema
 
     namespace ee.cyber.cdoc2.fbs.recipients;
 

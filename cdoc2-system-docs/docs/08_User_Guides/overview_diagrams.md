@@ -1,4 +1,8 @@
-# Overview diagrams
+# Overview Diagrams
+
+This page provides a visual summary of the CDOC2 system, covering format differences,
+architecture, capsule options, and encryption flows. The diagrams are intended as a
+quick reference alongside the more detailed sections of this documentation.
 
 ## CDOC1 VS CDOC2 format
 

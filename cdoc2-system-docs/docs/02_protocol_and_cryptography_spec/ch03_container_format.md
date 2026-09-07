@@ -31,7 +31,7 @@ Header structure is described with the help of pseudocode that is based on no sp
 
 The header consists of one or several structures describing a Recipient. Each Recipient structure contains complete information on how the specific Recipient can access the FMK (for identification, access to personal encrypted materials, etc.).
 
-A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the senders, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
+A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the Sender, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section [Serialized format](#serialized-format)).
 
 ```c
 Header = {
@@ -94,10 +94,10 @@ The ``Recipient`` structure consists of a capsule, a Recipient key label, an enc
 
 - ``Capsule`` – encryption method specific data that the Recipient can use to decrypt the FMK.
 - ``EncryptedFMK`` – encrypted FMK.
-- ``FMKEncryptionMethod`` –FMK encryption method type.
+- ``FMKEncryptionMethod`` – FMK encryption method type.
 - ``KeyLabel`` – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. ``KeyLabel`` is a UTF-8 string.
 
-Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See section 6.4 on the details of cryptographic operations.
+Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as ``FMKEncryptionMethod``. See  [FMK encryption and decryption](ch05_cryptographic_details.md#fmk-encryption-and-decryption) on the details of cryptographic operations.
 The following capsule types have been specified to ensure the support of a variety of encryption methods ([CDOC2 encryption schemes](ch02_encryption_schemes.md)).
 
 - ``ECCPublicKeyCapsule`` – the Recipient is identified by ECC public key ``RecipientPublicKey`` (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the [SC.01 encryption method](ch02_encryption_schemes.md#sc01-encryption-scheme-for-recipients-with-ec-key-pair).
@@ -159,7 +159,7 @@ Although not required by the specification, `KeyLabel` should however follow con
 
 - KeyLabel SHOULD NOT be empty.
 - KeyLabels SHOULD be unique inside container.
-- If a KeyLabel starts with "data:" it SHOULD follow the [KeyLabel field specification v1](appendix_d_keylabel.md).
+- If a KeyLabel starts with "data:" it SHOULD follow the [KeyLabel field specification v1](keylabel_field.md).
 
 Dependent upon the encryption method the following formatting rules are used in the reference implementation:
 
@@ -181,7 +181,7 @@ Examples:
 - Certificate - FILE=~/folder/filename&CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.
 - ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined
 
-Known fields are defined in Appendix: [KeyLabel field specification v1](appendix_d_keylabel.md).
+Known fields are defined in: [KeyLabel field specification v1](keylabel_field.md).
 
 Machine-readable `KeyLabel` examples:
 

@@ -1,4 +1,4 @@
-# Appendix D: KeyLabel field specification
+# KeyLabel field specification
 
 `KeyLabel` field specification lists the following fields.
 
@@ -69,4 +69,4 @@ Exception to this (decryption should succeed without `KeyLabel`) may be symmetri
 |-------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|----------|
 | v     | Version                                                                                                                                                                                                                          | 1                                             | X        |
 | type  | Smart-ID/Mobile-ID                                                                                                                                                                                                               | auth                                          | X        |
-| sn    | [ETSI semantics identifier](../03_system_architecture/ch05_shares_server.md#etsi-semantics-identifier) or [private company issuer identifier](../03_system_architecture/ch05_shares_server.md#private-company-issuer-identifier) | etsi/PNOEE-48010010101 ; private/JIO/70000349 | X        |
+| sn    | [ETSI semantics identifier](../03_system_architecture/ch07_shares_server.md#etsi-semantics-identifier) or [private company issuer identifier](../03_system_architecture/ch07_shares_server.md#private-company-issuer-identifier) | etsi/PNOEE-48010010101 ; private/JIO/70000349 | X        |

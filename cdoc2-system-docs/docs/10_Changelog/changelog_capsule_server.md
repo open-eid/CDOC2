@@ -1,12 +1,27 @@
 # CDOC2 Capsule Server changelog
 
-**[1.7] Added support for secp521**
+**[1.7.2] Security and bug fixes**
 
-* Added support for the elliptic curve secp521
+* Return correct error code when client certificate is missing in `/key-capsules/{transactionId}`.
+* Return `x-expiry-time-adjusted` in `PUT /key-capsules`.
+* Updated all components to Spring Boot 4.1.0
 
-**[1.6] Added support for secp265**
+**[1.7.1] Added support for secp521r1**
 
-* Added support for the elliptic curve secp265
+* Added support for the elliptic curve secp521r1
+
+**[1.7] Improved logging**
+
+* Log the `Content-Type`, `Origin` and `Sec-Fetch-*`, `X-Forwarded-For` header values for each request.
+* Added request completion time logging.
+* For `POST` requests, log the size of the request body.
+* Remove the certificate subject common name (CN) from the log's.
+* Add support for tracing.
+* Add `logstash-logback-encoder` dependency to support OpenTelemetry JSON logging.
+
+**[1.6] Added support for secp256r1**
+
+* Added support for the elliptic curve secp256r1
 * Add `x-expiry-time-adjusted` header to `GET /key-capsules/{transactionId}` result as specified in [cdoc2-key-capsules 2.2.0 OAS](https://github.com/open-eid/cdoc2-openapi)
 * Changed the behavior of the `x-expiry-time` header in the `POST /key-capsules/{transactionId}`.
   Now if the `x-expiry-time` is larger than the maximum allowed expiry time, then the expiry
@@ -21,7 +36,7 @@
 **[1.4] Return `x-expiry-time` header to `GET /key-capsules/{transactionId}`**
 
 * Return `x-expiry-time` header to `GET` `/key-capsules/{transactionId}` as specified in
-  [cdoc2-key-capsules 2.1.0 OAS ](https://github.com/open-eid/cdoc2-openapi/blob/04eac9013b919c405eee6e88f497897758af29a0/cdoc2-key-capsules-openapi.yaml#L38)
+  [cdoc2-key-capsules 2.1.0 OAS](https://github.com/open-eid/cdoc2-openapi/blob/04eac9013b919c405eee6e88f497897758af29a0/cdoc2-key-capsules-openapi.yaml#L38)
 
 **[1.3] Add new optional HTTP header 'x-expiry-time'**
 
@@ -40,9 +55,9 @@
 
 # CDOC2 schema changes
 
-**[2.1] Added new elliptic cure `secp521r1` to EllipticCurve enum in recipients.fbs**
+**[2.1] Added new elliptic curve `secp521r1` to EllipticCurve enum in recipients.fbs**
 
-**[2.0] Added new elliptic cure `secp256r1` to EllipticCurve enum in recipients.fbs**
+**[2.0] Added new elliptic curve `secp256r1` to EllipticCurve enum in recipients.fbs**
 
 **[1.4] SID/MID changes to the schema**
 

@@ -1,8 +1,11 @@
 title: "System Architecture"
 nav:
-    - 'System Context': ch01_system_context.md
-    - 'System Components': ch02_system_components.md
-    - 'External Interfaces': ch03_external_interfaces.md
-    - 'Capsule Server': ch04_capsule_server.md
-    - 'Shares Server': ch05_shares_server.md
-    - 'Client authentication protocol': ch06_ID_authentication_protocol.md
+    - 'System Context':
+        - 'Hardware Token/Capsule Server': ch01_system_context.md
+        - 'SID/MID': ch02_system_context_sid_mid.md
+    - 'System Components':
+        - 'Hardware Token/Capsule Server': ch03_system_components.md
+        - 'SID/MID': ch04_system_components_sid_mid.md
+    - 'External Interfaces': ch05_external_interfaces.md
+    - 'Capsule Server': ch06_capsule_server.md
+    - 'Shares Server': ch07_shares_server.md

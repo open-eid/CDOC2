@@ -21,7 +21,7 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 * `C` - Ciphertext (encrypted message M)
 * `FMK` - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.
 * `CEK` - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.
-* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CKC).
+* `KEK` - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CC).
 * Index `i` is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, `KEK_i`.
 
 ### Standard cryptographic functions
@@ -115,12 +115,12 @@ EncryptedFMK_i = XOR(FMK, KEK_i)
 
 #### Decryption steps by Recipients
 
-Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, Capsule_i}` and has ECDSA public key `PK_i` and corresponding ECDSA secret key `SK_i`.
+Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, Capsule_i}` and has EC public key `PK_i` and corresponding EC secret key `SK_i`.
 
 ```py linenums="1"
-EncryptedFMK_i = Container_i.EncryptedFMK_i
+EncryptedFMK_i = Container_i.EncryptedFMK
 SenderEphemeralPK = Capsule_i.EphemeralPK
-KEK_i = HKDF(StaticKEKSalt, ECSVDP-DH(SK_i, EphemeralPK))
+KEK_i = HKDF(StaticKEKSalt, ECSVDP-DH(SK_i, SenderEphemeralPK))
 FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
@@ -186,14 +186,14 @@ EncryptedFMK_i = XOR(FMK, KEK_i)
 
 #### Decryption steps by Recipients
 
-Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has ECDSA public key `PK_i` and corresponding ECDSA secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from Capsule Server.
+Recipient `i` receives the CDOC2 `Container_i` with data `{C, EncryptedFMK_i, ContainerCapsule_i}` and has EC public key `PK_i` and corresponding EC secret key `SK_i`. Recipient reads `KeyServerCapsuleID_i` from `ContainerCapsule_i` and downloads corresponding `KeyServerCapsule_i` from Capsule Server. Recipient authenticates to Capsule Server with EC key pair `(SK_i, PK_i)`.
 
 Decryption steps are exactly the same:
 
 ```py linenums="1"
-EncryptedFMK_i = Container_i.EncryptedFMK_i
+EncryptedFMK_i = Container_i.EncryptedFMK
 SenderEphemeralPK = KeyServerCapsule_i.EphemeralPK
-KEK_i = HKDF(StaticKEKSalt, ECSVDP-DH(SK_i, EphemeralPK))
+KEK_i = HKDF(StaticKEKSalt, ECSVDP-DH(SK_i, SenderEphemeralPK))
 FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF-Expand(FMK)
 M = Dec(CEK, C)
@@ -213,7 +213,7 @@ CEK = HKDF-Expand(FMK)
 C = Enc(CEK, M)
 KEK_i = CSRNG()
 EncryptedKEK_i = RSAES-OAEP-ENCRYPT(PK_i, KEK_i)
-KeyServerCapsule_i = {{EncryptedKEK_i, PK_i}
+KeyServerCapsule_i = {EncryptedKEK_i, PK_i}
 ContainerCapsule_i = {KeyServerCapsuleID_i, PK_i}
 EncryptedFMK_i = XOR(FMK, KEK_i)
 ```
@@ -321,6 +321,8 @@ M = Dec(CEK, C)
 
 ## Encryption schemes with secret sharing
 
+> **Note:** This scheme applies to SiD/MiD recipients only.
+
 ### SC07: Encryption scheme with (n-of-n) secret shared decryption key
 
 This scheme is used, when Sender wishes to allow decrypting CDOC2 documents using authentication means like Smart-ID/Mobile-ID. In that case, multiple CDOC2 Shares Servers (CSS) are used to distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all `n` shares in order to reconstruct the key material.
@@ -356,7 +358,9 @@ Sender has created a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Caps
 
 Recipient `i` receives a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Authentication signature data format and authentication token details are specified in section [Capsule Server](../03_system_architecture/ch04_capsule_server.md).
+See section [Client Authentication Protocol](ch06_ID_authentication_protocol.md) for a more
+detailed description of the authentication process, including session token and authentication
+token overview.
 
 ```py linenums="1"
 # Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers
@@ -374,12 +378,19 @@ FMK = XOR(KEK_i, EncryptedFMK_i)
 CEK = HKDF_Expand(FMK)
 M = Dec(CEK, C)
 ```
+
+### SC08: (WIP) Encryption scheme with (t-of-n) secret shared decryption key
+
+This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
+
+This scheme is not fully specified.
+
 <!---
 Commented out until we start working on this 
 
 ### SC08: (WIP) Encryption scheme with t-of-n secret shared decryption key
 
-This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
+This scheme is used, when Sender wishes to use multiple CSS servers to distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only `t` shares from a total of `n` shares, in order to reconstruct the key material.
 
 This scheme is not fully specified. We don't have functions `SplitSecrets()` and `CombineSecrets()` yet.
 
@@ -413,7 +424,9 @@ Sender has created a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsu
 
 Recipient `i` receives a CDOC Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-Authentication signature data format and authentication token details are specified in section [Capsule Server](ch_04_capsule_server.md).
+See section [Client Authentication Protocol](ch06_ID_authentication_protocol.md) for a more
+detailed description of the authentication process, including session token and authentication
+token overview.
 
 ```py linenums="1"
 # Recipient i sends `Capsule_i_Share_j_ID` to corresponding CSS servers

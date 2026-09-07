@@ -1,17 +1,19 @@
 ---
-title: Client authentication protocol
+title: 8. Client authentication protocol
 ---
 
 # Client authentication protocol
 
 This section describes a protocol and data formats for authenticating to multiple CSS servers (cdoc2-shares-servers) in order to download every `KeySharesCapsule` from them.
 
+> **Note:** This section applies to SiD/MiD only.
+
 ## Authentication protocol requirements
 
 1. Multiple CSSs hold Capsules, which all need to be downloaded by Client.
 2. Client needs to authenticate to multiple CSSs, in order to download all Capsules.
 3. Client should only need to create one signature with its authentication means (Mobile-ID, Smart-ID) for authentication.
-4. CSS must not be able to replay the authentication ticket to another CSS.
+4. CSS must not be able to replay the authentication token to another CSS.
 
 ## Non-suitable alternatives
 
@@ -19,11 +21,11 @@ Before designing a custom authentication protocol, we should make sure that we c
 
 For example, traditionally, authentication and authorization processes are handled by OpenID Connect and OAuth2 protocols. They are well studied and robust. However, if we try to apply them to our situation and try to map mandatory roles from OpenID Connect and OAuth2 ecosystems to our components (Client, CSSs), the situation becomes cumbersome.
 
-First, the requirement that Client needs to "login" to multiple servers with single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications, and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
+First, the requirement that Client needs to "login" to multiple servers with a single use of user's eID means is difficult to achieve. This is usually handled by a single-sign-on service. There's such a service, called GovSSO (<https://e-gov.github.io/GOVSSO/TechnicalSpecification>), but it is more oriented towards web applications, and it is using a generic OpenID Connect protocol without binding the issued `id_tokens` with user's authentication signatures. In case CSS would be accepting such `id_tokens`, there's no cryptographic proof that authentication of the user has actually taken place and that the user's eID means was used. That would mean that the security of such a  central single-sign-on provider would be critical and in case the security of GovSSO would be breached, it would be able to download every `KeySharesCapsule` on behalf of any user.
 
-Additionally, if we would be using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens. This would mean that CSS server can re-use the token and replay it to another CSS server. It might be possible to overcome the threat of token replay with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create yet another central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such component would be breached, the attacker would be able to download every `KeySharesCapsule` on behalf of any user.
+Additionally, if we were using OAuth2 authorization protocols, we would be using OAuth2 "bearer" tokens. This would mean that CSS server can re-use the token and replay it to another CSS server. It might be possible to overcome the threat of token replay with protocols like "OAuth2 Certificate-Bound Access Tokens" (<https://datatracker.ietf.org/doc/html/rfc8705>) and "OAuth2 Demonstrating Proof of Possession" (<https://www.rfc-editor.org/rfc/rfc9449>), but that would require us to create yet another central trusted component which would hand out those access tokens. That kind of component would be a single source of failure and in case the security of such a component would be breached, the attacker would be able to download every `KeySharesCapsule` on behalf of any user.
 
-Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment and traditional authentication protocols are not suitable. More tailored approach would be needed to come up with an authentication protocol, that would satisfy all requirements and would depend only on the eID authentication means or eID trust service providers.
+Therefore, introducing additional trusted components to the CDOC2 ecosystem is not desirable at the moment and traditional authentication protocols are not suitable. A more tailored approach would be needed to come up with an authentication protocol, that would satisfy all requirements and would depend only on the eID authentication means or eID trust service providers.
 
 ## Overview of the generic authentication protocol
 
@@ -48,7 +50,7 @@ participant "CSS servers" as CSS
 participant "MiD/SiD API" as SID
 
 User -> CLIENT : Decrypt this CDOC2 container
-CLIENT -> User : We need to access DigiDoc4/CDOC2 infrastructure\nPlease authenticate as user "U"
+CLIENT -> User : We need to access CDOC2 infrastructure\nPlease authenticate as user "U"
 
 alt SID
   User -> CLIENT : Agree, start authentication with SiD \nprovide identification code
@@ -173,7 +175,7 @@ In this section the details of the authentication protocol are explained.
 
 ### Authentication data
 
-In generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (Mobile-ID, Smart-ID), using the authentication key pair.
+In the generic protocol, the Client signs a set of information, which expresses the proof of Recipient's identity, and Recipient's intent to download specific Capsule. We can use the JWT standard (<https://www.rfc-editor.org/rfc/rfc7519.html>) for this. Client will sign the following set of JWT claims with their authentication means (Mobile-ID, Smart-ID), using the authentication key pair.
 
 ```json
 {
@@ -205,7 +207,7 @@ Because of the signature, it is not possible to modify JWT claims anymore. If we
 
 ### Intro to SD-JWT standard
 
-SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with following entities:
+SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc/draft-ietf-oauth-selective-disclosure-jwt/>) defines a mechanism for selective disclosure of individual elements of a JSON object, which is used as the payload of a JSON Web Signature (JWS) structure. It assumes an ecosystem with the following entities:
 
 1. SD-JWT is created by an entity called _Issuer_. Issuer decides, which claims are included in SD-JWT and which claims will be individually disclosable. Issuer signs the SD-JWT with its key pair and secures the SD-JWT against modifications.
 2. SD-JWT is received from Issuer by an entity called _Holder_. Holder decides when and where to present the SD-JWT and also decides, which disclosable claims it wishes to reveal and which claims it wishes to keep secret from Verifier.
@@ -214,7 +216,8 @@ SD-JWT draft standard (<https://sdjwt.js.org>, <https://datatracker.ietf.org/doc
 We are mapping those SD-JWT-specific entities to CDOC2 data model in following way:
 
 1. Same SD-JWT data structure is used for CDOC2 authentication data and CDOC2 authentication signature. CDOC2 authentication data is expressed as SD-JWT claims. CDOC2 authentication signature corresponds to the Issuer signature.
-2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific CDOC2 authentication ticket.
+2. SD-JWT presentation along with selectively disclosed claims is used as a server-specific
+   CDOC2 authentication token.
 3. Roles of SD-JWT Issuer and SD-JWT Holder is performed by CDOC2 Client. Client creates SD-JWT structure, specifies that some claims are disclosable and creates specific presentations for each CSS server. SD-JWT standard optionally supports a scenario when Holder has its own key pair (separate from Issuer's key pair) and it is possible to verify the possession of Holder's key pair during the SD-JWT presentations. In CDOC2 system, we don't use Holder's key binding feature.
 4. Role of SD-JWT Verifier is performed by CSS servers. Servers will provide Client with nonces and verify that they will receive a valid signed SD-JWT with server-specific nonce as disclosable claim.
 
@@ -224,21 +227,24 @@ How does this "selective disclosure" feature actually work behind the scenes? Th
 
 ```text
 SD-CLAIMS = (
-    CLAIM-NAME: HASH(SALT | CLAIM-VALUE)
+    HASH(SALT | CLAIM-NAME | CLAIM-VALUE)
 )*
 ```
 
-where `SALT` is a random salt. This kind of operation effectively "hides" the content of the `CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct value, if they are provided with the values of `SALT` and clear-text `CLAIM_VALUE`. Such kind of `SD-CLAIMS` are included in the JWT structure, inside a special JOSE object with name `_sd`.
+where `SALT` is a random salt. This kind of operation effectively "hides" `CLAIM-NAME` and
+`CLAIM-VALUE`. But, it allows Verifier to check if the digest was computed from the correct data,
+if they are provided with the values of `SALT`, clear-text `CLAIM-NAME` and `CLAIM_VALUE`.
+Such `SD-CLAIMS` are included in the JWT structure, inside a special JOSE array with name `_sd`.
 
-In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-RELEASES` data items, which are:
+In order to reveal the `CLAIM-VALUE` to Verifier, Holder needs to create `SD-DISCLOSURE` data items, which are:
 
 ```text
-SD-RELEASES = (
-    CLAIM-NAME: (DISCLOSED-SALT, DISCLOSED-VALUE)
-)
+SD-DISCLOSURE = (
+    SALT, CLAIM-NAME, CLAIM-VALUE
+)*
 ```
 
-and add such data items in the JWT, in a special JOSE object with name `sd_release`.
+The resulting disclosure items are appended to the JWT using the tilde character `~` as a separator
 
 So, for example, let's take the original set of claims:
 
@@ -246,7 +252,7 @@ So, for example, let's take the original set of claims:
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "given_name": "John",
-  "family_name": "Doe",
+  "family_name": "Doe"
 }
 ```
 
@@ -256,9 +262,9 @@ Let's say that the Issuer wishes to make claim `given_name` disclosable. They ge
 {
   "sub": "6c5c0a49-b589-431d-bae7-219122a9ec2c",
   "family_name": "Doe",
-  "_sd_": {
-    "given_name": "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
-  }
+  "_sd": [
+    "PvU7cWjuHUq6w-i9XFpQZhjT-uprQL3GH3mKsAJl0e0"
+  ]
 }
 ```
 
@@ -268,23 +274,24 @@ JWT header and JWT payload is then signed and following JWT is created:
 <JWT_header>.<JWT_payload>.<JWT_signature>
 ```
 
-However, this "compact"-encoded JWT doesn't yet contain random salt values. So, SD-JWT Salt/Value Container, which is simply a JSON array of `SD-RELEASES` data items, is also added:
+However, this "compact"-encoded JWT doesn't yet disclosure information. So, an SD-DISCLOSURE
+object is also added:
 
 ```json
-{ 
   [
-    "given_name": "[\"eluV5Og3gSNII8EYnsxA_A\", \"John\"]",
+    "eluV5Og3gSNII8EYnsxA_A", "given_name", "John"
   ]
-}
 ```
 
-It is encoded in Base64 and added to the original encoded JWT, after yet another period ("."):
+It is encoded in Base64 and appended to the original encoded JWT, separated and terminated by a
+tilde  ("~"):
 
 ```text
-<JWT_header>.<JWT_payload>.<JWT_signature>.<SD-JWT Salt/Value Container>
+<JWT_header>.<JWT_payload>.<JWT_signature>~<SDJWT_disclosure>~
 ```
 
-Now, Holder can decide which disclosable claim information from the `<SD-JWT Salt/Value Container>` they will include, when creating a presentation to Verifier, and which disclosable claims they don't include. The signature of the original JWT is still valid, because original JWT will be unchanged.
+Now, Holder can decide which claims to disclose by selectively appending `<SDJWT_disclosure>`
+objects when creating a presentation to Verifier. The signature of the original JWT is still valid, because original JWT will be unchanged.
 
 ### Creating SD-JWT structure (authentication data and authentication signature)
 
@@ -301,7 +308,9 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
    The values for the `alg` claim depend on the signature algorithm that the user's eID means authentication key pair is using:
    - Mobile-ID uses `ES256` (ECDSA with SHA-256).
-   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`.
+   - Smart-ID RP API v3 uses `RSASSA-PSS+ACSP_V2`. This is a non-standard algorithm which
+     describes the combination of algorithms in use by SID RPv3 and is interpreted as such by
+     the CDOC2 infrastructure token authentication logic.
 
 2. Client initialises empty SD-JWT payload structure and adds always-disclosed claims to SD-JWT payload. The `iss` claim is added directly to the payload. The `aud` claim is added as a selectively disclosable claim via the `_sd` mechanism and is therefore not present as a plain claim in the base payload.
 
@@ -322,7 +331,7 @@ Applying SD-JWT data structure to CDOC2 authentication protocol, we get followin
 
 4. Client signs the SD-JWT structure (with the header, payload and disclosable claims information in `_sd` structure), as SD-JWT Issuer with user's authentication means.
 
-### Presenting SD-JWT (creating authentication ticket)
+### Presenting SD-JWT (creating authentication token)
 
 For each server, Client creates SD-JWT presentation and discloses only that `aud` array element, which contains `key-share` and `nonce`, which are specific to that server.
 
@@ -395,7 +404,7 @@ if we decode the individual parts, we get following data items:
    ]
    ```
 
-### Verifying SD-JWT (verifying authentication ticket)
+### Verifying SD-JWT (verifying authentication token)
 
 CSS server receives compact SD-JWT presentation (`<Issuer-signed JWT>~<Disclosure 1>~<Disclosure 2>~`) and performs following authentication and authorization checks:
 
@@ -417,9 +426,9 @@ If all checks are positive, then the authentication and access control decision 
 
 Before authenticating to CSS servers (cdoc2-shares-servers), a valid session token is needed. Session token is valid up to 24 hours.
 
-Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens — 
-which are signed directly by the user's eID means — session tokens are signed by the 
-Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the 
+Session tokens use the type identifier `vnd.cdoc2.session-token.v2+sd-jwt`. Unlike auth tokens —
+which are signed directly by the user's eID means — session tokens are signed by the
+Authentication Server. In the case of Smart-ID RPv3 authentication, the signature is embedded within the
 session token as a claim, along with the parameters needed to verify it.
 
 ### Session Token structure
@@ -442,6 +451,7 @@ Session token payload includes:
 - `_sd` / `_sd_alg`: Selectively disclosable `aud` claim (same URL format as in auth tokens)
 
 Additionally for SID RPv3 authentication:
+
 - `signatureProtocol`: RPv3 signature protocol
 - `rpChallenge`: Relying party challenge value
 - `interactionsDigest`: SHA-256 digest of the serialized interactions object
@@ -458,10 +468,8 @@ CSS server receives the session token presentation and performs the following ch
 2. Verify that the token type header is `vnd.cdoc2.session-token.v2+sd-jwt`.
 3. Verify that `iat` is not in the future and `exp` is not in the past.
 4. Verify that `sub` matches the identity from the signing certificate.
-5. Verify the embedded user eID signature in the `signature` claim using the appropriate method:
-   - For **Smart-ID RP API v3**: verify using RSASSA-PSS+ACSP_V2 algorithm and the provided SID signature parameters.
-   - For **Mobile-ID**: verify using the EC public key from the user's certificate and the provided MID signature parameters.
-6. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+5. Verify the `aud` claim following the same steps 4–9 as for the auth token verification above.
+6. Only for **Smart-ID RP API v3** : Verify the embedded user eID signature in the `signature` claim
 
 ## Security of the protocol
 
@@ -475,7 +483,7 @@ In case the network between the CDOC2 Client and CSS servers is compromised and 
 
 In case the attacker is able to hijack the network connections between the CDOC2 Client and CSS servers and redirect the connection attempts from the real CSS servers to attacker itself, attacker is also able to masquerade to Client as real CSS server and is also observe the values of the transmitted capsule shares. Attacker might be able to present a self-signed X.509 HTTPS certificate, or it might be able to present a valid X.509 HTTPS certificate from the real CA as well. In case the CDOC2 Client doesn't verify the identity of the CSS server, it is not able to tell a difference between the attacker and real CSS server.
 
-It is essential that CDOC2 Clients authenticate, which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.
+It is essential that CDOC2 Clients authenticate which servers they are connecting to and that they are verifying the HTTPS X.509 certificates against the whitelisted values in the configuration file.
 
 ### Protection against compromised CSS servers
 
@@ -534,16 +542,18 @@ Therefore, the described protocol should be secure against such properties. Howe
 
 In case the MITM attacker has been able to compromise the path between the CDOC2 Client and the user's authentication means (Mobile-ID, Smart-ID) and is able to trick user to sign attacker's submitted hash with the user's authentication key pair, it is possible to attack the CDOC2 system.
 
-Following authentication means have this potential weakness:
+The following authentication means have this potential weakness:
 
 1. ID-card when used via PKCS#11 interface
 2. Mobile-ID REST API
 3. Smart-ID RP-API v2
 
-Following authentication means or APIs do not have this weakness:
+The following authentication means or APIs do not have this weakness:
 
 1. ID-card when used via web-eID JS interface
 2. Smart-ID RP-API v3 (supported in CDOC2 via the RSASSA-PSS+ACSP_V2 signature verification)
+3. Mobile-ID REST API with an RP counter signature. This is implemented in CDOC2 as an HTTP
+   signature scheme ( [RFC 9421](https://datatracker.ietf.org/doc/html/rfc9421) )
 
 In order to mitigate against this weakness, CDOC2 system can benefit from following countermeasures:
 
