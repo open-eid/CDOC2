@@ -31,4 +31,4 @@ CCS interface provides the following endpoints:
 * `/key-capsules/{transactionId}` Get Server Capsule based on the transaction identifier. Used by recipient to request a Server Capsule.
 * `/key-capsules` Upload a Server Capsule to a CCS. Used by sender to upload Server Capsule to a CCS.
 
-For full CCS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
+For full CCS OpenAPI specification, see [API References](../05_api_references/capsule_server_api.md).

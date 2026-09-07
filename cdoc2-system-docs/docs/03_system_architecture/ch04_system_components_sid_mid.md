@@ -45,7 +45,7 @@ Command line utility to create/process CDOC2 files. Provides CLI interface to CD
 * `/session_nonce` Generate a session nonce for embedding in the session token. Accessed only by
   CDOC2 Auth Server.
 
-For full CSS OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
+For full CSS OpenAPI specification, see [API References](../05_api_references/shares_server_api.md).
 
 ### CDOC2 Auth Server interface
 
@@ -53,7 +53,7 @@ For full CSS OpenAPI specification, see [API References](../02_protocol_and_cryp
 * `/auth/status/{authProcessUuid}` Poll authentication status. Returns session token and signing certificate when complete.
 * `/.well-known/jwks.jws` Returns the Auth Server's public signing keys (JWK format).
 
-For full Auth Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
+For full Auth Server OpenAPI specification, see [API References](../05_api_references/auth_server_api.md).
 
 ### CDOC2 RP Server interface
 
@@ -65,4 +65,4 @@ For full Auth Server OpenAPI specification, see [API References](../02_protocol_
 * `/mid/session/{sessionID}` Poll Mobile-ID session status. Returns signature and RFC 9421 countersignature headers.
 * `/.well-known/jwks.jws` Returns the RP Server's public signing keys.
 
-For full RP Server OpenAPI specification, see [API References](../02_protocol_and_cryptography_spec/api_references.md).
+For full RP Server OpenAPI specification, see [API References](../05_api_references/rp_server_api.md).
