@@ -1,5 +1,6 @@
 title: "User Guides"
 nav:
+    - 'Integrator Guide': integrator_guide.md
     - 'Password Strength User Guide': password_guide.md
     - 'CDOC2 Container Storage User Guide': container_storage_guide.md
     - 'Overview diagrams': overview_diagrams.md
