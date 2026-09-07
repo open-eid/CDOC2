@@ -460,6 +460,62 @@ Additionally for SID RPv3 authentication:
 - `schemeName`: Name of scheme that was used to create the signature (e.g., `smart-id`)
 - `signature`: Embedded user eID signature with algorithm parameters.
 
+### SID Session Token Example
+
+```json
+{
+  "rpChallenge": "rkgk4q16y61lRhERNqVUw0itHWgs3mfLKv9pD6glBt9td2QneawYK3FF8qd1pRjGCnyrgsVNjkIrwOsney39yw==",
+  "sub": "etsi/PNOEE-40504040001",
+  "signature": {
+    "value": "JXmVh0ZV...",
+    "serverRandom": "sV9wlKtZe5tr0gN9ietPSJ/T",
+    "userChallenge": "fykZLrfSkl1on1pHNPkdAYQ-izGt7VFyczyCC3lxrik",
+    "signatureAlgorithm": "rsassa-pss",
+    "flowType": "Notification",
+    "signatureAlgorithmParameters": {
+      "hashAlgorithm": "SHA-256",
+      "maskGenAlgorithm": {
+        "algorithm": "id-mgf1",
+        "parameters": {
+          "hashAlgorithm": "SHA-256"
+        }
+      },
+      "saltLength": 32,
+      "trailerField": "0xbc"
+    }
+  },
+  "iss": "https://cdoc2-auth-server.ee",
+  "schemeName": "smart-id-demo",
+  "signatureProtocol": "RSASSA-PSS+ACSP_V2",
+  "interactionsDigest": "olJN7OXUvfy1bUPNu712X3A7MOm1BXiWtlAmv+ubIz0=",
+  "exp": 1776872529,
+  "iat": 1776786129,
+  "interactionTypeUsed": "confirmationMessageAndVerificationCodeChoice",
+  "rpName": "DEMO",
+  "aud": [
+    "https://cdoc2-rp-server.ee/session_nonce/WTq9gAkv5_UJioELXDqOAA",
+    "https://cdoc2-shares-server-1.ee/session_nonce/nrVcSEcHuWt2SKfjkMm6RQ",
+    "https://cdoc2-shares-server-2.ee/session_nonce/LrVESEcHuW32SKfjkMmxRa"
+  ]
+}
+```
+
+### MID Session Token Example
+
+```json
+{
+  "iss": "https://cdoc2-auth-server.ee",
+  "sub": "etsi/PNOEE-51307149560",
+  "exp": 1776872529,
+  "iat": 1776786129,
+  "aud": [
+     "https://cdoc2-rp-server.ee/session_nonce/WTq9gAkv5_UJioELXDqOAA",
+     "https://cdoc2-shares-server-1.ee/session_nonce/nrVcSEcHuWt2SKfjkMm6RQ",
+     "https://cdoc2-shares-server-2.ee/session_nonce/LrVESEcHuW32SKfjkMmxRa"
+  ]
+}
+```
+
 ### Verifying Session Token
 
 CSS server receives the session token presentation and performs the following checks:
