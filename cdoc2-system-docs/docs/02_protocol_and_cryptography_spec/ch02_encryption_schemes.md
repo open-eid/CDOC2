@@ -306,6 +306,17 @@ EncryptedFMK_i = XOR(FMK, KEK_i)
 
 Sender creates a CDOC2 Container for each Recipient with `{C, EncryptedFMK_i, Capsule_i}`, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.
 
+<!-- markdownlint-disable code-block-style -->
+
+!!! note
+
+    Design of SC06 might be a bit confusing first, as generating two different salt values (`PasswordSalt_i` and `KeyMaterialSalt_i`) doesn't seem to offer additional security. Rationale behind this design choice is following:
+
+    1. protocol designs of SC05 and SC06 should be similar, because they are dealing with similar situation. In case the SC05 uses `KeyMaterialSalt_i`, the SC06 should also use that.
+    2. SC06 combines two primitives here, `PBKDF2()` from [RFC8018](https://www.rfc-editor.org/info/rfc8018/) and `HKDF()` from [RFC 5869](https://www.rfc-editor.org/info/rfc5869/). Both primitives encourage usage of salt values.
+
+    Can we do without salt values? Can we re-use single salt value with PBKDF2 and HKDF? Difficult to decide. However, as generating two separate salt values is not expensive and certainly shouldn't do  harm, it was decided to err on the side of caution, rather strictly follow individual RFC recommendations and therefore, to use two independent salt values.
+
 #### Decryption steps for Recipient or Sender
 
 After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient `i`) or the Recipient `i` wishes to decrypt the Container.
