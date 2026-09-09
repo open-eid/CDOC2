@@ -1,5 +1,0 @@
-title: "Testing Specification"
-nav:
-
-    - 'Capsule Server': test_plan.md
-    - 'SID/MID' : test_plan_sidmid.md
