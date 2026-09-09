@@ -26,15 +26,15 @@ quick reference alongside the more detailed sections of this documentation.
 
 ## CDOC2 concept model
 
-![CDOC2 concept model](`../img/CDOC2 model.jpg`)
+![CDOC2 concept model](`../img/CDOC2 model.png`)
 
 ## CDOC1 main flow
 
-![CDOC1 main flow](`../img/CDOC1 main flow.jpg`)
+![CDOC1 main flow](`../img/CDOC1 main flow.png`)
 
 ## CDOC2 main flow (ID-Card, password)
 
-![CDOC2 main flow (ID-Card, password)](`../img/CDOC2 main flow (ID-card, password).jpg`)
+![CDOC2 main flow (ID-Card, password)](`../img/CDOC2 main flow (ID-card, password).png`)
 
 ## CDOC2 Key Shares
 
