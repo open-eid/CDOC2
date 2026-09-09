@@ -29,11 +29,16 @@ For convenience, we repeat here some of the acronyms and shorthand notation, whi
 Schemes use following standard functions:
 
 1. `Enc(CEK, M)` means encryption of message `M` with symmetric key `CEK`.
-2. `HKDF()`, `HKDF-Extract()`, `HKDF-Expand()` are key derivation functions as defined in RFC5869 (<https://datatracker.ietf.org/doc/html/rfc5869>).
-3. `ECSVDP-DH(SecretKey, PublicKey)` is Elliptic Curve Secret Value Derivation Primitive, Diffie-Hellman version, as defined in IEEE standard P1363 and in RFC5349 (<https://datatracker.ietf.org/doc/html/rfc5349>). Note that this is little-bit different from "ECC Cofactor Diffie-Hellman (ECC CDH)" as defined in NIST SP800-56A, section 5.7.1.2.
-4. `RSAES-OAEP-ENCRYPT(PK, M)` means encryption of message `M` with RSA public key `PK` according to RFC8017, section 7.1.1 (<https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1>).
-5. `RSAES-OAEP-DECRYPT(SK, C)` means decryption of ciphertext `C` with RSA private key `SK` according to RFC8017, section 7.1.2 (<https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2>)
-6. `PBKDF2(Password, Salt)` is key material derivation function as defined in RFC2898 (<https://www.ietf.org/rfc/rfc2898.txt>).
+2. `HKDF()`, `HKDF-Extract()`, `HKDF-Expand()` are key derivation functions as defined in
+   [RFC5869](https://datatracker.ietf.org/doc/html/rfc5869).
+3. `ECSVDP-DH(SecretKey, PublicKey)` is Elliptic Curve Secret Value Derivation Primitive,
+   Diffie-Hellman version, as defined in IEEE standard P1363 and in [RFC5349](https://datatracker.ietf.org/doc/html/rfc5349). Note that this is little-bit 
+   different from "ECC Cofactor Diffie-Hellman (ECC CDH)" as defined in NIST SP800-56A, section 5.7.1.2.
+4. `RSAES-OAEP-ENCRYPT(PK, M)` means encryption of message `M` with RSA public key `PK` 
+   according to [RFC8017, section 7.1.1](https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1).
+5. `RSAES-OAEP-DECRYPT(SK, C)` means decryption of ciphertext `C` with RSA private key `SK` 
+   according to [RFC8017, section 7.1.2](https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2)
+6. `PBKDF2(Password, Salt)` is key material derivation function as defined in [RFC2898](https://www.ietf.org/rfc/rfc2898.txt).
 7. `XOR(Key1, Key2)` is bitwise exclusive-or operation on symmetric keys.
 
 ## Generic CDOC2 encryption scheme
