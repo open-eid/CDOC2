@@ -996,7 +996,7 @@
 <span class="md-ellipsis">
     
   
-    Testing Specification
+    Changelog
   
 
     
@@ -1005,56 +1005,6 @@
 </label>
 <nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
 <label class="md-nav__title" for="__nav_8">
-<span class="md-nav__icon md-icon"></span>
-            
-  
-    Testing Specification
-  
-
-          </label>
-<ul class="md-nav__list" data-md-scrollfix="">
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../09_test_plan/test_plan/">
-<span class="md-ellipsis">
-    
-  
-    Capsule Server
-  
-
-    
-  </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="../../09_test_plan/test_plan_sidmid/">
-<span class="md-ellipsis">
-    
-  
-    SID/MID
-  
-
-    
-  </span>
-</a>
-</li>
-</ul>
-</nav>
-</li>
-<li class="md-nav__item md-nav__item--nested">
-<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
-<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
-<span class="md-ellipsis">
-    
-  
-    Changelog
-  
-
-    
-  </span>
-<span class="md-nav__icon md-icon"></span>
-</label>
-<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
-<label class="md-nav__title" for="__nav_9">
 <span class="md-nav__icon md-icon"></span>
             
   
@@ -1734,6 +1684,17 @@
 <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
 <p>Sender creates a CDOC2 Container for each Recipient with <code>{C, EncryptedFMK_i, Capsule_i}</code>, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.</p>
+<hr/>
+<p><strong>NOTE</strong></p>
+<p>Design of SC06 might be a bit confusing at first, as generating two different salt values
+(<code>PasswordSalt_i</code> and <code>KeyMaterialSalt_i</code>) doesn't seem to offer additional security. Rationale
+behind this design choice is the following:</p>
+<ol>
+<li>protocol designs of SC05 and SC06 should be similar, because they are dealing with similar situations. If SC05 uses <code>KeyMaterialSalt_i</code>,  SC06 should also use that.</li>
+<li>SC06 combines two primitives here, <code>PBKDF2()</code> from <a href="https://www.rfc-editor.org/info/rfc8018/">RFC8018</a> and <code>HKDF()</code> from <a href="https://www.rfc-editor.org/info/rfc5869/">RFC 5869</a>. Both primitives encourage usage of salt values.</li>
+</ol>
+<p>Can we do without salt values? Can we re-use a single salt value with PBKDF2 and HKDF? Difficult to decide. However, as generating two separate salt values is not expensive and certainly shouldn't do  harm, it was decided to err on the side of caution, rather than strictly follow individual RFC recommendations and therefore, to use two independent salt values.</p>
+<hr/>
 <h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
 <p>After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient <code>i</code>) or the Recipient <code>i</code> wishes to decrypt the Container.</p>
 <p>Recipient <code>i</code> receives CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK, Capsule}</code> and has password <code>Password_i</code> and follows steps for decryption:</p>
