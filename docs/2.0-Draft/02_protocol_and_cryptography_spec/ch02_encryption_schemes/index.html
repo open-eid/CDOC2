@@ -1453,11 +1453,16 @@
 <p>Schemes use following standard functions:</p>
 <ol>
 <li><code>Enc(CEK, M)</code> means encryption of message <code>M</code> with symmetric key <code>CEK</code>.</li>
-<li><code>HKDF()</code>, <code>HKDF-Extract()</code>, <code>HKDF-Expand()</code> are key derivation functions as defined in RFC5869 (<a href="https://datatracker.ietf.org/doc/html/rfc5869">https://datatracker.ietf.org/doc/html/rfc5869</a>).</li>
-<li><code>ECSVDP-DH(SecretKey, PublicKey)</code> is Elliptic Curve Secret Value Derivation Primitive, Diffie-Hellman version, as defined in IEEE standard P1363 and in RFC5349 (<a href="https://datatracker.ietf.org/doc/html/rfc5349">https://datatracker.ietf.org/doc/html/rfc5349</a>). Note that this is little-bit different from "ECC Cofactor Diffie-Hellman (ECC CDH)" as defined in NIST SP800-56A, section 5.7.1.2.</li>
-<li><code>RSAES-OAEP-ENCRYPT(PK, M)</code> means encryption of message <code>M</code> with RSA public key <code>PK</code> according to RFC8017, section 7.1.1 (<a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1">https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1</a>).</li>
-<li><code>RSAES-OAEP-DECRYPT(SK, C)</code> means decryption of ciphertext <code>C</code> with RSA private key <code>SK</code> according to RFC8017, section 7.1.2 (<a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2">https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2</a>)</li>
-<li><code>PBKDF2(Password, Salt)</code> is key material derivation function as defined in RFC2898 (<a href="https://www.ietf.org/rfc/rfc2898.txt">https://www.ietf.org/rfc/rfc2898.txt</a>).</li>
+<li><code>HKDF()</code>, <code>HKDF-Extract()</code>, <code>HKDF-Expand()</code> are key derivation functions as defined in
+   <a href="https://datatracker.ietf.org/doc/html/rfc5869">RFC5869</a>.</li>
+<li><code>ECSVDP-DH(SecretKey, PublicKey)</code> is Elliptic Curve Secret Value Derivation Primitive,
+   Diffie-Hellman version, as defined in IEEE standard P1363 and in <a href="https://datatracker.ietf.org/doc/html/rfc5349">RFC5349</a>. Note that this is little-bit
+   different from "ECC Cofactor Diffie-Hellman (ECC CDH)" as defined in NIST SP800-56A, section 5.7.1.2.</li>
+<li><code>RSAES-OAEP-ENCRYPT(PK, M)</code> means encryption of message <code>M</code> with RSA public key <code>PK</code>
+   according to <a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1">RFC8017, section 7.1.1</a>.</li>
+<li><code>RSAES-OAEP-DECRYPT(SK, C)</code> means decryption of ciphertext <code>C</code> with RSA private key <code>SK</code>
+   according to <a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2">RFC8017, section 7.1.2</a></li>
+<li><code>PBKDF2(Password, Salt)</code> is key material derivation function as defined in <a href="https://www.ietf.org/rfc/rfc2898.txt">RFC2898</a>.</li>
 <li><code>XOR(Key1, Key2)</code> is bitwise exclusive-or operation on symmetric keys.</li>
 </ol>
 <h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
