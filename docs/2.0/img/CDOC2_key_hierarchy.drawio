@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="1 – Võtmehierarhia" id="page-voetmehierarhia">
+    <mxGraphModel dx="1547" dy="1187" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="720" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d1_title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontSize=20;fontStyle=1;whiteSpace=wrap;" value="CDOC2 Key Hierarchy" vertex="1">
+          <mxGeometry height="30" width="600" x="160" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_box" parent="1" style="rounded=0;html=1;fillColor=none;strokeColor=#9673a6;dashed=1;verticalAlign=top;align=center;fontStyle=2;fontColor=#9673a6;whiteSpace=wrap;" value="for each recipient i (i = 1..k)" vertex="1">
+          <mxGeometry height="315" width="300" x="620" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_random" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="random ← CSRNG()&lt;br&gt;(≥ 256 bit)" vertex="1">
+          <mxGeometry height="50" width="280" x="320" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_extract" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="FMK ← Extract(&quot;CDOC20salt&quot;, random)" vertex="1">
+          <mxGeometry height="40" width="300" x="310" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_fmk" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;" value="FMK&lt;br&gt;File Master Key (256 bit)" vertex="1">
+          <mxGeometry height="55" width="240" x="340" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_cekexp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="CEK ← Expand(FMK, &quot;CDOC20cek&quot;, L)" vertex="1">
+          <mxGeometry height="45" width="270" x="30" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_hhkexp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="HHK ← Expand(FMK, &quot;CDOC20hmac&quot;, 32)" vertex="1">
+          <mxGeometry height="45" width="270" x="325" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_kek" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" value="KEK_i (256 bit)&lt;br&gt;derivation according to scheme:&lt;br&gt;ECDH / RSA-OAEP / sym. key /&lt;br&gt;PBKDF2 / Key Shares (SC01–SC07)" vertex="1">
+          <mxGeometry height="90" width="270" x="635" y="378" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_cek" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="CEK&lt;br&gt;Content Encryption Key&lt;br&gt;(in case of 256 bit ChaCha20)" vertex="1">
+          <mxGeometry height="60" width="240" x="45" y="478" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_hhk" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="HHK&lt;br&gt;Header HMAC Key (256 bit)" vertex="1">
+          <mxGeometry height="60" width="240" x="340" y="478" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_encxor" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="EncryptedFMK_i = XOR(FMK, KEK_i)" vertex="1">
+          <mxGeometry height="40" width="240" x="650" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_payload" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Payload encryption&lt;br&gt;C = Enc(CEK, M)&lt;br&gt;ChaCha20-Poly1305 (AEAD)" vertex="1">
+          <mxGeometry height="70" width="270" x="30" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Header integrity&lt;br&gt;Checksum = HMAC(HHK, Serialize(Header))&lt;br&gt;HMAC-SHA-256" vertex="1">
+          <mxGeometry height="70" width="270" x="325" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_encfmk" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="EncryptedFMK_i&lt;br&gt;(in the Recipient_i struct&lt;br&gt;from CDOC2 header)" vertex="1">
+          <mxGeometry height="70" width="240" x="650" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e1" edge="1" parent="1" source="d1_random" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_extract">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e2" edge="1" parent="1" source="d1_extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_fmk">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e3" edge="1" parent="1" source="d1_fmk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_cekexp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e4" edge="1" parent="1" source="d1_fmk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_hhkexp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e5" edge="1" parent="1" source="d1_fmk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_kek">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e6" edge="1" parent="1" source="d1_cekexp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_cek">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e7" edge="1" parent="1" source="d1_cek" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_payload">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e8" edge="1" parent="1" source="d1_hhkexp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_hhk">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e9" edge="1" parent="1" source="d1_hhk" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_header">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e10" edge="1" parent="1" source="d1_kek" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_encxor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d1_e11" edge="1" parent="1" source="d1_encxor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;" target="d1_encfmk">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

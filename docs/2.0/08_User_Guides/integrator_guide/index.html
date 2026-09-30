@@ -1,0 +1,1149 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../../05_api_references/rp_server_api/" rel="prev"/>
+<link href="../password_guide/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>Integrator Guide - CDOC2 System Documentation</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#cdoc2-integrator-guide">23. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="CDOC2 System Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            CDOC2 System Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Integrator Guide
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="CDOC2 System Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    CDOC2 System Documentation
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../terms_and_accronyms/">
+<span class="md-ellipsis">
+    
+  
+    Terms and Acronyms
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Case Model
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Case Model
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
+<span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Protocol and Cryptography Specification
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Protocol and Cryptography Specification
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch02_encryption_schemes/">
+<span class="md-ellipsis">
+    
+  
+    Encryption Schemes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch03_container_format/">
+<span class="md-ellipsis">
+    
+  
+    Container Format
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch05_cryptographic_details/">
+<span class="md-ellipsis">
+    
+  
+    Cryptographic Details
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/A1_Security_level/">
+<span class="md-ellipsis">
+    
+  
+    Password-Based Encryption Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch06_ID_authentication_protocol/">
+<span class="md-ellipsis">
+    
+  
+    Client authentication protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/header_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Header FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/recipients_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Recipients FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/keylabel_field/">
+<span class="md-ellipsis">
+    
+  
+    KeyLabel field specification
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Architecture
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Context
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch02_system_context_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Components
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Components
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch03_system_components/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch04_system_components_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_external_interfaces/">
+<span class="md-ellipsis">
+    
+  
+    External Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch07_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API References
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API References
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/capsule_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/shares_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/auth_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/rp_server_api/">
+<span class="md-ellipsis">
+    
+  
+    RP Server API
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+</a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-youre-building">
+<span class="md-ellipsis">
+      
+        What you're building
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-vocabulary">
+<span class="md-ellipsis">
+      
+        Core vocabulary
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-backend-components-your-client-may-need-to-call">
+<span class="md-ellipsis">
+      
+        The backend components your client may need to call
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-encryption-schemes-you-need-to-support">
+<span class="md-ellipsis">
+      
+        The encryption schemes you need to support
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#talking-to-a-capsule-server">
+<span class="md-ellipsis">
+      
+        Talking to a Capsule Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id">
+<span class="md-ellipsis">
+      
+        Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reference-building-blocks-build-vs-reuse">
+<span class="md-ellipsis">
+      
+        Reference building blocks — build vs. reuse
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-responsibilities-checklist-for-integrators">
+<span class="md-ellipsis">
+      
+        Security responsibilities checklist for Integrators
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../password_guide/">
+<span class="md-ellipsis">
+    
+  
+    Password Strength User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../container_storage_guide/">
+<span class="md-ellipsis">
+    
+  
+    CDOC2 Container Storage User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../overview_diagrams/">
+<span class="md-ellipsis">
+    
+  
+    Overview diagrams
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_auth_server/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_rp_server/">
+<span class="md-ellipsis">
+    
+  
+    RP Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-youre-building">
+<span class="md-ellipsis">
+      
+        What you're building
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-vocabulary">
+<span class="md-ellipsis">
+      
+        Core vocabulary
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-backend-components-your-client-may-need-to-call">
+<span class="md-ellipsis">
+      
+        The backend components your client may need to call
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-encryption-schemes-you-need-to-support">
+<span class="md-ellipsis">
+      
+        The encryption schemes you need to support
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#talking-to-a-capsule-server">
+<span class="md-ellipsis">
+      
+        Talking to a Capsule Server
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id">
+<span class="md-ellipsis">
+      
+        Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reference-building-blocks-build-vs-reuse">
+<span class="md-ellipsis">
+      
+        Reference building blocks — build vs. reuse
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-responsibilities-checklist-for-integrators">
+<span class="md-ellipsis">
+      
+        Security responsibilities checklist for Integrators
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="cdoc2-integrator-guide"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.</span> CDOC2 Integrator Guide<a class="headerlink" href="#cdoc2-integrator-guide" title="Permanent link">¶</a></h1>
+<p><em>For developers building client software (desktop, mobile, or CLI) that creates or opens CDOC2
+encrypted containers</em></p>
+<p>This chapter is a practical companion to the full CDOC2 System Documentation, aimed specifically at
+<strong>Integrators</strong> — teams who are not modifying the CDOC2 protocol itself, but need to embed CDOC2
+encrypt/decrypt capability into their own end-user software. It summarizes what you need to know to
+plan an implementation and points back to the authoritative chapters for the details you'll need
+while coding.</p>
+<h2 id="what-youre-building"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.1</span> What you're building<a class="headerlink" href="#what-youre-building" title="Permanent link">¶</a></h2>
+<p>A <strong>CDOC2 Client Application</strong> is the umbrella term the specification uses for any software that
+lets a user encrypt files into a CDOC2 Container or decrypt one — it is described as an abstract
+component in the CDOC2 System that helps users encrypt files into a CDOC2 Container and decrypt
+received CDOC2 Containers, with DigiDoc4 desktop and mobile applications and a CDOC2 CLI application
+given as concrete examples. The use cases in the specification are deliberately written generically
+so that any client — yours included — can implement them, and the specification notes that a
+specific client's own documentation may add implementation-specific detail such as UX wireframes on
+top of these generic use cases.</p>
+<p>Before writing code, it helps to internalize the four roles a user can play: a <strong>User</strong> who runs
+your client, acting as <strong>Sender</strong> when packaging files for someone else, as <strong>Recipient</strong> when
+opening a container addressed to them, and occasionally as their own Recipient when they encrypt
+something for their own long-term storage. An <strong>Administrator</strong> role also exists in the model, for
+whoever manages configuration (trusted server lists, capsule servers, key material) for a fleet of
+clients.</p>
+<h2 id="core-vocabulary"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.2</span> Core vocabulary<a class="headerlink" href="#core-vocabulary" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>CDOC2 Container</strong> — the file format used to transmit the encrypted payload and metadata,
+  including the capsule, from Sender to Recipient.</li>
+<li><strong>Capsule</strong> — the data structure containing encryption-scheme-specific information (encrypted
+  symmetric keys, public keys, salt, server references, etc.) that the Recipient uses to derive,
+  establish, or retrieve the decryption key. A capsule is either a <strong>Container Capsule</strong> (travels
+  inside the file itself) or a <strong>Server Capsule</strong> (mediated by a Capsule Server).</li>
+<li><strong>FMK / CEK / KEK / HHK</strong> — the File Master Key is the root key material from which the Content
+  Encryption Key (used to encrypt the payload) and the Header HMAC Key (used to protect container
+  integrity) are derived, while the Key Encryption Key is the symmetric key used to wrap the FMK so
+  it can travel safely to each recipient inside the container.</li>
+</ul>
+<h2 id="the-backend-components-your-client-may-need-to-call"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.3</span> The backend components your client may need to call<a class="headerlink" href="#the-backend-components-your-client-may-need-to-call" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Role</th>
+<th>Relevant to Integrators</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CDOC2 Capsule Server (CCS)</td>
+<td>Stores encryption/decryption key material and provides endpoints for auth-token creation and key material upload/download</td>
+<td>Used for the "server-mediated" EC/RSA schemes</td>
+</tr>
+<tr>
+<td>CDOC2 Shares Server (CSS)</td>
+<td>Returns share identifiers to the client application, stores key shares, and requires the recipient to authenticate before downloading shares; shares are spread across multiple independent CSS instances so that compromising one server doesn't expose key material</td>
+<td>Used for Smart-ID/Mobile-ID-based decryption</td>
+</tr>
+<tr>
+<td>CDOC2 Authentication server (auth-server)</td>
+<td>Used in the Smart-ID/Mobile-ID context to compose and issue a session token, an SD-JWT structure sent with its signing certificate as a header on subsequent requests</td>
+<td>Needed only if you support SID/MID recipients</td>
+</tr>
+<tr>
+<td>CDOC2 Relying party server (rp-server)</td>
+<td>Mediates and validates client requests to Smart-ID/Mobile-ID relying-party services, including verifying the session token</td>
+<td>Needed only if you support SID/MID recipients</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-encryption-schemes-you-need-to-support"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.4</span> The encryption schemes you need to support<a class="headerlink" href="#the-encryption-schemes-you-need-to-support" title="Permanent link">¶</a></h2>
+<p>CDOC2 isn't one algorithm — it's a family of seven schemes (SC01–SC07), chosen per recipient, so a
+single container can mix recipient types. As an integrator, your encryption flow needs to pick the
+right scheme based on what the recipient has available:</p>
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>Recipient has…</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SC01</td>
+<td>An EC key pair on a hardware token (e.g. ID-card)</td>
+<td>Diffie-Hellman key exchange generates a shared secret between sender and recipient, used to protect the FMK; the capsule travels inside the container itself</td>
+</tr>
+<tr>
+<td>SC02</td>
+<td>An RSA key pair</td>
+<td>RSA-OAEP is used to wrap a randomly generated KEK, carried over from CDOC1 for compatibility with existing RSA-based eID tokens</td>
+</tr>
+<tr>
+<td>SC03</td>
+<td>An EC key pair, capsule via CCS</td>
+<td>Same DH mechanism as SC01, but the capsule is transmitted via a Capsule Server rather than embedded in the container</td>
+</tr>
+<tr>
+<td>SC04</td>
+<td>An RSA key pair, capsule via CCS</td>
+<td>Same as SC02, but capsule delivered via CCS</td>
+</tr>
+<tr>
+<td>SC05</td>
+<td>A pre-shared symmetric key, no eID token</td>
+<td>Useful for long-term storage independent of hardware tokens or PKI validity, or for sending to recipients who have no eID means but have previously received a shared key</td>
+</tr>
+<tr>
+<td>SC06</td>
+<td>A pre-shared password</td>
+<td>Similar to SC05 but derives the KEK from a password via PBKDF2 instead of a raw shared key</td>
+</tr>
+<tr>
+<td>SC07</td>
+<td>No local private key material at all</td>
+<td>Smart-ID / Mobile-ID (n-of-n shared secret)</td>
+</tr>
+</tbody>
+</table>
+<p>Practical guidance: default to <strong>SC01</strong>/ <strong>SC02</strong> (with a CCS, i.e. <strong>SC03</strong>/ <strong>SC04</strong>) whenever the
+recipient has a known certificate on a hardware or smart-card-backed token — this gives forward
+secrecy against future compromise of the recipient's private key, because an attacker who is only
+monitoring the public channel cannot recover the symmetric key from a broken public-key algorithm or
+a later-compromised private key, since the key is transmitted separately through the Capsule Server.
+Fall back to password-based (<strong>SC06</strong>) or shared-key (<strong>SC05</strong>) schemes only when no eID means
+exists for a recipient, or for archival use where you don't want decryption to depend on a
+certificate remaining valid.</p>
+<p><strong>SC07</strong> is the only path for recipients who authenticate purely via Smart-ID/Mobile-ID with no
+local key pair. Implementing it requires your client to talk to Auth Server, RP Server, and multiple
+independent Shares Server instances.</p>
+<h2 id="talking-to-a-capsule-server"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.5</span> Talking to a Capsule Server<a class="headerlink" href="#talking-to-a-capsule-server" title="Permanent link">¶</a></h2>
+<p>If your client is going to use CCS-mediated schemes (SC03/SC04) or support recipients without local
+tokens, you need to implement two client-side roles against the CCS API:</p>
+<p><strong>As Sender</strong> — the sender's interface is unauthenticated and open to any sender: your client
+transmits the capsule and a recipient identifier and receives a transaction identifier back, which
+you embed in the container header alongside the CCS's identifier and the recipient identifier.</p>
+<p><strong>As Recipient</strong> — the client authenticates to the server and presents the transaction identifier
+found in the container; the server looks up the capsule and compares the recipient identity
+established during authentication against the recipient identifier attached to that capsule before
+releasing it. For the currently specified capsule type, authentication is done via mutual TLS: the
+server validates the client's certificate (e.g. via OCSP) and compares the public key presented in
+that certificate against the public key tied to the stored capsule — meaning if a recipient's
+certificate is later revoked, the CCS will refuse to hand over the capsule to whoever now holds that
+revoked key.</p>
+<p>Two integration details are easy to overlook and matter for security:</p>
+<ul>
+<li><strong>Trust configuration, not discovery.</strong> Clients must ship (or be able to fetch from a trusted
+  source) a list of trusted Capsule Servers — including each server's identifier, supported capsule
+  type, sender/recipient interface URLs, operating organization, and public keys/certificates — and
+  this same list is used for TLS key pinning. Do not let a sender's client dynamically trust a
+  server URL supplied only by data inside an incoming container; only the server's identifier
+  travels with the container, precisely so a malicious party cannot redirect the recipient to an
+  untrusted endpoint.</li>
+<li><strong>Expiration is negotiated, not assumed.</strong> When forwarding a capsule, your client supplies a
+  requested expiration time and must compare the requested expiration against the recipient's certificate
+  validity and use the earlier of the two; the CCS applies only its own maximum and signals truncation
+  via x-expiry-time-adjusted. Handle that rejection path explicitly rather than assuming your requested
+  TTL will always be honored.</li>
+</ul>
+<p>For the exact request/response shapes, generate client stubs from the published OpenAPI
+specification rather than hand-rolling the API — the specification maintains machine-readable
+schemas for exactly this purpose.</p>
+<h2 id="supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.6</span> Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID<a class="headerlink" href="#supporting-recipients-without-a-hardware-token-key-shares-smart-id-and-mobile-id" title="Permanent link">¶</a></h2>
+<p>Not every recipient owns a smart card. The CDOC2 ecosystem addresses this with a <strong>key-shares</strong>
+architecture that lets a recipient decrypt after proving their identity remotely via Smart-ID or
+Mobile-ID rather than presenting a certificate over mTLS. If your client needs to support this path,
+be aware of the additional components involved:</p>
+<ul>
+<li>A <strong>CDOC2 authentication server</strong> and an <strong>SID/MID proxy</strong> (RP server) sit between your client and
+  the identity providers — the authentication server issues access tokens, while the proxy gives
+  your client access to RIA's Smart-ID RP API and Mobile-ID REST API without your client integrating
+  those APIs directly.</li>
+<li>Instead of a single Capsule Server, decryption key material can be split across multiple
+  <strong>key-share servers</strong>; a recipient authenticates once and presents a signed authentication token
+  to each share server in turn to reassemble their key. The auth token format is an SD-JWT
+  (selectively disclosable JWT), and support for ES256 and RS256 signature algorithms is required to
+  accommodate both Mobile-ID and Smart-ID signing.</li>
+<li>The typical flow your client will need to drive is: request a nonce per key-share from that share
+  server's <code>/key-shares/{shareId}/nonce</code> endpoint, use that nonce (with the SID/MID proxy) to
+  produce a signed auth token, then present that token in an <code>x-cdoc2-auth-token</code> header when
+  calling <code>GET /key-shares/{shareId}</code> to retrieve each share.</li>
+</ul>
+<h2 id="reference-building-blocks-build-vs-reuse"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.7</span> Reference building blocks — build vs. reuse<a class="headerlink" href="#reference-building-blocks-build-vs-reuse" title="Permanent link">¶</a></h2>
+<p>You are not expected to reimplement the cryptography from the specification text.</p>
+<ul>
+<li><strong><code>cdoc2-java-ref-impl</code></strong> — a Java library implementing client-side CDOC2 functionality
+  (encrypt/decrypt, capsule handling), plus a <strong><code>cdoc2-cli</code></strong> command-line tool built on it. If your
+  client targets the JVM, or you want a reference to test your own implementation against, start
+  here.</li>
+<li><strong><code>libcdoc</code></strong> — a C/C++ library covering the same functionality for native clients, used by the
+  DigiDoc4 desktop application itself.</li>
+<li><strong><code>cdoc2-openapi</code></strong> — versioned OpenAPI definitions for the Capsule Server and key-shares APIs,
+  published as Maven artifacts, for generating client stubs in any language with tooling support.</li>
+<li><strong><code>cdoc2-auth</code></strong> — the SD-JWT based authentication library/protocol implementation for the
+  key-shares flow described above.</li>
+</ul>
+<p>Unless you have a specific reason to write your own cryptographic implementation (e.g. targeting a
+platform with no JVM/C++ interop), integrating one of the reference libraries is the lower-risk
+path — it keeps you aligned with corrections to the specification as the format matures, and CDOC1
+and CDOC2 are explicitly <strong>not</strong> wire-compatible, so any home-grown parser needs to be
+format-version aware from day one.</p>
+<h2 id="security-responsibilities-checklist-for-integrators"><span class="enumerate-headings-plugin enumerate-heading-plugin">23.8</span> Security responsibilities checklist for Integrators<a class="headerlink" href="#security-responsibilities-checklist-for-integrators" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong>Never</strong> invent your own trust list mechanism for Capsule Servers — ship or securely fetch the
+  canonical list and pin against its certificates.</li>
+<li>Validate header size limits and file-name/content safety rules before writing or unpacking a
+  container; the use cases treat both as explicit failure paths your UI must handle, not edge cases
+  to ignore.</li>
+<li>Enforce minimum password strength client-side for SC06/<code>UC.Client.P.01</code>-style flows; the spec
+  expects this check before a password is accepted.</li>
+<li>Prefer OCSP-checked, short-lived trust decisions for capsule server TLS certificates over
+  long-cached trust.</li>
+<li>If you support the key-shares/Smart-ID/Mobile-ID path, do not persist SD-JWT auth tokens beyond
+  their intended single use, and treat the auth-server and rp-server as no more trusted than any
+  other network dependency — mTLS/OCSP habits apply there too.</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: RP Server API" class="md-footer__link md-footer__link--prev" href="../../05_api_references/rp_server_api/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                RP Server API
+              </div>
+</div>
+</a>
+<a aria-label="Next: Password Strength User Guide" class="md-footer__link md-footer__link--next" href="../password_guide/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Password Strength User Guide
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="../../javascripts/katex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+</body>
+</html>

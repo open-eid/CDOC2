@@ -1,0 +1,1442 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../ch02_encryption_schemes/" rel="prev"/>
+<link href="../ch05_cryptographic_details/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>2. CDOC2 container format - CDOC2 System Documentation</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#cdoc2-container-format">5. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="CDOC2 System Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            CDOC2 System Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              2. CDOC2 container format
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="CDOC2 System Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    CDOC2 System Documentation
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../terms_and_accronyms/">
+<span class="md-ellipsis">
+    
+  
+    Terms and Acronyms
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Case Model
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Case Model
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
+<span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Protocol and Cryptography Specification
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Protocol and Cryptography Specification
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch02_encryption_schemes/">
+<span class="md-ellipsis">
+    
+  
+    Encryption Schemes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Container Format
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Container Format
+  
+
+    
+  </span>
+</a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#abstracted-format">
+<span class="md-ellipsis">
+      
+        Abstracted format
+      
+    </span>
+</a>
+<nav aria-label="Abstracted format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-principles">
+<span class="md-ellipsis">
+      
+        Basic principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-structure">
+<span class="md-ellipsis">
+      
+        Header structure
+      
+    </span>
+</a>
+<nav aria-label="Header structure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#keylabel-recommendations">
+<span class="md-ellipsis">
+      
+        KeyLabel recommendations
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capsule-types">
+<span class="md-ellipsis">
+      
+        Capsule types
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-extension">
+<span class="md-ellipsis">
+      
+        Format extension
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialized-format">
+<span class="md-ellipsis">
+      
+        Serialized format
+      
+    </span>
+</a>
+<nav aria-label="Serialized format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#general-description-of-the-format">
+<span class="md-ellipsis">
+      
+        General description of the format
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#envelope">
+<span class="md-ellipsis">
+      
+        Envelope
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-and-hmac">
+<span class="md-ellipsis">
+      
+        Header and HMAC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#payload">
+<span class="md-ellipsis">
+      
+        Payload
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-composition-procedure">
+<span class="md-ellipsis">
+      
+        Format composition procedure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-parsing-procedure">
+<span class="md-ellipsis">
+      
+        Format parsing procedure
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unencrypted-payload">
+<span class="md-ellipsis">
+      
+        Unencrypted payload
+      
+    </span>
+</a>
+<nav aria-label="Unencrypted payload" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-posix-tar-archive-assembly">
+<span class="md-ellipsis">
+      
+        Requirements for POSIX tar archive assembly
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-payload-unpacking">
+<span class="md-ellipsis">
+      
+        Requirements for payload unpacking
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch05_cryptographic_details/">
+<span class="md-ellipsis">
+    
+  
+    Cryptographic Details
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../A1_Security_level/">
+<span class="md-ellipsis">
+    
+  
+    Password-Based Encryption Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch06_ID_authentication_protocol/">
+<span class="md-ellipsis">
+    
+  
+    Client authentication protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../header_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Header FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../recipients_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Recipients FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../keylabel_field/">
+<span class="md-ellipsis">
+    
+  
+    KeyLabel field specification
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Architecture
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Context
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch02_system_context_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Components
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Components
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch03_system_components/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch04_system_components_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_external_interfaces/">
+<span class="md-ellipsis">
+    
+  
+    External Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch07_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API References
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API References
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/capsule_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/shares_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/auth_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/rp_server_api/">
+<span class="md-ellipsis">
+    
+  
+    RP Server API
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    
+  
+    Password Strength User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    
+  
+    CDOC2 Container Storage User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    
+  
+    Overview diagrams
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_auth_server/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_rp_server/">
+<span class="md-ellipsis">
+    
+  
+    RP Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#abstracted-format">
+<span class="md-ellipsis">
+      
+        Abstracted format
+      
+    </span>
+</a>
+<nav aria-label="Abstracted format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-principles">
+<span class="md-ellipsis">
+      
+        Basic principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-structure">
+<span class="md-ellipsis">
+      
+        Header structure
+      
+    </span>
+</a>
+<nav aria-label="Header structure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#keylabel-recommendations">
+<span class="md-ellipsis">
+      
+        KeyLabel recommendations
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capsule-types">
+<span class="md-ellipsis">
+      
+        Capsule types
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-extension">
+<span class="md-ellipsis">
+      
+        Format extension
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialized-format">
+<span class="md-ellipsis">
+      
+        Serialized format
+      
+    </span>
+</a>
+<nav aria-label="Serialized format" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#general-description-of-the-format">
+<span class="md-ellipsis">
+      
+        General description of the format
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#envelope">
+<span class="md-ellipsis">
+      
+        Envelope
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#header-and-hmac">
+<span class="md-ellipsis">
+      
+        Header and HMAC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#payload">
+<span class="md-ellipsis">
+      
+        Payload
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-composition-procedure">
+<span class="md-ellipsis">
+      
+        Format composition procedure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#format-parsing-procedure">
+<span class="md-ellipsis">
+      
+        Format parsing procedure
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#unencrypted-payload">
+<span class="md-ellipsis">
+      
+        Unencrypted payload
+      
+    </span>
+</a>
+<nav aria-label="Unencrypted payload" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-posix-tar-archive-assembly">
+<span class="md-ellipsis">
+      
+        Requirements for POSIX tar archive assembly
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#requirements-for-payload-unpacking">
+<span class="md-ellipsis">
+      
+        Requirements for payload unpacking
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="cdoc2-container-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.</span> CDOC2 container format<a class="headerlink" href="#cdoc2-container-format" title="Permanent link">¶</a></h1>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as
+described in <a href="https://datatracker.ietf.org/doc/html/rfc2119">RFC 2119</a>.</p>
+<h2 id="abstracted-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1</span> Abstracted format<a class="headerlink" href="#abstracted-format" title="Permanent link">¶</a></h2>
+<p>This section describes the CDOC2 format from an abstract point of view, presenting the data contents and data models used therein without referencing the specifics of the serialized format.</p>
+<h3 id="basic-principles"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.1</span> Basic principles<a class="headerlink" href="#basic-principles" title="Permanent link">¶</a></h3>
+<p>The basic principles outlined below will provide the user of this specification with points of reference for understanding the details of the specification.</p>
+<ul>
+<li>The abstracted format consists of a header and an encrypted payload.</li>
+<li>The abstracted format contains a single encrypted payload consisting of one or several encrypted files. File information, as well as the sizes and sequence of the files, in case there is more than one file, is also encrypted.</li>
+<li>The payload is encrypted using a single symmetric key (Content Encryption Key; CEK), using AEAD (Authenticated Encryption with Additional Data) encryption.</li>
+<li>The CEK is derived from the CDOC file master key (File Master Key; FMK). See section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>.</li>
+<li>The FMK can be encrypted in parallel using one or several key encryption keys (KEK), one per Recipient. On KEK generation see section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>.</li>
+<li>The header describes the protection of the FMK (i.e. how the Recipients can acquire the KEK required for decrypting the FMK).</li>
+<li>Header integrity is ensured using a message authentication code computed using the message authentication key derived from the FMK (Header HMAC Key; HHK). See section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</li>
+<li>To ensure format universality, no elements specific to the Estonian eID infrastructure have been used in the description. Thus, the Recipient is described with reference to their public key rather than their certificate.</li>
+<li>Decryption always follows the same pattern: 1) the Recipient acquires a KEK, 2) the Recipient decrypts the FMK, 3) the Recipient derives the HHK and validates the header, 4) the Recipient derives the CEK, 5) the Recipient decrypts the payload.</li>
+</ul>
+<h3 id="header-structure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2</span> Header structure<a class="headerlink" href="#header-structure" title="Permanent link">¶</a></h3>
+<p>Header structure is described with the help of pseudocode that is based on no specific programming or schema language but should be intuitively understood.</p>
+<p>The header consists of one or several structures describing a Recipient. Each Recipient structure contains complete information on how the specific Recipient can access the FMK (for identification, access to personal encrypted materials, etc.).</p>
+<p>A message authentication code is computed for the header using a key derived from the FMK. This is necessary for preventing the manipulation of the header by the Sender, e.g. for the purpose of concealing some Recipient. The header authentication code is computed for a header serialized in a specific manner (see section <a href="#serialized-format">Serialized format</a>).</p>
+<div class="highlight"><pre><span></span><code><span class="n">Header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">Recipients</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">Recipient</span><span class="p">[](</span><span class="mf">1.</span><span class="p">.</span><span class="n">k</span><span class="p">)</span>
+<span class="w">    </span><span class="n">PayloadEncryptionMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="k">enum</span><span class="p">(</span><span class="n">CHACHA20</span><span class="o">-</span><span class="n">POLY1305</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>A message authentication code is computed for the header (see section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>):</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">Checksum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HMAC</span><span class="p">(</span><span class="n">HHK</span><span class="p">,</span><span class="w"> </span><span class="n">Serialize</span><span class="p">(</span><span class="n">Header</span><span class="p">))</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcUAAABRCAMAAACUn01XAAAAYFBMVEUAAAAKCgoQEBAdHR0gICApKSkwMDA/Pz9CQkJLS0tWVlZeXl5lZWVvb29wcHB4eHiAgICOjo6QkJCcnJylpaWvr6+1tbW/v7/GxsbLy8vR0dHa2trk5OTt7e3x8fH///+/fBDyAAAAKnRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cHM6Ly9wbGFudHVtbC5jb212zsofAAAAcGlUWHRwbGFudHVtbAABAAAAeJxzKC5JLCqpTMzN4XJ28XdWcM7PK0nMzEstsuLSVfBITUxJLYIznDNSk7OLS3OdKktSi9OKU9JSioEIKO2al1xUWVCSmhKQWJmTn5jC5ZCalwI2k8tQz8jAyEzPAgBkWSMZVFio+QAAC4ZJREFUeNrtXQl3mzASHnFjbHwkadLdt7v//291t4ePGh9gcwi0krjE4dStkzpR/L3XBEkzYtBIw4C+UPQfuOHdQ7m2ATe8AG5elAE3L8qAmxdlwM2LMuDmRRlw86IMuHlRBmjXNuDlgfG1LXh9aE2/SedFf/sBnEj9Nh6KpWub88L46esTHV3bitcGSYKf8awuS+ZF3x9OpfchhT3y9qZTFSXLbrb6h3AiAJrqm7oklxcxdpgTccIKWUxOye39a1t6MZAjZHFyeTEFnf3artnP5MfJPCeKrm3p5dDp1ZaQy4sEPkY8ZUBQhxrJspsujvtUdw2I/ATMMZuzuwMaii1bLQv0u2ubeRnkWosVCAM78FfWVJ/HEOkTN17Sit3Wcf1QaAk3oTu4tr0XQs61GP23OCCbyQgsvLt3acH8muhkRyvMr0ILKA/XNvdiyOlFg0XI+CfNcLJkSyBNId1HGU1edZxZNACZQguY17b2csjpRcRSVeo1lu4gBBaCpeKq6Dsp8h8ktMhwU5HTixV0MPk9L40/65Dw603oJSdm1SIFJJiIz16es4mp00IFQsg8VjHYZrDHdcu1LXwRSL4WYer9UAiaWFNvS8bsWX+6+J+i23XLtQ18ESCpWMXh/JPVrsuwoiL2SyviToK0Rss7Rbh4rK5V9rVIQ6ch/gLIX9I1q947JL8vfhDcvCgDWhH1jXJWNPkD/0VoDM/b5axoE+c8wcW1Lb0KRC+u92+Cs7L41K4hSbCKZmcpd3NUWREKE1bwor9/I5yVriNaNJMbWhCym7fMWWnSTG5ooV6LGE8KJyYJUU0ECaGjp5ZuJjEGXW9KlGgVn8MGW8OzBFtAzgafneJgwt+G45O3hz3qGkGiVNHpKXbqiUV/sqF57owujTNeJoSHbCJeEDepqhQN7K1sou6o4KxAtGZvjZV7y+PvGLXRiP06eIzloc0sUQKaCn39bw9aY/vumKA/8iKjmZztxS1+pD+T+Wf9hEDUNeLgZTpJBvdwPLVTdTxrC2sbKJApM+FN+1pzu2Lxwm3OMWZSXSkY2FvZQj0yBWclmtPbkIZDnq0aaYq96J5ewQoUGw548WQ0JaBdbCFNmkS0SfaHDw0izeQVEK5GNBThDbn4pmI+Aln/tOt+cF+XkT65pLKFzpiu8zwvY0tPeQK8ig+BAx6gJw2Gc/AeGxJNhaOPkeHSLr3UVPfEdtEmhHQFQ3xMiWK6NDqHqWnWzbmKRRt4FWpmp+kRbPW8octjaB/O5N1s9CkbjXvW4PvIGdYCzEZlMMpN2tiDeJcgfaJuTDsPcqwD5Nq7g+IW4Qg5AcZHllT76Xif4BSmatlZrh0E6UqdFj2VJu14ZWWgKNmqbI9K24s4AZvZohT3Q+3+GwROgmFAJU0rjLKsKSEobLeASBw86RAmEXVqjNwjBnIAK4hVFEXhE/VigqBuht0GtHR3eFJ4VdOYaJmB8nDeTrw2J6OBMOdJ8Q98b2xE80cj0p1sv3xkvJuJtkvsuiXEhovSeFrpBqabrDWrEvDX7ijlDFdIFgObLAZTEmXqkQYnHuRCbI3DpQPj4/If+fCmvqqhpWMC2YzBVJUBoLKzQtuMyQCVPZUm8crKQFGyXflLL9Iw2hRQU8yYj3yu6yHnOBi9CukWBnfpj8xjKyp9MOb46H7aBNojKLqB4LiMo8olRXO6gfE4+4Z3NGikYztrnNmjxcx7Om8xPnxbKc6omgC/y7uJhYFQ6YKMDlYpcLcZj6t55bqQZDTa2OK51TuwD/RWbB1Cmv9EX2jNA9Js34QjccBQ9EF9NlxoR3hQ9lSZZLLKqiRKdip/4cVyDneKpH3ckYgARtT4gDN2LTq1aCRhyRqbOKuEUdJqGmzRTEWjVa4KxrhlB5/+8XbM1jgbyDlM6PGm/6cyXmf7fZlE/gHvpr4mVtbSSiDJylEL93c0adH0+cBuZORMQTVZQs8u0LiHzF88acPVVPGdcjesPJuoXRxXJuWroiyJkr2Vz3hRz4e0Br14g9XGfEypgtKUqBUI57Mo+XioYj6CF0S3s0AYqaKZ8LWs8ODcmU96XPi2WAt8Oy0/7v7MtkDXYhrkqr/Nu9HyOZMrl5eTC9RMZcSnIXo8HJfqJ8Fc3mM1smz3cnbwJ7Ya2GEZSaqzidrFcWVSKZmXRMneyme8qNJb355GppjwyZFGHsCQzrToGFoQxDBALYm6yPxJ0who5BnclTGBB+0YQAdUdEKnN0mFy6gwZffFKZyHpTYdIGGxVyc4j3ejWD7LtUBIUUuBDJLiiszxktDIrAyH2Y/9VGGzBPcnVXy6Dv3UYDcbOg+EsxXawvG4NKlwSFkSJHsrn/EizOiNbafhdEZVsi+sZkLXwHROFgZJQJk0JUSFoRltYhzDqNl/+l2hNZ7R9wcuhhmtYyU5uj1PVGB+/o0cddY/nIqz0QxIUhNCveTdmMoem1VLkVZOfyynOom8J9RWtQYbXScxu1jr05KMcWLx24RxGKl+3D0tHSXisyjsbHDugihFVWelNjc6P65Myk9blkTJ3srnvKg9bY40fht5yoJUY8S6N568kAY4e6q1JYTivXcI6A2q8WjqhGECs9H+GE68nlF+WB92dKb2b7qr578fOPkQei7vRn9af0dEcVFHFWbr70pm83cX5qdF5vzM1NQegRt+RVY30YD4Ow3o93TQ1MGRr79R/I18LjvLCm2G8rgyKT9tURIl+ytr1Lyb6MdD0RPBoHZ3j+kDoVYF76ZEVcww0nofm9P01Nuw7sm+/LtP7rh8+vVDx0W8mwyraq8qtb7RgrO8K/wLvstcn/V0VmqLPVUmNQwUJbuV/bwbFZLCi6g3OinCWLckquJJJot6MjKiU4/rLSRwZnDt2H0u76ZrfFnTsl5r/e4HDpubaWVnWk9PzTHQoSvZX1n1XfeoBa/6jusykOC97fcvd7MzJ+jlEIZm/NN7s1tTxEvur23Db+LzXzyX4MVhvI+cN7DXDx2+NkmCZHTbJD4NMUzNjO2b2Irt4c5o9zfezTNo3GyGw3fPgfvwvBtefGcpxA0cN1axDLh5UQZIGUEx36g8931CL9gmPutG653mp4lU+z+kFV0GKb24Ddjzkn7mBnMvv4lt4m8DhRDrruedUXTSi9HNiy8G8/G3xDE62U2y8N7B6wY5vVhiq5GSCcUZUJwpNSh5TaxEn66g4DdVbKmKX0WhDwIoqVfHUjFv8oPMcPU+XtZfh6TZTfHVIvZFImsd0hFf6tNhmn+hSPcjRrtRIPTC8WAdgKlqgwGqPmNUfdeII1Og/ORRpcix9+xJNs96vof09yHnWuTsKedOYEIVrA/+haKS1wTKPbLTrcP5TRXB6a5kKlEPRiQK6C2zpF5VihRkO3bB+rabdHhZV4CcXuTsKbZmKiZUsenGtygrXhOjIdn7gqVREpwEMlOyAm1Kg2RJvRIJUVwMWUmXl3UFyOnF6iGjZkLlB9wDFa9J4RIFu7PJluLyZZJUUq9EQhTJtbMuL+sKkNOLbegVA4qj5DUxkl2CVM5vEtlSApmJoaJeVYp84GImpnV5WVeAnNkNSRiEqxxsEiAVAdNJ9jyZjA6Ad/RIi9Os/sBR+V0jYYyKTx5VirzLbQpBNOx+D+kKkGstlhTY+Dsr/KtuEBhQUPOanO06M8cFv0kvCU5NMhPrqKJelYoM09VXBBMTurysvwPxi75yfbUIf524J5oaDKic1zQ3J03aUklwataCQL1qEKJwxvfUe3hZfwO7zT+rs8m1FjUtGJ3ILwQfCrym5qvWkuDUeQFbNLQIUVpTq0fvFdEgIkl2Xxwn3q8pYCWv6bc/H/Y3CVG/APES4c8a5Yqo/Dshb4I79LrgRCR5/2+bN8Mdem00iUiyefHtcodeFLL/n28fkjskWXbzQXHzogy4eVEG3LwoA25elAE3L8qAmxdlwM2LMuD/H94PQBCD7m0AAAAASUVORK5CYII=" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p>The Recipient is described using the structure <code>Recipient</code>. The format of the structure allows for quick and unambiguous decisions on whether the reader can decrypt the payload using the specific instance of <code>Recipient</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">Recipient</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Capsule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Union</span><span class="p">(</span><span class="o">:</span><span class="n">ECCPublicKeyCapsule</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">:</span><span class="n">KeyServerCapsule</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>
+<span class="w">                </span><span class="o">:</span><span class="n">SymmetricKeyCapsule</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">:</span><span class="n">RSAPublicKeyCapsule</span><span class="w"> </span><span class="p">)</span>
+<span class="w">        </span><span class="n">KeyLabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">string</span>
+<span class="w">        </span><span class="n">EncryptedFMK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">        </span><span class="n">FMKEncryptionMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="k">enum</span><span class="p">(</span><span class="n">XOR</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<p>The <code>Recipient</code> structure consists of a capsule, a Recipient key label, an encrypted FMK, and an FMK encryption method identifier.</p>
+<ul>
+<li><code>Capsule</code> – encryption method specific data that the Recipient can use to decrypt the FMK.</li>
+<li><code>EncryptedFMK</code> – encrypted FMK.</li>
+<li><code>FMKEncryptionMethod</code> – FMK encryption method type.</li>
+<li><code>KeyLabel</code> – human-readable label of the private or secret key required for decrypting the FMK. This label is necessary for building a sensible user interface. The sender fills this field based on the key or the related certificate. No concrete method for achieving this is indicated in the specification as this is not relevant to cryptographic processing. <code>KeyLabel</code> is a UTF-8 string.</li>
+</ul>
+<p>Successful processing of the Capsule structure returns a cryptographic key for decrypting the FMK using the method defined as <code>FMKEncryptionMethod</code>. See  <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a> on the details of cryptographic operations.
+The following capsule types have been specified to ensure the support of a variety of encryption methods (<a href="../ch02_encryption_schemes/">CDOC2 encryption schemes</a>).</p>
+<ul>
+<li><code>ECCPublicKeyCapsule</code> – the Recipient is identified by ECC public key <code>RecipientPublicKey</code> (e.g. the public key of the first ID-card key pair). The KEK is derived using ECDH. Used in the <a href="../ch02_encryption_schemes/#sc01-encryption-scheme-for-recipients-with-ec-key-pair">SC.01 encryption method</a>.</li>
+<li><code>RSAPublicKeyCapsule</code> – the Recipient is identified by RSA public key <code>RecipientPublicKey</code>. The KEK is derived by decrypting the capsule using the RSA private key. Used in the <a href="../ch02_encryption_schemes/#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">SC.02 encryption method</a>.</li>
+<li><code>KeyServerCapsule</code> – the Recipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>, used by the Recipient for authentication on a Capsule Server. The Capsule Server returns an <code>ECCPublicKeyCapsule</code> or a <code>RSAPublicKeyCapsule</code> used as described above. Used in the  <a href="../ch02_encryption_schemes/#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">SC.03</a> and <a href="../ch02_encryption_schemes/#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">SC.04</a> encryption methods.</li>
+<li><code>PBKDF2Capsule</code> - used for password-based encryption. PBKDF2 stands for Password-Based Key Derivation Function 2, a widely adopted standard defined in RFC 2898. It enhances the security of hashed passwords by using salts and by applying many iterations of the hashing process. The capsule type is used in the <a href="../ch02_encryption_schemes/#sc06-direct-encryption-scheme-with-pre-shared-passwords">SC.06 encryption method</a>.</li>
+<li><code>KeySharesCapsule</code> - Key Shares capsule type is used for secret sharing of the Recipient's key. It only stores the URL or the Shares Server and the share identifier. Recipient has to authenticate with the Shares Servers in order to retrieve the Key Shares. Used in the <a href="../ch02_encryption_schemes/#encryption-schemes-with-secret-sharing">SC.07 encryption method</a>.</li>
+<li><code>SymmetricKeyCapsule</code> – the Recipient is identified by key label <code>KeyLabel</code>. The KEK is derived using HKDF from a symmetric key provided by the user. Used in the <a href="../ch02_encryption_schemes/#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">SC.05 encryption method</a>.</li>
+</ul>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<p>This list may be expanded in future versions of the specification.</p>
+<h4 id="keylabel-recommendations"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.2.1</span> KeyLabel recommendations<a class="headerlink" href="#keylabel-recommendations" title="Permanent link">¶</a></h4>
+<p>Although not required by the specification, <code>KeyLabel</code> should however follow consistent formatting rules and be structured in a machine-readable format for Client Application to show the User what decryption method is allowed and, in case of password and symmetric key encryption, a reminder of what password or key to use.</p>
+<ul>
+<li>KeyLabel SHOULD NOT be empty.</li>
+<li>KeyLabels SHOULD be unique inside container.</li>
+<li>If a KeyLabel starts with "data:" it SHOULD follow the <a href="../keylabel_field/">KeyLabel field specification v1</a>.</li>
+</ul>
+<p>Dependent upon the encryption method the following formatting rules are used in the reference implementation:</p>
+<p><strong>1. For machine parsable text <a href="https://datatracker.ietf.org/doc/html/rfc2397">data url</a> format was chosen, that starts with <code>data:</code></strong></p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="nl">data</span><span class="p">:[</span><span class="o">&lt;</span><span class="n">mediatype</span><span class="o">&gt;</span><span class="p">][;</span><span class="n">base64</span><span class="p">],</span><span class="o">&lt;</span><span class="n">data</span><span class="o">&gt;</span>
+</code></pre></div>
+<p>The <code>mediatype</code> can be omitted and is application/x-www-form-urlencoded if not specified and fields are encoded as url parameters. Parameter names are case-insensitive. <code>;base64</code> encoding is optional and means then that Base64 encoded has been applied to the <code>&lt;data&gt;</code> part.</p>
+<p><code>type</code> and <code>v</code> fields are required, rest of fields are <code>type</code> specific.</p>
+<p>Examples:</p>
+<ul>
+<li>Smart-ID/Mobile-ID - ETSI semantics identifier formatted as PNO=etsi/{identifier} e.g. "etsi/PNOEE-48010010101", where PNO means personal number issued by a national authority and {identifier} is replaced by the Recipient's identifier. Example: type=auth&amp;sn=ETSI%3APNOEE-48010010101</li>
+<li>Password, with an integrated password manager - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault.</li>
+<li>Symmetric key - KM=bitwarden&amp;VAULT=CDOC2&amp;KEY_ID=HELLO.CDOC2&amp;FILE=~/folder/secret.pem&amp;USER_DESC=hello, where KM means key manager and VAULT refers to the name of a secure vault, keyring or wallet inside the password manager. KEY_ID is the name given to the key in the vault. FILE is the path to the symmetric key.</li>
+<li>Certificate - FILE=~/folder/filename&amp;CERT_HASH=XXYYXXYY, where FILE is the path to the certificate and CERT_HASH is a result of applying a digest algorithm.</li>
+<li>ID-card and Digi-ID and Digi-ID E-RESIDENT - TYPE=ID-card&amp;cn={cn}, TYPE means eID type. The current known values are: 'ID-CARD', 'Digi-ID E-RESIDENT', 'Digi-ID'. For these types the following fields and requirements are defined</li>
+</ul>
+<p>Known fields are defined in: <a href="../keylabel_field/">KeyLabel field specification v1</a>.</p>
+<p>Machine-readable <code>KeyLabel</code> examples:</p>
+<ul>
+<li><code>data:,v=1&amp;type=ID-card&amp;serial_number=PNOEE-38001085718&amp;cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718</code></li>
+<li><code>data:application/x-www-form-urlencoded,v=1&amp;type=ID-card&amp;serial_number=PNOEE-38001085718&amp;cn=J%C3%95EORG%2CJAAK-KRISTJAN%2C38001085718</code></li>
+<li><code>data:application/x-www-form-urlencoded;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4</code></li>
+<li><code>data:;base64,dj0xJnR5cGU9SUQtY2FyZCZzZXJpYWxfbnVtYmVyPVBOT0VFLTM4MDAxMDg1NzE4JmNuPUolQzMlOTVFT1JHJTJDSkFBSy1LUklTVEpBTiUyQzM4MDAxMDg1NzE4</code></li>
+</ul>
+<p><strong>2. The second format for <code>KeyLabel</code> is free text format and it doesn't start with <code>data:</code></strong></p>
+<p>This format is meant for password encryption and symmetric key encryption use cases when no integrated password manager is used.</p>
+<p>Free text <code>KeyLabel</code> examples:</p>
+<ul>
+<li>"131:40:16"</li>
+<li>"kevade"</li>
+<li>"poem"</li>
+<li>"password manager, key: hello.cdoc2"</li>
+</ul>
+<h3 id="capsule-types"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.3</span> Capsule types<a class="headerlink" href="#capsule-types" title="Permanent link">¶</a></h3>
+<p>ECC public key capsule. The Recipient is identified by ECC public key <code>RecipientPublicKey</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">ECCPublicKeyCapsule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Curve</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="k">enum</span><span class="p">(</span><span class="n">secp384r1</span><span class="p">,</span><span class="w"> </span><span class="n">secp256r1</span><span class="p">,</span><span class="w"> </span><span class="n">secp521r1</span><span class="p">)</span>
+<span class="w">        </span><span class="n">RecipientPublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">        </span><span class="n">SenderPublicKey</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>Curve</code> – identifier of the elliptic curve employed.</li>
+<li><code>RecipientPublicKey</code> – Recipient’s ECC public key, used by the Recipient to select the correct private key ECDH.</li>
+<li><code>SenderPublicKey</code> – sender’s public key used by the Recipient to derive the KEK using ECDH.</li>
+</ul>
+<p>RSA public key capsule. The Recipient is identified by RSA public key <code>RecipientPublicKey</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">RSAPublicKeyCapsule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">RecipientPublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">        </span><span class="n">EncryptedKEK</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>RecipientPublicKey</code> - Recipient’s RSA public key, used by the Recipient to select the correct private key to decrypt KEK.</li>
+<li><code>EncryptedKEK</code> -  key encryption key encrypted with the Recipient's public key.</li>
+</ul>
+<p>Server capsule. The receipient is identified by ECC or RSA public key <code>RecipientPublicKey</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">KeyServerCapsule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">RecipientKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Union</span><span class="p">(</span><span class="o">:</span><span class="n">EccKeyDetails</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">:</span><span class="n">RsaKeyDetails</span><span class="p">)</span>
+<span class="w">        </span><span class="n">KeyServerID</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">string</span>
+<span class="w">        </span><span class="n">TransactionID</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">string</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">RsaKeyDetails</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">RecipientPublicKey</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">EccKeyDetails</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Curve</span><span class="w">              </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="k">enum</span><span class="p">(</span><span class="n">secp384r1</span><span class="p">,</span><span class="w"> </span><span class="n">secp256r1</span><span class="p">,</span><span class="w"> </span><span class="n">secp521r1</span><span class="p">)</span>
+<span class="w">            </span><span class="n">RecipientPublicKey</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>RecipientKey</code> – The information about the Recipient's key. Used to select the correct certificate and private key to authenticate on the Capsule Server.</li>
+<li><code>KeyServerID</code> – Capsule Server identifier. The Recipient's client software MUST be able to translate this identifier (perhaps with a help of a configuration file) to Capsule Server’s network address. The assignment of <code>KeyServerID</code>s is outside the scope of this document and MUST be managed by implementers.</li>
+<li><code>TransactionID</code> – The identifier of the capsule assigned by the key exchange server during key upload.</li>
+</ul>
+<p>Symmetric key capsule. The Recipient is identified by the label of the symmetric key held by the user, <code>KeyLabel</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="n">SymmetricKeyCapsule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Salt</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="o">:</span><span class="n">byte</span><span class="p">[]</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>Salt</code> – random number generated by the sender, used by the sender as input for the HKDF-Extract function.</li>
+</ul>
+<h3 id="format-extension"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.1.4</span> Format extension<a class="headerlink" href="#format-extension" title="Permanent link">¶</a></h3>
+<p>To allow for format extension and ensure general forward compatibility, the union type field Capsule is included in the header structure Recipient. Each type of the union describes a specific type of Recipient along with corresponding cryptographic primitives and key management tools. Types can be added to the format as necessary both in abstracted and concrete forms.</p>
+<h2 id="serialized-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2</span> Serialized format<a class="headerlink" href="#serialized-format" title="Permanent link">¶</a></h2>
+<p>The specification describes the implementation of the abstracted format using the FlatBuffers format.</p>
+<h3 id="general-description-of-the-format"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.1</span> General description of the format<a class="headerlink" href="#general-description-of-the-format" title="Permanent link">¶</a></h3>
+<p>The format consists of an envelope, which is essentially made up of a serialized and concatenated header, a message authentication code, and a payload.
+The message authentication code and payload are serialized using simple serialization.
+For the sake of extensibility and the necessity of transmitting messages identical to the header from the point of view of processing logic via the capsule server, the header is described here with reference to the FlatBuffers format.
+Aside from the header extension mechanism, the envelope used in this format also has the version identifier, set as 2 (byte value). The identifier must be changed whenever incompatible changes to the standard are introduced.</p>
+<h3 id="envelope"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.2</span> Envelope<a class="headerlink" href="#envelope" title="Permanent link">¶</a></h3>
+<p>The envelope consists of the following data elements, presented sequentially as bytes. The designation of the start and end of the envelope is outside the scope of the specification, insofar as the main and natural use case of the format is one where a CDOC file contains a single envelope.</p>
+<ul>
+<li>4 bytes: the string “CDOC” – format designator (prelude), UTF-8 encoded.</li>
+<li>1 byte: version identifier, set as 2 in the specification.</li>
+<li>4 bytes: length of the following header, big-endian order. Header length is a 32-bit signed integer, i.e. the maximum header size is 2 GB. For the sake of the simplicity of implementation, header size is limited to 1 MB (2<sup>20</sup> bytes).</li>
+<li>x bytes, where x is as defined above: serialized FlatBuffers header.</li>
+<li>32 bytes: header message authentication code (see section 6.5).</li>
+<li>The rest of the bytes, until the end of the envelope: payload encrypted using the method and key specified in the header.</li>
+</ul>
+<p>Table 1 presents an overview of the envelope structure.
+Table 1. Envelope structure</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>“CDOC”</th>
+<th>Version</th>
+<th>Header length</th>
+<th>Header</th>
+<th>HMAC</th>
+<th>Payload</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Length</td>
+<td>4</td>
+<td>1</td>
+<td>4</td>
+<td>Header length</td>
+<td>32</td>
+<td>Until end of envelope</td>
+</tr>
+<tr>
+<td>Start</td>
+<td>1</td>
+<td>5</td>
+<td>6</td>
+<td>10</td>
+<td>10 + header length</td>
+<td>10 + header length + 32</td>
+</tr>
+</tbody>
+</table>
+<h3 id="header-and-hmac"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.3</span> Header and HMAC<a class="headerlink" href="#header-and-hmac" title="Permanent link">¶</a></h3>
+<p>The technical description (schema) of the FlatBuffers format can be found in the reference implementation source code repository, under <code>cdoc2-schema/</code>.
+The schema is described in two files and reproduced as appendices to the specification.</p>
+<ul>
+<li>
+<p><code>src/main/fbs/header.fbs</code> Description of the FlatBuffers header.</p>
+</li>
+<li>
+<p><code>src/main/fbs/recipients.fbs</code> Descriptions of recipient types; can be shared with schemas presented in other files.</p>
+</li>
+</ul>
+<p>The header, serialized following the FlatBuffers rule set, is written to the envelope, preceded a 4-byte length field as per the envelope description.
+The Header Message Authentication Code (HMAC) is computed as described in section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a> and written, bytewise, immediately after the header. The message authentication code algorithm and, consequently, HMAC length are defined in this specification.</p>
+<h3 id="payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.4</span> Payload<a class="headerlink" href="#payload" title="Permanent link">¶</a></h3>
+<p>Lastly, the payload is written to a container composed following the CDOC format, immediately after the HMAC. The format presumes that the end-of-payload indicator is defined outside the format, e.g. as end-of-file.</p>
+<p>Note that the end-of-payload indicator is purely optional: the true integrity of the payload is determined by whether the payload can be completely decrypted.</p>
+<p>The composition of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>.</p>
+<p>The encryption of the payload is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
+<h3 id="format-composition-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.5</span> Format composition procedure<a class="headerlink" href="#format-composition-procedure" title="Permanent link">¶</a></h3>
+<p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.
+The following steps are needed to compose a CDOC2 container.</p>
+<ul>
+<li>Compile the list of all Recipients.</li>
+<li>Generate FMK, HHK, and CEK.</li>
+<li>Compose the header along with all corresponding cryptographic operations.</li>
+<li>Compute the HMAC.</li>
+<li>Generate the payload plaintext.</li>
+<li>Encrypt the payload.</li>
+<li>Generate the serialized envelope.</li>
+<li>Securely delete the FMK, HHK, and CEK values used during the procedure.</li>
+</ul>
+<p>Generation of the payload plaintext is described in section <a href="./#unencrypted-payload">Unencrypted payload</a>, <code>container.Tar.archiveFiles()</code>.</p>
+<p>Next, the cryptographic material used for the protection of the header and payload is prepared. Generation and derivation of the corresponding keys (FMK, HHK, CEK) is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>container.Envelope.prepare()</code> and <code>container.Envelope()</code>.</p>
+<p>The list of all desired Recipients is then compiled and serialized, as the cryptographic methods used for ensuring the integrity of the container operate with an integral serialized header.</p>
+<p>The requisite cryptographic procedures described in sections <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a> and <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a> are executed for each Recipient.</p>
+<p>The HMAC is then computed as per section <a href="../ch05_cryptographic_details/#header-authentication-code">Header authentication code</a>.</p>
+<p>Payload encryption is described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>, <code>crypto.ChaChaCipher.encryptPayload()</code> and <code>crypto.ChaChaCipher.initChaChaOutputStream()</code>.</p>
+<p>The detailed serialized envelope format is presented in section <a href="#envelope">Envelope</a>.</p>
+<p>At the end of the encryption process, the employed cryptographic materials (symmetric keys, ephemeral private keys) should be securely deleted. Secure deletion significantly depends on the operational environment; in some cases (e.g. in JVM) it might not be possible. The developer must evaluate what options for secure deletion are provided by the employed programming language and operational environment.</p>
+<h3 id="format-parsing-procedure"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.2.6</span> Format parsing procedure<a class="headerlink" href="#format-parsing-procedure" title="Permanent link">¶</a></h3>
+<p>This section makes reference to the reference implementation source code, using Java package names and identifiers. References to source code are styled as monotype.</p>
+<p>The container parsing reference implementation is found in the function <code>container.Envelope.decrypt()</code>. This functions serves as the primary entry point into the decryption logic and its main purpose is to take the encrypted container provided as input and write all the files contained therein to the selected folder.</p>
+<p>The function does the following and all its alternative implementations must do the same while employing all relevant security checks.</p>
+<ul>
+<li>Parsing the envelope and decoding the envelope header.</li>
+<li>Decrypting/deriving the KEK.</li>
+<li>Decrypting/deriving the container-specific keys, i.e. FMK, HHK, and CEK.</li>
+<li>Checking the HMAC.</li>
+<li>Decrypting the archive.</li>
+<li>Extracting files from the encrypted archive. In stream processing mode, decryption and extraction form a single operation.</li>
+</ul>
+<p>The envelope parsing and header decryption reference implementation is found in the function <code>container.Envelope.readFBSHeader()</code>.</p>
+<p>The header should be parsed using the FlatBuffers library, utilizing the root type fbs.header.Header (in the reference implementation, this is implemented as the function <code>fbs.header.Header.getRootAsHeader()</code> generated from the FlatBuffers schema).</p>
+<p>Parsing of the complete header is implemented as the reference implementation function <code>container.Envelope.deserializeFBSHeader()</code>.</p>
+<p>One recipient entry (Recipient) corresponding to a key in the possession of the party processing the container must be found in the header, and the KEK, FMK, and HHK must be derived or decrypted.</p>
+<p>Recipient identification methods corresponding to each encryption method are described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. In case no Recipient corresponding to the processing party is not found, the container cannot be decrypted. In this case, the algorithm MUST return a “container not meant for opening by the processor” error and terminate.</p>
+<p>KEK computation is described in section <a href="../ch05_cryptographic_details/#descriptions-of-header-elements-and-kek-computation">Descriptions of header elements and KEK computation</a>. Should an error occur during KEK computation (e.g. the point is not located on the ellipse curve), the algorithm must return an error and terminate. KEK computation functions are found in the class <code>crypto.KekTools</code>.</p>
+<p>FMK decryption is described in section <a href="../ch05_cryptographic_details/#fmk-encryption-and-decryption">FMK encryption and decryption</a>, <code>crypto.Crypto.xor()</code>.</p>
+<p>HHK derivation procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>crypto.Crypto.deriveHeaderHmacKey()</code>.</p>
+<p>The HHK and the original serialized form of the header must be used to check the HMAC using <code>container.Envelope.checkHmac()</code>.</p>
+<p>After a successful message authentication code check, the payload may be decrypted. In case the HMAC check was unsuccessful, the algorithm must return an error and terminate.</p>
+<p>Decryption requires deriving the CEK. The corresponding procedure is described in section <a href="../ch05_cryptographic_details/#key-derivation">Key derivation</a>, <code>Crypto.deriveContentEncryptionKey()</code>.</p>
+<p>Payload decryption is carried out in three stages: decryption, cryptogram authentication, and unpacking the decrypted archive.</p>
+<p>Decryption and cryptogram authentication are described in section <a href="../ch05_cryptographic_details/#payload-assembly-and-encryption">Payload assembly and encryption</a>.</p>
+<p>Archive unpacking is described in section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a>.</p>
+<h2 id="unencrypted-payload"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3</span> Unencrypted payload<a class="headerlink" href="#unencrypted-payload" title="Permanent link">¶</a></h2>
+<p>This section provides a more detailed description of the format and processing of the unencrypted payload.</p>
+<p>Although the data units in the payload are referred as "files", these do not have to correspond to the actual files in a filesystem. Container creator may generate the data on-the-fly, and a consumer can process or present it without saving the data to the filesystem. Thus the names of files (data-blocks) can contain symbols that are not representable in the file system, and the client software MUST take care to handle the names in a safe way. Refer to the section <a href="#requirements-for-payload-unpacking">Requirements for payload unpacking</a> for the recommendations.</p>
+<p>Main features of the format:</p>
+<ul>
+<li>The transmitted files are archived using the <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">POSIX tar format</a>.</li>
+<li>The archived files are packed using ZLIB, standardized in <a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">IETF RFC 1950</a>.</li>
+</ul>
+<p>The container payload plaintext is formed as follows: the transmitted files (or file) are added to a POSIX tar archive which is then packed into the ZLIB format as a single bloc.</p>
+<p>Implementation note: the DD4 client uses the relevant Qt wrapper functions to call the zlib library. Since these functions cannot be used in streaming mode, the specification recommends replacing the use of Qt wrappers with streaming mode zlib calls. This becomes especially crucial in storage cryptography where data volumes may be very high and encryption of the data in memory buffers in one piece may be unfeasible.</p>
+<h3 id="requirements-for-posix-tar-archive-assembly"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.1</span> Requirements for POSIX tar archive assembly<a class="headerlink" href="#requirements-for-posix-tar-archive-assembly" title="Permanent link">¶</a></h3>
+<p>Given the long history and large number of variations of the tar format, this subsection presents an overview of the requirements for archives created for CDOC2. The purpose of these requirements is to reduce compatibility issues between different client applications and/or operating systems and facilitate the save extraction of the files from the archive to the file system.</p>
+<ul>
+<li><a href="https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html">Standardized POSIX tar dialect</a> and "PAX extended header" MUST be used. This format is also known as ‘POSIX 1003.1-2001’ or ‘PAX’.</li>
+<li>All file names MUST be valid UTF-8 strings.</li>
+<li>At least 100B filenames must be supported.</li>
+<li>The length of file names MUST not exceed 1000 bytes.</li>
+<li>File sizes up to 8 GiB MUST be supported.</li>
+<li>Filenames MUST NOT refer to absolute paths in a filesystem.</li>
+<li>Filenames MUST be unique in container.</li>
+<li>Filenames MUST NOT be empty and not contain any of the following characters: (<a href="https://en.wikipedia.org/wiki/Control_character">Unicode control characters</a>, U+202E, U+FFFE, U+FFFF).</li>
+<li>Permission bits and other security attributes MUST be ignored (such attributes MAY be present in the archive, but they SHALL NOT be used when decrypting).</li>
+<li>Only normal files (type 0) MUST be added to the archive.</li>
+<li>Files MUST be treated as binary files (no translation of line endings).</li>
+</ul>
+<h3 id="requirements-for-payload-unpacking"><span class="enumerate-headings-plugin enumerate-heading-plugin">5.3.2</span> Requirements for payload unpacking<a class="headerlink" href="#requirements-for-payload-unpacking" title="Permanent link">¶</a></h3>
+<p>The payload format is chosen to enable unpacking in streaming mode. This means the encrypted payload does not have to be loaded to memory in one piece. The payload can be decrypted, unpacked, and files written to the disk in plaintext sequentially.</p>
+<p>When data is processed in streaming mode, the decrypted data will be available before the encryption checksum verification. Unpacking MUST be done with taking into account the possibility that the payload can be faulty and not meet the rules set out in the specification or might have even been maliciously assembled by an attacker. As the sender of a CDOC2 container is unauthenticated, the possibility of the payload having been assembled by an attacker MUST be always accounted for, even if the encryption checksums match.</p>
+<p>Thus, when processing data in streaming mode, the errors encountered in processing the plaintext (packing or archival errors) should not be handled before the entire payload has been processed and the cryptogram authenticated. If the cryptogram authentication fails, this failure must be reported as the main error. Errors encountered in plaintext processing should only be reported if cryptogram authentication was successful. In case of an authentication error, all created files should be deleted.</p>
+<p>Below, we have described two types of attacks that software based on this specification must be able to deploy countermeasures against.</p>
+<p>The list of potential attacks is inconclusive. Thus, any file might contain a virus or malware and needs to be checked by antivirus software before use, but this type of attack is not specific to CDOC2 but is equally valid for the use of files received from any untrusted source and is hence not covered here in more detail.</p>
+<p>Attack 1: The attacker may create a compressed payload that will unpack into a massive file. This may cause the application to crash when the Recipient processes this payload in memory. It can cause disk space to run out when written to disk. The pragmatic solution is to set a maximum size limit for unpacked files and continuously monitor free memory or free disk space during unpacking. If the files being unpacked are larger than permitted or free memory or free disk space has decreased below the permitted limit, unpacking must be aborted, files written to the disk in the process deleted, and the error reported.</p>
+<p>Attack 2: The attacker may manipulate the attributes of the files in the tar archive – file names, permission bits, security attributes and types. If such tar archive is unpacked without additional checks, the attacker may be able to overwrite existing system files, add new files, create files invisible to normal users but necessary for certain attacks, etc.</p>
+<p>Since the CDOC2 container is not meant to serve as a universal archive format but simply provide a means for the simultaneous encryption of multiple files while retaining original file names for the user’s convenience, a number of rules have been set out for the unpacking of tar files which will ensure protection from the forms of manipulation described above if enforced:</p>
+<ul>
+<li>File creation MUST ignore permission bits, file owner and group identifiers and other security attributes found in the archive – all files must be created non-executable, owned by the user running the application, and readable and writable by this user.</li>
+<li>Only normal files (type 0) are allowed in the tar archive. If the archive contains a file of some other type, client MUST abort unpacking, delete files written to the disk before this point, and present an error message. A CDOC2 container generation application MUST not create files containing any other file types.</li>
+<li>File name safety must be validated before writing a file to the disk. If a file name is, in any way, outside of "normal" expected rules (absolute pathname, contains special shell symbols etc.) a client software MAY either:</li>
+<li>abort unpacking, delete files written to the disk before this point, and return an error message.</li>
+<li>replace all offending symbols with safe values and warn user that potentially dangerous name was encountered.</li>
+</ul>
+<p>File name safety verification serves the following purposes:</p>
+<ul>
+<li>Prevention of <a href="https://capec.mitre.org/data/definitions/126.html">path traversal attacks</a> and creation of files outside the folder selected by the user.</li>
+<li>Prevention of the creation of files with names containing special symbols, inaccessible or difficult to access for the user.</li>
+</ul>
+<p>Different operating systems have different requirements for file names. The pragmatic solution is to use a tried and tested method for validating file names received from untrusted sources. Using multiple validation mechanisms is advantageous.</p>
+<p><a href="https://github.com/thombashi/pathvalidate">Pathvalidate</a> is a comprehensive Python library for file name validation – similar checks must also be used in other programming languages.</p>
+<p>The <a href="https://wiki.sei.cmu.edu/confluence/display/java/IDS04-J.+Safely+extract+files+from+ZipInputStream">SEI CERT coding standard</a> describes an additional method for preventing path traversal.</p>
+<p>List of requirements for file names used in the reference implementation container.FileNameValidator:</p>
+<ul>
+<li>Cannot begin with a space or hyphen.</li>
+<li>Cannot end with a space or period.</li>
+<li>Cannot be any of the following: CON, PRN, AUX, NUL, COM[1-9], LPT[1-9].</li>
+<li>Cannot contain any of the following symbols: &lt;, &gt;, :, \, /, |, ?, *.</li>
+<li>Cannot contain <a href="https://en.wikipedia.org/wiki/Control_character">control characters</a>.</li>
+<li>Cannot contain the Unicode character Right-To-Left Override (U+202E).</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Encryption Schemes" class="md-footer__link md-footer__link--prev" href="../ch02_encryption_schemes/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                Encryption Schemes
+              </div>
+</div>
+</a>
+<a aria-label="Next: Cryptographic Details" class="md-footer__link md-footer__link--next" href="../ch05_cryptographic_details/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Cryptographic Details
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="../../javascripts/katex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+</body>
+</html>

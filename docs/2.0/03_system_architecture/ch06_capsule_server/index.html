@@ -1,0 +1,1068 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../ch05_external_interfaces/" rel="prev"/>
+<link href="../ch07_shares_server/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>6. CDOC2 CCS - CDOC2 System Documentation</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#cdoc2-ccs">17. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="CDOC2 System Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            CDOC2 System Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              6. CDOC2 CCS
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="CDOC2 System Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    CDOC2 System Documentation
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../terms_and_accronyms/">
+<span class="md-ellipsis">
+    
+  
+    Terms and Acronyms
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Case Model
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Case Model
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
+<span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Protocol and Cryptography Specification
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Protocol and Cryptography Specification
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch02_encryption_schemes/">
+<span class="md-ellipsis">
+    
+  
+    Encryption Schemes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch03_container_format/">
+<span class="md-ellipsis">
+    
+  
+    Container Format
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch05_cryptographic_details/">
+<span class="md-ellipsis">
+    
+  
+    Cryptographic Details
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/A1_Security_level/">
+<span class="md-ellipsis">
+    
+  
+    Password-Based Encryption Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/ch06_ID_authentication_protocol/">
+<span class="md-ellipsis">
+    
+  
+    Client authentication protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/header_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Header FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/recipients_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Recipients FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../02_protocol_and_cryptography_spec/keylabel_field/">
+<span class="md-ellipsis">
+    
+  
+    KeyLabel field specification
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Architecture
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Context
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch01_system_context/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch02_system_context_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Components
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Components
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch03_system_components/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch04_system_components_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch05_external_interfaces/">
+<span class="md-ellipsis">
+    
+  
+    External Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+<span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ccs-operating-principles">
+<span class="md-ellipsis">
+      
+        CCS operating principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-state">
+<span class="md-ellipsis">
+      
+        Server state
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-interfaces">
+<span class="md-ellipsis">
+      
+        Server interfaces
+      
+    </span>
+</a>
+<nav aria-label="Server interfaces" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sender-interface">
+<span class="md-ellipsis">
+      
+        Sender interface
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recipient-interface">
+<span class="md-ellipsis">
+      
+        Recipient interface
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interface-security">
+<span class="md-ellipsis">
+      
+        Interface security
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-identification-and-trust">
+<span class="md-ellipsis">
+      
+        Server identification and trust
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recipient-authentication">
+<span class="md-ellipsis">
+      
+        Recipient authentication
+      
+    </span>
+</a>
+<nav aria-label="Recipient authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-keyservercapsule-authentication-scheme">
+<span class="md-ellipsis">
+      
+        The KeyServerCapsule authentication scheme
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch07_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API References
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API References
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/capsule_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/shares_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/auth_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/rp_server_api/">
+<span class="md-ellipsis">
+    
+  
+    RP Server API
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    
+  
+    Password Strength User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    
+  
+    CDOC2 Container Storage User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    
+  
+    Overview diagrams
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_auth_server/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_rp_server/">
+<span class="md-ellipsis">
+    
+  
+    RP Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+<span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ccs-operating-principles">
+<span class="md-ellipsis">
+      
+        CCS operating principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-state">
+<span class="md-ellipsis">
+      
+        Server state
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-interfaces">
+<span class="md-ellipsis">
+      
+        Server interfaces
+      
+    </span>
+</a>
+<nav aria-label="Server interfaces" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sender-interface">
+<span class="md-ellipsis">
+      
+        Sender interface
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recipient-interface">
+<span class="md-ellipsis">
+      
+        Recipient interface
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interface-security">
+<span class="md-ellipsis">
+      
+        Interface security
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#server-identification-and-trust">
+<span class="md-ellipsis">
+      
+        Server identification and trust
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#recipient-authentication">
+<span class="md-ellipsis">
+      
+        Recipient authentication
+      
+    </span>
+</a>
+<nav aria-label="Recipient authentication" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-keyservercapsule-authentication-scheme">
+<span class="md-ellipsis">
+      
+        The KeyServerCapsule authentication scheme
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="cdoc2-ccs"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.</span> CDOC2 CCS<a class="headerlink" href="#cdoc2-ccs" title="Permanent link">¶</a></h1>
+<p>This section defines the CDOC2 Capsule Server (CCS), what interfaces it provides to other system components, and rules of use.</p>
+<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>The CCS is a subsystem tasked with transmitting the Capsule required for the decryption of the CDOC2 Container from the sender to the recipient following the rules set out for specific encryption methods in section <a href="../../02_protocol_and_cryptography_spec/ch02_encryption_schemes/#cdoc2-encryption-schemes">CDOC2 encryption schemes</a>. CDOC2 Capsule server only uses the encryption schemes which assume a single CCS. This is in contrast to CDOC2 Shares Servers (CCSs ) which must use encryption schemes with multiple servers (CCSs) that are independent and operated by separate organizations.</p>
+<p>The communication channel provided by the CCS is more secure than public channels of communication used for the transmission of CDOC2 Containers. A properly operating CCS ensures that the attacker, who is monitoring the public communication channel and may store all CDOC2 Containers and may be able to break public key encryption algorithms in the future with sufficiently powerful quantum computer, is not able to do so, because the Capsule information is transmitted in a separate channel. Thus, the CDOC2 System gains some additional protection against quantum computers. The CCS does not need to transmit large encrypted documents, meaning that its operating costs will be low.</p>
+<h2 id="ccs-operating-principles"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.2</span> CCS operating principles<a class="headerlink" href="#ccs-operating-principles" title="Permanent link">¶</a></h2>
+<p>In the simplest case, the CCS operates as follows.</p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title=""/></p>
+<ol>
+<li>Sender generates a Capsule for a specific Recipient during encryption.</li>
+<li>Sender chooses a CCS, connects to the server and transmits the Capsule to the server along with a Recipient identifier.</li>
+<li>CCS generates a transaction identifier and saves the generated identifier along with the Capsule and Recipient identifier.</li>
+<li>CCS returns the generated identifier to Sender.</li>
+<li>Sender adds selected CCS identifier, transaction identifier, and Recipient identifier inside Container.</li>
+<li>The Sender transmits Container to Recipient.</li>
+<li>The Recipient finds information concerning the Capsule generated for them in Container.</li>
+<li>Recipient uses eID means to authenticate to CCS.</li>
+<li>Recipient authenticates to CCS and queries capsule.</li>
+<li>CCS looks up Capsule based on the transaction identifier and verifies the recipient identity and makes authentication decision and access control decision.</li>
+<li>CCS returns Capsule to Recipient.</li>
+<li>Recipient uses the information found in Capsule for decrypting Container.</li>
+</ol>
+<h2 id="server-state"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.3</span> Server state<a class="headerlink" href="#server-state" title="Permanent link">¶</a></h2>
+<p>Server state consists of the Capsules received by the server for transmission, as well as all relevant information.</p>
+<ul>
+<li>Capsule: Byte array, meaningless for the server.</li>
+<li>Transaction ID: UUID generated by the server itself using a cryptographically secure random number generator.</li>
+<li>Recipient ID: Identifier received by the server as the output of the recipient authentication process.</li>
+<li>Validity period: The CCS stores the Capsule only for a limited period, collectively specified by the sender and the key management policies used by the CCS. The capsule is deleted after this period.</li>
+</ul>
+<h2 id="server-interfaces"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.4</span> Server interfaces<a class="headerlink" href="#server-interfaces" title="Permanent link">¶</a></h2>
+<p>The server provides two interfaces: one for delivery of the Capsule from the sender to the CCS and the other for delivery of the Capsule from the server to the recipient.</p>
+<p>The interfaces are formally described in the <a href="https://spec.openapis.org/oas/latest.html">OpenAPI format</a> (see <a href="../../05_api_references/capsule_server_api/">API References</a>).</p>
+<h3 id="sender-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.4.1</span> Sender interface<a class="headerlink" href="#sender-interface" title="Permanent link">¶</a></h3>
+<p>The CCS sender interface is used by the sender to transmit the Capsule to the server and receive a transaction identifier that they will subsequently add to the container header.</p>
+<p>The sender transmits the Capsule and recipient identifier to the server and receives from the server a transaction identifier.
+The interface is unauthenticated and can be used by all senders.</p>
+<h3 id="recipient-interface"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.4.2</span> Recipient interface<a class="headerlink" href="#recipient-interface" title="Permanent link">¶</a></h3>
+<p>The CCS recipient interface is used by the recipient to receive a Capsule from the server.</p>
+<p>The recipient authenticates with the server and transmits a transaction identifier. Based on this identifier, the server looks up the Capsule. The capsule must be addressed to the recipient who authenticated with the server – the server thus compares the recipient identifier established during authentication with the recipient identifier transmitted by the sender of the Capsule. The server then returns the Capsule to the recipient.</p>
+<h3 id="interface-security"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.4.3</span> Interface security<a class="headerlink" href="#interface-security" title="Permanent link">¶</a></h3>
+<p>Interface security is ensured using the TLS 1.3 protocol. The server holds a certificate issued by a publicly available and trusted CA. The clients can validate this certificate on each connection using the OCSP protocol.</p>
+<p>To ensure protocol security, it is important to make sure that the Capsule is only received by
+the CCS. This can be achieved via the pinning of server TLS keys. Key pinning ensures that
+commonly practiced use of TLS inspection does not compromise the confidentiality of the keying material.</p>
+<h2 id="server-identification-and-trust"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.5</span> Server identification and trust<a class="headerlink" href="#server-identification-and-trust" title="Permanent link">¶</a></h2>
+<p>Enhanced security features provided by CDOC2 are only valid if the Capsule is transmitted via
+servers meeting the requirements of the specific encryption scenario (see <a href="../../02_protocol_and_cryptography_spec/ch02_encryption_schemes/">Encryption Schemes</a> ).</p>
+<p>To ensure the recipient and sender’s confidence in the servers they are using, each client using
+the CDOC2 format must be provided with a list of trusted capsule servers either as a part of the
+DigiDoc software package (or other client application) or in some other form. This list is also used for TLS key pinning.</p>
+<p>The server list consists of the following elements.</p>
+<ul>
+<li>Server identifier</li>
+<li>Capsule type supported by the server.</li>
+<li>Sender interface URL.</li>
+<li>Recipient interface URL.</li>
+<li>Identifier of the organization maintaining the server.</li>
+<li>Server public keys to enable the client to cryptographically verify the server’s identity. Public keys are provided in the form of certificates.</li>
+</ul>
+<p>The sender never transmits the recipient the server’s technical access point but only its identifier in the server list. This is done to prevent attacks seeking mislead the recipient into communicating with an untrusted server.</p>
+<p>Should multiple independent CCS infrastructures be set up with no coordination of server identifier assignation between the systems and should the same identifier be assigned to different servers in different systems, this could lead to a situation where a client using the infrastructure of one system creates a container that another client will then attempt to open using the infrastructure of another system.</p>
+<p>This would result in the recipient contacting the wrong CCS, authenticating with the server, and transmitting the transaction identifier found in the container to the server. The server will be unable to find the Capsule corresponding to this transaction identifier and will return an error message (Decryption failed).</p>
+<p>The CCS used by the recipient will receive a transaction identifier but since it will be unable to authenticate with the correct CCS on the behalf of the recipient, it will also be unable to download the Capsule from the correct server.</p>
+<p>The Capsule type supported by the server allows the sender to choose the correct Capsule type
+and enables the recipient to authenticate with the server using the correct protocol. As the
+servers are lightweight, an organization seeking to support multiple different recipient types
+will be able to run multiple separate capsule servers. This ensures that the CCS can be simplified
+and thus made more secure. This is especially important in the case of the recipient interface, as the authentication protocols used may widely differ in their features, making secure implementation difficult.</p>
+<p>The identifier of the organization maintaining the server does not necessarily have to be explicitly tied to the organization’s name, but it must enable the identification of servers controlled by the same organization. This information is required to support future secret sharing-based encryption methods.</p>
+<p>Each server may be assigned more than one public key – this helps ensure smooth change of certificates and keys. Upon connection to the server, the client must always verify that the server is using one of the listed certificates. This will help prevent man-in-the-middle attacks.</p>
+<h2 id="recipient-authentication"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.6</span> Recipient authentication<a class="headerlink" href="#recipient-authentication" title="Permanent link">¶</a></h2>
+<p>Each CCS-based Capsule type describes a specific recipient identification and authentication method.
+This version of the specification defines a single CCS-based Capsule type:</p>
+<ul>
+<li><code>KeyServerCapsule</code> -- public key based authentication and access control</li>
+</ul>
+<p>This list may be expanded in future versions of the specification. Various authentication schemes may be used in parallel.</p>
+<h3 id="the-keyservercapsule-authentication-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">17.6.1</span> The <code>KeyServerCapsule</code> authentication scheme<a class="headerlink" href="#the-keyservercapsule-authentication-scheme" title="Permanent link">¶</a></h3>
+<p>In this scheme, the recipient is identified by their public key used for the decryption of the container. The public key is defined by the field <code>RecipientKey</code> in the structure <code>KeyServerCapsule</code>.</p>
+<p>The server authenticates the recipient using TLS client authentication (<em>mTLS</em>). The server is configured to validate the client certificate (e.g. using OCSP). Should the recipient lose control of their decryption key and cancel their certificate, the CCS will not issue the Capsule card to the new holder (potential attacker) and the attacker will be unable to decrypt the container.</p>
+<p>After successful authentication, the server reads the client’s public key from the certificate used by the client and compares this public key to the public key tied to the Capsule referenced by the transaction identifier. If the two keys match, the server will return the Capsule. Otherwise, the server will return an error message.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: External Interfaces" class="md-footer__link md-footer__link--prev" href="../ch05_external_interfaces/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                External Interfaces
+              </div>
+</div>
+</a>
+<a aria-label="Next: Shares Server" class="md-footer__link md-footer__link--next" href="../ch07_shares_server/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Shares Server
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="../../javascripts/katex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+</body>
+</html>

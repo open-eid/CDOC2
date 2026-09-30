@@ -1,0 +1,1854 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<link href="../../01_use_case_model/ch03_use_cases/" rel="prev"/>
+<link href="../ch03_container_format/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>3. CDOC2 encryption schemes - CDOC2 System Documentation</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#cdoc2-encryption-schemes">4. 
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="CDOC2 System Documentation" class="md-header__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            CDOC2 System Documentation
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              3. CDOC2 encryption schemes
+            
+          </span>
+</div>
+</div>
+</div>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="CDOC2 System Documentation" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="CDOC2 System Documentation">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    CDOC2 System Documentation
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../terms_and_accronyms/">
+<span class="md-ellipsis">
+    
+  
+    Terms and Acronyms
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Use Case Model
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Use Case Model
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../01_use_case_model/ch03_use_cases/">
+<span class="md-ellipsis">
+    
+  
+    Use Cases
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Protocol and Cryptography Specification
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Protocol and Cryptography Specification
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Encryption Schemes
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Encryption Schemes
+  
+
+    
+  </span>
+</a>
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+<span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notation-and-functions">
+<span class="md-ellipsis">
+      
+        Notation and functions
+      
+    </span>
+</a>
+<nav aria-label="Notation and functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notation">
+<span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standard-cryptographic-functions">
+<span class="md-ellipsis">
+      
+        Standard cryptographic functions
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generic-cdoc2-encryption-scheme">
+<span class="md-ellipsis">
+      
+        Generic CDOC2 encryption scheme
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-hierarchy-illustration">
+<span class="md-ellipsis">
+      
+        Key Hierarchy illustration
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-key-establishment-algorithms">
+<span class="md-ellipsis">
+      
+        Encryption schemes with key-establishment algorithms
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with key-establishment algorithms" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">
+<span class="md-ellipsis">
+      
+        SC01: Encryption scheme for Recipients with EC key pair
+      
+    </span>
+</a>
+<nav aria-label="SC01: Encryption scheme for Recipients with EC key pair" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-asymmetric-public-key-encryption-system">
+<span class="md-ellipsis">
+      
+        Encryption schemes with asymmetric public key encryption system
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with asymmetric public key encryption system" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">
+<span class="md-ellipsis">
+      
+        SC02: Encryption scheme for recipients with RSA key pair
+      
+    </span>
+</a>
+<nav aria-label="SC02: Encryption scheme for recipients with RSA key pair" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_1">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_1">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-using-capsule-servers">
+<span class="md-ellipsis">
+      
+        Encryption schemes using Capsule Servers
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes using Capsule Servers" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">
+<span class="md-ellipsis">
+      
+        SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
+    </span>
+</a>
+<nav aria-label="SC03: Encryption scheme with capsule server for recipients with EC key pairs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_2">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_2">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">
+<span class="md-ellipsis">
+      
+        SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
+    </span>
+</a>
+<nav aria-label="SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_3">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_3">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-pre-shared-secrets">
+<span class="md-ellipsis">
+      
+        Encryption schemes with pre-shared secrets
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with pre-shared secrets" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">
+<span class="md-ellipsis">
+      
+        SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
+    </span>
+</a>
+<nav aria-label="SC05: Encryption scheme for recipients with pre-shared symmetric secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_4">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-for-recipients-or-sender">
+<span class="md-ellipsis">
+      
+        Decryption steps for Recipients or Sender
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords">
+<span class="md-ellipsis">
+      
+        SC06: Direct encryption scheme with pre-shared passwords
+      
+    </span>
+</a>
+<nav aria-label="SC06: Direct encryption scheme with pre-shared passwords" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_5">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-for-recipient-or-sender">
+<span class="md-ellipsis">
+      
+        Decryption steps for Recipient or Sender
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-secret-sharing">
+<span class="md-ellipsis">
+      
+        Encryption schemes with secret sharing
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with secret sharing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key">
+<span class="md-ellipsis">
+      
+        SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
+    </span>
+</a>
+<nav aria-label="SC07: Encryption scheme with (n-of-n) secret shared decryption key" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_6">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipient">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipient
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc08-wip-encryption-scheme-with-t-of-n-secret-shared-decryption-key">
+<span class="md-ellipsis">
+      
+        SC08: (WIP) Encryption scheme with (t-of-n) secret shared decryption key
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch03_container_format/">
+<span class="md-ellipsis">
+    
+  
+    Container Format
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch05_cryptographic_details/">
+<span class="md-ellipsis">
+    
+  
+    Cryptographic Details
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../A1_Security_level/">
+<span class="md-ellipsis">
+    
+  
+    Password-Based Encryption Security
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../ch06_ID_authentication_protocol/">
+<span class="md-ellipsis">
+    
+  
+    Client authentication protocol
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_4_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../header_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Header FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../recipients_flatbuffers_schema/">
+<span class="md-ellipsis">
+    
+  
+    Recipients FlatBuffers Schema
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../keylabel_field/">
+<span class="md-ellipsis">
+    
+  
+    KeyLabel field specification
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Architecture
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Context
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch01_system_context/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch02_system_context_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    System Components
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_2_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    System Components
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch03_system_components/">
+<span class="md-ellipsis">
+    
+  
+    Hardware Token/Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch04_system_components_sid_mid/">
+<span class="md-ellipsis">
+    
+  
+    SID/MID
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch05_external_interfaces/">
+<span class="md-ellipsis">
+    
+  
+    External Interfaces
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch06_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../03_system_architecture/ch07_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API References
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API References
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/capsule_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/shares_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/auth_server_api/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server API
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../05_api_references/rp_server_api/">
+<span class="md-ellipsis">
+    
+  
+    RP Server API
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    User Guides
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/integrator_guide/">
+<span class="md-ellipsis">
+    
+  
+    Integrator Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/password_guide/">
+<span class="md-ellipsis">
+    
+  
+    Password Strength User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/container_storage_guide/">
+<span class="md-ellipsis">
+    
+  
+    CDOC2 Container Storage User Guide
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../08_User_Guides/overview_diagrams/">
+<span class="md-ellipsis">
+    
+  
+    Overview diagrams
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_capsule_server/">
+<span class="md-ellipsis">
+    
+  
+    Capsule Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_shares_server/">
+<span class="md-ellipsis">
+    
+  
+    Shares Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_auth_server/">
+<span class="md-ellipsis">
+    
+  
+    Auth Server
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../10_Changelog/changelog_rp_server/">
+<span class="md-ellipsis">
+    
+  
+    RP Server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="In this chapter:" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      In this chapter:
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#introduction">
+<span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notation-and-functions">
+<span class="md-ellipsis">
+      
+        Notation and functions
+      
+    </span>
+</a>
+<nav aria-label="Notation and functions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notation">
+<span class="md-ellipsis">
+      
+        Notation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standard-cryptographic-functions">
+<span class="md-ellipsis">
+      
+        Standard cryptographic functions
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generic-cdoc2-encryption-scheme">
+<span class="md-ellipsis">
+      
+        Generic CDOC2 encryption scheme
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-hierarchy-illustration">
+<span class="md-ellipsis">
+      
+        Key Hierarchy illustration
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-key-establishment-algorithms">
+<span class="md-ellipsis">
+      
+        Encryption schemes with key-establishment algorithms
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with key-establishment algorithms" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">
+<span class="md-ellipsis">
+      
+        SC01: Encryption scheme for Recipients with EC key pair
+      
+    </span>
+</a>
+<nav aria-label="SC01: Encryption scheme for Recipients with EC key pair" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-asymmetric-public-key-encryption-system">
+<span class="md-ellipsis">
+      
+        Encryption schemes with asymmetric public key encryption system
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with asymmetric public key encryption system" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">
+<span class="md-ellipsis">
+      
+        SC02: Encryption scheme for recipients with RSA key pair
+      
+    </span>
+</a>
+<nav aria-label="SC02: Encryption scheme for recipients with RSA key pair" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_1">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_1">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-using-capsule-servers">
+<span class="md-ellipsis">
+      
+        Encryption schemes using Capsule Servers
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes using Capsule Servers" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs">
+<span class="md-ellipsis">
+      
+        SC03: Encryption scheme with capsule server for recipients with EC key pairs
+      
+    </span>
+</a>
+<nav aria-label="SC03: Encryption scheme with capsule server for recipients with EC key pairs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_2">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_2">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs">
+<span class="md-ellipsis">
+      
+        SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs
+      
+    </span>
+</a>
+<nav aria-label="SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_3">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipients_3">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipients
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-pre-shared-secrets">
+<span class="md-ellipsis">
+      
+        Encryption schemes with pre-shared secrets
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with pre-shared secrets" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">
+<span class="md-ellipsis">
+      
+        SC05: Encryption scheme for recipients with pre-shared symmetric secret
+      
+    </span>
+</a>
+<nav aria-label="SC05: Encryption scheme for recipients with pre-shared symmetric secret" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_4">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-for-recipients-or-sender">
+<span class="md-ellipsis">
+      
+        Decryption steps for Recipients or Sender
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords">
+<span class="md-ellipsis">
+      
+        SC06: Direct encryption scheme with pre-shared passwords
+      
+    </span>
+</a>
+<nav aria-label="SC06: Direct encryption scheme with pre-shared passwords" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_5">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-for-recipient-or-sender">
+<span class="md-ellipsis">
+      
+        Decryption steps for Recipient or Sender
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-schemes-with-secret-sharing">
+<span class="md-ellipsis">
+      
+        Encryption schemes with secret sharing
+      
+    </span>
+</a>
+<nav aria-label="Encryption schemes with secret sharing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key">
+<span class="md-ellipsis">
+      
+        SC07: Encryption scheme with (n-of-n) secret shared decryption key
+      
+    </span>
+</a>
+<nav aria-label="SC07: Encryption scheme with (n-of-n) secret shared decryption key" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#encryption-steps-by-sender_6">
+<span class="md-ellipsis">
+      
+        Encryption steps by Sender
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decryption-steps-by-recipient">
+<span class="md-ellipsis">
+      
+        Decryption steps by Recipient
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sc08-wip-encryption-scheme-with-t-of-n-secret-shared-decryption-key">
+<span class="md-ellipsis">
+      
+        SC08: (WIP) Encryption scheme with (t-of-n) secret shared decryption key
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="cdoc2-encryption-schemes"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.</span> CDOC2 encryption schemes<a class="headerlink" href="#cdoc2-encryption-schemes" title="Permanent link">¶</a></h1>
+<h2 id="introduction"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.1</span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">¶</a></h2>
+<p>This section discusses encryption schemes, which are supported by CDOC2 system. The purpose of the section is to familiarize the reader with basic principles of encryption schemes and to specify, how the cryptographic primitives and other functions are used to compose CDOC2 encryption schemes. However, in this section, encryption schemes are presented in abstract form, and they are missing some details. For example, iteration count of PBKDF2 function is not defined here and additional arguments for the HKDF functions are not defined in this section. Such implementation details are specified in <a href="../ch05_cryptographic_details/">Cryptographic protocol details</a>.</p>
+<p>Encryption schemes are presented in an abstract form, where Sender wants to send a message <code>M</code> (payload of the CDOC2 Container) to total of <code>l</code> Recipients (<code>Recipient_1</code>, <code>Recipient_2</code>, ... <code>Recipient_l</code>) and Recipients are all similar, in a sense that they all have similar RSA key pairs or that they all have established a password with Sender. In the actual CDOC2 system, Sender may mix different kind of Recipients and different encryption schemes may be concurrently used in the same CDOC2 Container. In that sense, encryption schemes defined in this section are not comparable to use-cases, which describe interaction details of user and CDOC2 system software components. Use-cases are discussed in section <a href="../../01_use_case_model/ch03_use_cases/">Client Application use cases</a>.</p>
+<h2 id="notation-and-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2</span> Notation and functions<a class="headerlink" href="#notation-and-functions" title="Permanent link">¶</a></h2>
+<h3 id="notation"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.1</span> Notation<a class="headerlink" href="#notation" title="Permanent link">¶</a></h3>
+<p>For convenience, we repeat here some of the acronyms and shorthand notation, which is used to define cryptographic schemes:</p>
+<ul>
+<li><code>M</code> - Message (payload of CDOC2 Container)</li>
+<li><code>C</code> - Ciphertext (encrypted message M)</li>
+<li><code>FMK</code> - File Master Key. Cryptographic key material for deriving other encryption and HMAC keys.</li>
+<li><code>CEK</code> - Content Encryption Key. Symmetric key used to encrypt the payload of CDOC2 Container.</li>
+<li><code>KEK</code> - Key Encryption Key. Symmetric key used to encrypt (wrap) the FMK, so that FMK could be transmitted inside CDOC2 Capsule (CC).</li>
+<li>Index <code>i</code> is used to denote an instance of key or data structure, which is specific to certain Recipient, for example, <code>KEK_i</code>.</li>
+</ul>
+<h3 id="standard-cryptographic-functions"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.2.2</span> Standard cryptographic functions<a class="headerlink" href="#standard-cryptographic-functions" title="Permanent link">¶</a></h3>
+<p>Schemes use following standard functions:</p>
+<ol>
+<li><code>Enc(CEK, M)</code> means encryption of message <code>M</code> with symmetric key <code>CEK</code>.</li>
+<li><code>HKDF()</code>, <code>HKDF-Extract()</code>, <code>HKDF-Expand()</code> are key derivation functions as defined in
+   <a href="https://datatracker.ietf.org/doc/html/rfc5869">RFC5869</a>.</li>
+<li><code>ECSVDP-DH(SecretKey, PublicKey)</code> is Elliptic Curve Secret Value Derivation Primitive,
+   Diffie-Hellman version, as defined in IEEE standard P1363 and in <a href="https://datatracker.ietf.org/doc/html/rfc5349">RFC5349</a>. Note that this is little-bit
+   different from "ECC Cofactor Diffie-Hellman (ECC CDH)" as defined in NIST SP800-56A, section 5.7.1.2.</li>
+<li><code>RSAES-OAEP-ENCRYPT(PK, M)</code> means encryption of message <code>M</code> with RSA public key <code>PK</code>
+   according to <a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.1">RFC8017, section 7.1.1</a>.</li>
+<li><code>RSAES-OAEP-DECRYPT(SK, C)</code> means decryption of ciphertext <code>C</code> with RSA private key <code>SK</code>
+   according to <a href="https://datatracker.ietf.org/doc/html/rfc8017#section-7.1.2">RFC8017, section 7.1.2</a></li>
+<li><code>PBKDF2(Password, Salt)</code> is key material derivation function as defined in <a href="https://www.ietf.org/rfc/rfc2898.txt">RFC2898</a>.</li>
+<li><code>XOR(Key1, Key2)</code> is bitwise exclusive-or operation on symmetric keys.</li>
+</ol>
+<h2 id="generic-cdoc2-encryption-scheme"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.3</span> Generic CDOC2 encryption scheme<a class="headerlink" href="#generic-cdoc2-encryption-scheme" title="Permanent link">¶</a></h2>
+<p>In general, CDOC2 system implements encryption of payload of CDOC2 Container with the following generic steps:</p>
+<ol>
+<li>Sender generates a random FMK, which is used as a master key material for deriving other specific cryptographic keys.</li>
+<li>From FMK, Sender derives a CEK, which is used for encrypting the payload of CDOC2 Container, and additional HMAC keys, which are used to protect the integrity of CDOC2 Container.</li>
+<li>FMK is encrypted (wrapped) with a recipient-specific key encryption key (KEK) and added to the CDOC2 Container. It now depends on the capabilities of the Recipient, how this KEK is made available to Recipient, so that they could decrypt the encrypted FMK and in turn, the whole Container. For example, some Recipients may be able to use eID means, which are capable of Diffie-Hellman key exchange, some may be able to use authentication-only eID means and some may only be able to use pre-shared password.</li>
+<li>Suitable encryption scheme for each Recipient is used and required information to execute key-establishment protocol or key-derivation protocol is put into data structure called "capsule" (Capsule). In some cases, the Capsule is transmitted along the CDOC2 Container itself and in some cases, Capsule Server(s) could be used.</li>
+</ol>
+<p>An example activity diagram about creating CDOC2 Container with multiple recipients, is given below:</p>
+<p><img alt="uml diagram" class="uml" src="data:image/png;base64,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" title="Example diagram about creating CDOC2 Container with multiple recipients"/></p>
+<h2 id="key-hierarchy-illustration"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.4</span> Key Hierarchy illustration<a class="headerlink" href="#key-hierarchy-illustration" title="Permanent link">¶</a></h2>
+<p><img alt="Key Hiearachy" src="../../img/CDOC2_key_hierarchy.png"/></p>
+<h2 id="encryption-schemes-with-key-establishment-algorithms"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5</span> Encryption schemes with key-establishment algorithms<a class="headerlink" href="#encryption-schemes-with-key-establishment-algorithms" title="Permanent link">¶</a></h2>
+<p>These schemes are usable in case Recipients have eID means with some type of asymmetric key pair (such as RSA or EC), and this key pair could be used do derive the FMK decryption key (KEK) between Sender and Recipient, with some kind of key-establishment protocol. CDOC2 Container will contain the encrypted payload and capsule, which contains necessary information to execute the key-establishment protocol. Container and capsule will be transmitted to Recipient in the same communication channel.</p>
+<h3 id="sc01-encryption-scheme-for-recipients-with-ec-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1</span> SC01: Encryption scheme for Recipients with EC key pair<a class="headerlink" href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair" title="Permanent link">¶</a></h3>
+<p>This scheme can be used for transmitting encrypted messages to Recipients holding an EC key pair. Scheme uses Diffie-Hellman key exchange algorithm to generate same secret value for both Sender and Recipient, which is used to protect the FMK of CDOC2 Container.</p>
+<p>The key exchange algorithm is almost the same as NIST key-establishment scheme <code>C(1e, 1s, ECC CDH)</code> (SP 800-56A Rev3, Section 6.2.2.2 - "(Cofactor) One-Pass Diffie-Hellman, C(1e, 1s, ECC CDH) Scheme"), with the only difference that NIST describes a key-establishment scheme with cofactor ECC CDH primitive, but we are using ECC DH primitive without a cofactor.</p>
+<h4 id="encryption-steps-by-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender" title="Permanent link">¶</a></h4>
+<p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="p">{</span><span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">EphemeralSK</span><span class="p">}</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">StaticKEKSalt</span><span class="p">,</span> <span class="n">ECSVDP</span><span class="o">-</span><span class="n">DH</span><span class="p">(</span><span class="n">EphemeralSK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">))</span>
+<span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EllipticCurveInfo</span><span class="p">,</span> <span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="decryption-steps-by-recipients"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.5.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has EC public key <code>PK_i</code> and corresponding EC secret key <code>SK_i</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">SenderEphemeralPK</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">EphemeralPK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">StaticKEKSalt</span><span class="p">,</span> <span class="n">ECSVDP</span><span class="o">-</span><span class="n">DH</span><span class="p">(</span><span class="n">SK_i</span><span class="p">,</span> <span class="n">SenderEphemeralPK</span><span class="p">))</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="encryption-schemes-with-asymmetric-public-key-encryption-system"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6</span> Encryption schemes with asymmetric public key encryption system<a class="headerlink" href="#encryption-schemes-with-asymmetric-public-key-encryption-system" title="Permanent link">¶</a></h2>
+<h3 id="sc02-encryption-scheme-for-recipients-with-rsa-key-pair"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1</span> SC02: Encryption scheme for recipients with RSA key pair<a class="headerlink" href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair" title="Permanent link">¶</a></h3>
+<p>This scheme can be used for transmitting encrypted messages to Recipients holding a RSA key pair. Scheme uses RSA-OAEP encryption scheme to protect the FMK decryption key (KEK). Wrapped KEK is included in the capsule, which is transmitted to the Recipient within the CDOC2 Container.</p>
+<p>Note that, while it is also possible to use Diffie-Hellman key exchange algorithm with RSA key pair, in order to derive the KEK between Sender and Recipient, a direct RSAES-PKCS1-v1_5 or RSA-OAEP encryption scheme has been traditionally used with CDOC1 applications and therefore, support for this scheme has been carried over to CDOC2 system as well.</p>
+<h4 id="encryption-steps-by-sender_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_1" title="Permanent link">¶</a></h4>
+<p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">RSAES</span><span class="o">-</span><span class="n">OAEP</span><span class="o">-</span><span class="n">ENCRYPT</span><span class="p">(</span><span class="n">PK_i</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+<span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="decryption-steps-by-recipients_1"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.6.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_1" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">EncryptedKEK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">RSAES</span><span class="o">-</span><span class="n">OAEP</span><span class="o">-</span><span class="n">DECRYPT</span><span class="p">(</span><span class="n">SK_i</span><span class="p">,</span> <span class="n">EncryptedKEK_i</span><span class="p">)</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="encryption-schemes-using-capsule-servers"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7</span> Encryption schemes using Capsule Servers<a class="headerlink" href="#encryption-schemes-using-capsule-servers" title="Permanent link">¶</a></h2>
+<p>These schemes are usable, in case the Sender wishes to use Capsule Server as a separate transmission channel for sending key capsules to Recipients. CDOC2 Container itself is still transmitted within the usual transmission channel.</p>
+<h3 id="sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1</span> SC03: Encryption scheme with capsule server for recipients with EC key pairs<a class="headerlink" href="#sc03-encryption-scheme-with-capsule-server-for-recipients-with-ec-key-pairs" title="Permanent link">¶</a></h3>
+<p>This scheme uses same kind of key-establishment algorithm, as <a href="#sc01-encryption-scheme-for-recipients-with-ec-key-pair">scheme SC01</a>, but Capsule is transmitted via the Capsule Servers.</p>
+<h4 id="encryption-steps-by-sender_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_2" title="Permanent link">¶</a></h4>
+<p>Sender knows the ECC public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding ECC secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="p">{</span><span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">EphemeralSK</span><span class="p">}</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">StaticKEKSalt</span><span class="p">,</span> <span class="n">ECSVDP</span><span class="o">-</span><span class="n">DH</span><span class="p">(</span><span class="n">EphemeralSK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">))</span>
+<span class="n">KeyServerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EphemeralPK</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
+<span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="decryption-steps-by-recipients_2"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.1.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_2" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has EC public key <code>PK_i</code> and corresponding EC secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule Server. Recipient authenticates to Capsule Server with EC key pair <code>(SK_i, PK_i)</code>.</p>
+<p>Decryption steps are exactly the same:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">SenderEphemeralPK</span> <span class="o">=</span> <span class="n">KeyServerCapsule_i</span><span class="o">.</span><span class="n">EphemeralPK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">StaticKEKSalt</span><span class="p">,</span> <span class="n">ECSVDP</span><span class="o">-</span><span class="n">DH</span><span class="p">(</span><span class="n">SK_i</span><span class="p">,</span> <span class="n">SenderEphemeralPK</span><span class="p">))</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2</span> SC04: Encryption scheme with Capsule Server for recipients with RSA key pairs<a class="headerlink" href="#sc04-encryption-scheme-with-capsule-server-for-recipients-with-rsa-key-pairs" title="Permanent link">¶</a></h3>
+<p>This scheme uses same kind of RSA-OAEP encryption scheme, as <a href="#sc02-encryption-scheme-for-recipients-with-rsa-key-pair">scheme SC02</a>, but Capsule is transmitted via Capsule Server.</p>
+<h4 id="encryption-steps-by-sender_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_3" title="Permanent link">¶</a></h4>
+<p>Sender knows the RSA public keys <code>PK_1</code>, <code>PK_2</code>, ..., <code>PK_l</code> of recipients <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>. Recipients hold corresponding RSA secret keys <code>SK_1</code>, <code>SK_2</code>, ..., <code>SK_l</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">RSAES</span><span class="o">-</span><span class="n">OAEP</span><span class="o">-</span><span class="n">ENCRYPT</span><span class="p">(</span><span class="n">PK_i</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+<span class="n">KeyServerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
+<span class="n">ContainerCapsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyServerCapsuleID_i</span><span class="p">,</span> <span class="n">PK_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="decryption-steps-by-recipients_3"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.7.2.2</span> Decryption steps by Recipients<a class="headerlink" href="#decryption-steps-by-recipients_3" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, ContainerCapsule_i}</code> and has RSA public key <code>PK_i</code> and corresponding RSA secret key <code>SK_i</code>. Recipient reads <code>KeyServerCapsuleID_i</code> from <code>ContainerCapsule_i</code> and downloads corresponding <code>KeyServerCapsule_i</code> from Capsule server. Recipient authenticates to Capsule Server with RSA key pair <code>(SK_i, PK_i)</code>.</p>
+<p>Decryption steps are exactly the same:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">KeyServerCapsule_i</span><span class="o">.</span><span class="n">EncryptedKEK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">RSAES</span><span class="o">-</span><span class="n">OAEP</span><span class="o">-</span><span class="n">DECRYPT</span><span class="p">(</span><span class="n">SK_i</span><span class="p">,</span> <span class="n">EncryptedKEK_i</span><span class="p">)</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="encryption-schemes-with-pre-shared-secrets"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8</span> Encryption schemes with pre-shared secrets<a class="headerlink" href="#encryption-schemes-with-pre-shared-secrets" title="Permanent link">¶</a></h2>
+<p>Previous schemes SC01, SC02, SC03, and SC04 all use some form of pair-wise key-establishment protocols, and they are relying on the fact that recipients have access to RSA or EC key pairs, usually in the form of eID means. In addition to these schemes, CDOC2 system have to support situations, where Recipients don't have any such tokens, or when the storage requirements of CDOC2 Container exceed usable lifetime of such tokens. In these cases, it is possible to use pre-shared symmetric encryption key or pre-shared password.</p>
+<h3 id="sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1</span> SC05: Encryption scheme for recipients with pre-shared symmetric secret<a class="headerlink" href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret" title="Permanent link">¶</a></h3>
+<p>This scheme is used, when Sender wishes to use an externally generated symmetric encryption key for:</p>
+<ul>
+<li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
+<li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means, but who have previously received the symmetric encryption key.</li>
+</ul>
+<p>Encryption scheme can be used with multiple Recipients, who each may know different encryption key. This encryption scheme is very similar to <a href="./#sc06-direct-encryption-scheme-with-pre-shared-passwords">scheme SC06</a>, which uses pre-shared password or passphrase.</p>
+<h4 id="encryption-steps-by-sender_4"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_4" title="Permanent link">¶</a></h4>
+<p>Sender knows symmetric keys <code>S_1</code>, <code>S_2</code>, ..., <code>S_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">KeyMaterialSalt_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">S_i</span><span class="p">)</span>
+<span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">S_i</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+<span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">EncryptedKEK_i</span><span class="p">,</span> <span class="n">KeyMaterialSalt_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h4 id="decryption-steps-for-recipients-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.1.2</span> Decryption steps for Recipients or Sender<a class="headerlink" href="#decryption-steps-for-recipients-or-sender" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives the CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK_i, Capsule_i}</code> and knows symmetric key <code>S_i</code>. Also, Sender may assume the role of any Recipient <code>i</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">EncryptedKEK_i</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">EncryptedKEK</span>
+<span class="n">KeyMaterialSalt_i</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">KeyMaterialSalt</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">S_i</span><span class="p">)</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="sc06-direct-encryption-scheme-with-pre-shared-passwords"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2</span> SC06: Direct encryption scheme with pre-shared passwords<a class="headerlink" href="#sc06-direct-encryption-scheme-with-pre-shared-passwords" title="Permanent link">¶</a></h3>
+<p>This scheme is used, when Sender wishes to use a password-based encryption for:</p>
+<ul>
+<li>long-term storage of CDOC2 Container, so that decryption of it doesn't depend on availability of hardware tokens or validity of PKI certificates, and/or</li>
+<li>transmitting CDOC2 Container to such Receivers, who doesn't have any eID means.</li>
+</ul>
+<p>Password-based encryption scheme can be used with multiple Recipients, who each may know a different password for decryption. This encryption scheme is very similar to <a href="#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret">scheme SC05</a>, which uses pre-shared encryption key(s).</p>
+<h4 id="encryption-steps-by-sender_5"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_5" title="Permanent link">¶</a></h4>
+<p>Sender knows passwords <code>Password_1</code>, <code>Password_2</code>, ..., <code>Password_l</code> for each Recipient <code>B_1</code>, <code>B_2</code>, ..., <code>B_l</code> and follows steps for encryption:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Extract</span><span class="p">(</span><span class="n">StaticFMKSalt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+<span class="n">PasswordSalt_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">PasswordKeyMaterial_i</span> <span class="o">=</span> <span class="n">PBKDF2</span><span class="p">(</span><span class="n">Password_i</span><span class="p">,</span> <span class="n">PasswordSalt_i</span><span class="p">)</span>
+<span class="n">KeyMaterialSalt_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">PasswordKeyMaterial_i</span><span class="p">)</span>
+<span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">PasswordSalt_i</span><span class="p">}</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<p>Sender creates a CDOC2 Container for each Recipient with <code>{C, EncryptedFMK_i, Capsule_i}</code>, including other technical details, and sends the Container to Recipient or places in long-term storage for themselves.</p>
+<hr/>
+<p><strong>NOTE</strong></p>
+<p>Design of SC06 might be a bit confusing at first, as generating two different salt values
+(<code>PasswordSalt_i</code> and <code>KeyMaterialSalt_i</code>) doesn't seem to offer additional security. Rationale
+behind this design choice is the following:</p>
+<ol>
+<li>protocol designs of SC05 and SC06 should be similar, because they are dealing with similar situations. If SC05 uses <code>KeyMaterialSalt_i</code>,  SC06 should also use that.</li>
+<li>SC06 combines two primitives here, <code>PBKDF2()</code> from <a href="https://www.rfc-editor.org/info/rfc8018/">RFC8018</a> and <code>HKDF()</code> from <a href="https://www.rfc-editor.org/info/rfc5869/">RFC 5869</a>. Both primitives encourage usage of salt values.</li>
+</ol>
+<p>Can we do without salt values? Can we re-use a single salt value with PBKDF2 and HKDF? Difficult to decide. However, as generating two separate salt values is not expensive and certainly shouldn't do  harm, it was decided to err on the side of caution, rather than strictly follow individual RFC recommendations and therefore, to use two independent salt values.</p>
+<hr/>
+<h4 id="decryption-steps-for-recipient-or-sender"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.8.2.2</span> Decryption steps for Recipient or Sender<a class="headerlink" href="#decryption-steps-for-recipient-or-sender" title="Permanent link">¶</a></h4>
+<p>After some time, Sender may wish to decrypt the Container themselves (assuming the role of any Recipient <code>i</code>) or the Recipient <code>i</code> wishes to decrypt the Container.</p>
+<p>Recipient <code>i</code> receives CDOC2 <code>Container_i</code> with data <code>{C, EncryptedFMK, Capsule}</code> and has password <code>Password_i</code> and follows steps for decryption:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">PasswordSalt_i</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">PasswordSalt</span>
+<span class="n">PasswordKeyMaterial_i</span> <span class="o">=</span> <span class="n">PBKDF2</span><span class="p">(</span><span class="n">Password_i</span><span class="p">,</span> <span class="n">PasswordSalt_i</span><span class="p">)</span>
+<span class="n">KeyMaterialSalt_i</span> <span class="o">=</span> <span class="n">Capsule_i</span><span class="o">.</span><span class="n">KeyMaterialSalt</span>
+<span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">Container_i</span><span class="o">.</span><span class="n">EncryptedFMK</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF</span><span class="p">(</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">PasswordKeyMaterial_i</span><span class="p">)</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF</span><span class="o">-</span><span class="n">Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="encryption-schemes-with-secret-sharing"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.9</span> Encryption schemes with secret sharing<a class="headerlink" href="#encryption-schemes-with-secret-sharing" title="Permanent link">¶</a></h2>
+<blockquote>
+<p><strong>Note:</strong> This scheme applies to SiD/MiD recipients only.</p>
+</blockquote>
+<h3 id="sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.9.1</span> SC07: Encryption scheme with (n-of-n) secret shared decryption key<a class="headerlink" href="#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key" title="Permanent link">¶</a></h3>
+<p>This scheme is used, when Sender wishes to allow decrypting CDOC2 documents using authentication means like Smart-ID/Mobile-ID. In that case, multiple CDOC2 Shares Servers (CSS) are used to distribute the key material necessary to decrypt CDOC2 Container among the servers and this way to reduce the need to trust a single CSS server. Scheme uses simple n-of-n solution, where recipient needs to download all <code>n</code> shares in order to reconstruct the key material.</p>
+<h4 id="encryption-steps-by-sender_6"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.9.1.1</span> Encryption steps by Sender<a class="headerlink" href="#encryption-steps-by-sender_6" title="Permanent link">¶</a></h4>
+<p>Following steps outline how to create CDOC2 Container with a Recipient header structure and a Capsule for Recipient <code>i</code>. Index <code>i</code> is for enumerating over Recipients from <code>(1, 2, 3, ..., l)</code>. Index <code>j</code> is for enumerating over shares from <code>(1, 2, 3, ..., n)</code> of <code>KEK_i</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">FMK</span> <span class="o">=</span> <span class="n">HKDF_Extract</span><span class="p">(</span><span class="n">Static_FMK_Salt</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">())</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF_Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Enc</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">...</span> <span class="n">l</span><span class="p">):</span> 
+   <span class="n">KeyMaterialSalt_i</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span>
+   <span class="n">KEK_i</span> <span class="o">=</span> <span class="n">HKDF_Expand</span><span class="p">(</span><span class="n">HKDF_Extract</span><span class="p">(</span><span class="n">KeyMaterialSalt_i</span><span class="p">,</span> <span class="n">CSRNG</span><span class="p">()))</span>
+   <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+      <span class="n">KEK_i_share_j</span> <span class="o">=</span> <span class="n">CSRNG</span><span class="p">()</span> 
+   <span class="n">KEK_i_share_1</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">KEK_i_share_2</span><span class="p">,</span> <span class="n">KEK_i_share_3</span><span class="p">,</span><span class="o">...</span><span class="p">,</span> <span class="n">KEK_i_share_n</span><span class="p">)</span>
+   <span class="c1"># Client uploads all shares of KEK_i to CSS servers and </span>
+   <span class="c1"># gets corresponding Capsule_i_Share_j_ID for each KEK_i_share_j</span>
+   <span class="n">RecipientInfo_i</span> <span class="o">=</span> <span class="s2">"etsi/PNOEE-48010010101"</span>
+   <span class="n">DistributedKEKInfo_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">CSS_ID</span><span class="p">,</span> <span class="n">Capsule_i_Share_j_ID</span><span class="p">}</span>
+   <span class="n">Capsule_i</span> <span class="o">=</span> <span class="p">{</span><span class="n">RecipientInfo_i</span><span class="p">,</span> <span class="n">DistributedKEKInfo_i</span><span class="p">}</span>
+   <span class="n">EncryptedFMK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">FMK</span><span class="p">,</span> <span class="n">KEK_i</span><span class="p">)</span>
+
+<span class="n">Container</span> <span class="o">=</span> <span class="p">{</span><span class="n">C</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="n">l</span><span class="p">],</span> <span class="n">Capsule_i</span> <span class="p">[</span><span class="mf">1.</span><span class="o">.</span><span class="n">l</span><span class="p">]}</span>
+</code></pre></div></td></tr></table></div>
+<p>Sender has created a CDOC2 Container containing <code>{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}</code> for transmitting to Recipients <code>(1..l)</code>.</p>
+<h4 id="decryption-steps-by-recipient"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.9.1.2</span> Decryption steps by Recipient<a class="headerlink" href="#decryption-steps-by-recipient" title="Permanent link">¶</a></h4>
+<p>Recipient <code>i</code> receives a CDOC2 Container containing <code>{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}</code>, where <code>Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}</code> and <code>DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]</code>.</p>
+<p>See section <a href="../ch06_ID_authentication_protocol/">Client Authentication Protocol</a> for a more
+detailed description of the authentication process, including session token and authentication
+token overview.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1"># Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers</span>
+<span class="c1"># and receives `nonce_i_j` from each server</span>
+<span class="n">auth_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">Capsule_i_Share_j_ID</span><span class="p">,</span> <span class="n">SHA256</span><span class="p">(</span><span class="n">nonce_i_j</span><span class="p">)}</span>
+<span class="n">auth_hash</span> <span class="o">=</span> <span class="n">SHA256</span><span class="p">(</span><span class="n">auth_data</span><span class="p">)</span>
+<span class="c1"># Recipient performs ID-card/Mobile-ID/Smart-ID authentication</span>
+<span class="c1"># and creates a signature `auth_signature` on `auth_hash` </span>
+<span class="c1"># with authentication key pair.</span>
+<span class="n">auth_signature</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">auth_hash</span><span class="p">)</span> 
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">...</span> <span class="n">n</span><span class="p">]:</span> 
+   <span class="n">auth_token_j</span> <span class="o">=</span> <span class="n">auth_data_for_server_j</span> <span class="o">+</span> <span class="n">auth_signature</span>
+<span class="n">KEK_i</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i_share_1</span><span class="p">,</span> <span class="n">KEK_i_share_2</span><span class="p">,</span> <span class="n">KEK_i_share_3</span><span class="p">,</span><span class="o">...</span><span class="p">,</span> <span class="n">KEK_i_share_n</span><span class="p">)</span>
+<span class="n">FMK</span> <span class="o">=</span> <span class="n">XOR</span><span class="p">(</span><span class="n">KEK_i</span><span class="p">,</span> <span class="n">EncryptedFMK_i</span><span class="p">)</span>
+<span class="n">CEK</span> <span class="o">=</span> <span class="n">HKDF_Expand</span><span class="p">(</span><span class="n">FMK</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">Dec</span><span class="p">(</span><span class="n">CEK</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="sc08-wip-encryption-scheme-with-t-of-n-secret-shared-decryption-key"><span class="enumerate-headings-plugin enumerate-heading-plugin">4.9.2</span> SC08: (WIP) Encryption scheme with (t-of-n) secret shared decryption key<a class="headerlink" href="#sc08-wip-encryption-scheme-with-t-of-n-secret-shared-decryption-key" title="Permanent link">¶</a></h3>
+<p>This scheme is used, when Sender wishes to use multiple CSS servers do distribute the key material necessary to decrypt CDOC2 Container among the servers and to reduce the need to trust a single CSS server. Scheme uses Shamir's Secret Sharing scheme, where recipient needs to download only <code>t</code> shares from a total of <code>n</code> shares, in order to reconstruct the key material.</p>
+<p>This scheme is not fully specified.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<nav aria-label="Footer" class="md-footer__inner md-grid">
+<a aria-label="Previous: Use Cases" class="md-footer__link md-footer__link--prev" href="../../01_use_case_model/ch03_use_cases/">
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Previous
+              </span>
+<div class="md-ellipsis">
+                Use Cases
+              </div>
+</div>
+</a>
+<a aria-label="Next: Container Format" class="md-footer__link md-footer__link--next" href="../ch03_container_format/">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+                Next
+              </span>
+<div class="md-ellipsis">
+                Container Format
+              </div>
+</div>
+<div class="md-footer__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.footer", "navigation.expand", "content.tooltips", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="../../javascripts/katex.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+</body>
+</html>
