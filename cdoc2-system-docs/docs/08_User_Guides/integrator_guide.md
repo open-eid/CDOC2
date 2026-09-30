@@ -51,7 +51,7 @@ clients.
 
 ## The encryption schemes you need to support
 
-CDOC2 isn't one algorithm — it's a family of six schemes (SC01–SC06), chosen per recipient, so a
+CDOC2 isn't one algorithm — it's a family of seven schemes (SC01–SC07), chosen per recipient, so a
 single container can mix recipient types. As an integrator, your encryption flow needs to pick the
 right scheme based on what the recipient has available:
 
