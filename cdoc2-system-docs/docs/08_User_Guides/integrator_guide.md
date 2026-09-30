@@ -44,14 +44,14 @@ clients.
 
 | Component                                 | Role                                                                                                                                                                                                                                                                  | Relevant to Integrators                       |
 |-------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| CDOC2 Capsule Server (CCS)                | Stores encryption/decryption key material and provides endpoints for auth-ticket creation and key material upload/download                                                                                                                                            | Used for the "server-mediated" EC/RSA schemes |
+| CDOC2 Capsule Server (CCS)                | Stores encryption/decryption key material and provides endpoints for auth-token creation and key material upload/download                                                                                                                                             | Used for the "server-mediated" EC/RSA schemes |
 | CDOC2 Shares Server (CSS)                 | Returns share identifiers to the client application, stores key shares, and requires the recipient to authenticate before downloading shares; shares are spread across multiple independent CSS instances so that compromising one server doesn't expose key material | Used for Smart-ID/Mobile-ID-based decryption  |
 | CDOC2 Authentication server (auth-server) | Used in the Smart-ID/Mobile-ID context to compose and issue a session token, an SD-JWT structure sent with its signing certificate as a header on subsequent requests                                                                                                 | Needed only if you support SID/MID recipients |
 | CDOC2 Relying party server (rp-server)    | Mediates and validates client requests to Smart-ID/Mobile-ID relying-party services, including verifying the session token                                                                                                                                            | Needed only if you support SID/MID recipients |
 
 ## The encryption schemes you need to support
 
-CDOC2 isn't one algorithm — it's a family of six schemes (SC01–SC06), chosen per recipient, so a
+CDOC2 isn't one algorithm — it's a family of seven schemes (SC01–SC07), chosen per recipient, so a
 single container can mix recipient types. As an integrator, your encryption flow needs to pick the
 right scheme based on what the recipient has available:
 
@@ -106,15 +106,14 @@ Two integration details are easy to overlook and matter for security:
   travels with the container, precisely so a malicious party cannot redirect the recipient to an
   untrusted endpoint.
 - **Expiration is negotiated, not assumed.** When forwarding a capsule, your client supplies a
-  requested expiration time, but if the recipient's certificate expires sooner than the requested
-  capsule lifetime, the certificate's expiration takes precedence, and the CCS will reject a request
-  whose expiration exceeds what its own configuration allows. Handle that rejection path explicitly
-  rather than assuming your requested TTL will always be honored.
+  requested expiration time and must compare the requested expiration against the recipient's certificate
+  validity and use the earlier of the two; the CCS applies only its own maximum and signals truncation
+  via x-expiry-time-adjusted. Handle that rejection path explicitly rather than assuming your requested
+  TTL will always be honored.
 
 For the exact request/response shapes, generate client stubs from the published OpenAPI
 specification rather than hand-rolling the API — the specification maintains machine-readable
-schemas for exactly this purpose, and versioned artifacts are published as Maven packages under the
-`open-eid` organization for JVM-based integrators.
+schemas for exactly this purpose.
 
 ## Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
 
@@ -128,13 +127,13 @@ be aware of the additional components involved:
   your client access to RIA's Smart-ID RP API and Mobile-ID REST API without your client integrating
   those APIs directly.
 - Instead of a single Capsule Server, decryption key material can be split across multiple
-  **key-share servers**; a recipient authenticates once and presents a signed authentication ticket
-  to each share server in turn to reassemble their key. The auth ticket format is an SD-JWT
+  **key-share servers**; a recipient authenticates once and presents a signed authentication token
+  to each share server in turn to reassemble their key. The auth token format is an SD-JWT
   (selectively disclosable JWT), and support for ES256 and RS256 signature algorithms is required to
   accommodate both Mobile-ID and Smart-ID signing.
 - The typical flow your client will need to drive is: request a nonce per key-share from that share
   server's `/key-shares/{shareId}/nonce` endpoint, use that nonce (with the SID/MID proxy) to
-  produce a signed auth ticket, then present that ticket in an `x-cdoc2-auth-ticket` header when
+  produce a signed auth token, then present that token in an `x-cdoc2-auth-token` header when
   calling `GET /key-shares/{shareId}` to retrieve each share.
 
 ## Reference building blocks — build vs. reuse
@@ -169,6 +168,6 @@ format-version aware from day one.
   expects this check before a password is accepted.
 - Prefer OCSP-checked, short-lived trust decisions for capsule server TLS certificates over
   long-cached trust.
-- If you support the key-shares/Smart-ID/Mobile-ID path, do not persist SD-JWT auth tickets beyond
-  their intended single use, and treat the auth-server and rp-server as no more
-  trusted than any other network dependency — mTLS/OCSP habits apply there too.
+- If you support the key-shares/Smart-ID/Mobile-ID path, do not persist SD-JWT auth tokens beyond
+  their intended single use, and treat the auth-server and rp-server as no more trusted than any
+  other network dependency — mTLS/OCSP habits apply there too.
