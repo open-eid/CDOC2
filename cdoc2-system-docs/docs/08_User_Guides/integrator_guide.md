@@ -106,10 +106,10 @@ Two integration details are easy to overlook and matter for security:
   travels with the container, precisely so a malicious party cannot redirect the recipient to an
   untrusted endpoint.
 - **Expiration is negotiated, not assumed.** When forwarding a capsule, your client supplies a
-  requested expiration time, but if the recipient's certificate expires sooner than the requested
-  capsule lifetime, the certificate's expiration takes precedence, and the CCS will reject a request
-  whose expiration exceeds what its own configuration allows. Handle that rejection path explicitly
-  rather than assuming your requested TTL will always be honored.
+  requested expiration time and must compare the requested expiration against the recipient's certificate 
+  validity and use the earlier of the two; the CCS applies only its own maximum and signals truncation 
+  via x-expiry-time-adjusted. Handle that rejection path explicitly rather than assuming your requested 
+  TTL will always be honored.
 
 For the exact request/response shapes, generate client stubs from the published OpenAPI
 specification rather than hand-rolling the API — the specification maintains machine-readable
