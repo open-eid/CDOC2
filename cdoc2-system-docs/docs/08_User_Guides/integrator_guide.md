@@ -113,8 +113,7 @@ Two integration details are easy to overlook and matter for security:
 
 For the exact request/response shapes, generate client stubs from the published OpenAPI
 specification rather than hand-rolling the API — the specification maintains machine-readable
-schemas for exactly this purpose, and versioned artifacts are published as Maven packages under the
-`open-eid` organization for JVM-based integrators.
+schemas for exactly this purpose.
 
 ## Supporting recipients without a hardware token: key-shares, Smart-ID and Mobile-ID
 
