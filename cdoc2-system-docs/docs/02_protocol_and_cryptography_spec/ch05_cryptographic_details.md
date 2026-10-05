@@ -232,7 +232,8 @@ This information is used for computing the KEK just as described above with refe
 
 ### KeySharesCapsule
 
-Capsule type `KeySharesCapsule` refers to a situation, when the encryption/decryption key material is split between multiple CCS servers. The corresponding encryption/decryption scheme is [SC07](ch02_encryption_schemes.md#sc05-encryption-scheme-for-recipients-with-pre-shared-symmetric-secret). In such cases, the KEK is not derived using any of the key establishment algorithms, but generated from CSRNG.
+Capsule type `KeySharesCapsule` refers to a situation, when the encryption/decryption key
+material is split between multiple CSS servers. The corresponding encryption/decryption scheme is [SC07](ch02_encryption_schemes.md#sc07-encryption-scheme-with-n-of-n-secret-shared-decryption-key). In such cases, the KEK is not derived using any of the key establishment algorithms, but generated from CSRNG.
 
 #### KEK computation during encryption (KeySharesCapsule)
 
