@@ -381,9 +381,9 @@ Sender has created a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Caps
 
 Recipient `i` receives a CDOC2 Container containing `{C, EncryptedFMK_i [1..l], Capsule_i [1..l]}`, where `Capsule_i = {RecipientInfo_i, DistributedKEKInfo_i}` and `DistributedKEKInfo_i = {CSS_ID, Capsule_i_Share_j_ID} [1..n]`.
 
-See section [Client Authentication Protocol](ch06_ID_authentication_protocol.md) for a more
-detailed description of the authentication process, including session token and authentication
-token overview.
+The pseudocode below is a simplified abstraction of
+the authentication step. The normative description — session token, SD-JWT auth token and, for
+Mobile-ID, the RP counter-signature — is in [Client Authentication Protocol](ch06_ID_authentication_protocol.md)
 
 ```py linenums="1"
 # Recipient sends `Capsule_i_Share_j_ID` to corresponding CSS servers
