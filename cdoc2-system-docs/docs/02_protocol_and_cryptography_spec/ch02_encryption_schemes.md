@@ -96,7 +96,7 @@ or such Capsule, which contains information, where to retrieve information to re
 
 ## Key Hierarchy illustration
 
-![Key Hiearachy](`../img/CDOC2_key_hierarchy.png`)
+![Key Hierachy](`../img/CDOC2_key_hierarchy.png`)
 
 ## Encryption schemes with key-establishment algorithms
 
