@@ -23,7 +23,9 @@
 
 *[CDOC2 authentication server]: Web service to generate session tokens for CSS and Relying Party Servers
 
-*[authentication ticket]: A server-specific presentation of the CDOC2 Authentication Token, created by selectively disclosing only the nonce relevant to one CSS server. One Authentication Token is signed once by the Recipient; a separate Authentication Ticket is derived and sent to each CSS.
+*[authentication token]: A server-specific presentation of the CDOC2 Authentication Token, created
+by selectively disclosing only the nonce relevant to one CSS server. One Authentication Token is
+signed once by the Recipient; a separate Authentication Token is derived and sent to each CSS.
 
 *[SID/MID proxy]: Proxy provided by RIA to provide access to Smart-ID RP API and Mobile-ID REST API
 
@@ -39,7 +41,8 @@
 
 *[ECC CDH]: Elliptic-Curve Cryptography Co-factor Diffie Hellman key-establishment algorithm
 
-*[nonce]: A randomly generated, single-use value issued by a CSS server, used to prevent replay of authentication tickets.
+*[nonce]: A randomly generated, single-use value issued by a CSS server, used to prevent replay
+of authentication tokens.
 
 *[HMAC]: Hash-Based Message Authentication Code. Protects integrity of CDOC Container.
 
