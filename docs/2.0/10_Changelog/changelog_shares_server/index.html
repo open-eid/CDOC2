@@ -712,6 +712,20 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="cdoc2-shares-server-changelog"><span class="enumerate-headings-plugin enumerate-heading-plugin">30.</span> CDOC2 Shares Server changelog<a class="headerlink" href="#cdoc2-shares-server-changelog" title="Permanent link">¶</a></h1>
+<p><strong>[0.8.2] Minor improvements</strong></p>
+<ul>
+<li>TLS_1.3 no longer forced for infrastructure connections</li>
+<li>logging and tracing improvements</li>
+</ul>
+<p><strong>[0.8.1] Logging and tracing</strong></p>
+<ul>
+<li>added <code>logstash-logback-encoder</code> dependency to enable JSON logging</li>
+<li>Added logging for previously unlogged exception handling paths (failed auth/session token
+  validation, JWK fetch failures) and a catch-all exception handler for unexpected errors</li>
+<li>Add support for tracing (<code>micrometer-tracing-bridge-otel</code>, <code>opentelemetry-exporter-otlp</code>,
+  <code>spring-boot-micrometer-tracing</code>, <code>spring-boot-micrometer-tracing-opentelemetry</code>)</li>
+<li>Dependency updates</li>
+</ul>
 <p><strong>[0.8.0] Refactoring, dependency updates and test coverage</strong></p>
 <ul>
 <li>Updated cdoc2-client version</li>

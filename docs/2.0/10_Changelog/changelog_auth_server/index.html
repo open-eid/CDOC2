@@ -712,6 +712,24 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="cdoc2-auth-server-changelog"><span class="enumerate-headings-plugin enumerate-heading-plugin">31.</span> CDOC2 Auth Server changelog<a class="headerlink" href="#cdoc2-auth-server-changelog" title="Permanent link">¶</a></h1>
+<p><strong>[0.8.2] Cleanup and minor fixes</strong></p>
+<ul>
+<li>removed all classpath resources</li>
+<li>TLS_1.3 no longer forced for infrastructure connections</li>
+<li>status value returned by <code>/auth/status/</code> changed to enum in Openapi spec</li>
+<li>MobileID authentication response validation is optional, disabled by default. New
+  configuration key <code>mobileid.validateAuthenticationResponse</code></li>
+<li>logging and tracing improvements</li>
+</ul>
+<p><strong>[0.8.1] Logging and tracing</strong></p>
+<ul>
+<li>added <code>logstash-logback-encoder</code> dependency to enable JSON logging</li>
+<li>Added logging to previously unlogged exception handling paths</li>
+<li>Add support for tracing (<code>micrometer-tracing-bridge-otel</code>, <code>opentelemetry-exporter-otlp</code>)</li>
+<li>Add Spring Security configuration (<code>spring-boot-starter-security</code>) requiring HTTP Basic
+  authentication for <code>/actuator/prometheus</code></li>
+<li>Dependency updates</li>
+</ul>
 <p><strong>[0.8.0] Improved input language handling, client configurability</strong></p>
 <ul>
 <li>Language parameter for <code>auth/start</code> is constrained by openapi spec to be a nullable two character

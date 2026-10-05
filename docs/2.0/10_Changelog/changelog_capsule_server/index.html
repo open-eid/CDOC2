@@ -712,11 +712,16 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="cdoc2-capsule-server-changelog"><span class="enumerate-headings-plugin enumerate-heading-plugin">27.</span> CDOC2 Capsule Server changelog<a class="headerlink" href="#cdoc2-capsule-server-changelog" title="Permanent link">¶</a></h1>
+<p><strong>[1.7.3] Security update</strong></p>
+<ul>
+<li>Spring managed dependencies <code>tomcat-embed-core</code>, <code>tomcat-embed-websocket</code>,
+  <code>tomcat-embed-el</code> forced to version <code>11.0.25</code> to fix critical vulnerabilities</li>
+</ul>
 <p><strong>[1.7.2] Security and bug fixes</strong></p>
 <ul>
 <li>Return correct error code when client certificate is missing in <code>/key-capsules/{transactionId}</code>.</li>
 <li>Return <code>x-expiry-time-adjusted</code> in <code>PUT /key-capsules</code>.</li>
-<li>Updated all components to Spring Boot 4.1.0</li>
+<li>Updated all components to Spring Boot 4.1.1</li>
 </ul>
 <p><strong>[1.7.1] Added support for secp521r1</strong></p>
 <ul>

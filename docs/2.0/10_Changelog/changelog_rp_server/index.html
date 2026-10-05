@@ -711,6 +711,24 @@
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
 <h1 id="cdoc2-rp-server-changelog"><span class="enumerate-headings-plugin enumerate-heading-plugin">32.</span> CDOC2 RP Server changelog<a class="headerlink" href="#cdoc2-rp-server-changelog" title="Permanent link">¶</a></h1>
+<p><strong>[0.8.2] Cleanup and minor fixes</strong></p>
+<ul>
+<li>removed all classpath resources</li>
+<li>requesting a non-existent MID session through <code>/mid/session</code> will produce an HTTP-404 NOT FOUND response</li>
+<li>Session token verification failures produce correct 400-series responses</li>
+<li>logging and tracing improvements</li>
+</ul>
+<p><strong>[0.8.1] Logging and tracing</strong></p>
+<ul>
+<li>added <code>logstash-logback-encoder</code> dependency to enable JSON logging</li>
+<li>ensured all client, validation and unexpected server errors are logged</li>
+<li>Add support for tracing (<code>micrometer-tracing-bridge-otel</code>, <code>opentelemetry-exporter-otlp</code>)</li>
+<li>Add Spring Security configuration (<code>spring-boot-starter-security</code>) requiring HTTP Basic
+  authentication for <code>/actuator/prometheus</code></li>
+<li><code>/sid/session</code> request for non-existent session will produce 404 NOT FOUND</li>
+<li>Reduce <code>warn</code> level logging verbosity for session token verification failures</li>
+<li>Dependency updates</li>
+</ul>
 <p><strong>[0.8.0] Improved error handling, client configurability</strong></p>
 <ul>
 <li>SmartIdClientException from SK SID service is propagated to application interface as HTTP 400 BAD
