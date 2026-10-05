@@ -7,7 +7,6 @@
 * Session token verification failures produce correct 400-series responses
 * logging and tracing improvements
 
-
 **[0.8.1] Logging and tracing**
 
 * added `logstash-logback-encoder` dependency to enable JSON logging
