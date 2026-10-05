@@ -4,7 +4,10 @@
 
 * `Authentication Server`, `cdoc2-auth` - SID/MID. Generates session tokens to presented to other CDOC2 SID/MID infrastructure servers.
 
-* `Authentication ticket` - SID/MID. A server-specific presentation of the CDOC2 Authentication Token, created by selectively disclosing only the nonce relevant to one CSS server. One Authentication Token is signed once by the Recipient; a separate Authentication Ticket is derived and sent to each CSS.
+* `Authentication token` - SID/MID. A server-specific presentation of the CDOC2 Authentication
+  Token, created by selectively disclosing only the nonce relevant to one CSS server. One
+  Authentication Token is signed once by the Recipient; a separate Authentication Token is derived
+  and sent to each CSS.
 
 * `Capsule` - Data structure, which contains encryption scheme-specific information (encrypted symmetric keys, public keys, salt, server object references, ...)<br/>which Recipient can use to derive, establish or retrieve decryption keys for decrypting the CDOC2 Container. Capsule can either be a Server Capsule, a Container Capsule or a Shares Capsule.
 
