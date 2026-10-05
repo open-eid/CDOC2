@@ -1,10 +1,15 @@
 # CDOC2 Capsule Server changelog
 
+**[1.7.3] Security update**
+
+* Spring managed dependencies `tomcat-embed-core`, `tomcat-embed-websocket`,
+  `tomcat-embed-el` forced to version `11.0.25` to fix critical vulnerabilities
+
 **[1.7.2] Security and bug fixes**
 
 * Return correct error code when client certificate is missing in `/key-capsules/{transactionId}`.
 * Return `x-expiry-time-adjusted` in `PUT /key-capsules`.
-* Updated all components to Spring Boot 4.1.0
+* Updated all components to Spring Boot 4.1.1
 
 **[1.7.1] Added support for secp521r1**
 

@@ -1,5 +1,23 @@
 # CDOC2 Auth Server changelog
 
+**[0.8.2] Cleanup and minor fixes**
+
+* removed all classpath resources
+* TLS_1.3 no longer forced for infrastructure connections
+* status value returned by `/auth/status/` changed to enum in Openapi spec
+* MobileID authentication response validation is optional, disabled by default. New
+  configuration key `mobileid.validateAuthenticationResponse`
+* logging and tracing improvements
+
+**[0.8.1] Logging and tracing**
+
+* added `logstash-logback-encoder` dependency to enable JSON logging
+* Added logging to previously unlogged exception handling paths
+* Add support for tracing (`micrometer-tracing-bridge-otel`, `opentelemetry-exporter-otlp`)
+* Add Spring Security configuration (`spring-boot-starter-security`) requiring HTTP Basic
+  authentication for `/actuator/prometheus`
+* Dependency updates
+
 **[0.8.0] Improved input language handling, client configurability**
 
 * Language parameter for `auth/start` is constrained by openapi spec to be a nullable two character

@@ -1,5 +1,19 @@
 # CDOC2 Shares Server changelog
 
+**[0.8.2] Minor improvements**
+
+* TLS_1.3 no longer forced for infrastructure connections
+* logging and tracing improvements
+
+**[0.8.1] Logging and tracing**
+
+* added `logstash-logback-encoder` dependency to enable JSON logging
+* Added logging for previously unlogged exception handling paths (failed auth/session token
+  validation, JWK fetch failures) and a catch-all exception handler for unexpected errors
+* Add support for tracing (`micrometer-tracing-bridge-otel`, `opentelemetry-exporter-otlp`,
+  `spring-boot-micrometer-tracing`, `spring-boot-micrometer-tracing-opentelemetry`)
+* Dependency updates
+
 **[0.8.0] Refactoring, dependency updates and test coverage**
 
 * Updated cdoc2-client version
