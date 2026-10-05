@@ -1,5 +1,24 @@
 # CDOC2 RP Server changelog
 
+**[0.8.2] Cleanup and minor fixes**
+
+* removed all classpath resources
+* requesting a non-existent MID session through `/mid/session` will produce an HTTP-404 NOT FOUND response
+* Session token verification failures produce correct 400-series responses
+* logging and tracing improvements
+
+
+**[0.8.1] Logging and tracing**
+
+* added `logstash-logback-encoder` dependency to enable JSON logging
+* ensured all client, validation and unexpected server errors are logged
+* Add support for tracing (`micrometer-tracing-bridge-otel`, `opentelemetry-exporter-otlp`)
+* Add Spring Security configuration (`spring-boot-starter-security`) requiring HTTP Basic
+  authentication for `/actuator/prometheus`
+* `/sid/session` request for non-existent session will produce 404 NOT FOUND
+* Reduce `warn` level logging verbosity for session token verification failures
+* Dependency updates
+
 **[0.8.0] Improved error handling, client configurability**
 
 * SmartIdClientException from SK SID service is propagated to application interface as HTTP 400 BAD
