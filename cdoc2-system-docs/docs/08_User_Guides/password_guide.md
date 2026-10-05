@@ -13,17 +13,7 @@ Before encrypting your files, it's important to understand the password strength
 
 **Step 2: Choose a Strong Password**
 
-You have two options for selecting a strong password:
-
-a) Use the auto-suggest feature to generate a random password. The password will have the following criteria:
-
-- Length: 20 characters
-- Contains:
-  - At least one digit (0-9)
-  - At least one uppercase letter (A-Z)
-  - At least one lowercase letter (a-z)
-
-b) Manually create a password meeting the specified criteria. It is recommended to utilize a password manager to generate a strong, random password that meets the criteria and then store the password there.
+Manually create a password meeting the specified criteria. It is recommended to utilize a password manager to generate a strong, random password that meets the criteria and then store the password there.
 
 **Step 3: Encrypt Your Files**
 
