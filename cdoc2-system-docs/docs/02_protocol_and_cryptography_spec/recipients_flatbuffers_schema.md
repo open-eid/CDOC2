@@ -104,3 +104,9 @@
         // In future might support other identifiers in format "private/VENDOR/identifier"
         recipient_id:         string (required);
     }
+
+    // Note that even though 'salt' field is currently marked as "required" 
+    // in the KeySharesCapsule format, the 'salt' value is not actually used
+    // in the decryption process. The field will be likely removed in the 
+    // next version of the KeySharesCapsule format.
+    // Applications can fill 'salt' field with random bytes or with 0x00 bytes.
