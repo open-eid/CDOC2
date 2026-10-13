@@ -1,5 +1,9 @@
 # CDOC2 Shares Server changelog
 
+**[0.8.3] Java upgrade**
+
+* Upgraded from Java 17 to 21
+
 **[0.8.2] Minor improvements**
 
 * TLS_1.3 no longer forced for infrastructure connections
